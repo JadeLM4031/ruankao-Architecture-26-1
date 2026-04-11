@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>系统架构设计师 - 模块9：计算机网络</title>
+<style>
+:root { --bg:#f5f6fa; --card:#ffffff; --border:#e0e3eb; --text:#1e2235; --muted:#6b7194; --accent:#4361ee; --accent2:#3a56d4; --accent-light:#eef1ff; --correct:#16a34a; --correct-bg:#dcfce7; --wrong:#dc2626; --wrong-bg:#fee2e2; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.7; padding:20px; }
+.container { max-width:860px; margin:0 auto; }
+h1 { text-align:center; font-size:1.6rem; margin-bottom:6px; }
+.subtitle { text-align:center; color:var(--muted); margin-bottom:30px; font-size:0.95rem; }
+.progress-bar { background:var(--border); border-radius:10px; height:8px; margin-bottom:30px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:10px; transition:width 0.5s; width:0%; }
+.q-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px 28px; margin-bottom:20px; box-shadow:0 1px 3px rgba(0,0,0,0.04); transition:all 0.3s; }
+.q-card.answered { opacity:0.9; }
+.q-card.correct-card { border-color:var(--correct); box-shadow:0 0 0 1px var(--correct); }
+.q-card.wrong-card { border-color:var(--wrong); box-shadow:0 0 0 1px var(--wrong); }
+.q-card.case-card { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+.q-header { display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+.q-tag { display:inline-block; font-size:0.72rem; padding:2px 10px; border-radius:20px; font-weight:600; }
+.tag-choice { background:#dbeafe; color:#2563eb; }
+.tag-case { background:#ede9fe; color:#7c3aed; }
+.tag-calc { background:#fef3c7; color:#92400e; }
+.q-score { display:inline-block; font-size:0.72rem; padding:2px 10px; border-radius:20px; font-weight:600; background:#f0fdf4; color:#166534; }
+.q-number { font-weight:700; color:var(--accent); font-size:0.9rem; margin-bottom:6px; }
+.q-text { font-size:0.95rem; margin-bottom:16px; white-space:pre-wrap; }
+.options { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+.opt-btn { background:var(--accent-light); border:1px solid var(--border); border-radius:8px; padding:10px 16px; color:var(--text); font-size:0.9rem; cursor:pointer; text-align:left; transition:all 0.2s; }
+.opt-btn:hover { background:#dde3ff; border-color:var(--accent); }
+.opt-btn.selected { background:#c7d2fe; border-color:var(--accent); font-weight:600; }
+.opt-btn.correct-answer { background:var(--correct-bg); border-color:var(--correct); color:var(--correct); font-weight:600; }
+.opt-btn.wrong-answer { background:var(--wrong-bg); border-color:var(--wrong); color:var(--wrong); font-weight:600; }
+.opt-btn.disabled { pointer-events:none; }
+.case-input { width:100%; min-height:150px; background:#fafbff; border:1px solid var(--border); border-radius:8px; padding:12px 16px; color:var(--text); font-size:0.9rem; resize:vertical; font-family:inherit; line-height:1.6; }
+.case-input:focus { outline:none; border-color:var(--accent); background:#fff; }
+.btn { padding:8px 20px; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer; border:none; transition:all 0.2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); }
+.btn-primary:disabled { opacity:0.4; cursor:not-allowed; }
+.btn-row { display:flex; gap:10px; margin-top:12px; }
+.analysis { display:none; margin-top:16px; padding:16px 18px; background:#f8f9ff; border-radius:8px; border-left:3px solid var(--accent); font-size:0.88rem; }
+.analysis.show { display:block; }
+.analysis h4 { color:var(--accent); margin-bottom:8px; font-size:0.9rem; }
+.analysis p { margin-bottom:6px; }
+.score-badge { display:inline-block; font-size:0.75rem; font-weight:700; padding:2px 10px; border-radius:20px; margin-left:8px; }
+.score-correct { background:var(--correct-bg); color:var(--correct); }
+.score-wrong { background:var(--wrong-bg); color:var(--wrong); }
+.report-section { display:none; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-top:30px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.report-section.show { display:block; }
+.report-section h2 { font-size:1.2rem; margin-bottom:12px; }
+.report-text { width:100%; min-height:200px; background:#f8f9fa; border:1px solid var(--border); border-radius:8px; padding:12px; font-size:0.85rem; font-family:"Consolas","Courier New",monospace; line-height:1.5; resize:vertical; }
+.summary-bar { display:flex; gap:16px; justify-content:center; margin-bottom:20px; flex-wrap:wrap; }
+.summary-item { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 24px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.summary-item .num { font-size:1.6rem; font-weight:700; }
+.summary-item .label { font-size:0.8rem; color:var(--muted); }
+@media (max-width:600px) { body{padding:12px;} .q-card{padding:16px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>模块9：计算机网络</h1>
+  <p class="subtitle">选择题 x 6（每题1分）+ 案例分析 x 1（10分）| 共16分 | 全部作答后生成报告</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="summary-bar">
+    <div class="summary-item"><div class="num" id="totalCount">7</div><div class="label">总题数</div></div>
+    <div class="summary-item"><div class="num" id="doneCount">0</div><div class="label">已作答</div></div>
+    <div class="summary-item"><div class="num" id="correctCount" style="color:var(--correct)">0</div><div class="label">选择题正确</div></div>
+    <div class="summary-item"><div class="num" id="totalScore" style="color:var(--accent)">0</div><div class="label">满分16分</div></div>
+  </div>
+  <div id="questionsContainer"></div>
+  <div style="text-align:center; margin:30px 0;">
+    <button class="btn btn-primary" id="generateBtn" disabled onclick="generateReport()" style="padding:12px 36px; font-size:1rem;">生成答题报告（复制给教练）</button>
+  </div>
+  <div class="report-section" id="reportSection">
+    <h2>答题报告</h2>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:10px;">请全选复制下方内容，粘贴给教练即可</p>
+    <textarea class="report-text" id="reportText" readonly></textarea>
+    <div class="btn-row" style="margin-top:10px;"><button class="btn btn-primary" onclick="copyReport()">一键复制</button></div>
+  </div>
+</div>
+<script>
+const questions = [
+  {
+    id: 1,
+    type: "choice",
+    tag: "计算题",
+    tagClass: "tag-calc",
+    score: 1,
+    text: "某网络采用无噪声信道，带宽为4000Hz，采用16种不同的信号电平。根据Nyquist定理，该信道的最大数据传输速率为：",
+    options: [
+      "A. 16 Kbps",
+      "B. 24 Kbps",
+      "C. 32 Kbps",
+      "D. 64 Kbps"
+    ],
+    answer: 2,
+    analysis: "正确答案：C\n\nNyquist定理：最大数据速率 = 2W × log₂(V)\nW = 4000Hz，V = 16\n\n速率 = 2 × 4000 × log₂(16)\n= 8000 × 4\n= 32000 bps\n= 32 Kbps\n\nlog₂(16) = 4（因为 2⁴ = 16）\n\n常见计算：\nlog₂(4) = 2，log₂(8) = 3，log₂(16) = 4，log₂(32) = 5，log₂(64) = 6\n\n注意区分Nyquist（无噪声）和Shannon（有噪声）：\n- Shannon定理：C = W × log₂(1 + S/N)，S/N是信噪比\n- 2025真题考过：2×3000×log₂(32) = 30kbps"
+  },
+  {
+    id: 2,
+    type: "choice",
+    tag: "计算题",
+    tagClass: "tag-calc",
+    score: 1,
+    text: "某公司获得IP地址块 192.168.10.0/24，需要划分为至少6个子网。则子网掩码应为：",
+    options: [
+      "A. 255.255.255.192",
+      "B. 255.255.255.224",
+      "C. 255.255.255.240",
+      "D. 255.255.255.248"
+    ],
+    answer: 1,
+    analysis: "正确答案：B\n\n需要至少6个子网：2^n ≥ 6，n = 3（2³ = 8 ≥ 6）\n\n原掩码 /24，借用3位 → /27\n/27 = 11111111.11111111.11111111.11100000\n= 255.255.255.224\n\n验证：\n- 子网数 = 2³ = 8个（满足≥6的要求）\n- 每个子网主机数 = 2⁵ - 2 = 30台\n\n各选项对应的位数：\n192 = /26（借2位，4个子网，不够6个）\n224 = /27（借3位，8个子网）✓\n240 = /28（借4位，16个子网，浪费）\n248 = /29（借5位，32个子网，太浪费）\n\n做题技巧：题目要求\"至少\"N个子网时，取最小的n满足 2^n ≥ N。"
+  },
+  {
+    id: 3,
+    type: "choice",
+    tag: "选择题",
+    tagClass: "tag-choice",
+    score: 1,
+    text: "在DNS域名解析过程中，以下关于递归查询和迭代查询的叙述中，正确的是：",
+    options: [
+      "A. 客户端到本地DNS服务器通常使用迭代查询",
+      "B. 本地DNS服务器到根DNS服务器通常使用递归查询",
+      "C. 客户端到本地DNS服务器使用递归查询，本地DNS服务器到其他DNS服务器使用迭代查询",
+      "D. 整个DNS解析过程全部使用递归查询"
+    ],
+    answer: 2,
+    analysis: "正确答案：C\n\nDNS查询方式：\n- 客户端 → 本地DNS：递归查询（\"你帮我查到底\"）\n- 本地DNS → 根DNS：迭代查询（\"你告诉我下一步问谁\"）\n- 本地DNS → 顶级DNS：迭代查询\n- 本地DNS → 权威DNS：迭代查询\n\n递归 vs 迭代：\n- 递归：被查询者负责最终结果（一问到底）\n- 迭代：被查询者只返回下一步该问谁（逐步指引）\n\nA错误：客户端到本地DNS是递归，不是迭代。\nB错误：本地DNS到根DNS是迭代，不是递归。\nD错误：不是全部递归，本地DNS后续用迭代。"
+  },
+  {
+    id: 4,
+    type: "choice",
+    tag: "选择题",
+    tagClass: "tag-choice",
+    score: 1,
+    text: "路由器工作在OSI参考模型的哪一层？",
+    options: [
+      "A. 物理层",
+      "B. 数据链路层",
+      "C. 网络层",
+      "D. 传输层"
+    ],
+    answer: 2,
+    analysis: "正确答案：C\n\n网络设备与OSI层次对应：\n- 集线器（Hub）→ 物理层：只是信号放大和转发\n- 交换机（Switch）→ 数据链路层：基于MAC地址转发帧\n- 路由器（Router）→ 网络层：基于IP地址转发数据包 ✓\n- 网关（Gateway）→ 应用层：协议转换\n- 网桥（Bridge）→ 数据链路层：连接两个网段\n\n记忆口诀：\"物以类聚，数交路传\"→ 物理集线器，数据交换机，网络路由器，传输没有专用设备（端到端）\n\n2025真题考过路由器工作层次的辨析。"
+  },
+  {
+    id: 5,
+    type: "choice",
+    tag: "选择题",
+    tagClass: "tag-choice",
+    score: 1,
+    text: "以下关于TCP和UDP的叙述中，正确的是：",
+    options: [
+      "A. TCP和UDP都提供可靠的数据传输",
+      "B. TCP面向连接，UDP无连接",
+      "C. TCP适合实时视频流传输，UDP适合文件传输",
+      "D. TCP和UDP都使用三次握手建立连接"
+    ],
+    answer: 1,
+    analysis: "正确答案：B\n\nTCP vs UDP：\n- TCP：面向连接、可靠传输、三次握手、字节流、有流量控制和拥塞控制\n- UDP：无连接、不可靠、无握手、数据报、无流量控制、速度快\n\nA错误：UDP不提供可靠传输。\nC错误：说反了。TCP适合文件传输（需要可靠），UDP适合视频流（需要速度，可容忍少量丢包）。\nD错误：UDP无连接，不需要握手。\n\nTCP三次握手：SYN → SYN+ACK → ACK\nTCP四次挥手：FIN → ACK → FIN → ACK"
+  },
+  {
+    id: 6,
+    type: "choice",
+    tag: "选择题",
+    tagClass: "tag-choice",
+    score: 1,
+    text: "以下协议中，工作在传输层的是：",
+    options: [
+      "A. HTTP",
+      "B. IP",
+      "C. TCP",
+      "D. ARP"
+    ],
+    answer: 2,
+    analysis: "正确答案：C\n\n协议与层次对应：\n- 应用层：HTTP、FTP、SMTP、DNS、DHCP、Telnet\n- 传输层：TCP、UDP ✓\n- 网络层：IP、ICMP、ARP、RARP、OSPF\n- 数据链路层：PPP、以太网协议\n\nA的HTTP是应用层协议。\nB的IP是网络层协议。\nD的ARP是网络层协议（将IP地址解析为MAC地址）。\n\n注意：ARP虽然涉及MAC地址，但它在TCP/IP模型中属于网络层（网际层），不是数据链路层。"
+  },
+  {
+    id: 7,
+    type: "case",
+    tag: "案例分析",
+    tagClass: "tag-case",
+    score: 10,
+    text: "某企业总部和分支机构需要通过网络互联。总部获得IP地址块 172.16.8.0/22。现需要：\n\n① 总部有4个部门，每个部门最多需要200台主机；\n② 分支机构需要独立的子网，每个分支机构最多50台主机；\n③ 总部和分支机构之间需要通过VPN安全互联；\n\n问题：\n1. 172.16.8.0/22 地址块包含多少个可用IP地址？请说明计算过程。（3分）\n2. 针对①，如果每个部门分配一个子网，子网掩码应如何设置？每个子网最多容纳多少台主机？（4分）\n3. 针对③的VPN方案，请说明至少应采用什么技术来保证数据传输的安全性？列举两种具体的安全措施。（3分）",
+    sampleAnswer: "【参考答案】\n\n问题1（3分）\n/22 表示前22位为网络位，后10位为主机位。\n主机位 = 32 - 22 = 10位\n总IP数 = 2^10 = 1024\n可用IP数 = 1024 - 2 = 1022个（减去网络地址和广播地址）\n\n问题2（4分）\n每个部门最多200台主机：2^m - 2 ≥ 200\n2^8 - 2 = 254 ≥ 200，m = 8位主机位\n子网掩码 = 32 - 8 = /24 = 255.255.255.0\n\n验证：\n原地址块 /22，需要划分为4个部门\n/22 借2位 → /24，恰好得到 2² = 4个子网\n每个子网：172.16.8.0/24、172.16.9.0/24、172.16.10.0/24、172.16.11.0/24\n每个子网主机数 = 2^8 - 2 = 254台\n\n问题3（3分）\nVPN应采用的安全技术：\n1. IPSec（IP安全协议）：对IP数据包进行加密和认证，保证数据在公网传输的机密性和完整性。可采用传输模式或隧道模式。\n2. SSL/TLS：在传输层建立加密通道，常见于远程访问VPN（如OpenVPN）。\n\n其他可行措施：\n- 数据加密（如AES-256）保证机密性\n- 数字证书/身份认证（如双因素认证）防止未授权访问\n- 隧道技术（如GRE、L2TP）封装私有数据通过公网传输",
+    scoringGuide: "问题1：正确计算主机位数（1分）+ 正确计算总IP数（1分）+ 减2得到可用IP（1分），共3分。\n问题2：正确确定主机位m=8（1分）+ 子网掩码/24或255.255.255.0（1分）+ 划分4个子网（1分）+ 每个子网254台（1分），共4分。\n问题3：提出VPN加密技术（1分）+ 具体安全措施至少2种各1分（2分），共3分。IPSec、SSL/TLS、AES加密、数字证书、隧道技术等均可得分。"
+  }
+];
+
+let userAnswers={}, totalQuestions=questions.length, choiceCorrect=0;
+
+function renderQuestions(){const c=document.getElementById('questionsContainer');let h='';questions.forEach(q=>{const tc=q.tagClass||(q.type==='choice'?'tag-choice':'tag-case');h+=`<div class="q-card" id="qcard-${q.id}"><div class="q-header"><span class="q-tag ${tc}">${q.tag}</span><span class="q-score">${q.score}分</span></div><div class="q-number">第 ${q.id} 题</div><div class="q-text">${q.text}</div>`;if(q.type==='choice'){h+=`<div class="options" id="opts-${q.id}">`;q.options.forEach((o,i)=>{h+=`<button class="opt-btn" id="opt-${q.id}-${i}" onclick="selectOption(${q.id},${i})">${o}</button>`;});h+=`</div><div class="btn-row"><button class="btn btn-primary" id="submit-${q.id}" onclick="submitChoice(${q.id})" disabled>提交答案</button></div>`;}else{h+=`<textarea class="case-input" id="input-${q.id}" placeholder="在此输入你的答案..."></textarea><div class="btn-row"><button class="btn btn-primary" id="submit-${q.id}" onclick="submitCase(${q.id})">提交答案</button></div>`;}h+=`<div class="analysis" id="analysis-${q.id}"></div></div>`;});c.innerHTML=h;}
+
+function selectOption(qid,oi){if(userAnswers[qid]!==undefined)return;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(o=>o.classList.remove('selected'));document.getElementById(`opt-${qid}-${oi}`).classList.add('selected');document.getElementById(`submit-${qid}`).disabled=false;userAnswers[qid]={type:'choice',selected:oi,submitted:false};}
+
+function submitChoice(qid){if(!userAnswers[qid]||userAnswers[qid].submitted)return;userAnswers[qid].submitted=true;const q=questions.find(x=>x.id===qid),sel=userAnswers[qid].selected,cor=q.answer,ok=sel===cor;if(ok)choiceCorrect++;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(o=>o.classList.add('disabled'));document.getElementById(`opt-${qid}-${cor}`).classList.add('correct-answer');if(!ok)document.getElementById(`opt-${qid}-${sel}`).classList.add('wrong-answer');const card=document.getElementById(`qcard-${qid}`);card.classList.add('answered',ok?'correct-card':'wrong-card');card.querySelector('.q-number').innerHTML+=ok?`<span class="score-badge score-correct">+ ${q.score}分</span>`:`<span class="score-badge score-wrong">+ 0分</span>`;const ae=document.getElementById(`analysis-${qid}`);ae.innerHTML=`<h4>解析</h4><p>${q.analysis.replace(/\n/g,'<br>')}</p>`;ae.classList.add('show');document.getElementById(`submit-${qid}`).disabled=true;document.getElementById(`submit-${qid}`).textContent='已提交';updateProgress();}
+
+function submitCase(qid){const inp=document.getElementById(`input-${qid}`),ans=inp.value.trim();if(!ans){alert('请先输入你的答案');return;}if(userAnswers[qid]&&userAnswers[qid].submitted)return;userAnswers[qid]={type:'case',answer:ans,submitted:true};inp.disabled=true;document.getElementById(`submit-${qid}`).disabled=true;document.getElementById(`submit-${qid}`).textContent='已提交';const card=document.getElementById(`qcard-${qid}`);card.classList.add('answered','case-card');card.querySelector('.q-number').innerHTML+='<span class="score-badge" style="background:#ede9fe;color:#7c3aed">待教练评分</span>';const q=questions.find(x=>x.id===qid),ae=document.getElementById(`analysis-${qid}`);ae.innerHTML=`<h4>参考答案</h4><p>${q.sampleAnswer.replace(/\n/g,'<br>')}</p>${q.scoringGuide?`<h4 style="margin-top:12px">评分标准</h4><p>${q.scoringGuide.replace(/\n/g,'<br>')}</p>`:''}`;ae.classList.add('show');updateProgress();}
+
+function updateProgress(){const a=Object.values(userAnswers).filter(x=>x.submitted).length;document.getElementById('doneCount').textContent=a;document.getElementById('correctCount').textContent=choiceCorrect;document.getElementById('progressFill').style.width=(a/totalQuestions*100)+'%';if(a===totalQuestions)document.getElementById('generateBtn').disabled=false;}
+
+function generateReport(){let r=`=== 系统架构设计师 模块9 答题报告 ===\n日期：${new Date().toLocaleDateString('zh-CN')}\n选择题正确：${choiceCorrect}/6\n选择题得分：${choiceCorrect}/6分\n\n`;questions.forEach(q=>{const ua=userAnswers[q.id];r+=`--- 第${q.id}题（${q.tag}，${q.score}分）---\n`;if(q.type==='choice'){r+=`我的答案：${String.fromCharCode(65+ua.selected)}\n正确答案：${String.fromCharCode(65+q.answer)}\n结果：${ua.selected===q.answer?'✓ 正确（+'+q.score+'分）':'✗ 错误（+0分）'}\n`;}else{r+=`我的答案（${q.score}分，待教练评分）：\n${ua.answer}\n`;}r+='\n';});r+='=== 报告结束 ===';document.getElementById('reportText').value=r;document.getElementById('reportSection').classList.add('show');document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});}
+
+function copyReport(){const ta=document.getElementById('reportText');ta.select();navigator.clipboard.writeText(ta.value).then(()=>{const b=event.target;b.textContent='✓ 已复制';setTimeout(()=>{b.textContent='一键复制';},2000);}).catch(()=>{document.execCommand('copy');alert('已复制');});}
+
+renderQuestions();
+</script>
+</body>
+</html>
