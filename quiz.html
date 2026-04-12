@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>系统架构设计师 - 模块9：计算机网络</title>
+<title>系统架构设计师 - 模块12：综合拾遗</title>
 <style>
 :root { --bg:#f5f6fa; --card:#ffffff; --border:#e0e3eb; --text:#1e2235; --muted:#6b7194; --accent:#4361ee; --accent2:#3a56d4; --accent-light:#eef1ff; --correct:#16a34a; --correct-bg:#dcfce7; --wrong:#dc2626; --wrong-bg:#fee2e2; }
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -60,14 +60,14 @@ h1 { text-align:center; font-size:1.6rem; margin-bottom:6px; }
 </head>
 <body>
 <div class="container">
-  <h1>模块9：计算机网络</h1>
-  <p class="subtitle">选择题 x 6（每题1分）+ 案例分析 x 1（10分）| 共16分 | 全部作答后生成报告</p>
+  <h1>模块12：综合拾遗（数学/知识产权/项目管理）</h1>
+  <p class="subtitle">选择题 x 6（每题1分）+ 案例分析 x 1（8分）| 共14分 | 全部作答后生成报告</p>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="summary-bar">
     <div class="summary-item"><div class="num" id="totalCount">7</div><div class="label">总题数</div></div>
     <div class="summary-item"><div class="num" id="doneCount">0</div><div class="label">已作答</div></div>
     <div class="summary-item"><div class="num" id="correctCount" style="color:var(--correct)">0</div><div class="label">选择题正确</div></div>
-    <div class="summary-item"><div class="num" id="totalScore" style="color:var(--accent)">0</div><div class="label">满分16分</div></div>
+    <div class="summary-item"><div class="num" id="totalScore" style="color:var(--accent)">0</div><div class="label">满分14分</div></div>
   </div>
   <div id="questionsContainer"></div>
   <div style="text-align:center; margin:30px 0;">
@@ -85,34 +85,34 @@ const questions = [
   {
     id: 1,
     type: "choice",
-    tag: "计算题",
-    tagClass: "tag-calc",
+    tag: "选择题",
+    tagClass: "tag-choice",
     score: 1,
-    text: "某网络采用无噪声信道，带宽为4000Hz，采用16种不同的信号电平。根据Nyquist定理，该信道的最大数据传输速率为：",
+    text: "某程序员在公司的办公电脑上，利用业余时间独立开发了一款软件。该软件的著作权应归谁所有？",
     options: [
-      "A. 16 Kbps",
-      "B. 24 Kbps",
-      "C. 32 Kbps",
-      "D. 64 Kbps"
+      "A. 归程序员个人所有，因为是业余时间开发的",
+      "B. 归公司所有，因为使用了公司的设备",
+      "C. 需要根据是否使用了公司的资源和技术资料来判断",
+      "D. 归公司和程序员共同所有"
     ],
     answer: 2,
-    analysis: "正确答案：C\n\nNyquist定理：最大数据速率 = 2W × log₂(V)\nW = 4000Hz，V = 16\n\n速率 = 2 × 4000 × log₂(16)\n= 8000 × 4\n= 32000 bps\n= 32 Kbps\n\nlog₂(16) = 4（因为 2⁴ = 16）\n\n常见计算：\nlog₂(4) = 2，log₂(8) = 3，log₂(16) = 4，log₂(32) = 5，log₂(64) = 6\n\n注意区分Nyquist（无噪声）和Shannon（有噪声）：\n- Shannon定理：C = W × log₂(1 + S/N)，S/N是信噪比\n- 2025真题考过：2×3000×log₂(32) = 30kbps"
+    analysis: "正确答案：C\n\n职务作品判断标准：\n- 如果是\"为完成单位工作任务\"所开发 → 著作权归单位\n- 如果是在本职工作中明确指派的任务 → 著作权归单位\n\n本题关键信息：\"业余时间\"\"独立开发\"→ 看起来不是职务作品\n但\"使用公司办公电脑\"→ 可能涉及使用了公司资源\n\n判断原则：\n1. 是否为单位指派的任务？\n2. 是否主要利用了单位的物质技术条件（设备、资金、未公开信息）？\n3. 是否与本职工作相关？\n\n如果确实完全独立、与工作无关、未利用公司专有技术 → 归个人\n如果利用了公司资源或与本职工作相关 → 归公司\n\nA过于绝对（只看时间不看资源），B也过于绝对。C最准确：需综合判断。"
   },
   {
     id: 2,
     type: "choice",
-    tag: "计算题",
-    tagClass: "tag-calc",
+    tag: "选择题",
+    tagClass: "tag-choice",
     score: 1,
-    text: "某公司获得IP地址块 192.168.10.0/24，需要划分为至少6个子网。则子网掩码应为：",
+    text: "某项目计划预算100万元，计划工期10个月。第5个月末，计划完成工作预算（PV）为50万元，实际完成工作预算（EV）为45万元，实际花费（AC）为52万元。则该项目的成本绩效指数（CPI）和进度绩效指数（SPI）分别为：",
     options: [
-      "A. 255.255.255.192",
-      "B. 255.255.255.224",
-      "C. 255.255.255.240",
-      "D. 255.255.255.248"
+      "A. CPI=0.87, SPI=0.90",
+      "B. CPI=1.16, SPI=1.11",
+      "C. CPI=0.87, SPI=1.11",
+      "D. CPI=1.16, SPI=0.90"
     ],
-    answer: 1,
-    analysis: "正确答案：B\n\n需要至少6个子网：2^n ≥ 6，n = 3（2³ = 8 ≥ 6）\n\n原掩码 /24，借用3位 → /27\n/27 = 11111111.11111111.11111111.11100000\n= 255.255.255.224\n\n验证：\n- 子网数 = 2³ = 8个（满足≥6的要求）\n- 每个子网主机数 = 2⁵ - 2 = 30台\n\n各选项对应的位数：\n192 = /26（借2位，4个子网，不够6个）\n224 = /27（借3位，8个子网）✓\n240 = /28（借4位，16个子网，浪费）\n248 = /29（借5位，32个子网，太浪费）\n\n做题技巧：题目要求\"至少\"N个子网时，取最小的n满足 2^n ≥ N。"
+    answer: 0,
+    analysis: "正确答案：A\n\n挣值分析公式：\nCPI = EV / AC = 45 / 52 ≈ 0.87\nSPI = EV / PV = 45 / 50 = 0.90\n\n解读：\nCPI = 0.87 < 1 → 成本超支（每花1元只创造了0.87元的价值）\nSPI = 0.90 < 1 → 进度落后（只完成了计划的90%）\n\n记忆方法：\n- 分子永远是EV（挣值）\n- CPI的分母是AC（实际花了多少）→ 花得比挣得多 = 超支\n- SPI的分母是PV（计划做多少）→ 挣得比计划少 = 落后\n- 都是>1好的方向（CPI>1省钱，SPI>1超前）\n\nCV = EV - AC = 45 - 52 = -7万（超支7万）\nSV = EV - PV = 45 - 50 = -5万（落后5万的进度）"
   },
   {
     id: 3,
@@ -120,31 +120,31 @@ const questions = [
     tag: "选择题",
     tagClass: "tag-choice",
     score: 1,
-    text: "在DNS域名解析过程中，以下关于递归查询和迭代查询的叙述中，正确的是：",
+    text: "关于软件著作权，以下叙述正确的是：",
     options: [
-      "A. 客户端到本地DNS服务器通常使用迭代查询",
-      "B. 本地DNS服务器到根DNS服务器通常使用递归查询",
-      "C. 客户端到本地DNS服务器使用递归查询，本地DNS服务器到其他DNS服务器使用迭代查询",
-      "D. 整个DNS解析过程全部使用递归查询"
+      "A. 软件著作权自软件发布之日起产生",
+      "B. 软件著作权需要向版权局登记后才能获得",
+      "C. 软件著作权自软件开发完成之日起自动产生",
+      "D. 软件著作权的保护期限为作者终生"
     ],
     answer: 2,
-    analysis: "正确答案：C\n\nDNS查询方式：\n- 客户端 → 本地DNS：递归查询（\"你帮我查到底\"）\n- 本地DNS → 根DNS：迭代查询（\"你告诉我下一步问谁\"）\n- 本地DNS → 顶级DNS：迭代查询\n- 本地DNS → 权威DNS：迭代查询\n\n递归 vs 迭代：\n- 递归：被查询者负责最终结果（一问到底）\n- 迭代：被查询者只返回下一步该问谁（逐步指引）\n\nA错误：客户端到本地DNS是递归，不是迭代。\nB错误：本地DNS到根DNS是迭代，不是递归。\nD错误：不是全部递归，本地DNS后续用迭代。"
+    analysis: "正确答案：C\n\n软件著作权核心规则：\n- 自开发完成之日起自动产生，无需登记，无需发布（C正确）\n- 登记不是获得著作权的前提，只是证据效力更强\n- 保护期限：自然人=终生+死后50年，法人=发表后50年\n\nA错误：不是从\"发布\"之日起，而是从\"开发完成\"之日起。软件可以不发布就享有著作权。\nB错误：不需要登记。登记是自愿的，不是强制的。\nD错误：不是\"作者终生\"，而是\"终生+死后50年\"（自然人）或\"发表后50年\"（法人/单位）。"
   },
   {
     id: 4,
     type: "choice",
-    tag: "选择题",
-    tagClass: "tag-choice",
+    tag: "计算题",
+    tagClass: "tag-calc",
     score: 1,
-    text: "路由器工作在OSI参考模型的哪一层？",
+    text: "某公司需要选择技术方案，有以下两个备选方案：\n方案A：成功概率70%，收益200万元；失败概率30%，损失50万元。\n方案B：成功概率50%，收益400万元；失败概率50%，损失80万元。\n用决策树方法，应选择哪个方案？其期望收益为：",
     options: [
-      "A. 物理层",
-      "B. 数据链路层",
-      "C. 网络层",
-      "D. 传输层"
+      "A. 方案A，期望收益125万元",
+      "B. 方案B，期望收益160万元",
+      "C. 方案A，期望收益140万元",
+      "D. 方案B，期望收益320万元"
     ],
-    answer: 2,
-    analysis: "正确答案：C\n\n网络设备与OSI层次对应：\n- 集线器（Hub）→ 物理层：只是信号放大和转发\n- 交换机（Switch）→ 数据链路层：基于MAC地址转发帧\n- 路由器（Router）→ 网络层：基于IP地址转发数据包 ✓\n- 网关（Gateway）→ 应用层：协议转换\n- 网桥（Bridge）→ 数据链路层：连接两个网段\n\n记忆口诀：\"物以类聚，数交路传\"→ 物理集线器，数据交换机，网络路由器，传输没有专用设备（端到端）\n\n2025真题考过路由器工作层次的辨析。"
+    answer: 1,
+    analysis: "正确答案：B\n\n决策树期望值 = 概率 × 收益 之和\n\n方案A期望值 = 0.7 × 200 + 0.3 × (-50) = 140 - 15 = 125万元\n方案B期望值 = 0.5 × 400 + 0.5 × (-80) = 200 - 40 = 160万元\n\n160 > 125 → 选方案B，期望收益160万元。\n\n决策树方法：选期望值最大的方案。\n注意：期望值法不考虑风险偏好。方案B虽然期望值更高，但失败概率也更高（50%），风险更大。如果考虑风险厌恶，可能选A更稳妥。但纯决策树方法只看期望值。"
   },
   {
     id: 5,
@@ -152,15 +152,15 @@ const questions = [
     tag: "选择题",
     tagClass: "tag-choice",
     score: 1,
-    text: "以下关于TCP和UDP的叙述中，正确的是：",
+    text: "以下标准代号中，表示推荐性国家标准的是：",
     options: [
-      "A. TCP和UDP都提供可靠的数据传输",
-      "B. TCP面向连接，UDP无连接",
-      "C. TCP适合实时视频流传输，UDP适合文件传输",
-      "D. TCP和UDP都使用三次握手建立连接"
+      "A. GB",
+      "B. GB/T",
+      "C. GB/Z",
+      "D. GJB"
     ],
     answer: 1,
-    analysis: "正确答案：B\n\nTCP vs UDP：\n- TCP：面向连接、可靠传输、三次握手、字节流、有流量控制和拥塞控制\n- UDP：无连接、不可靠、无握手、数据报、无流量控制、速度快\n\nA错误：UDP不提供可靠传输。\nC错误：说反了。TCP适合文件传输（需要可靠），UDP适合视频流（需要速度，可容忍少量丢包）。\nD错误：UDP无连接，不需要握手。\n\nTCP三次握手：SYN → SYN+ACK → ACK\nTCP四次挥手：FIN → ACK → FIN → ACK"
+    analysis: "正确答案：B\n\n标准代号含义：\n- GB = 国家标准（强制性）\n- GB/T = 国家标准（推荐性），T=推荐\n- GB/Z = 国家标准化指导性技术文件，Z=指导\n- GJB = 国家军用标准\n\n其他常见代号：\n- ISO = 国际标准化组织\n- IEEE = 美国电气电子工程师学会\n- YD = 通信行业标准\n- SJ = 电子行业标准\n- DB = 地方标准\n- Q = 企业标准\n\n记忆：GB是强制（\"必GB\"），GB/T是推荐（\"T=推Tui荐\"）"
   },
   {
     id: 6,
@@ -168,25 +168,25 @@ const questions = [
     tag: "选择题",
     tagClass: "tag-choice",
     score: 1,
-    text: "以下协议中，工作在传输层的是：",
+    text: "甲公司委托乙公司开发一款管理软件，双方未签订书面合同，也未对著作权归属做出明确约定。该软件的著作权应归：",
     options: [
-      "A. HTTP",
-      "B. IP",
-      "C. TCP",
-      "D. ARP"
+      "A. 甲公司所有，因为甲公司出资委托",
+      "B. 乙公司所有，因为乙公司是实际开发者",
+      "C. 甲乙公司共同所有",
+      "D. 归国家所有"
     ],
-    answer: 2,
-    analysis: "正确答案：C\n\n协议与层次对应：\n- 应用层：HTTP、FTP、SMTP、DNS、DHCP、Telnet\n- 传输层：TCP、UDP ✓\n- 网络层：IP、ICMP、ARP、RARP、OSPF\n- 数据链路层：PPP、以太网协议\n\nA的HTTP是应用层协议。\nB的IP是网络层协议。\nD的ARP是网络层协议（将IP地址解析为MAC地址）。\n\n注意：ARP虽然涉及MAC地址，但它在TCP/IP模型中属于网络层（网际层），不是数据链路层。"
+    answer: 1,
+    analysis: "正确答案：B\n\n委托开发著作权归属规则：\n- 有合同约定 → 按合同约定\n- 没有合同或合同未约定 → 归开发者（受托方）\n\n本题：\"未签订书面合同\"\"未对著作权归属做出明确约定\" → 归开发者乙公司。\n\nA错误：出资不等于拥有著作权。委托方只获得软件的使用权，不是著作权。\nC错误：共同所有需要有明确约定，法律没有规定默认共同所有。\nD错误：软件著作权不会归国家。\n\n真题常考三种情况：\n1. 职务作品 → 单位\n2. 委托开发有约定 → 按约定\n3. 委托开发无约定 → 开发者"
   },
   {
     id: 7,
     type: "case",
     tag: "案例分析",
     tagClass: "tag-case",
-    score: 10,
-    text: "某企业总部和分支机构需要通过网络互联。总部获得IP地址块 172.16.8.0/22。现需要：\n\n① 总部有4个部门，每个部门最多需要200台主机；\n② 分支机构需要独立的子网，每个分支机构最多50台主机；\n③ 总部和分支机构之间需要通过VPN安全互联；\n\n问题：\n1. 172.16.8.0/22 地址块包含多少个可用IP地址？请说明计算过程。（3分）\n2. 针对①，如果每个部门分配一个子网，子网掩码应如何设置？每个子网最多容纳多少台主机？（4分）\n3. 针对③的VPN方案，请说明至少应采用什么技术来保证数据传输的安全性？列举两种具体的安全措施。（3分）",
-    sampleAnswer: "【参考答案】\n\n问题1（3分）\n/22 表示前22位为网络位，后10位为主机位。\n主机位 = 32 - 22 = 10位\n总IP数 = 2^10 = 1024\n可用IP数 = 1024 - 2 = 1022个（减去网络地址和广播地址）\n\n问题2（4分）\n每个部门最多200台主机：2^m - 2 ≥ 200\n2^8 - 2 = 254 ≥ 200，m = 8位主机位\n子网掩码 = 32 - 8 = /24 = 255.255.255.0\n\n验证：\n原地址块 /22，需要划分为4个部门\n/22 借2位 → /24，恰好得到 2² = 4个子网\n每个子网：172.16.8.0/24、172.16.9.0/24、172.16.10.0/24、172.16.11.0/24\n每个子网主机数 = 2^8 - 2 = 254台\n\n问题3（3分）\nVPN应采用的安全技术：\n1. IPSec（IP安全协议）：对IP数据包进行加密和认证，保证数据在公网传输的机密性和完整性。可采用传输模式或隧道模式。\n2. SSL/TLS：在传输层建立加密通道，常见于远程访问VPN（如OpenVPN）。\n\n其他可行措施：\n- 数据加密（如AES-256）保证机密性\n- 数字证书/身份认证（如双因素认证）防止未授权访问\n- 隧道技术（如GRE、L2TP）封装私有数据通过公网传输",
-    scoringGuide: "问题1：正确计算主机位数（1分）+ 正确计算总IP数（1分）+ 减2得到可用IP（1分），共3分。\n问题2：正确确定主机位m=8（1分）+ 子网掩码/24或255.255.255.0（1分）+ 划分4个子网（1分）+ 每个子网254台（1分），共4分。\n问题3：提出VPN加密技术（1分）+ 具体安全措施至少2种各1分（2分），共3分。IPSec、SSL/TLS、AES加密、数字证书、隧道技术等均可得分。"
+    score: 8,
+    text: "某软件开发项目，总预算200万元，计划工期12个月。项目进行到第6个月末时，各项数据如下：\n\n- 计划完成工作的预算成本（PV）= 100万元\n- 实际完成工作的预算成本（EV）= 80万元\n- 实际花费（AC）= 90万元\n\n问题：\n1. 计算项目的成本偏差（CV）、进度偏差（SV）、成本绩效指数（CPI）和进度绩效指数（SPI）。（4分）\n2. 根据计算结果，判断项目当前的成本和进度状况（超支/节约、超前/落后）。（2分）\n3. 如果项目继续按当前CPI执行，预测项目完工时的总成本（EAC）。（2分）",
+    sampleAnswer: "【参考答案】\n\n问题1（4分）\nCV = EV - AC = 80 - 90 = -10万元\nSV = EV - PV = 80 - 100 = -20万元\nCPI = EV / AC = 80 / 90 ≈ 0.89\nSPI = EV / PV = 80 / 100 = 0.80\n\n问题2（2分）\nCV = -10 < 0 → 成本超支（花了90万只完成了80万的价值）\nSV = -20 < 0 → 进度落后（只完成了计划的80%）\nCPI = 0.89 < 1 → 每花1元只创造0.89元价值\nSPI = 0.80 < 1 → 进度只达到计划的80%\n\n综合判断：项目既超支又落后。\n\n问题3（2分）\nEAC（完工估算）= BAC / CPI\nBAC（完工预算）= 200万元（总预算）\nEAC = 200 / 0.89 ≈ 224.7万元\n\n含义：如果继续按当前效率执行，项目最终将花费约224.7万元，超出预算24.7万元。",
+    scoringGuide: "问题1：每个指标1分（CV、SV、CPI、SPI），共4分。\n问题2：正确判断成本超支（1分）+ 正确判断进度落后（1分），共2分。\n问题3：正确使用EAC公式（1分）+ 计算结果正确（1分），共2分。"
   }
 ];
 
@@ -202,7 +202,7 @@ function submitCase(qid){const inp=document.getElementById(`input-${qid}`),ans=i
 
 function updateProgress(){const a=Object.values(userAnswers).filter(x=>x.submitted).length;document.getElementById('doneCount').textContent=a;document.getElementById('correctCount').textContent=choiceCorrect;document.getElementById('progressFill').style.width=(a/totalQuestions*100)+'%';if(a===totalQuestions)document.getElementById('generateBtn').disabled=false;}
 
-function generateReport(){let r=`=== 系统架构设计师 模块9 答题报告 ===\n日期：${new Date().toLocaleDateString('zh-CN')}\n选择题正确：${choiceCorrect}/6\n选择题得分：${choiceCorrect}/6分\n\n`;questions.forEach(q=>{const ua=userAnswers[q.id];r+=`--- 第${q.id}题（${q.tag}，${q.score}分）---\n`;if(q.type==='choice'){r+=`我的答案：${String.fromCharCode(65+ua.selected)}\n正确答案：${String.fromCharCode(65+q.answer)}\n结果：${ua.selected===q.answer?'✓ 正确（+'+q.score+'分）':'✗ 错误（+0分）'}\n`;}else{r+=`我的答案（${q.score}分，待教练评分）：\n${ua.answer}\n`;}r+='\n';});r+='=== 报告结束 ===';document.getElementById('reportText').value=r;document.getElementById('reportSection').classList.add('show');document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});}
+function generateReport(){let r=`=== 系统架构设计师 模块12 答题报告 ===\n日期：${new Date().toLocaleDateString('zh-CN')}\n选择题正确：${choiceCorrect}/6\n选择题得分：${choiceCorrect}/6分\n\n`;questions.forEach(q=>{const ua=userAnswers[q.id];r+=`--- 第${q.id}题（${q.tag}，${q.score}分）---\n`;if(q.type==='choice'){r+=`我的答案：${String.fromCharCode(65+ua.selected)}\n正确答案：${String.fromCharCode(65+q.answer)}\n结果：${ua.selected===q.answer?'✓ 正确（+'+q.score+'分）':'✗ 错误（+0分）'}\n`;}else{r+=`我的答案（${q.score}分，待教练评分）：\n${ua.answer}\n`;}r+='\n';});r+='=== 报告结束 ===';document.getElementById('reportText').value=r;document.getElementById('reportSection').classList.add('show');document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});}
 
 function copyReport(){const ta=document.getElementById('reportText');ta.select();navigator.clipboard.writeText(ta.value).then(()=>{const b=event.target;b.textContent='✓ 已复制';setTimeout(()=>{b.textContent='一键复制';},2000);}).catch(()=>{document.execCommand('copy');alert('已复制');});}
 
