@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案例实战全真模拟 · 第2套（共5套）</title>
+<style>
+:root { --bg:#f5f6fa; --card:#ffffff; --border:#e0e3eb; --text:#1e2235; --muted:#6b7194; --accent:#4361ee; --accent2:#3a56d4; --accent-light:#eef1ff; --correct:#16a34a; --correct-bg:#dcfce7; --warn:#f59e0b; --warn-bg:#fef3c7; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.7; padding:20px; }
+.container { max-width:920px; margin:0 auto; }
+h1 { text-align:center; font-size:1.5rem; margin-bottom:6px; }
+.subtitle { text-align:center; color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+.exam-info { background:var(--warn-bg); border:1px solid #fde68a; border-radius:10px; padding:14px 20px; margin-bottom:24px; font-size:0.88rem; line-height:1.8; }
+.exam-info strong { color:#92400e; }
+.pick-bar { display:flex; gap:10px; justify-content:center; margin-bottom:12px; flex-wrap:wrap; }
+.pick-item { background:var(--card); border:2px solid var(--border); border-radius:10px; padding:10px 18px; font-weight:600; font-size:0.88rem; transition:all 0.25s; user-select:none; text-align:center; }
+.pick-item.must { background:var(--accent-light); border-color:var(--accent); color:var(--accent); }
+.pick-item.optional { cursor:pointer; }
+.pick-item.optional:hover { border-color:var(--accent); background:var(--accent-light); }
+.pick-item.optional.selected { border-color:var(--accent); background:var(--accent); color:#fff; }
+.pick-item.optional.locked { cursor:default; opacity:0.45; }
+.pick-count { text-align:center; margin-bottom:20px; font-size:0.88rem; color:var(--muted); }
+.pick-count span { font-weight:700; color:var(--accent); }
+.q-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px 28px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.q-card.hidden-card { display:none; }
+.q-card h3 { color:var(--accent); font-size:1.05rem; margin-bottom:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.q-card h3 .q-tag { display:inline-block; font-size:0.7rem; padding:2px 10px; border-radius:20px; font-weight:600; }
+.tag-must { background:#fee2e2; color:#dc2626; }
+.tag-opt { background:#ede9fe; color:#7c3aed; }
+.q-card h3 .q-score { display:inline-block; font-size:0.7rem; padding:2px 10px; border-radius:20px; font-weight:600; background:#f0fdf4; color:#166534; }
+.bg-material { background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:16px 18px; margin-bottom:18px; font-size:0.9rem; line-height:1.9; }
+.bg-material strong { color:var(--accent2); }
+.question-block { margin-bottom:18px; padding:14px 16px; background:#fafbff; border-radius:8px; border-left:3px solid var(--accent); }
+.question-block .q-title { font-weight:600; font-size:0.92rem; margin-bottom:10px; color:var(--text); }
+.question-block .q-hint { font-size:0.8rem; color:var(--muted); margin-bottom:8px; }
+.fill-table { width:100%; border-collapse:collapse; margin-bottom:10px; font-size:0.88rem; }
+.fill-table th { background:var(--accent-light); padding:8px 12px; text-align:left; font-size:0.82rem; color:var(--accent); border:1px solid var(--border); }
+.fill-table td { padding:6px 12px; border:1px solid var(--border); }
+.fill-table input { border:none; border-bottom:2px solid var(--accent); background:transparent; width:100%; padding:4px 2px; font-size:0.88rem; font-family:inherit; outline:none; }
+.fill-table input:focus { border-bottom-color:var(--accent2); }
+.answer-area textarea { width:100%; min-height:140px; background:#fafbff; border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.9rem; font-family:inherit; line-height:1.7; resize:vertical; transition:border-color 0.2s; }
+.answer-area textarea:focus { outline:none; border-color:var(--accent); background:#fff; }
+.save-indicator { font-size:0.78rem; color:var(--muted); margin-top:4px; min-height:18px; }
+.save-indicator.saved { color:var(--correct); }
+.btn { padding:8px 20px; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer; border:none; transition:all 0.2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); }
+.bottom-bar { text-align:center; margin:30px 0; }
+.report-section { display:none; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-top:20px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.report-section.show { display:block; }
+.report-section h2 { font-size:1.2rem; margin-bottom:12px; }
+.report-text { width:100%; min-height:250px; background:#f8f9fa; border:1px solid var(--border); border-radius:8px; padding:12px; font-size:0.85rem; font-family:"Consolas","Courier New",monospace; line-height:1.5; resize:vertical; }
+@media (max-width:600px) { body{padding:12px;} .q-card{padding:16px;} .bg-material{padding:12px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>案例实战全真模拟 · 第2套</h1>
+  <p class="subtitle">第二关通关训练 | 模拟真实考试格式</p>
+
+  <div class="exam-info">
+    <strong>考试说明：</strong>共5道大题，<strong>第1题必答</strong>，第2~5题<strong>4选2</strong>，共答3题，总分75分。题型包括<strong>填空题</strong>+<strong>简答题</strong>。答题内容<strong>自动暂存</strong>，关闭页面不丢失。全部答完后生成报告发给教练评分。
+  </div>
+
+  <div class="pick-bar">
+    <div class="pick-item must">试题一（必答）<br>ATAM架构评估</div>
+    <div class="pick-item optional" data-q="2" onclick="togglePick(2)">试题二<br>安全架构设计</div>
+    <div class="pick-item optional" data-q="3" onclick="togglePick(3)">试题三<br>电商性能优化</div>
+    <div class="pick-item optional" data-q="4" onclick="togglePick(4)">试题四<br>区块链+智能合约</div>
+    <div class="pick-item optional" data-q="5" onclick="togglePick(5)">试题五<br>嵌入式实时系统</div>
+  </div>
+  <div class="pick-count">选答进度：<span id="pickNum">0</span> / 2 道（从试题二~五中选2道）</div>
+
+  <!-- ==================== 试题一：ATAM必答 ==================== -->
+  <div class="q-card" id="qCard1">
+    <h3>试题一：在线医疗平台架构评估（ATAM） <span class="q-tag tag-must">必答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某互联网公司开发在线医疗问诊平台，支持视频问诊、电子处方、药品配送。项目组采用ATAM方法进行架构评估，构建了如下效用树：<br><br>
+      <strong>效用树部分内容：</strong><br>
+      - 性能<br>
+       　 - 问诊视频延迟 < 500ms (H)<br>
+       　 - 并发处方生成 > 1000张/分钟 (M)<br>
+      - 安全性<br>
+       　 - 患者数据加密存储 (H)<br>
+       　 - 处方防篡改验证 (H)<br>
+      - 可用性<br>
+       　 - 系统7×24运行，年停机<8.8小时 (M)<br>
+      - 可修改性<br>
+       　 - 支持新增科室模块不影响现有 (L)<br><br>
+      架构师提出了以下架构决策：<br>
+      (a) 采用双活数据中心部署<br>
+      (b) 所有患者数据使用AES-256加密存储<br>
+      (c) 处方数据采用区块链存证<br>
+      (d) 前后端分离，各科室独立微服务<br>
+      (e) 视频问诊使用WebRTC协议<br>
+      (f) 数据库采用MySQL主从+读写分离
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（10分）</div>
+      <div class="q-hint">ATAM评估中涉及四个核心概念：敏感点、权衡点、风险、非风险。请根据背景材料，完成下表填空。</div>
+      <table class="fill-table">
+        <tr><th>架构决策</th><th>分析</th><th>属于什么</th></tr>
+        <tr><td>(a) 双活数据中心</td><td>提升了可用性，但增加了网络同步成本，同时影响性能</td><td><input type="text" id="f1_1" data-key="f1_1" placeholder="填概念名称"></td></tr>
+        <tr><td>(b) AES-256加密</td><td>保证数据安全，对性能有一定影响</td><td><input type="text" id="f1_2" data-key="f1_2" placeholder="填概念名称"></td></tr>
+        <tr><td>(c) 区块链存证</td><td>团队能力不足，区块链运维经验欠缺</td><td><input type="text" id="f1_3" data-key="f1_3" placeholder="填概念名称"></td></tr>
+        <tr><td>(e) WebRTC视频</td><td>有效降低视频延迟，满足性能要求</td><td><input type="text" id="f1_4" data-key="f1_4" placeholder="填概念名称"></td></tr>
+        <tr><td>(f) 主从+读写分离</td><td>主库写入性能可能成为瓶颈</td><td><input type="text" id="f1_5" data-key="f1_5" placeholder="填概念名称"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（8分）</div>
+      <div class="q-hint">ATAM评估的效用树是四级结构，请完成填空，并说明效用树中优先级(H/M/L)的作用。</div>
+      <div style="background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:14px; margin-bottom:10px; font-size:0.88rem; line-height:2.2;">
+        <strong>效用树四级结构：</strong><br>
+        根节点 → 第1级：【<input type="text" style="width:100px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f1_lv1" data-key="f1_lv1">】<br>
+        → 第2级：【<input type="text" style="width:100px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f1_lv2" data-key="f1_lv2">】<br>
+        → 第3级：属性精化（具体化描述）<br>
+        → 第4级：【<input type="text" style="width:100px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f1_lv4" data-key="f1_lv4">】（含刺激源、刺激、环境、制品、响应、响应度量六要素）
+      </div>
+      <div class="answer-area">
+        <textarea id="a1_2" data-key="case1_q2" oninput="autoSave(this)" placeholder="H/M/L优先级的作用是什么？"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（7分）</div>
+      <div class="q-hint">架构评估中，场景六要素是什么？请结合"视频问诊延迟<500ms"这个场景，写出完整的六要素。</div>
+      <div class="answer-area">
+        <textarea id="a1_3" data-key="case1_q3" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd1"></div>
+  </div>
+
+  <!-- ==================== 试题二：安全架构 ==================== -->
+  <div class="q-card hidden-card" id="qCard2">
+    <h3>试题二：在线支付系统安全架构 <span class="q-tag tag-opt">选答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某第三方支付公司需要对其支付系统进行安全架构升级。系统现状：<br>
+      ① 前后端通过HTTP明文通信，存在被窃听风险<br>
+      ② 用户密码以明文存储在数据库中<br>
+      ③ 系统曾遭受SQL注入攻击，导致部分用户信息泄露<br>
+      ④ 支付接口缺乏有效的身份认证机制，存在被伪造请求攻击的风险<br>
+      ⑤ 内部运维人员可直接访问生产数据库，操作无审计记录<br>
+      ⑥ 需要对接银行系统，银行要求通信必须采用数字签名确保不可抵赖
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（10分）</div>
+      <div class="q-hint">请完成安全防护技术填空。</div>
+      <table class="fill-table">
+        <tr><th>安全问题</th><th>解决方案（填具体技术名称）</th><th>防护的安全属性</th></tr>
+        <tr><td>① HTTP明文通信</td><td><input type="text" id="f2_1" data-key="f2_1" placeholder="加密方案"></td><td><input type="text" id="f2_1a" data-key="f2_1a" placeholder="保密性/完整性/..."></td></tr>
+        <tr><td>② 密码明文存储</td><td><input type="text" id="f2_2" data-key="f2_2" placeholder="存储方案"></td><td>保密性</td></tr>
+        <tr><td>③ SQL注入攻击</td><td><input type="text" id="f2_3" data-key="f2_3" placeholder="防注入方案"></td><td>完整性</td></tr>
+        <tr><td>④ 伪造请求攻击</td><td><input type="text" id="f2_4" data-key="f2_4" placeholder="防伪造方案"></td><td>真实性/完整性</td></tr>
+        <tr><td>⑤ 运维无审计</td><td><input type="text" id="f2_5" data-key="f2_5" placeholder="审计方案"></td><td>可审计性</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（8分）</div>
+      <div class="q-hint">对称加密和非对称加密有什么区别？数字签名使用的是哪种加密？数字签名保证的两大安全属性是什么？</div>
+      <div class="answer-area">
+        <textarea id="a2_2" data-key="case2_q2" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（7分）</div>
+      <div class="q-hint">背景⑥中银行要求"不可抵赖"，请结合数字签名原理，说明：发送方如何对消息进行签名？接收方如何验证？为什么数字签名能保证不可抵赖？</div>
+      <div class="answer-area">
+        <textarea id="a2_3" data-key="case2_q3" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd2"></div>
+  </div>
+
+  <!-- ==================== 试题三：性能优化 ==================== -->
+  <div class="q-card hidden-card" id="qCard3">
+    <h3>试题三：电商平台性能优化 <span class="q-tag tag-opt">选答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某电商平台在"双十一"大促期间暴露出严重性能问题：<br>
+      ① 首页加载时间超过8秒，用户投诉量大<br>
+      ② 商品详情页的高并发查询导致数据库CPU飙升到95%<br>
+      ③ 秒杀活动中库存扣减出现超卖现象<br>
+      ④ 订单创建接口响应时间从200ms飙升到3秒<br>
+      ⑤ 运维无法快速定位性能瓶颈所在<br><br>
+      当前技术栈：Nginx + Tomcat集群 + MySQL主从 + 本地文件存储。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（8分）</div>
+      <div class="q-hint">针对首页加载慢和商品详情页高并发，请完成性能优化方案填空（涵盖前端、缓存、数据库三层）。</div>
+      <table class="fill-table">
+        <tr><th>层面</th><th>问题</th><th>优化方案（填具体技术）</th></tr>
+        <tr><td>前端</td><td>首页加载慢</td><td><input type="text" id="f3_1" data-key="f3_1" placeholder="前端加速方案"></td></tr>
+        <tr><td>缓存</td><td>商品详情反复查库</td><td><input type="text" id="f3_2" data-key="f3_2" placeholder="缓存方案"></td></tr>
+        <tr><td>数据库</td><td>高并发查询CPU高</td><td><input type="text" id="f3_3" data-key="f3_3" placeholder="数据库优化方案"></td></tr>
+        <tr><td>数据库</td><td>读写压力集中</td><td><input type="text" id="f3_4" data-key="f3_4" placeholder="读写方案"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（9分）</div>
+      <div class="q-hint">针对秒杀超卖问题，请设计高并发库存扣减方案。要求写出完整流程（从用户点击秒杀到库存扣减成功），并说明如何保证不超卖。</div>
+      <div class="answer-area">
+        <textarea id="a3_2" data-key="case3_q2" oninput="autoSave(this)" style="min-height:180px;"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（8分）</div>
+      <div class="q-hint">为了解决"无法快速定位性能瓶颈"，请设计可观测性方案。要求完成下表填空。</div>
+      <table class="fill-table">
+        <tr><th>观测维度</th><th>采集什么数据</th><th>用什么工具</th></tr>
+        <tr><td>日志(Logging)</td><td>请求日志、错误日志</td><td><input type="text" id="f3_5" data-key="f3_5" placeholder="日志工具"></td></tr>
+        <tr><td>指标(Metrics)</td><td>CPU、内存、QPS、响应时间</td><td><input type="text" id="f3_6" data-key="f3_6" placeholder="监控工具"></td></tr>
+        <tr><td>追踪(Tracing)</td><td>一次请求的完整调用链</td><td><input type="text" id="f3_7" data-key="f3_7" placeholder="链路追踪工具"></td></tr>
+      </table>
+      <div class="answer-area" style="margin-top:8px;">
+        <textarea id="a3_3" data-key="case3_q3" oninput="autoSave(this)" placeholder="三个维度如何联动？例如：Metrics发现异常 → Logging查详情 → Tracing定位具体服务"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd3"></div>
+  </div>
+
+  <!-- ==================== 试题四：区块链 ==================== -->
+  <div class="q-card hidden-card" id="qCard4">
+    <h3>试题四：供应链金融区块链系统 <span class="q-tag tag-opt">选答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某银行计划构建基于区块链的供应链金融平台，解决中小企业融资难问题。核心需求：<br>
+      ① 核心企业（链主）签发应收账款凭证，凭证在链上流转不可篡改<br>
+      ② 供应商可以拆分、转让凭证给二级供应商<br>
+      ③ 银行根据链上凭证为供应商放款<br>
+      ④ 需要支持智能合约自动执行还款和清算<br>
+      ⑤ 系统需要在性能、安全、去中心化之间取得平衡
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（9分）</div>
+      <div class="q-hint">请完成区块链六层架构填空。</div>
+      <table class="fill-table">
+        <tr><th>层级</th><th>功能</th><th>本系统对应实现</th></tr>
+        <tr><td>数据层</td><td>区块结构、默克尔树、链式存储</td><td>应收账款凭证的链式存储</td></tr>
+        <tr><td>网络层</td><td>P2P组网、数据传播、验证机制</td><td>银行+核心企业+供应商组网</td></tr>
+        <tr><td>共识层</td><td>共识算法</td><td><input type="text" id="f4_1" data-key="f4_1" placeholder="适合联盟链的共识算法"></td></tr>
+        <tr><td>激励层</td><td>发行机制、分配机制</td><td>（联盟链中通常不需要）</td></tr>
+        <tr><td>合约层</td><td>智能合约、脚本代码</td><td><input type="text" id="f4_2" data-key="f4_2" placeholder="什么功能用合约自动执行"></td></tr>
+        <tr><td>应用层</td><td>业务应用场景</td><td>供应链金融凭证流转</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（8分）</div>
+      <div class="q-hint">什么是智能合约？请结合背景材料，说明至少两个适合用智能合约自动执行的业务场景，并解释为什么这些场景适合智能合约。</div>
+      <div class="answer-area">
+        <textarea id="a4_2" data-key="case4_q2" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（8分）</div>
+      <div class="q-hint">区块链系统面临"不可能三角"（去中心化、安全性、可扩展性）。本系统是联盟链，请在三者中说明取舍选择及理由。相比公链（如以太坊），联盟链在哪些方面做了妥协，获得了什么好处？</div>
+      <div class="answer-area">
+        <textarea id="a4_3" data-key="case4_q3" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd4"></div>
+  </div>
+
+  <!-- ==================== 试题五：嵌入式 ==================== -->
+  <div class="q-card hidden-card" id="qCard5">
+    <h3>试题五：工业机器人控制系统 <span class="q-tag tag-opt">选答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某工厂开发工业机器人控制系统，系统需要处理以下任务：<br>
+      ① 电机控制：每1ms执行一次PID计算，延迟超过2ms会导致电机失步<br>
+      ② 安全监控：检测碰撞传感器，必须在5ms内触发紧急停机<br>
+      ③ 视觉识别：识别工件位置，处理周期约100ms<br>
+      ④ 运动路径规划：根据视觉数据规划路径，周期约200ms<br>
+      ⑤ HMI人机界面：操作员查看状态和下发指令<br><br>
+      系统采用RTOS实时操作系统，使用<strong>速率单调调度（RMS）</strong>算法进行任务调度。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（9分）</div>
+      <div class="q-hint">根据速率单调调度（RMS）算法，请将5个任务按优先级从高到低排列，并完成填空。</div>
+      <div style="background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:14px; margin-bottom:10px; font-size:0.88rem; line-height:2.2;">
+        <strong>RMS算法核心规则：</strong><input type="text" style="width:260px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f5_rule" data-key="f5_rule" placeholder="RMS根据什么分配优先级"><br><br>
+        <strong>优先级排序（从高到低）：</strong><br>
+        第1优先级（最高）：<input type="text" style="width:180px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f5_p1" data-key="f5_p1"><br>
+        第2优先级：<input type="text" style="width:180px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f5_p2" data-key="f5_p2"><br>
+        第3优先级：<input type="text" style="width:180px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f5_p3" data-key="f5_p3"><br>
+        第4优先级：<input type="text" style="width:180px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f5_p4" data-key="f5_p4"><br>
+        第5优先级（最低）：<input type="text" style="width:180px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f5_p5" data-key="f5_p5">
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（8分）</div>
+      <div class="q-hint">什么是优先级反转？请结合本系统举例说明其产生过程，并给出至少两种解决方案的名称和原理。</div>
+      <div class="answer-area">
+        <textarea id="a5_2" data-key="case5_q2" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（8分）</div>
+      <div class="q-hint">嵌入式系统的软件架构有层次式架构、管道-过滤器架构、分区式架构。请分别说明其特点，并结合本系统分析应选择哪种架构。</div>
+      <div class="answer-area">
+        <textarea id="a5_3" data-key="case5_q3" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd5"></div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="bottom-bar">
+    <button class="btn btn-primary" onclick="generateReport()" style="padding:12px 36px; font-size:1rem;">生成答题报告（复制给教练）</button>
+  </div>
+
+  <div class="report-section" id="reportSection">
+    <h2>答题报告</h2>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:10px;">请全选复制下方内容，粘贴给教练即可</p>
+    <textarea class="report-text" id="reportText" readonly></textarea>
+    <div style="margin-top:10px;"><button class="btn btn-primary" onclick="copyReport()">一键复制</button></div>
+  </div>
+</div>
+
+<script>
+const PICK_KEY = 'caseSim2_picks';
+const TEXT_PREFIX = 'caseSim2_';
+let picked = new Set();
+
+function restoreState() {
+  const saved = localStorage.getItem(PICK_KEY);
+  if (saved) {
+    try {
+      const valid = JSON.parse(saved).filter(n => n >= 2 && n <= 5);
+      picked = new Set(valid);
+      localStorage.setItem(PICK_KEY, JSON.stringify([...picked]));
+      picked.forEach(n => {
+        const el = document.querySelector(`.pick-item[data-q="${n}"]`);
+        if (el) el.classList.add('selected');
+        const card = document.getElementById('qCard' + n);
+        if (card) card.classList.remove('hidden-card');
+      });
+      document.getElementById('pickNum').textContent = picked.size;
+      if (picked.size >= 2) lockPicks();
+    } catch(e) { localStorage.removeItem(PICK_KEY); }
+  }
+  document.querySelectorAll('textarea[data-key]').forEach(ta => {
+    const s = localStorage.getItem(TEXT_PREFIX + ta.dataset.key);
+    if (s) ta.value = s;
+  });
+  document.querySelectorAll('input[data-key]').forEach(inp => {
+    const s = localStorage.getItem(TEXT_PREFIX + inp.dataset.key);
+    if (s) inp.value = s;
+  });
+}
+
+function togglePick(n) {
+  const el = document.querySelector(`.pick-item[data-q="${n}"]`);
+  if (!el || el.classList.contains('locked')) return;
+  if (picked.has(n)) {
+    picked.delete(n);
+    el.classList.remove('selected');
+    document.getElementById('qCard' + n).classList.add('hidden-card');
+    unlockAll();
+    if (picked.size >= 2) lockPicks();
+  } else {
+    if (picked.size >= 2) return;
+    picked.add(n);
+    el.classList.add('selected');
+    document.getElementById('qCard' + n).classList.remove('hidden-card');
+    if (picked.size >= 2) lockPicks();
+  }
+  document.getElementById('pickNum').textContent = picked.size;
+  localStorage.setItem(PICK_KEY, JSON.stringify([...picked]));
+}
+
+function lockPicks() {
+  document.querySelectorAll('.pick-item.optional').forEach(el => {
+    if (!el.classList.contains('selected')) el.classList.add('locked');
+  });
+}
+
+function unlockAll() {
+  document.querySelectorAll('.pick-item.optional.locked').forEach(el => el.classList.remove('locked'));
+}
+
+let saveTimer = null;
+function autoSave(el) {
+  clearTimeout(saveTimer);
+  const ind = el.closest('.q-card').querySelector('.save-indicator');
+  if (ind) { ind.textContent = '正在输入...'; ind.classList.remove('saved'); }
+  saveTimer = setTimeout(() => {
+    localStorage.setItem(TEXT_PREFIX + el.dataset.key, el.value);
+    if (ind) { ind.textContent = '✓ 已暂存 ' + new Date().toLocaleTimeString(); ind.classList.add('saved'); }
+  }, 800);
+}
+
+document.addEventListener('input', function(e) {
+  if (e.target.matches('input[data-key]')) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => { localStorage.setItem(TEXT_PREFIX + e.target.dataset.key, e.target.value); }, 800);
+  }
+});
+
+function gatherAnswers(cardId) {
+  const card = document.getElementById(cardId);
+  let text = '';
+  const inputs = card.querySelectorAll('input[data-key]');
+  if (inputs.length > 0) {
+    text += '【填空题】\n';
+    inputs.forEach(inp => {
+      const row = inp.closest('tr');
+      const ctx = row ? row.children[0]?.textContent + ' / ' + row.children[1]?.textContent : inp.dataset.key;
+      text += `${ctx.trim()}：${inp.value.trim() || '（未填）'}\n`;
+    });
+    text += '\n';
+  }
+  card.querySelectorAll('textarea[data-key]').forEach(ta => {
+    const label = ta.closest('.question-block')?.querySelector('.q-title')?.textContent || ta.dataset.key;
+    text += `${label}\n${ta.value.trim() || '（未作答）'}\n\n`;
+  });
+  return text;
+}
+
+function generateReport() {
+  if (picked.size < 2) { alert('请先选择2道选答题'); return; }
+  const names = { 1:'试题一：ATAM架构评估（必答）', 2:'试题二：安全架构设计', 3:'试题三：电商性能优化', 4:'试题四：区块链+智能合约', 5:'试题五：嵌入式实时系统' };
+  let report = '=== 案例实战全真模拟 第2套 答题报告 ===\n\n';
+  report += '【必答】' + names[1] + '\n' + gatherAnswers('qCard1') + '---\n\n';
+  [...picked].sort().forEach(n => { report += '【选答】' + names[n] + '\n' + gatherAnswers('qCard' + n) + '---\n\n'; });
+  document.getElementById('reportText').value = report;
+  document.getElementById('reportSection').classList.add('show');
+  document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});
+}
+
+function copyReport() {
+  const ta = document.getElementById('reportText');
+  ta.select(); document.execCommand('copy'); alert('已复制到剪贴板');
+}
+
+restoreState();
+</script>
+</body>
+</html>
