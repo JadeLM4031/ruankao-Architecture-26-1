@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案例实战全真模拟 · 第3套（共5套）</title>
+<style>
+:root { --bg:#f5f6fa; --card:#ffffff; --border:#e0e3eb; --text:#1e2235; --muted:#6b7194; --accent:#4361ee; --accent2:#3a56d4; --accent-light:#eef1ff; --correct:#16a34a; --correct-bg:#dcfce7; --warn:#f59e0b; --warn-bg:#fef3c7; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.7; padding:20px; }
+.container { max-width:920px; margin:0 auto; }
+h1 { text-align:center; font-size:1.5rem; margin-bottom:6px; }
+.subtitle { text-align:center; color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+.exam-info { background:var(--warn-bg); border:1px solid #fde68a; border-radius:10px; padding:14px 20px; margin-bottom:24px; font-size:0.88rem; line-height:1.8; }
+.exam-info strong { color:#92400e; }
+.pick-bar { display:flex; gap:10px; justify-content:center; margin-bottom:12px; flex-wrap:wrap; }
+.pick-item { background:var(--card); border:2px solid var(--border); border-radius:10px; padding:10px 18px; font-weight:600; font-size:0.88rem; transition:all 0.25s; user-select:none; text-align:center; }
+.pick-item.must { background:var(--accent-light); border-color:var(--accent); color:var(--accent); }
+.pick-item.optional { cursor:pointer; }
+.pick-item.optional:hover { border-color:var(--accent); background:var(--accent-light); }
+.pick-item.optional.selected { border-color:var(--accent); background:var(--accent); color:#fff; }
+.pick-item.optional.locked { cursor:default; opacity:0.45; }
+.pick-count { text-align:center; margin-bottom:20px; font-size:0.88rem; color:var(--muted); }
+.pick-count span { font-weight:700; color:var(--accent); }
+.q-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px 28px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.q-card.hidden-card { display:none; }
+.q-card h3 { color:var(--accent); font-size:1.05rem; margin-bottom:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.q-card h3 .q-tag { display:inline-block; font-size:0.7rem; padding:2px 10px; border-radius:20px; font-weight:600; }
+.tag-must { background:#fee2e2; color:#dc2626; }
+.tag-opt { background:#ede9fe; color:#7c3aed; }
+.q-card h3 .q-score { display:inline-block; font-size:0.7rem; padding:2px 10px; border-radius:20px; font-weight:600; background:#f0fdf4; color:#166534; }
+.bg-material { background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:16px 18px; margin-bottom:18px; font-size:0.9rem; line-height:1.9; }
+.bg-material strong { color:var(--accent2); }
+.question-block { margin-bottom:18px; padding:14px 16px; background:#fafbff; border-radius:8px; border-left:3px solid var(--accent); }
+.question-block .q-title { font-weight:600; font-size:0.92rem; margin-bottom:10px; color:var(--text); }
+.question-block .q-hint { font-size:0.8rem; color:var(--muted); margin-bottom:8px; }
+.fill-table { width:100%; border-collapse:collapse; margin-bottom:10px; font-size:0.88rem; }
+.fill-table th { background:var(--accent-light); padding:8px 12px; text-align:left; font-size:0.82rem; color:var(--accent); border:1px solid var(--border); }
+.fill-table td { padding:6px 12px; border:1px solid var(--border); }
+.fill-table input { border:none; border-bottom:2px solid var(--accent); background:transparent; width:100%; padding:4px 2px; font-size:0.88rem; font-family:inherit; outline:none; }
+.fill-table input:focus { border-bottom-color:var(--accent2); }
+.answer-area textarea { width:100%; min-height:140px; background:#fafbff; border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.9rem; font-family:inherit; line-height:1.7; resize:vertical; transition:border-color 0.2s; }
+.answer-area textarea:focus { outline:none; border-color:var(--accent); background:#fff; }
+.save-indicator { font-size:0.78rem; color:var(--muted); margin-top:4px; min-height:18px; }
+.save-indicator.saved { color:var(--correct); }
+.btn { padding:8px 20px; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer; border:none; transition:all 0.2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); }
+.bottom-bar { text-align:center; margin:30px 0; }
+.report-section { display:none; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-top:20px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.report-section.show { display:block; }
+.report-section h2 { font-size:1.2rem; margin-bottom:12px; }
+.report-text { width:100%; min-height:250px; background:#f8f9fa; border:1px solid var(--border); border-radius:8px; padding:12px; font-size:0.85rem; font-family:"Consolas","Courier New",monospace; line-height:1.5; resize:vertical; }
+@media (max-width:600px) { body{padding:12px;} .q-card{padding:16px;} .bg-material{padding:12px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>案例实战全真模拟 · 第3套</h1>
+  <p class="subtitle">第二关通关训练 | 模拟真实考试格式</p>
+
+  <div class="exam-info">
+    <strong>考试说明：</strong>共5道大题，<strong>第1题必答</strong>，第2~5题<strong>4选2</strong>，共答3题，总分75分。题型包括<strong>填空题</strong>+<strong>简答题</strong>。答题内容<strong>自动暂存</strong>，关闭页面不丢失。全部答完后生成报告发给教练评分。
+  </div>
+
+  <div class="pick-bar">
+    <div class="pick-item must">试题一（必答）<br>质量属性+管道-过滤器</div>
+    <div class="pick-item optional" data-q="2" onclick="togglePick(2)">试题二<br>数据库设计</div>
+    <div class="pick-item optional" data-q="3" onclick="togglePick(3)">试题三<br>微服务改造</div>
+    <div class="pick-item optional" data-q="4" onclick="togglePick(4)">试题四<br>可靠性设计</div>
+    <div class="pick-item optional" data-q="5" onclick="togglePick(5)">试题五<br>大数据架构</div>
+  </div>
+  <div class="pick-count">选答进度：<span id="pickNum">0</span> / 2 道（从试题二~五中选2道）</div>
+
+  <!-- ==================== 试题一：必答 ==================== -->
+  <div class="q-card" id="qCard1">
+    <h3>试题一：智能交通监控平台架构设计 <span class="q-tag tag-must">必答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某市交通管理局计划建设智能交通监控平台，接入全市5000个路口的摄像头和传感器数据，实现实时路况监测、信号灯智能调度、违章自动识别、交通事件预警等功能。系统需要处理以下关键需求：<br><br>
+      (a) 系统应保证7×24小时不间断运行，全年计划外停机不超过52.6分钟<br>
+      (b) 视频流分析结果应在200ms内推送到调度中心<br>
+      (c) 新增一种违章识别算法时，不应影响其他违章识别模块的运行<br>
+      (d) 系统应支持从当前5000路口扩展到20000路口，无需重新开发核心处理模块<br>
+      (e) 违章记录数据和视频证据必须加密存储，防止被篡改和泄露<br>
+      (f) 系统应能在某个处理节点故障时，自动将任务迁移到其他节点，不丢失数据<br>
+      (g) 支持通过标准化接口对接交警总队系统和城管执法系统<br>
+      (h) 所有违章处罚操作应记录完整审计日志，支持事后追溯<br>
+      (i) 系统应支持插件机制，第三方厂商可开发新的传感器接入插件<br>
+      (j) 信号灯调度指令从生成到下发应在100ms内完成<br><br>
+      架构师提出，视频数据处理流水线适合采用<strong>管道-过滤器（Pipe-Filter）</strong>架构风格。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（12分）</div>
+      <div class="q-hint">请将上述需求(a)~(j)对应的质量属性名称填入下表（每空1.2分）。</div>
+      <table class="fill-table">
+        <tr><th>需求编号</th><th>质量属性名称</th><th style="width:40px;">序号</th></tr>
+        <tr><td>(a) 全年计划外停机不超过52.6分钟</td><td><input type="text" id="f1_a" data-key="f1_a"></td><td>1</td></tr>
+        <tr><td>(b) 视频分析结果200ms内推送</td><td><input type="text" id="f1_b" data-key="f1_b"></td><td>2</td></tr>
+        <tr><td>(c) 新增违章识别算法不影响其他模块</td><td><input type="text" id="f1_c" data-key="f1_c"></td><td>3</td></tr>
+        <tr><td>(d) 从5000路口扩展到20000路口</td><td><input type="text" id="f1_d" data-key="f1_d"></td><td>4</td></tr>
+        <tr><td>(e) 违章记录加密存储，防篡改防泄露</td><td><input type="text" id="f1_e" data-key="f1_e"></td><td>5</td></tr>
+        <tr><td>(f) 故障节点自动迁移任务，不丢数据</td><td><input type="text" id="f1_f" data-key="f1_f"></td><td>6</td></tr>
+        <tr><td>(g) 对接交警总队和城管执法系统</td><td><input type="text" id="f1_g" data-key="f1_g"></td><td>7</td></tr>
+        <tr><td>(h) 违章处罚操作记录审计日志</td><td><input type="text" id="f1_h" data-key="f1_h"></td><td>8</td></tr>
+        <tr><td>(i) 支持插件机制，第三方开发接入插件</td><td><input type="text" id="f1_i" data-key="f1_i"></td><td>9</td></tr>
+        <tr><td>(j) 信号灯调度指令100ms内下发</td><td><input type="text" id="f1_j" data-key="f1_j"></td><td>10</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（6分）</div>
+      <div class="q-hint">管道-过滤器架构风格中，数据处理流水线由多个过滤器通过管道串联组成。请完成以下视频处理流水线填空。</div>
+      <div style="background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:14px; margin-bottom:10px; font-size:0.88rem; line-height:2.2;">
+        <strong>视频数据处理流水线：</strong><br>
+        摄像头原始视频流 → 【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f1_c1" data-key="f1_c1" placeholder="第一步处理">】→【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f1_c2" data-key="f1_c2" placeholder="第二步处理">】→【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f1_c3" data-key="f1_c3" placeholder="第三步处理">】→ 违章记录存储+告警推送<br><br>
+        <strong>管道-过滤器的两个核心特征：</strong><br>
+        特征1：每个过滤器【<input type="text" style="width:160px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f1_f1" data-key="f1_f1" placeholder="独立性描述">】，互不影响<br>
+        特征2：过滤器之间通过【<input type="text" style="width:140px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f1_f2" data-key="f1_f2" placeholder="数据传递方式">】连接，不共享状态
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（7分）</div>
+      <div class="q-hint">请结合交通监控平台的业务背景，分析为什么视频数据处理流水线适合采用管道-过滤器架构风格？请从管道-过滤器的特点出发，至少给出3点理由。并说明管道-过滤器与层次结构（Layered）架构的关键区别。</div>
+      <div class="answer-area">
+        <textarea id="a1_3" data-key="case1_q3" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd1"></div>
+  </div>
+
+  <!-- ==================== 试题二：数据库 ==================== -->
+  <div class="q-card hidden-card" id="qCard2">
+    <h3>试题二：在线考试系统数据库设计 <span class="q-tag tag-opt">选答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某教育机构开发在线考试系统，初步设计的考试记录关系模式为：<br><br>
+      <strong>R（考试编号, 考试名称, 考试日期, 考生编号, 考生姓名, 题目编号, 题目内容, 题目分值, 考生答案, 得分）</strong><br><br>
+      其中：每场考试包含多道题目，每名考生对每道题目有一条作答记录。<br>
+      业务特点：日均考试50万场，峰值200万场；90%查询按考试编号查成绩单，8%按考生编号查历史考试记录。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（8分）</div>
+      <div class="q-hint">上述关系模式R存在什么规范化问题？请分析违反了第几范式，并给出满足BCNF的分解方案（写出分解后的关系模式及各关系模式的主键）。</div>
+      <div class="answer-area">
+        <textarea id="a2_1" data-key="case2_q1" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（9分）</div>
+      <div class="q-hint">请完成分布式数据库概念填空。</div>
+      <table class="fill-table">
+        <tr><th>概念</th><th>说明</th><th>答案</th></tr>
+        <tr><td>分片键</td><td>决定数据分布到哪个节点的字段</td><td><input type="text" id="f2_1" data-key="f2_1" placeholder="本系统应选什么字段作为分片键"></td></tr>
+        <tr><td>分片策略</td><td>hash(key)%N实现均匀分布</td><td><input type="text" id="f2_2" data-key="f2_2" placeholder="这种分片策略叫什么"></td></tr>
+        <tr><td>非分片键查询</td><td>按考生编号查成绩（非分片键）</td><td><input type="text" id="f2_3" data-key="f2_3" placeholder="如何解决跨分片查询"></td></tr>
+        <tr><td>CAP定理</td><td>网络分区发生时，在C和A之间选择</td><td><input type="text" id="f2_4" data-key="f2_4" placeholder="本系统应优先保证C还是A"></td></tr>
+        <tr><td>BASE理论</td><td>相对于ACID的宽松一致性模型</td><td><input type="text" id="f2_5" data-key="f2_5" placeholder="BASE三个字母分别代表什么"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（8分）</div>
+      <div class="q-hint">请说明1NF、2NF、3NF、BCNF各级范式的核心要求，以及"升级"到下一级范式时分别消除了什么依赖。</div>
+      <div class="answer-area">
+        <textarea id="a2_3" data-key="case2_q3" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd2"></div>
+  </div>
+
+  <!-- ==================== 试题三：微服务 ==================== -->
+  <div class="q-card hidden-card" id="qCard3">
+    <h3>试题三：传统金融系统微服务改造 <span class="q-tag tag-opt">选答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某银行的核心业务系统采用传统单体架构（COBOL + Oracle），已运行15年。面临以下问题：<br>
+      ① 各业务模块（存款、贷款、转账、理财）高度耦合，一个模块故障导致整个系统不可用<br>
+      ② 每次变更需要全量回归测试，发布周期长达1个月<br>
+      ③ 转账业务在月末高峰期并发量大，但理财模块并发量小，无法独立扩缩容<br>
+      ④ 开发团队已扩展到8个小组，代码合并冲突频繁<br>
+      ⑤ 监管要求核心交易操作必须有完整审计追踪<br><br>
+      银行决定采用<strong>绞杀者模式（Strangler Pattern）</strong>将核心系统逐步迁移到微服务架构，采用DDD（领域驱动设计）进行服务拆分。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（8分）</div>
+      <div class="q-hint">请完成微服务架构组件填空。</div>
+      <div style="background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:14px; margin-bottom:10px; font-size:0.88rem; line-height:2.2;">
+        <strong>备选组件：</strong>API网关、服务注册中心（Nacos）、配置中心、熔断器（Sentinel）、消息队列、链路追踪（SkyWalking）<br><br>
+        客户端请求 → 【<input type="text" style="width:100px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f3_c1" data-key="f3_c1">】统一鉴权和路由<br>
+        微服务启动时注册到【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f3_c2" data-key="f3_c2">】实现服务发现<br>
+        服务调用链通过【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f3_c3" data-key="f3_c3">】排查定位问题<br>
+        异步业务解耦使用【<input type="text" style="width:100px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f3_c4" data-key="f3_c4">】削峰填谷<br>
+        服务间调用通过【<input type="text" style="width:100px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="f3_c5" data-key="f3_c5">】进行故障保护
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（9分）</div>
+      <div class="q-hint">什么是绞杀者模式？请说明其迁移策略的核心思想和步骤。假设银行决定先迁移"理财模块"，请描述具体的迁移步骤（从旧系统到新系统过渡的完整过程）。</div>
+      <div class="answer-area">
+        <textarea id="a3_2" data-key="case3_q2" oninput="autoSave(this)" style="min-height:180px;"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（8分）</div>
+      <div class="q-hint">微服务架构中，服务间通信有哪些方式？请列举至少3种，说明其原理、优缺点和适用场景。注意：API网关不属于服务间通信方式。</div>
+      <div class="answer-area">
+        <textarea id="a3_3" data-key="case3_q3" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd3"></div>
+  </div>
+
+  <!-- ==================== 试题四：可靠性 ==================== -->
+  <div class="q-card hidden-card" id="qCard4">
+    <h3>试题四：云平台可靠性设计 <span class="q-tag tag-opt">选答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某公司搭建企业私有云平台，核心服务架构如下：<br>
+      ① 前端接入层：2台Nginx负载均衡器（并联工作）<br>
+      ② 应用服务层：3台应用服务器（并联工作），每台的可靠度为0.9<br>
+      ③ 缓存层：Redis哨兵模式（3节点，1主2从，至少1主+1从可用即视为可用）<br>
+      ④ 数据库层：MySQL主从架构（1主1从，至少1台可用即视为可用），每台可靠度为0.85<br><br>
+      系统要求整体可用性不低于99.9%（即年度停机不超过8.8小时）。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（10分）</div>
+      <div class="q-hint">请完成可靠性相关概念填空，并计算各层及系统的可靠度。</div>
+      <table class="fill-table">
+        <tr><th>概念/计算</th><th>答案</th></tr>
+        <tr><td>串联系统的可靠度计算公式</td><td><input type="text" id="f4_1" data-key="f4_1" placeholder="R = ?"></td></tr>
+        <tr><td>并联系统的可靠度计算公式</td><td><input type="text" id="f4_2" data-key="f4_2" placeholder="R = ?"></td></tr>
+        <tr><td>3台应用服务器并联的可靠度（每台0.9）</td><td><input type="text" id="f4_3" data-key="f4_3" placeholder="计算结果"></td></tr>
+        <tr><td>MySQL主从（1主1从并联，每台0.85）的可靠度</td><td><input type="text" id="f4_4" data-key="f4_4" placeholder="计算结果"></td></tr>
+        <tr><td>MTBF的中文含义</td><td><input type="text" id="f4_5" data-key="f4_5" placeholder="MTBF全称"></td></tr>
+        <tr><td>MTTR的中文含义</td><td><input type="text" id="f4_6" data-key="f4_6" placeholder="MTTR全称"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（8分）</div>
+      <div class="q-hint">什么是冗余设计？冗余有哪些常见的实现模式（至少列举3种）？请分别说明其原理和适用场景。</div>
+      <div class="answer-area">
+        <textarea id="a4_2" data-key="case4_q2" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（7分）</div>
+      <div class="q-hint">假设前端接入层2台Nginx的可靠度均为0.95，应用层3台服务器可靠度均为0.9，缓存层可靠度为0.99，数据库层可靠度为0.9775（即第1题计算结果）。系统各层之间为串联关系。请计算整个系统的可靠度，并判断是否满足99.9%的可用性要求。</div>
+      <div class="answer-area">
+        <textarea id="a4_3" data-key="case4_q3" oninput="autoSave(this)"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd4"></div>
+  </div>
+
+  <!-- ==================== 试题五：大数据 ==================== -->
+  <div class="q-card hidden-card" id="qCard5">
+    <h3>试题五：智慧城市大数据平台架构 <span class="q-tag tag-opt">选答</span> <span class="q-score">25分</span></h3>
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某市建设智慧城市大数据平台，需要处理以下数据：<br>
+      ① 交通摄像头实时视频流（每秒5000帧，需要实时分析拥堵和事故）<br>
+      ② 环境传感器数据（温度、湿度、PM2.5，每秒上万条，需要实时告警）<br>
+      ③ 市民政务数据（户籍、社保、医疗记录，需要精确查询和统计报表）<br>
+      ④ 历史交通数据（过去5年的车流量、违章记录，需要离线分析和趋势预测）<br><br>
+      架构师在Lambda架构和Kappa架构之间进行选型。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（8分）</div>
+      <div class="q-hint">请完成Lambda架构三层结构填空。</div>
+      <table class="fill-table">
+        <tr><th>层级</th><th>功能</th><th>本系统对应技术</th></tr>
+        <tr><td><input type="text" id="f5_1" data-key="f5_1" placeholder="Lambda第一层"></td><td>全量数据存储和离线计算，结果精确</td><td><input type="text" id="f5_1a" data-key="f5_1a" placeholder="离线计算技术"></td></tr>
+        <tr><td><input type="text" id="f5_2" data-key="f5_2" placeholder="Lambda第二层"></td><td>实时数据处理，低延迟</td><td><input type="text" id="f5_2a" data-key="f5_2a" placeholder="实时处理技术"></td></tr>
+        <tr><td><input type="text" id="f5_3" data-key="f5_3" placeholder="Lambda第三层"></td><td>合并批处理和速度层结果，响应查询</td><td>合并查询接口</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（9分）</div>
+      <div class="q-hint">Lambda架构和Kappa架构有什么区别？请从架构结构、优缺点、适用场景三个维度进行对比。结合本系统的业务需求（既有实时分析又有离线精确统计），分析应该选择哪种架构并说明理由。</div>
+      <div class="answer-area">
+        <textarea id="a5_2" data-key="case5_q2" oninput="autoSave(this)" style="min-height:180px;"></textarea>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（8分）</div>
+      <div class="q-hint">请完成大数据技术生态填空。</div>
+      <table class="fill-table">
+        <tr><th>技术名称</th><th>功能</th><th>属于哪类</th></tr>
+        <tr><td><input type="text" id="f5_4" data-key="f5_4" placeholder="分布式文件系统"></td><td>大规模数据分布式存储</td><td>数据存储</td></tr>
+        <tr><td><input type="text" id="f5_5" data-key="f5_5" placeholder="流处理引擎"></td><td>实时流数据处理</td><td>实时计算</td></tr>
+        <tr><td><input type="text" id="f5_6" data-key="f5_6" placeholder="消息队列"></td><td>高吞吐消息缓冲，削峰填谷</td><td>消息中间件</td></tr>
+        <tr><td><input type="text" id="f5_7" data-key="f5_7" placeholder="NoSQL数据库"></td><td>海量数据的快速随机读写</td><td>数据存储</td></tr>
+      </table>
+      <div class="answer-area" style="margin-top:8px;">
+        <textarea id="a5_3" data-key="case5_q3" oninput="autoSave(this)" placeholder="补充说明：数据仓库和数据湖有什么区别？本系统的历史交通数据（需求④）应该用数据仓库还是数据湖存储？为什么？"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd5"></div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="bottom-bar">
+    <button class="btn btn-primary" onclick="generateReport()" style="padding:12px 36px; font-size:1rem;">生成答题报告（复制给教练）</button>
+  </div>
+
+  <div class="report-section" id="reportSection">
+    <h2>答题报告</h2>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:10px;">请全选复制下方内容，粘贴给教练即可</p>
+    <textarea class="report-text" id="reportText" readonly></textarea>
+    <div style="margin-top:10px;"><button class="btn btn-primary" onclick="copyReport()">一键复制</button></div>
+  </div>
+</div>
+
+<script>
+const PICK_KEY = 'caseSim3_picks';
+const TEXT_PREFIX = 'caseSim3_';
+let picked = new Set();
+
+function restoreState() {
+  const saved = localStorage.getItem(PICK_KEY);
+  if (saved) {
+    try {
+      const valid = JSON.parse(saved).filter(n => n >= 2 && n <= 5);
+      picked = new Set(valid);
+      localStorage.setItem(PICK_KEY, JSON.stringify([...picked]));
+      picked.forEach(n => {
+        const el = document.querySelector(`.pick-item[data-q="${n}"]`);
+        if (el) el.classList.add('selected');
+        const card = document.getElementById('qCard' + n);
+        if (card) card.classList.remove('hidden-card');
+      });
+      document.getElementById('pickNum').textContent = picked.size;
+      if (picked.size >= 2) lockPicks();
+    } catch(e) { localStorage.removeItem(PICK_KEY); }
+  }
+  document.querySelectorAll('textarea[data-key]').forEach(ta => {
+    const s = localStorage.getItem(TEXT_PREFIX + ta.dataset.key);
+    if (s) ta.value = s;
+  });
+  document.querySelectorAll('input[data-key]').forEach(inp => {
+    const s = localStorage.getItem(TEXT_PREFIX + inp.dataset.key);
+    if (s) inp.value = s;
+  });
+}
+
+function togglePick(n) {
+  const el = document.querySelector(`.pick-item[data-q="${n}"]`);
+  if (!el || el.classList.contains('locked')) return;
+  if (picked.has(n)) {
+    picked.delete(n);
+    el.classList.remove('selected');
+    document.getElementById('qCard' + n).classList.add('hidden-card');
+    unlockAll();
+    if (picked.size >= 2) lockPicks();
+  } else {
+    if (picked.size >= 2) return;
+    picked.add(n);
+    el.classList.add('selected');
+    document.getElementById('qCard' + n).classList.remove('hidden-card');
+    if (picked.size >= 2) lockPicks();
+  }
+  document.getElementById('pickNum').textContent = picked.size;
+  localStorage.setItem(PICK_KEY, JSON.stringify([...picked]));
+}
+
+function lockPicks() {
+  document.querySelectorAll('.pick-item.optional').forEach(el => {
+    if (!el.classList.contains('selected')) el.classList.add('locked');
+  });
+}
+
+function unlockAll() {
+  document.querySelectorAll('.pick-item.optional.locked').forEach(el => el.classList.remove('locked'));
+}
+
+let saveTimer = null;
+function autoSave(el) {
+  clearTimeout(saveTimer);
+  const ind = el.closest('.q-card').querySelector('.save-indicator');
+  if (ind) { ind.textContent = '正在输入...'; ind.classList.remove('saved'); }
+  saveTimer = setTimeout(() => {
+    localStorage.setItem(TEXT_PREFIX + el.dataset.key, el.value);
+    if (ind) { ind.textContent = '✓ 已暂存 ' + new Date().toLocaleTimeString(); ind.classList.add('saved'); }
+  }, 800);
+}
+
+document.addEventListener('input', function(e) {
+  if (e.target.matches('input[data-key]')) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => { localStorage.setItem(TEXT_PREFIX + e.target.dataset.key, e.target.value); }, 800);
+  }
+});
+
+function gatherAnswers(cardId) {
+  const card = document.getElementById(cardId);
+  let text = '';
+  const inputs = card.querySelectorAll('input[data-key]');
+  if (inputs.length > 0) {
+    text += '【填空题】\n';
+    inputs.forEach(inp => {
+      const row = inp.closest('tr');
+      const ctx = row ? row.children[0]?.textContent + ' / ' + row.children[1]?.textContent : inp.dataset.key;
+      text += `${ctx.trim()}：${inp.value.trim() || '（未填）'}\n`;
+    });
+    text += '\n';
+  }
+  card.querySelectorAll('textarea[data-key]').forEach(ta => {
+    const label = ta.closest('.question-block')?.querySelector('.q-title')?.textContent || ta.dataset.key;
+    text += `${label}\n${ta.value.trim() || '（未作答）'}\n\n`;
+  });
+  return text;
+}
+
+function generateReport() {
+  if (picked.size < 2) { alert('请先选择2道选答题'); return; }
+  const names = { 1:'试题一：质量属性+管道-过滤器（必答）', 2:'试题二：数据库设计', 3:'试题三：微服务改造', 4:'试题四：可靠性设计', 5:'试题五：大数据架构' };
+  let report = '=== 案例实战全真模拟 第3套 答题报告 ===\n\n';
+  report += '【必答】' + names[1] + '\n' + gatherAnswers('qCard1') + '---\n\n';
+  [...picked].sort().forEach(n => { report += '【选答】' + names[n] + '\n' + gatherAnswers('qCard' + n) + '---\n\n'; });
+  document.getElementById('reportText').value = report;
+  document.getElementById('reportSection').classList.add('show');
+  document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});
+}
+
+function copyReport() {
+  const ta = document.getElementById('reportText');
+  ta.select(); document.execCommand('copy'); alert('已复制到剪贴板');
+}
+
+restoreState();
+</script>
+</body>
+</html>
