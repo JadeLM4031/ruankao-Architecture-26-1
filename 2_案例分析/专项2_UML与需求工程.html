@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专项练习2：UML图+需求工程+知识图谱</title>
+<style>
+:root { --bg:#f5f6fa; --card:#ffffff; --border:#e0e3eb; --text:#1e2235; --muted:#6b7194; --accent:#4361ee; --accent2:#3a56d4; --accent-light:#eef1ff; --correct:#16a34a; --warn:#f59e0b; --warn-bg:#fef3c7; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.7; padding:20px; }
+.container { max-width:920px; margin:0 auto; }
+h1 { text-align:center; font-size:1.5rem; margin-bottom:6px; }
+.subtitle { text-align:center; color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+.exam-info { background:var(--warn-bg); border:1px solid #fde68a; border-radius:10px; padding:14px 20px; margin-bottom:24px; font-size:0.88rem; line-height:1.8; }
+.exam-info strong { color:#92400e; }
+.q-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px 28px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.q-card h3 { color:var(--accent); font-size:1.05rem; margin-bottom:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.q-card h3 .q-tag { display:inline-block; font-size:0.7rem; padding:2px 10px; border-radius:20px; font-weight:600; }
+.tag-drill { background:#fef3c7; color:#92400e; }
+.bg-material { background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:16px 18px; margin-bottom:18px; font-size:0.9rem; line-height:1.9; }
+.bg-material strong { color:var(--accent2); }
+.question-block { margin-bottom:18px; padding:14px 16px; background:#fafbff; border-radius:8px; border-left:3px solid var(--accent); }
+.question-block .q-title { font-weight:600; font-size:0.92rem; margin-bottom:10px; color:var(--text); }
+.question-block .q-hint { font-size:0.8rem; color:var(--muted); margin-bottom:8px; }
+.fill-table { width:100%; border-collapse:collapse; margin-bottom:10px; font-size:0.88rem; }
+.fill-table th { background:var(--accent-light); padding:8px 12px; text-align:left; font-size:0.82rem; color:var(--accent); border:1px solid var(--border); }
+.fill-table td { padding:6px 12px; border:1px solid var(--border); }
+.fill-table input { border:none; border-bottom:2px solid var(--accent); background:transparent; width:100%; padding:4px 2px; font-size:0.88rem; font-family:inherit; outline:none; }
+.fill-table input:focus { border-bottom-color:var(--accent2); }
+.answer-area textarea { width:100%; min-height:140px; background:#fafbff; border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.9rem; font-family:inherit; line-height:1.7; resize:vertical; transition:border-color 0.2s; }
+.answer-area textarea:focus { outline:none; border-color:var(--accent); background:#fff; }
+.save-indicator { font-size:0.78rem; color:var(--muted); margin-top:4px; min-height:18px; }
+.save-indicator.saved { color:var(--correct); }
+.btn { padding:8px 20px; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer; border:none; transition:all 0.2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); }
+.bottom-bar { text-align:center; margin:30px 0; }
+.report-section { display:none; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-top:20px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.report-section.show { display:block; }
+.report-section h2 { font-size:1.2rem; margin-bottom:12px; }
+.report-text { width:100%; min-height:250px; background:#f8f9fa; border:1px solid var(--border); border-radius:8px; padding:12px; font-size:0.85rem; font-family:"Consolas","Courier New",monospace; line-height:1.5; resize:vertical; }
+.uml-diagram { background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:14px 18px; margin-bottom:14px; font-family:"Consolas","Courier New",monospace; font-size:0.85rem; line-height:1.6; white-space:pre; overflow-x:auto; }
+@media (max-width:600px) { body{padding:12px;} .q-card{padding:16px;} .bg-material{padding:12px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>专项练习2：UML图 + 需求工程 + 知识图谱</h1>
+  <p class="subtitle">覆盖五套未练方向 | 对标2025真题</p>
+
+  <div class="exam-info">
+    <strong>训练方向：</strong>UML图识别与填空、需求工程方法、知识图谱基础。这三个方向五套完全没练过，但都是真题高频考点。
+  </div>
+
+  <!-- ==================== Part A：UML图 ==================== -->
+  <div class="q-card">
+    <h3>Part A：UML图识别与填空 <span class="q-tag tag-drill">高频</span></h3>
+
+    <div class="bg-material">
+      <strong>【UML图速查】</strong><br>
+      UML 2.5共14种图，分三大类：<br>
+      <strong>结构图（静态）</strong>：类图、对象图、包图、组件图、部署图、组合结构图<br>
+      <strong>行为图（动态）</strong>：用例图、活动图、状态机图、序列图、通信图、定时图、交互概览图
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（8分）UML图分类填空</div>
+      <div class="q-hint">请将以下UML图按类型分类，并说明各自的用途。</div>
+      <table class="fill-table">
+        <tr><th>UML图</th><th>属于哪类（结构/行为）</th><th>用途（一句话）</th></tr>
+        <tr><td>类图（Class Diagram）</td><td>结构图</td><td><input type="text" id="uml_1" data-key="uml_1" placeholder="类图的用途"></td></tr>
+        <tr><td>序列图（Sequence Diagram）</td><td><input type="text" id="uml_2" data-key="uml_2" placeholder="结构/行为"></td><td><input type="text" id="uml_3" data-key="uml_3" placeholder="序列图的用途"></td></tr>
+        <tr><td>用例图（Use Case Diagram）</td><td><input type="text" id="uml_4" data-key="uml_4" placeholder="结构/行为"></td><td><input type="text" id="uml_5" data-key="uml_5" placeholder="用例图的用途"></td></tr>
+        <tr><td>活动图（Activity Diagram）</td><td>行为图</td><td><input type="text" id="uml_6" data-key="uml_6" placeholder="活动图的用途"></td></tr>
+        <tr><td>状态机图（State Machine）</td><td><input type="text" id="uml_7" data-key="uml_7" placeholder="结构/行为"></td><td><input type="text" id="uml_8" data-key="uml_8" placeholder="状态机图的用途"></td></tr>
+        <tr><td>组件图（Component Diagram）</td><td><input type="text" id="uml_9" data-key="uml_9" placeholder="结构/行为"></td><td><input type="text" id="uml_10" data-key="uml_10" placeholder="组件图的用途"></td></tr>
+        <tr><td>部署图（Deployment Diagram）</td><td>结构图</td><td><input type="text" id="uml_11" data-key="uml_11" placeholder="部署图的用途"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（6分）类间关系识别</div>
+      <div class="q-hint">以下是网上书城系统的类关系描述，请判断属于哪种关系（依赖、关联、聚合、组合、泛化、实现）。</div>
+      <table class="fill-table">
+        <tr><th>关系描述</th><th>关系类型</th></tr>
+        <tr><td>Book类继承自Product类</td><td><input type="text" id="uml_r1" data-key="uml_r1" placeholder="什么关系"></td></tr>
+        <tr><td>Order类包含多个OrderItem（订单项与订单共存亡）</td><td><input type="text" id="uml_r2" data-key="uml_r2" placeholder="什么关系"></td></tr>
+        <tr><td>ShoppingCart包含多个Book（书可以独立于购物车存在）</td><td><input type="text" id="uml_r3" data-key="uml_r3" placeholder="什么关系"></td></tr>
+        <tr><td>PaymentProcessor类的process方法参数使用了CreditCard类</td><td><input type="text" id="uml_r4" data-key="uml_r4" placeholder="什么关系"></td></tr>
+        <tr><td>User类持有List&lt;Order&gt;作为成员变量</td><td><input type="text" id="uml_r5" data-key="uml_r5" placeholder="什么关系"></td></tr>
+        <tr><td>PaymentService实现IPaymentGateway接口</td><td><input type="text" id="uml_r6" data-key="uml_r6" placeholder="什么关系"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（6分）序列图填空</div>
+      <div class="q-hint">以下是用户登录的序列图描述，请填入正确的交互元素。</div>
+      <div style="background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:14px; margin-bottom:10px; font-size:0.88rem; line-height:2.2;">
+        <strong>序列图关键元素：</strong><br>
+        参与者（Actor）：用户<br>
+        对象（Lifeline）：【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="uml_s1" data-key="uml_s1" placeholder="登录入口对象">】→【AuthServer】→【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="uml_s2" data-key="uml_s2" placeholder="数据存储对象">】<br><br>
+        交互流程：<br>
+        1. 用户 → LoginController：发送【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="uml_s3" data-key="uml_s3" placeholder="发送什么消息">】（用户名+密码）<br>
+        2. LoginController → AuthServer：验证请求<br>
+        3. AuthServer → Database：【<input type="text" style="width:140px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="uml_s4" data-key="uml_s4" placeholder="查什么">】用户信息<br>
+        4. Database → AuthServer：返回用户记录<br>
+        5. AuthServer → LoginController：返回【<input type="text" style="width:140px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="uml_s5" data-key="uml_s5" placeholder="返回什么结果">】（token/失败原因）<br>
+        6. LoginController → 用户：返回登录结果
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd1"></div>
+  </div>
+
+  <!-- ==================== Part B：需求工程 ==================== -->
+  <div class="q-card">
+    <h3>Part B：需求工程 <span class="q-tag tag-drill">中高频</span></h3>
+
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某公司开发智能停车管理系统，项目经理需要收集和管理需求。<br>
+      系统涉及多方利益相关者：停车场管理员、车主、收费人员、交警部门。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（8分）需求获取方法填空</div>
+      <div class="q-hint">常用的需求获取方法有哪些？请完成下表填空。</div>
+      <table class="fill-table">
+        <tr><th>方法</th><th>适用场景</th><th>优缺点</th></tr>
+        <tr><td><input type="text" id="req_1" data-key="req_1" placeholder="面对面收集需求"></td><td>需要深入了解用户工作流程</td><td>信息丰富但耗时长</td></tr>
+        <tr><td>问卷调查</td><td>需要从大量用户收集统计信息</td><td><input type="text" id="req_2" data-key="req_2" placeholder="问卷的缺点"></td></tr>
+        <tr><td><input type="text" id="req_3" data-key="req_3" placeholder="快速构建初步版本"></td><td>需求不明确，需要用户反馈确认</td><td>直观但可能偏离真实需求</td></tr>
+        <tr><td>头脑风暴</td><td><input type="text" id="req_4" data-key="req_4" placeholder="适合什么场景"></td><td>激发创意但可能发散</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（5分）功能需求 vs 非功能需求</div>
+      <div class="q-hint">请将以下需求分为功能需求和非功能需求。</div>
+      <table class="fill-table">
+        <tr><th>需求描述</th><th>分类（功能/非功能）</th></tr>
+        <tr><td>车主可通过App查询空余车位</td><td><input type="text" id="req_5" data-key="req_5"></td></tr>
+        <tr><td>车位查询响应时间不超过1秒</td><td><input type="text" id="req_6" data-key="req_6"></td></tr>
+        <tr><td>系统支持微信和支付宝支付</td><td><input type="text" id="req_7" data-key="req_7"></td></tr>
+        <tr><td>系统全年可用率不低于99.9%</td><td><input type="text" id="req_8" data-key="req_8"></td></tr>
+        <tr><td>停车场管理员可手动调整费率</td><td><input type="text" id="req_9" data-key="req_9"></td></tr>
+      </table>
+    </div>
+    <div class="save-indicator" id="saveInd2"></div>
+  </div>
+
+  <!-- ==================== Part C：知识图谱 ==================== -->
+  <div class="q-card">
+    <h3>Part C：知识图谱与爬虫 <span class="q-tag tag-drill">2025真题</span></h3>
+
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某高校图书馆构建学术知识图谱系统，需要从多个学术数据库（知网、万方、Web of Science）采集论文数据，构建论文-作者-机构-关键词之间的关系网络，支持学术搜索和趋势分析。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（6分）知识图谱基础填空</div>
+      <table class="fill-table">
+        <tr><th>概念</th><th>说明</th><th>答案</th></tr>
+        <tr><td>知识图谱的核心表示</td><td>以三元组形式表示实体间关系</td><td>【<input type="text" id="kg_1" data-key="kg_1" placeholder="什么形式的三元组">】</td></tr>
+        <tr><td>三元组结构</td><td>头实体→关系→尾实体</td><td>例如：【<input type="text" style="width:300px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="kg_2" data-key="kg_2" placeholder="用论文领域举例一个三元组">】</td></tr>
+        <tr><td>知识图谱存储</td><td>常用图数据库</td><td><input type="text" id="kg_3" data-key="kg_3" placeholder="图数据库名称"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（6分）网络爬虫基础</div>
+      <div class="q-hint">爬虫是知识图谱数据采集的重要手段。请完成填空。</div>
+      <table class="fill-table">
+        <tr><th>概念</th><th>说明</th><th>答案</th></tr>
+        <tr><td>爬虫工作原理</td><td>从一个URL开始，下载页面→解析链接→加入队列→循环</td><td>这种遍历策略称为【<input type="text" id="kg_4" data-key="kg_4" placeholder="什么搜索策略">】</td></tr>
+        <tr><td>反爬虫对策</td><td>网站通过验证码、IP限制等方式阻止爬虫</td><td>至少给出两种应对方案：<input type="text" style="width:300px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem;" id="kg_5" data-key="kg_5" placeholder="反反爬虫方案"></td></tr>
+        <tr><td>robots.txt</td><td>网站声明哪些页面允许/禁止爬取</td><td>爬虫应遵守该协议，这体现了【<input type="text" id="kg_6" data-key="kg_6" placeholder="体现了什么原则">】原则</td></tr>
+      </table>
+    </div>
+    <div class="save-indicator" id="saveInd3"></div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="bottom-bar">
+    <button class="btn btn-primary" onclick="generateReport()" style="padding:12px 36px; font-size:1rem;">生成答题报告（复制给教练）</button>
+  </div>
+
+  <div class="report-section" id="reportSection">
+    <h2>答题报告</h2>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:10px;">请全选复制下方内容，粘贴给教练即可</p>
+    <textarea class="report-text" id="reportText" readonly></textarea>
+    <div style="margin-top:10px;"><button class="btn btn-primary" onclick="copyReport()">一键复制</button></div>
+  </div>
+</div>
+
+<script>
+const TEXT_PREFIX = 'drill2_';
+
+function restoreState() {
+  document.querySelectorAll('input[data-key]').forEach(inp => {
+    const s = localStorage.getItem(TEXT_PREFIX + inp.dataset.key);
+    if (s) inp.value = s;
+  });
+  document.querySelectorAll('textarea[data-key]').forEach(ta => {
+    const s = localStorage.getItem(TEXT_PREFIX + ta.dataset.key);
+    if (s) ta.value = s;
+  });
+}
+
+let saveTimer = null;
+function autoSave(el) {
+  clearTimeout(saveTimer);
+  const ind = el.closest('.q-card')?.querySelector('.save-indicator');
+  if (ind) { ind.textContent = '正在输入...'; ind.classList.remove('saved'); }
+  saveTimer = setTimeout(() => {
+    localStorage.setItem(TEXT_PREFIX + el.dataset.key, el.value);
+    if (ind) { ind.textContent = '✓ 已暂存 ' + new Date().toLocaleTimeString(); ind.classList.add('saved'); }
+  }, 800);
+}
+
+document.addEventListener('input', function(e) {
+  if (e.target.matches('input[data-key]')) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => { localStorage.setItem(TEXT_PREFIX + e.target.dataset.key, e.target.value); }, 800);
+  }
+});
+
+function generateReport() {
+  let report = '=== 专项练习2：UML图+需求工程+知识图谱 答题报告 ===\n\n';
+  report += '=== Part A：UML图 ===\n\n';
+
+  // UML图分类
+  report += '【问题1 UML图分类】\n';
+  const umlKeys = ['uml_1','uml_3','uml_5','uml_6','uml_8','uml_10','uml_11'];
+  const umlNames = ['类图用途','序列图分类','序列图用途','用例图分类','用例图用途','活动图用途','状态机分类','状态机用途','组件图分类','组件图用途','部署图用途'];
+  const allUmlIds = ['uml_1','uml_2','uml_3','uml_4','uml_5','uml_6','uml_7','uml_8','uml_9','uml_10','uml_11'];
+  allUmlIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) report += `${id}：${el.value.trim() || '（未填）'}\n`;
+  });
+  report += '\n';
+
+  // 类间关系
+  report += '【问题2 类间关系】\n';
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById(`uml_r${i}`);
+    if (el) report += `关系${i}：${el.value.trim() || '（未填）'}\n`;
+  }
+  report += '\n';
+
+  // 序列图
+  report += '【问题3 序列图】\n';
+  for (let i = 1; i <= 5; i++) {
+    const el = document.getElementById(`uml_s${i}`);
+    if (el) report += `s${i}：${el.value.trim() || '（未填）'}\n`;
+  }
+  report += '\n';
+
+  report += '=== Part B：需求工程 ===\n\n';
+  for (let i = 1; i <= 9; i++) {
+    const el = document.getElementById(`req_${i}`);
+    if (el) report += `req_${i}：${el.value.trim() || '（未填）'}\n`;
+  }
+  report += '\n';
+
+  report += '=== Part C：知识图谱 ===\n\n';
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById(`kg_${i}`);
+    if (el) report += `kg_${i}：${el.value.trim() || '（未填）'}\n`;
+  }
+
+  document.getElementById('reportText').value = report;
+  document.getElementById('reportSection').classList.add('show');
+  document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});
+}
+
+function copyReport() {
+  const ta = document.getElementById('reportText');
+  ta.select(); document.execCommand('copy'); alert('已复制到剪贴板');
+}
+
+restoreState();
+</script>
+</body>
+</html>

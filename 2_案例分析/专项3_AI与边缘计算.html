@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专项练习3：AI架构+边缘计算+2026新增考点</title>
+<style>
+:root { --bg:#f5f6fa; --card:#ffffff; --border:#e0e3eb; --text:#1e2235; --muted:#6b7194; --accent:#4361ee; --accent2:#3a56d4; --accent-light:#eef1ff; --correct:#16a34a; --warn:#f59e0b; --warn-bg:#fef3c7; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.7; padding:20px; }
+.container { max-width:920px; margin:0 auto; }
+h1 { text-align:center; font-size:1.5rem; margin-bottom:6px; }
+.subtitle { text-align:center; color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+.exam-info { background:var(--warn-bg); border:1px solid #fde68a; border-radius:10px; padding:14px 20px; margin-bottom:24px; font-size:0.88rem; line-height:1.8; }
+.exam-info strong { color:#92400e; }
+.q-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px 28px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.q-card h3 { color:var(--accent); font-size:1.05rem; margin-bottom:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.q-card h3 .q-tag { display:inline-block; font-size:0.7rem; padding:2px 10px; border-radius:20px; font-weight:600; }
+.tag-drill { background:#fef3c7; color:#92400e; }
+.bg-material { background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:16px 18px; margin-bottom:18px; font-size:0.9rem; line-height:1.9; }
+.bg-material strong { color:var(--accent2); }
+.question-block { margin-bottom:18px; padding:14px 16px; background:#fafbff; border-radius:8px; border-left:3px solid var(--accent); }
+.question-block .q-title { font-weight:600; font-size:0.92rem; margin-bottom:10px; color:var(--text); }
+.question-block .q-hint { font-size:0.8rem; color:var(--muted); margin-bottom:8px; }
+.fill-table { width:100%; border-collapse:collapse; margin-bottom:10px; font-size:0.88rem; }
+.fill-table th { background:var(--accent-light); padding:8px 12px; text-align:left; font-size:0.82rem; color:var(--accent); border:1px solid var(--border); }
+.fill-table td { padding:6px 12px; border:1px solid var(--border); }
+.fill-table input { border:none; border-bottom:2px solid var(--accent); background:transparent; width:100%; padding:4px 2px; font-size:0.88rem; font-family:inherit; outline:none; }
+.fill-table input:focus { border-bottom-color:var(--accent2); }
+.answer-area textarea { width:100%; min-height:140px; background:#fafbff; border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.9rem; font-family:inherit; line-height:1.7; resize:vertical; transition:border-color 0.2s; }
+.answer-area textarea:focus { outline:none; border-color:var(--accent); background:#fff; }
+.save-indicator { font-size:0.78rem; color:var(--muted); margin-top:4px; min-height:18px; }
+.save-indicator.saved { color:var(--correct); }
+.btn { padding:8px 20px; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer; border:none; transition:all 0.2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); }
+.bottom-bar { text-align:center; margin:30px 0; }
+.report-section { display:none; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-top:20px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.report-section.show { display:block; }
+.report-section h2 { font-size:1.2rem; margin-bottom:12px; }
+.report-text { width:100%; min-height:250px; background:#f8f9fa; border:1px solid var(--border); border-radius:8px; padding:12px; font-size:0.85rem; font-family:"Consolas","Courier New",monospace; line-height:1.5; resize:vertical; }
+@media (max-width:600px) { body{padding:12px;} .q-card{padding:16px;} .bg-material{padding:12px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>专项练习3：AI架构+边缘计算+2026新增</h1>
+  <p class="subtitle">覆盖五套未练方向 | 2025真题+2026新增考点</p>
+
+  <div class="exam-info">
+    <strong>训练方向：</strong>AI/大模型系统架构、边缘计算与云边协同、ArchiMate企业架构建模、MLOps。考点偏概念辨析，不考深度技术细节。
+  </div>
+
+  <!-- ==================== Part A：AI与大模型架构 ==================== -->
+  <div class="q-card">
+    <h3>Part A：AI系统架构与边缘计算 <span class="q-tag tag-drill">2025真题趋势</span></h3>
+
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某智能制造企业建设AI质检平台，需要处理工厂流水线的产品外观检测。系统需要：<br>
+      ① 在产线侧实时检测产品缺陷，响应延迟不超过50ms<br>
+      ② 将缺陷数据汇总分析，生成月度质量趋势报告<br>
+      ③ 持续用新缺陷样本优化检测模型<br>
+      ④ 支持多个工厂部署，每个工厂产线环境不同<br>
+      ⑤ 总部需要统一管理各工厂的模型版本<br><br>
+      架构师提出了<strong>云-边-端协同架构</strong>：端侧（摄像头采集）→ 边缘侧（产线旁的推理服务器）→ 云端（总部训练平台）。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（8分）云-边-端协同架构填空</div>
+      <div class="q-hint">请完成云边端三层的职责分工填空。</div>
+      <table class="fill-table">
+        <tr><th>层级</th><th>部署位置</th><th>负责什么</th><th>对应背景需求</th></tr>
+        <tr><td>端侧</td><td>产线摄像头/传感器</td><td><input type="text" id="ai_1" data-key="ai_1" placeholder="端侧做什么"></td><td>需求①</td></tr>
+        <tr><td><input type="text" id="ai_2" data-key="ai_2" placeholder="填层级名称"></td><td>工厂机房推理服务器</td><td>实时AI推理检测，低延迟响应</td><td>需求①</td></tr>
+        <tr><td>云端</td><td><input type="text" id="ai_3" data-key="ai_3" placeholder="云端在哪"></td><td><input type="text" id="ai_4" data-key="ai_4" placeholder="云端做什么"></td><td>需求②③⑤</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（6分）边缘计算 vs 云计算对比</div>
+      <div class="q-hint">请完成下表填空。</div>
+      <table class="fill-table">
+        <tr><th>对比维度</th><th>边缘计算</th><th>云计算</th></tr>
+        <tr><td>部署位置</td><td>靠近数据源（工厂/基站）</td><td>集中式数据中心</td></tr>
+        <tr><td>延迟</td><td><input type="text" id="ai_5" data-key="ai_5" placeholder="边缘计算延迟特点"></td><td>较高（数据需传到远端）</td></tr>
+        <tr><td>算力</td><td>有限</td><td><input type="text" id="ai_6" data-key="ai_6" placeholder="云计算算力特点"></td></tr>
+        <tr><td>适用场景</td><td><input type="text" id="ai_7" data-key="ai_7" placeholder="边缘适合什么"></td><td>大数据分析、模型训练</td></tr>
+        <tr><td>关系</td><td colspan="2" style="text-align:center;"><input type="text" id="ai_8" data-key="ai_8" placeholder="边缘和云是什么关系"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题3】（6分）MLOps概念填空</div>
+      <div class="q-hint">MLOps是2026新增考点。请完成填空。</div>
+      <div style="background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:14px; margin-bottom:10px; font-size:0.88rem; line-height:2.2;">
+        <strong>MLOps = 机器学习的DevOps</strong><br><br>
+        管理的是<strong>模型全生命周期</strong>：<br>
+        数据准备 → 【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="ai_9" data-key="ai_9" placeholder="用什么训练模型">】→ 模型评估 → 【<input type="text" style="width:120px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="ai_10" data-key="ai_10" placeholder="部署到哪">】→ 持续【<input type="text" style="width:80px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="ai_11" data-key="ai_11" placeholder="持续做什么">】→ 发现性能退化后重新训练<br><br>
+        <strong>MLOps解决什么问题？</strong><br>
+        传统方式下，数据科学家训练好模型后，交给运维部署，经常出现"训练环境≠生产环境"的问题。MLOps通过自动化流水线解决这一问题，核心理念是：【<input type="text" style="width:200px; border:none; border-bottom:2px solid var(--accent); background:transparent; font-size:0.88rem; text-align:center;" id="ai_12" data-key="ai_12" placeholder="MLOps核心理念">】
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd1"></div>
+  </div>
+
+  <!-- ==================== Part B：ArchiMate ==================== -->
+  <div class="q-card">
+    <h3>Part B：ArchiMate企业架构建模 <span class="q-tag tag-drill">2026新增</span></h3>
+
+    <div class="bg-material">
+      <strong>【背景】</strong><br>
+      某银行进行企业架构梳理，使用<strong>ArchiMate建模语言</strong>描述架构。ArchiMate由The Open Group定义，核心分为三个层次。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（6分）ArchiMate三层架构填空</div>
+      <table class="fill-table">
+        <tr><th>层次</th><th>关注什么</th><th>本系统对应</th></tr>
+        <tr><td><input type="text" id="arc_1" data-key="arc_1" placeholder="最上层，关注业务"></td><td>业务流程、组织、产品</td><td>存取款、贷款审批、理财服务</td></tr>
+        <tr><td><input type="text" id="arc_2" data-key="arc_2" placeholder="中间层，关注应用"></td><td>应用组件、服务、接口</td><td>核心交易系统、风控系统、手机银行App</td></tr>
+        <tr><td><input type="text" id="arc_3" data-key="arc_3" placeholder="最下层，关注技术"></td><td>服务器、网络、存储</td><td>数据库集群、网络设备、灾备中心</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（4分）ArchiMate vs UML</div>
+      <div class="q-hint">ArchiMate和UML都是建模语言，但定位不同。请完成对比。</div>
+      <table class="fill-table">
+        <tr><th>对比维度</th><th>ArchiMate</th><th>UML</th></tr>
+        <tr><td>定位</td><td><input type="text" id="arc_4" data-key="arc_4" placeholder="什么级别的建模"></td><td>软件详细设计（类、序列图）</td></tr>
+        <tr><td>范围</td><td>业务+应用+技术三层</td><td><input type="text" id="arc_5" data-key="arc_5" placeholder="UML范围"></td></tr>
+        <tr><td>使用者</td><td>企业架构师、CIO</td><td><input type="text" id="arc_6" data-key="arc_6" placeholder="UML使用者"></td></tr>
+        <tr><td>粒度</td><td>宏观（全局视角）</td><td><input type="text" id="arc_7" data-key="arc_7" placeholder="UML粒度"></td></tr>
+      </table>
+    </div>
+    <div class="save-indicator" id="saveInd2"></div>
+  </div>
+
+  <!-- ==================== Part C：综合辨析 ==================== -->
+  <div class="q-card">
+    <h3>Part C：2026新增考点辨析 <span class="q-tag tag-drill">概念辨析</span></h3>
+
+    <div class="question-block">
+      <div class="q-title">【问题1】（5分）零信任架构（ZTA）填空</div>
+      <table class="fill-table">
+        <tr><th>维度</th><th>传统边界防御</th><th>零信任架构（ZTA）</th></tr>
+        <tr><td>信任模型</td><td>进入内网即信任</td><td><input type="text" id="zta_1" data-key="zta_1" placeholder="ZTA的信任原则"></td></tr>
+        <tr><td>核心原则</td><td>边界防护（防火墙）</td><td><input type="text" id="zta_2" data-key="zta_2" placeholder="ZTA核心原则"></td></tr>
+        <tr><td>权限控制</td><td>基于网络位置</td><td><input type="text" id="zta_3" data-key="zta_3" placeholder="ZTA基于什么"></td></tr>
+        <tr><td>网络分段</td><td>大区域划分</td><td><input type="text" id="zta_4" data-key="zta_4" placeholder="ZTA怎么分段"></td></tr>
+        <tr><td>验证频率</td><td>一次认证</td><td><input type="text" id="zta_5" data-key="zta_5" placeholder="ZTA怎么验证"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【问题2】（5分）概念辨析连线题</div>
+      <div class="q-hint">请将左侧概念与右侧描述对应（填字母）。</div>
+      <table class="fill-table">
+        <tr><th>概念</th><th>答案</th><th>描述</th></tr>
+        <tr><td>Transformer</td><td><input type="text" id="match_1" data-key="match_1" placeholder="A/B/C/D/E"></td><td rowspan="5" style="font-size:0.85rem; line-height:2.2;">A. 机器学习的DevOps，管理模型全生命周期<br>B. AI推理下沉到数据源附近，降低延迟<br>C. 基于注意力机制的神经网络架构，大模型基础<br>D. 以身份为中心，每次访问都需认证<br>E. 从不信任，始终验证</td></tr>
+        <tr><td>边缘计算</td><td><input type="text" id="match_2" data-key="match_2" placeholder="A/B/C/D/E"></td></tr>
+        <tr><td>MLOps</td><td><input type="text" id="match_3" data-key="match_3" placeholder="A/B/C/D/E"></td></tr>
+        <tr><td>零信任</td><td><input type="text" id="match_4" data-key="match_4" placeholder="A/B/C/D/E"></td></tr>
+        <tr><td>微分段</td><td><input type="text" id="match_5" data-key="match_5" placeholder="A/B/C/D/E"></td></tr>
+      </table>
+    </div>
+    <div class="save-indicator" id="saveInd3"></div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="bottom-bar">
+    <button class="btn btn-primary" onclick="generateReport()" style="padding:12px 36px; font-size:1rem;">生成答题报告（复制给教练）</button>
+  </div>
+
+  <div class="report-section" id="reportSection">
+    <h2>答题报告</h2>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:10px;">请全选复制下方内容，粘贴给教练即可</p>
+    <textarea class="report-text" id="reportText" readonly></textarea>
+    <div style="margin-top:10px;"><button class="btn btn-primary" onclick="copyReport()">一键复制</button></div>
+  </div>
+</div>
+
+<script>
+const TEXT_PREFIX = 'drill3_';
+
+function restoreState() {
+  document.querySelectorAll('input[data-key]').forEach(inp => {
+    const s = localStorage.getItem(TEXT_PREFIX + inp.dataset.key);
+    if (s) inp.value = s;
+  });
+  document.querySelectorAll('textarea[data-key]').forEach(ta => {
+    const s = localStorage.getItem(TEXT_PREFIX + ta.dataset.key);
+    if (s) ta.value = s;
+  });
+}
+
+let saveTimer = null;
+document.addEventListener('input', function(e) {
+  if (e.target.matches('input[data-key],textarea[data-key]')) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => { localStorage.setItem(TEXT_PREFIX + e.target.dataset.key, e.target.value); }, 800);
+  }
+});
+
+function generateReport() {
+  let report = '=== 专项练习3：AI架构+边缘计算+2026新增 答题报告 ===\n\n';
+  const allIds = document.querySelectorAll('input[data-key]');
+  allIds.forEach(el => {
+    report += `${el.dataset.key}：${el.value.trim() || '（未填）'}\n`;
+  });
+  document.getElementById('reportText').value = report;
+  document.getElementById('reportSection').classList.add('show');
+  document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});
+}
+
+function copyReport() {
+  const ta = document.getElementById('reportText');
+  ta.select(); document.execCommand('copy'); alert('已复制到剪贴板');
+}
+
+restoreState();
+</script>
+</body>
+</html>

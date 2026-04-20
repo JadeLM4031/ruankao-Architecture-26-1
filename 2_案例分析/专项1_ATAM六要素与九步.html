@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专项练习1：ATAM六要素与九步</title>
+<style>
+:root { --bg:#f5f6fa; --card:#ffffff; --border:#e0e3eb; --text:#1e2235; --muted:#6b7194; --accent:#4361ee; --accent2:#3a56d4; --accent-light:#eef1ff; --correct:#16a34a; --correct-bg:#dcfce7; --warn:#f59e0b; --warn-bg:#fef3c7; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.7; padding:20px; }
+.container { max-width:920px; margin:0 auto; }
+h1 { text-align:center; font-size:1.5rem; margin-bottom:6px; }
+.subtitle { text-align:center; color:var(--muted); margin-bottom:10px; font-size:0.9rem; }
+.exam-info { background:var(--warn-bg); border:1px solid #fde68a; border-radius:10px; padding:14px 20px; margin-bottom:24px; font-size:0.88rem; line-height:1.8; }
+.exam-info strong { color:#92400e; }
+.q-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px 28px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.q-card h3 { color:var(--accent); font-size:1.05rem; margin-bottom:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.q-card h3 .q-tag { display:inline-block; font-size:0.7rem; padding:2px 10px; border-radius:20px; font-weight:600; }
+.tag-drill { background:#fef3c7; color:#92400e; }
+.bg-material { background:#f8f9ff; border:1px solid #e0e3eb; border-radius:8px; padding:16px 18px; margin-bottom:18px; font-size:0.9rem; line-height:1.9; }
+.bg-material strong { color:var(--accent2); }
+.question-block { margin-bottom:18px; padding:14px 16px; background:#fafbff; border-radius:8px; border-left:3px solid var(--accent); }
+.question-block .q-title { font-weight:600; font-size:0.92rem; margin-bottom:10px; color:var(--text); }
+.question-block .q-hint { font-size:0.8rem; color:var(--muted); margin-bottom:8px; }
+.fill-table { width:100%; border-collapse:collapse; margin-bottom:10px; font-size:0.88rem; }
+.fill-table th { background:var(--accent-light); padding:8px 12px; text-align:left; font-size:0.82rem; color:var(--accent); border:1px solid var(--border); }
+.fill-table td { padding:6px 12px; border:1px solid var(--border); }
+.fill-table input { border:none; border-bottom:2px solid var(--accent); background:transparent; width:100%; padding:4px 2px; font-size:0.88rem; font-family:inherit; outline:none; }
+.fill-table input:focus { border-bottom-color:var(--accent2); }
+.answer-area textarea { width:100%; min-height:140px; background:#fafbff; border:1px solid var(--border); border-radius:8px; padding:12px 16px; font-size:0.9rem; font-family:inherit; line-height:1.7; resize:vertical; transition:border-color 0.2s; }
+.answer-area textarea:focus { outline:none; border-color:var(--accent); background:#fff; }
+.save-indicator { font-size:0.78rem; color:var(--muted); margin-top:4px; min-height:18px; }
+.save-indicator.saved { color:var(--correct); }
+.btn { padding:8px 20px; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer; border:none; transition:all 0.2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); }
+.bottom-bar { text-align:center; margin:30px 0; }
+.report-section { display:none; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-top:20px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+.report-section.show { display:block; }
+.report-section h2 { font-size:1.2rem; margin-bottom:12px; }
+.report-text { width:100%; min-height:250px; background:#f8f9fa; border:1px solid var(--border); border-radius:8px; padding:12px; font-size:0.85rem; font-family:"Consolas","Courier New",monospace; line-height:1.5; resize:vertical; }
+.scenario-box { background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:14px 16px; margin-bottom:14px; font-size:0.88rem; line-height:1.9; }
+.scenario-box .s-label { font-weight:700; color:var(--accent); margin-bottom:6px; }
+@media (max-width:600px) { body{padding:12px;} .q-card{padding:16px;} .bg-material{padding:12px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>专项练习1：ATAM六要素与九步</h1>
+  <p class="subtitle">针对性补强 | 场景六要素对应 + ATAM评估步骤</p>
+
+  <div class="exam-info">
+    <strong>训练目标：</strong>场景六要素你连续3套丢分，这套专项集中攻克。<br>
+    <strong>六要素口诀：</strong>谁（刺激源）→ 做了什么（刺激）→ 在什么情况下（环境）→ 对什么（制品）→ 系统怎么处理（响应）→ 处理得怎么样（响应度量）
+  </div>
+
+  <!-- ==================== Part A：场景六要素填空 ==================== -->
+  <div class="q-card">
+    <h3>Part A：场景六要素对应训练 <span class="q-tag tag-drill">反复练</span></h3>
+
+    <div class="bg-material">
+      <strong>【六要素定义（背下来）】</strong><br>
+      ① <strong>刺激源（Source）</strong>：谁发起的？→ 人、外部系统、时间<br>
+      ② <strong>刺激（Stimulus）</strong>：做了什么？→ 具体的动作/事件<br>
+      ③ <strong>环境（Environment）</strong>：在什么情况下？→ 系统当前运行状态<br>
+      ④ <strong>制品（Artifact）</strong>：对什么东西？→ 被影响的系统模块/资源<br>
+      ⑤ <strong>响应（Response）</strong>：系统怎么处理？→ 系统采取的行动<br>
+      ⑥ <strong>响应度量（Response Measure）</strong>：处理得怎么样？→ 可量化的指标
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【场景1】（必练）电商系统：订单创建响应时间<200ms</div>
+      <div class="scenario-box">
+        <div class="s-label">场景描述：</div>
+        用户在电商网站提交订单后，系统应在200ms内完成订单创建并返回确认结果。
+      </div>
+      <table class="fill-table">
+        <tr><th>要素</th><th>填空</th></tr>
+        <tr><td>刺激源</td><td><input type="text" id="s1_src" data-key="s1_src" placeholder="谁发起的"></td></tr>
+        <tr><td>刺激</td><td><input type="text" id="s1_stm" data-key="s1_stm" placeholder="做了什么"></td></tr>
+        <tr><td>环境</td><td><input type="text" id="s1_env" data-key="s1_env" placeholder="在什么情况下"></td></tr>
+        <tr><td>制品</td><td><input type="text" id="s1_art" data-key="s1_art" placeholder="对什么东西"></td></tr>
+        <tr><td>响应</td><td><input type="text" id="s1_rsp" data-key="s1_rsp" placeholder="系统怎么处理"></td></tr>
+        <tr><td>响应度量</td><td><input type="text" id="s1_mes" data-key="s1_mes" placeholder="处理得怎么样"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【场景2】银行系统：异常交易100ms内触发风控告警</div>
+      <div class="scenario-box">
+        <div class="s-label">场景描述：</div>
+        当系统检测到异常交易（如短时间内大额转账）时，应在100ms内触发风控告警并冻结交易。
+      </div>
+      <table class="fill-table">
+        <tr><th>要素</th><th>填空</th></tr>
+        <tr><td>刺激源</td><td><input type="text" id="s2_src" data-key="s2_src" placeholder="谁发起的"></td></tr>
+        <tr><td>刺激</td><td>发起异常大额转账请求</td></tr>
+        <tr><td>环境</td><td><input type="text" id="s2_env" data-key="s2_env" placeholder="在什么情况下"></td></tr>
+        <tr><td>制品</td><td><input type="text" id="s2_art" data-key="s2_art" placeholder="对什么东西"></td></tr>
+        <tr><td>响应</td><td><input type="text" id="s2_rsp" data-key="s2_rsp" placeholder="系统怎么处理"></td></tr>
+        <tr><td>响应度量</td><td><input type="text" id="s2_mes" data-key="s2_mes" placeholder="处理得怎么样"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【场景3】医疗系统：患者数据泄露后2小时内完成追溯</div>
+      <div class="scenario-box">
+        <div class="s-label">场景描述：</div>
+        当系统检测到患者隐私数据被未授权访问时，应在2小时内完成泄露追溯、锁定泄露源并通知管理员。
+      </div>
+      <table class="fill-table">
+        <tr><th>要素</th><th>填空</th></tr>
+        <tr><td>刺激源</td><td><input type="text" id="s3_src" data-key="s3_src" placeholder="谁发起的"></td></tr>
+        <tr><td>刺激</td><td><input type="text" id="s3_stm" data-key="s3_stm" placeholder="做了什么"></td></tr>
+        <tr><td>环境</td><td><input type="text" id="s3_env" data-key="s3_env" placeholder="在什么情况下"></td></tr>
+        <tr><td>制品</td><td>患者隐私数据/数据库</td></tr>
+        <tr><td>响应</td><td><input type="text" id="s3_rsp" data-key="s3_rsp" placeholder="系统怎么处理"></td></tr>
+        <tr><td>响应度量</td><td><input type="text" id="s3_mes" data-key="s3_mes" placeholder="处理得怎么样"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【场景4】物流系统：新增配送方式不影响现有模块</div>
+      <div class="scenario-box">
+        <div class="s-label">场景描述：</div>
+        物流系统需要支持新增配送方式（如无人机配送），新增配送模块时不应影响现有的快递、自提等模块的正常运行。开发周期应不超过2周。
+      </div>
+      <table class="fill-table">
+        <tr><th>要素</th><th>填空</th></tr>
+        <tr><td>刺激源</td><td><input type="text" id="s4_src" data-key="s4_src" placeholder="谁发起的"></td></tr>
+        <tr><td>刺激</td><td><input type="text" id="s4_stm" data-key="s4_stm" placeholder="做了什么"></td></tr>
+        <tr><td>环境</td><td>系统正常运行状态</td></tr>
+        <tr><td>制品</td><td><input type="text" id="s4_art" data-key="s4_art" placeholder="对什么东西"></td></tr>
+        <tr><td>响应</td><td><input type="text" id="s4_rsp" data-key="s4_rsp" placeholder="系统怎么处理"></td></tr>
+        <tr><td>响应度量</td><td><input type="text" id="s4_mes" data-key="s4_mes" placeholder="处理得怎么样"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【场景5】在线考试系统：考试期间系统故障后30秒内自动切换备用</div>
+      <div class="scenario-box">
+        <div class="s-label">场景描述：</div>
+        考试进行中主服务器发生故障时，系统应在30秒内自动切换到备用服务器，考生答题数据不丢失，考生无感知。
+      </div>
+      <table class="fill-table">
+        <tr><th>要素</th><th>填空</th></tr>
+        <tr><td>刺激源</td><td><input type="text" id="s5_src" data-key="s5_src" placeholder="谁/什么发起"></td></tr>
+        <tr><td>刺激</td><td><input type="text" id="s5_stm" data-key="s5_stm" placeholder="做了什么/发生了什么"></td></tr>
+        <tr><td>环境</td><td><input type="text" id="s5_env" data-key="s5_env" placeholder="在什么情况下"></td></tr>
+        <tr><td>制品</td><td><input type="text" id="s5_art" data-key="s5_art" placeholder="对什么东西"></td></tr>
+        <tr><td>响应</td><td><input type="text" id="s5_rsp" data-key="s5_rsp" placeholder="系统怎么处理"></td></tr>
+        <tr><td>响应度量</td><td><input type="text" id="s5_mes" data-key="s5_mes" placeholder="处理得怎么样"></td></tr>
+      </table>
+    </div>
+    <div class="save-indicator" id="saveInd1"></div>
+  </div>
+
+  <!-- ==================== Part B：ATAM九步 ==================== -->
+  <div class="q-card">
+    <h3>Part B：ATAM评估九步 <span class="q-tag tag-drill">必背</span></h3>
+
+    <div class="bg-material">
+      <strong>【ATAM九步记忆框架】</strong><br>
+      ATAM评估分为4个阶段、9个步骤。请完成填空。
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【阶段1：介绍与准备】</div>
+      <table class="fill-table">
+        <tr><th>步骤</th><th>步骤名称</th><th>核心产出</th></tr>
+        <tr><td>第1步</td><td><input type="text" id="atam_s1" data-key="atam_s1" placeholder="介绍什么"></td><td>评估方法和流程说明</td></tr>
+        <tr><td>第2步</td><td><input type="text" id="atam_s2" data-key="atam_s2" placeholder="描述什么"></td><td>业务目标、约束条件、驱动因素</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【阶段2：评估与分析】</div>
+      <table class="fill-table">
+        <tr><th>步骤</th><th>步骤名称</th><th>核心产出</th></tr>
+        <tr><td>第3步</td><td><input type="text" id="atam_s3" data-key="atam_s3" placeholder="描述什么"></td><td>架构方案文档</td></tr>
+        <tr><td>第4步</td><td><input type="text" id="atam_s4" data-key="atam_s4" placeholder="分析什么"></td><td>架构方法/决策清单</td></tr>
+        <tr><td>第5步</td><td><input type="text" id="atam_s5" data-key="atam_s5" placeholder="生成什么"></td><td>质量属性效用树</td></tr>
+        <tr><td>第6步</td><td>分析架构方法</td><td><input type="text" id="atam_s6" data-key="atam_s6" placeholder="产出什么"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【阶段3：测试与验证】</div>
+      <table class="fill-table">
+        <tr><th>步骤</th><th>步骤名称</th><th>核心产出</th></tr>
+        <tr><td>第7步</td><td><input type="text" id="atam_s7" data-key="atam_s7" placeholder="做什么"></td><td>场景优先级排序</td></tr>
+        <tr><td>第8步</td><td>再次分析架构方法</td><td><input type="text" id="atam_s8" data-key="atam_s8" placeholder="针对什么分析"></td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【阶段4：报告】</div>
+      <table class="fill-table">
+        <tr><th>步骤</th><th>步骤名称</th><th>核心产出</th></tr>
+        <tr><td>第9步</td><td><input type="text" id="atam_s9" data-key="atam_s9" placeholder="输出什么"></td><td>评估报告（含敏感点、权衡点、风险、非风险）</td></tr>
+      </table>
+    </div>
+
+    <div class="question-block">
+      <div class="q-title">【简答题】ATAM评估的四个核心产出是什么？请分别解释。</div>
+      <div class="answer-area">
+        <textarea id="atam_q" data-key="atam_q" oninput="autoSave(this)" placeholder="敏感点、权衡点、风险、非风险分别是什么？"></textarea>
+      </div>
+    </div>
+    <div class="save-indicator" id="saveInd2"></div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="bottom-bar">
+    <button class="btn btn-primary" onclick="generateReport()" style="padding:12px 36px; font-size:1rem;">生成答题报告（复制给教练）</button>
+  </div>
+
+  <div class="report-section" id="reportSection">
+    <h2>答题报告</h2>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:10px;">请全选复制下方内容，粘贴给教练即可</p>
+    <textarea class="report-text" id="reportText" readonly></textarea>
+    <div style="margin-top:10px;"><button class="btn btn-primary" onclick="copyReport()">一键复制</button></div>
+  </div>
+</div>
+
+<script>
+const TEXT_PREFIX = 'drill1_';
+
+function restoreState() {
+  document.querySelectorAll('input[data-key]').forEach(inp => {
+    const s = localStorage.getItem(TEXT_PREFIX + inp.dataset.key);
+    if (s) inp.value = s;
+  });
+  document.querySelectorAll('textarea[data-key]').forEach(ta => {
+    const s = localStorage.getItem(TEXT_PREFIX + ta.dataset.key);
+    if (s) ta.value = s;
+  });
+}
+
+let saveTimer = null;
+function autoSave(el) {
+  clearTimeout(saveTimer);
+  const ind = el.closest('.q-card').querySelector('.save-indicator');
+  if (ind) { ind.textContent = '正在输入...'; ind.classList.remove('saved'); }
+  saveTimer = setTimeout(() => {
+    localStorage.setItem(TEXT_PREFIX + el.dataset.key, el.value);
+    if (ind) { ind.textContent = '✓ 已暂存 ' + new Date().toLocaleTimeString(); ind.classList.add('saved'); }
+  }, 800);
+}
+
+document.addEventListener('input', function(e) {
+  if (e.target.matches('input[data-key]')) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => { localStorage.setItem(TEXT_PREFIX + e.target.dataset.key, e.target.value); }, 800);
+  }
+});
+
+function generateReport() {
+  let report = '=== 专项练习1：ATAM六要素与九步 答题报告 ===\n\n';
+  report += '=== Part A：场景六要素 ===\n\n';
+  for (let i = 1; i <= 5; i++) {
+    report += `【场景${i}】\n`;
+    ['src','stm','env','art','rsp','mes'].forEach(key => {
+      const el = document.getElementById(`s${i}_${key}`);
+      const label = {src:'刺激源',stm:'刺激',env:'环境',art:'制品',rsp:'响应',mes:'响应度量'}[key];
+      const val = el ? (el.value.trim() || el.closest('td')?.textContent?.trim() || '（未填）') : '（未填）';
+      report += `${label}：${el && el.tagName === 'INPUT' ? (el.value.trim() || '（未填）') : val}\n`;
+    });
+    report += '\n';
+  }
+  report += '=== Part B：ATAM九步 ===\n\n';
+  for (let i = 1; i <= 9; i++) {
+    const el = document.getElementById(`atam_s${i}`);
+    report += `第${i}步：${el ? (el.value.trim() || '（未填）') : '（未填）'}\n`;
+  }
+  report += '\n';
+  const ta = document.getElementById('atam_q');
+  report += `【简答题】\n${ta ? (ta.value.trim() || '（未作答）') : '（未作答）'}\n`;
+  document.getElementById('reportText').value = report;
+  document.getElementById('reportSection').classList.add('show');
+  document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});
+}
+
+function copyReport() {
+  const ta = document.getElementById('reportText');
+  ta.select(); document.execCommand('copy'); alert('已复制到剪贴板');
+}
+
+restoreState();
+</script>
+</body>
+</html>
