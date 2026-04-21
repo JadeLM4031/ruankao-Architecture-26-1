@@ -6,199 +6,225 @@
 <title>系统架构设计师 - 综合知识全真模拟（75题）</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Microsoft YaHei','PingFang SC',sans-serif;background:#f0f2f5;color:#333;line-height:1.6}
-.header{background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;padding:20px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.header h1{font-size:1.4em;margin-bottom:4px}
-.header .timer{font-size:1.2em;font-weight:bold;margin-top:6px}
-.header .stats{font-size:.85em;margin-top:4px;opacity:.9}
-.container{max-width:900px;margin:0 auto;padding:15px}
-.progress-bar{background:#fff;border-radius:10px;padding:12px 16px;margin-bottom:15px;box-shadow:0 1px 4px rgba(0,0,0,.08);display:flex;align-items:center;gap:12px}
-.progress-bar .bar{flex:1;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden}
-.progress-bar .fill{height:100%;background:linear-gradient(90deg,#1a73e8,#4fc3f7);border-radius:4px;transition:width .3s}
-.progress-bar .text{font-size:.85em;white-space:nowrap;color:#666}
-.question-card{background:#fff;border-radius:10px;padding:20px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);transition:all .2s}
-.question-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.question-card.answered{border-left:4px solid #1a73e8}
-.question-card .q-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.q-num{background:#1a73e8;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.8em;font-weight:bold;flex-shrink:0}
-.q-tag{font-size:.7em;padding:2px 8px;border-radius:10px;color:#fff;white-space:nowrap}
-.tag-arch{background:#e53935}.tag-se{background:#43a047}.tag-os{background:#fb8c00}.tag-db{background:#8e24aa}
-.tag-net{background:#00897b}.tag-sec{background:#546e7a}.tag-reliability{background:#6d4c41}.tag-math{background:#3949ab}
-.tag-ip{background:#c62828}.tag-new{background:#00838f}.tag-en{background:#4527a0}
-.q-text{font-size:.92em;margin-bottom:12px;white-space:pre-wrap}
-.options{display:flex;flex-direction:column;gap:6px}
-.option{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;cursor:pointer;border:1.5px solid #e0e0e0;transition:all .15s;font-size:.88em}
-.option:hover{background:#e3f2fd;border-color:#90caf9}
-.option.selected{background:#e3f2fd;border-color:#1a73e8;font-weight:500}
-.option .opt-letter{font-weight:bold;min-width:18px;color:#1a73e8}
-.option .opt-text{flex:1}
-.nav-bar{background:#fff;border-radius:10px;padding:12px;margin-bottom:15px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.nav-bar .section-title{font-size:.85em;font-weight:bold;color:#1a73e8;margin:8px 0 4px;display:flex;align-items:center;gap:4px}
-.nav-bar .section-title:first-child{margin-top:0}
-.nav-grid{display:flex;flex-wrap:wrap;gap:4px}
-.nav-btn{width:32px;height:28px;border:1px solid #ddd;border-radius:4px;background:#fff;cursor:pointer;font-size:.75em;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.nav-btn:hover{background:#e3f2fd}
-.nav-btn.done{background:#1a73e8;color:#fff;border-color:#1a73e8}
-.submit-area{text-align:center;padding:20px}
-.submit-btn{background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;border:none;padding:14px 60px;border-radius:25px;font-size:1.1em;cursor:pointer;box-shadow:0 3px 10px rgba(26,115,232,.3);transition:all .2s}
-.submit-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(26,115,232,.4)}
-.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-/* Report styles */
-.report{display:none}
-.report .score-box{background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-bottom:15px}
-.report .score-box .score{font-size:3em;font-weight:bold}
-.report .score-box .label{font-size:.9em;opacity:.9}
-.report .summary{background:#fff;border-radius:10px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.report .summary h3{margin-bottom:8px;color:#1a73e8;font-size:.95em}
-.report .summary table{width:100%;border-collapse:collapse;font-size:.85em}
-.report .summary th,.report .summary td{padding:6px 8px;border-bottom:1px solid #eee;text-align:center}
-.report .summary th{background:#f5f5f5;font-weight:600}
-.review-card{background:#fff;border-radius:10px;padding:16px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-left:4px solid #4caf50}
+body{font-family:'SimSun','Microsoft YaHei',serif;background:#e8edf3;color:#333;line-height:1.8;font-size:14px}
+/* === TOP BAR === */
+.top-bar{background:#3a7bd5;color:#fff;padding:0 16px;height:42px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.top-bar .exam-title{font-size:14px;font-weight:bold}
+.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:12px}
+.top-bar .timer{font-size:15px;font-weight:bold;font-variant-numeric:tabular-nums;background:rgba(255,255,255,.18);padding:3px 12px;border-radius:3px}
+.top-bar .stats{opacity:.9}
+.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:4px 18px;border-radius:3px;font-size:12px;font-weight:bold;cursor:pointer}
+.top-bar .submit-top:hover{background:#f0f0f0}
+/* === MAIN LAYOUT === */
+.main-wrap{display:flex;height:calc(100vh - 42px);overflow:hidden}
+/* === LEFT PANEL === */
+.left-panel{width:220px;min-width:220px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column;overflow:hidden}
+.left-panel .panel-title{padding:10px 12px 6px;font-size:13px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.answer-card-area{flex:1;overflow-y:auto;padding:6px 8px}
+.answer-card-area::-webkit-scrollbar{width:3px}
+.answer-card-area::-webkit-scrollbar-thumb{background:#ccc;border-radius:2px}
+.ac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.ac-btn{aspect-ratio:1;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
+.ac-btn:hover{background:#e0ecfa}
+.ac-btn.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5;font-weight:bold}
+.ac-btn.done{background:#5eba5e;border-color:#4da64d;color:#fff}
+.ac-btn.done.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
+/* bottom info */
+.left-bottom{padding:8px 12px;border-top:1px solid #eee;font-size:11px;color:#888;line-height:1.5}
+.left-bottom span{display:inline-block;margin-right:8px}
+.lb-square{width:10px;height:10px;border-radius:1px;display:inline-block;vertical-align:middle;margin-right:3px}
+/* === RIGHT PANEL === */
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:16px 24px}
+.right-panel::-webkit-scrollbar{width:6px}
+.right-panel::-webkit-scrollbar-thumb{background:#c5cdd8;border-radius:3px}
+/* question display */
+.q-display{max-width:800px;margin:0 auto}
+.q-card{background:#fff;padding:20px 24px;margin-bottom:12px;border:1px solid #dde3eb}
+.q-card .q-title{font-size:14px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
+.q-card .q-text{font-size:14px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
+.q-options{display:flex;flex-direction:column;gap:6px}
+.q-opt{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;cursor:pointer;font-size:14px;line-height:1.7;transition:all .1s}
+.q-opt:hover{background:#f5f8fc}
+.q-opt.selected{background:#e8f0fe}
+.q-opt .opt-radio{width:15px;height:15px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative;transition:all .1s}
+.q-opt.selected .opt-radio{border-color:#3a7bd5}
+.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2px;left:2px;width:8px;height:8px;background:#3a7bd5;border-radius:50%}
+.q-opt .opt-content{flex:1}
+/* nav arrows */
+.q-nav-arrows{display:flex;justify-content:space-between;max-width:800px;margin:0 auto 16px;padding:0 4px}
+.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:6px 20px;cursor:pointer;font-size:12px;color:#555}
+.q-nav-btn:hover{background:#e0ecfa;border-color:#90b8e0;color:#3a7bd5}
+.q-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+/* === REPORT === */
+.report-wrap{display:none;flex:1;overflow-y:auto;background:#f5f7fa;padding:20px 30px}
+.report-wrap .report-inner{max-width:800px;margin:0 auto}
+.score-box{background:linear-gradient(135deg,#2b6cb0,#3182ce);color:#fff;border-radius:8px;padding:28px;text-align:center;margin-bottom:16px}
+.score-box .score{font-size:3.2em;font-weight:bold}
+.score-box .label{font-size:.9em;opacity:.9;margin-top:4px}
+.summary-box{background:#fff;border-radius:6px;padding:16px;margin-bottom:12px;border:1px solid #e2e8f0}
+.summary-box h3{margin-bottom:10px;color:#2b6cb0;font-size:14px;border-left:3px solid #2b6cb0;padding-left:8px}
+.summary-box table{width:100%;border-collapse:collapse;font-size:13px}
+.summary-box th,.summary-box td{padding:7px 10px;border-bottom:1px solid #eee;text-align:center}
+.summary-box th{background:#f5f7fa;font-weight:600;color:#555}
+.review-card{background:#fff;border-radius:6px;padding:16px 20px;margin-bottom:10px;border:1px solid #e2e8f0;border-left:4px solid #4caf50}
 .review-card.wrong{border-left-color:#e53935}
-.review-card .q-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.review-card .q-text{font-size:.88em;margin-bottom:8px;white-space:pre-wrap}
-.review-card .your-answer{font-size:.82em;color:#e53935;margin-bottom:4px}
-.review-card .correct-answer{font-size:.82em;color:#4caf50;margin-bottom:4px}
-.review-card .analysis{font-size:.82em;color:#666;background:#f5f5f5;padding:8px;border-radius:6px;margin-top:6px;white-space:pre-wrap}
-@media(max-width:600px){.container{padding:8px}.question-card{padding:14px}.header h1{font-size:1.1em}}
+.review-card .r-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.review-card .r-num{background:#2b6cb0;color:#fff;border-radius:3px;padding:1px 8px;font-size:12px}
+.review-card .r-tag{font-size:11px;padding:2px 8px;border-radius:2px;color:#fff}
+.review-card .r-text{font-size:13px;margin-bottom:8px;white-space:pre-wrap;line-height:1.7}
+.review-card .r-your{font-size:12px;color:#e53935;margin-bottom:3px}
+.review-card .r-correct{font-size:12px;color:#4caf50;margin-bottom:3px}
+.review-card .r-analysis{font-size:12px;color:#666;background:#f5f7fa;padding:10px;border-radius:4px;margin-top:6px;white-space:pre-wrap;line-height:1.7}
+/* responsive */
+@media(max-width:768px){
+  .left-panel{display:none}
+  .right-panel{padding:12px}
+  .q-card{padding:16px}
+}
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>系统架构设计师 · 综合知识全真模拟</h1>
-  <div class="timer" id="timer">150:00</div>
-  <div class="stats" id="stats">已答 0/75 题</div>
-</div>
-<div class="container" id="quiz-container">
-  <div class="progress-bar">
-    <div class="bar"><div class="fill" id="progress-fill" style="width:0%"></div></div>
-    <div class="text" id="progress-text">0%</div>
-  </div>
-  <div class="nav-bar" id="nav-bar"></div>
-  <div id="questions-area"></div>
-  <div class="submit-area">
-    <button class="submit-btn" id="submit-btn" onclick="submitExam()">交卷</button>
+<div class="top-bar">
+  <div class="exam-title">系统架构设计师 · 综合知识全真模拟</div>
+  <div class="right-info">
+    <div class="stats" id="stats">已答 0/75</div>
+    <div class="timer" id="timer">150:00</div>
+    <button class="submit-top" onclick="confirmSubmit()">交卷</button>
   </div>
 </div>
-<div class="container report" id="report"></div>
+<div class="main-wrap">
+  <div class="left-panel">
+    <div class="panel-title">答题卡（共75题）</div>
+    <div class="answer-card-area" id="answer-card"></div>
+    <div class="left-bottom">
+      <span><i class="lb-square" style="background:#fff;border:1px solid #ccc"></i>未答</span>
+      <span><i class="lb-square" style="background:#5eba5e"></i>已答</span>
+      <span><i class="lb-square" style="background:#3a7bd5"></i>当前</span>
+    </div>
+  </div>
+  <div class="right-panel" id="right-panel">
+    <div class="q-display" id="q-display"></div>
+    <div class="q-nav-arrows">
+      <button class="q-nav-btn" id="prev-btn" onclick="prevQ()">◀ 上一题</button>
+      <button class="q-nav-btn" id="next-btn" onclick="nextQ()">下一题 ▶</button>
+    </div>
+  </div>
+</div>
+<div class="report-wrap" id="report-wrap">
+  <div class="report-inner" id="report-inner"></div>
+</div>
 
 <script>
 // ========== QUESTION DATA ==========
-const questions = [];
-
-// --- Part 1: Q1-18 Architecture Design (0-based answer index) ---
 const part1 = [
-{id:1,tag:"架构风格",tagClass:"tag-arch",text:"某编译器的设计中，源代码经过词法分析生成Token流，Token流传给语法分析器生成语法树，语法树再传给语义分析器，最终生成中间代码。整个过程中数据在各处理阶段之间单向流动，每个阶段只接收上一阶段的输出作为输入。该编译器最符合哪种架构风格？",options:["A. 主程序-子程序风格","B. 管道-过滤器风格","C. 层次结构风格","D. 黑板系统风格"],answer:1,analysis:"正确答案：B\n\n管道-过滤器风格的核心特征：\n- 数据在构件之间单向流动（管道）\n- 每个构件（过滤器）独立处理输入、产生输出\n- 构件之间不共享状态，仅通过数据流连接\n\n编译器的经典流水线：词法分析→语法分析→语义分析→代码生成，每个阶段独立处理，输入输出是数据流，完美匹配管道-过滤器模型。"},
-{id:2,tag:"架构风格",tagClass:"tag-arch",text:"某电商平台的促销规则引擎需要在运行时动态加载和执行不同的促销规则（如满减、打折、赠品等），运营人员随时可能添加新的规则脚本。系统需要在不停机的情况下解释执行这些规则。该规则引擎最适合采用哪种架构风格？",options:["A. 管道-过滤器风格","B. 解释器风格","C. 事件驱动风格","D. 过程控制风格"],answer:1,analysis:"正确答案：B\n\n解释器风格的核心特征：\n- 提供一个虚拟机，可以解释执行自定义的语言或规则\n- 程序可以在运行时改变行为（动态加载规则/脚本）\n- 适用于需要高度灵活性和可定制性的场景\n\n关键词识别：\n- '动态加载'+'执行规则脚本' → 需要解释执行能力\n- '不停机'添加新规则 → 运行时灵活性\n- 规则引擎 = 解释器的典型应用场景"},
-{id:3,tag:"架构风格",tagClass:"tag-arch",text:"某智能家居控制系统中，温度传感器检测到室温超过30度后，系统自动触发空调开启；空调运行后，系统发出通知到用户手机APP。各设备模块之间通过消息进行通信，彼此不知道对方的存在。该系统最符合哪种架构风格？",options:["A. 管道-过滤器风格","B. 层次结构风格","C. 进程间通信风格","D. 事件驱动风格（隐式调用）"],answer:3,analysis:"正确答案：D\n\n事件驱动风格（隐式调用）的核心特征：\n- 构件不直接调用彼此，而是通过事件/消息间接通信\n- 事件的发送者不知道谁会接收和处理该事件\n- 构件之间高度解耦\n- 典型模式：发布-订阅（Pub-Sub）\n\n关键词识别：\n- '传感器检测→自动触发空调' → 事件触发响应\n- '发出通知到APP' → 事件广播\n- '彼此不知道对方的存在' → 隐式调用（解耦）"},
-{id:4,tag:"架构风格",tagClass:"tag-arch",text:"某公司开发一个企业级ERP系统，将系统分为基础设施层、数据访问层、业务逻辑层和表示层。每一层只能调用其下一层提供的接口，不能跨层调用，也不能调用上层。该ERP系统最符合哪种架构风格？",options:["A. 管道-过滤器风格","B. 层次结构风格","C. 客户端-服务器风格","D. 独立构件风格"],answer:1,analysis:"正确答案：B\n\n层次结构风格的核心特征：\n- 系统按层次组织，每层为其上层提供服务\n- 每层只能调用其直接下层的接口\n- 层与层之间通过接口交互，隐藏内部实现\n\n关键词识别：\n- '分为基础设施层、数据访问层、业务逻辑层、表示层' → 经典分层\n- '每一层只能调用下一层接口' → 严格的层次约束\n- '不能跨层调用' → 层次隔离"},
-{id:5,tag:"质量属性",tagClass:"tag-arch",text:"某银行核心系统需要在每秒处理10万笔交易，且任何一笔交易的响应时间不超过200毫秒。为此，架构师引入了内存数据库缓存热点数据，并采用连接池管理数据库连接。这些措施主要为了提升系统的哪个质量属性？",options:["A. 可用性","B. 可修改性","C. 性能","D. 安全性"],answer:2,analysis:"正确答案：C\n\n性能（Performance）关注的核心指标：\n- 响应时间：处理单次请求所需的时间\n- 吞吐量：单位时间内处理的请求数量\n\n关键词识别：\n- '每秒处理10万笔交易' → 吞吐量要求\n- '响应时间不超过200毫秒' → 响应时间要求\n- '内存数据库缓存'+'连接池' → 典型的性能优化策略"},
-{id:6,tag:"质量属性",tagClass:"tag-arch",text:"某在线教育平台要求全年故障停机时间不超过5分钟（即年可用率99.999%）。架构师采用了双活数据中心部署，两个数据中心同时对外提供服务，任何一个数据中心故障时，另一个可以无缝接管全部流量。这一措施主要为了提升哪个质量属性？",options:["A. 性能","B. 可用性","C. 可伸缩性","D. 互操作性"],answer:1,analysis:"正确答案：B\n\n可用性（Availability）关注的核心：\n- 系统正常运行时间的比例\n- 故障发生后的恢复速度\n- 常用指标：MTBF（平均无故障时间）、MTTR（平均恢复时间）\n\n关键词识别：\n- '全年故障停机时间不超过5分钟' → 可用性指标\n- '年可用率99.999%' → 五个9的高可用\n- '双活数据中心'+'无缝接管' → 典型的可用性策略（冗余+故障转移）"},
-{id:7,tag:"质量属性",tagClass:"tag-arch",text:"某医院信息系统需要与医保系统、检验系统（LIS）、影像系统（PACS）等多个外部系统进行数据交换和业务协同。架构师在设计时采用HL7和FHIR等标准协议进行系统集成。这主要为了提升系统的哪个质量属性？",options:["A. 可修改性","B. 安全性","C. 可伸缩性","D. 互操作性"],answer:3,analysis:"正确答案：D\n\n互操作性（Interoperability）关注的核心：\n- 系统与其他系统交换数据和使用信息的能力\n- 遵循标准协议和接口规范\n- 异构系统之间的协作能力\n\n关键词识别：\n- '与医保系统、LIS、PACS等多个外部系统' → 跨系统集成\n- '数据交换和业务协同' → 互操作场景\n- '采用HL7和FHIR标准协议' → 标准化接口促进互操作"},
-{id:8,tag:"质量属性",tagClass:"tag-arch",text:"某社交平台在重大新闻事件期间，用户访问量从日常的100万骤增到3000万。架构师通过自动扩缩容机制，在负载增长时自动增加服务器实例，负载降低时自动回收资源。这主要体现了系统哪个质量属性的提升？",options:["A. 可用性","B. 可修改性","C. 可伸缩性","D. 安全性"],answer:2,analysis:"正确答案：C\n\n可伸缩性（Scalability）关注的核心：\n- 系统在负载增加时保持性能水平的能力\n- 可以通过增加资源来提升处理能力\n- 垂直伸缩（升级硬件）vs 水平伸缩（增加节点）\n\n关键词识别：\n- '100万→3000万' → 负载剧烈增长\n- '自动扩缩容' → 动态调整资源应对负载变化\n\n与可用性的区别：可用性关注'不宕机'，可伸缩性关注'扛得住'。"},
-{id:9,tag:"ATAM评估",tagClass:"tag-arch",text:"在ATAM架构评估中，评估小组分析某电商系统时发现：为了提高性能，架构师将数据库读写操作合并到同一个连接中，减少连接建立开销。但这样一来，读写操作相互阻塞，在高并发场景下可能导致整个系统卡死。在ATAM中，这一发现应被记录为：",options:["A. 敏感点","B. 权衡点","C. 风险","D. 非风险"],answer:2,analysis:"正确答案：C\n\nATAM核心概念辨析：\n\n风险（Risk）：架构决策中已经暴露的问题或隐患，可能导致不良后果。\n\n权衡点（Tradeoff）：一个架构决策同时影响多个相互矛盾的质量属性。\n\n敏感点（Sensitivity point）：一个架构决策对一个质量属性有显著影响。\n\n本题关键分析：\n- '读写操作合并'是架构决策\n- '高并发下可能导致系统卡死' → 已暴露的隐患\n- 题目重点在'卡死的隐患' → 风险\n\n记忆口诀：看到'可能导致...问题/隐患'→ 风险；看到'为了A但牺牲B'→ 权衡点。"},
-{id:10,tag:"ATAM评估",tagClass:"tag-arch",text:"某系统的ATAM评估过程中，评估小组在效用树的构建阶段，针对'数据机密性'这一质量属性场景，识别出以下发现：将数据加密算法从AES-128升级到AES-256时，系统的数据机密性评级从3级提升到5级（满分5级），同时系统的平均响应时间从50ms增加到120ms。关于加密算法的选择，以下说法正确的是：",options:["A. 加密算法强度是安全性的敏感点，加密算法选择是安全性与性能之间的权衡点","B. 加密算法强度是安全性的权衡点，加密算法选择是敏感点","C. 加密算法强度是风险，加密算法选择是非风险","D. 加密算法强度是安全性的敏感点，但不存在权衡点"],answer:0,analysis:"正确答案：A\n\n逐层分析：\n\n敏感点：加密算法强度改变 → 安全性评级从3→5（一个质量属性显著变化）→ 加密算法强度是安全性的敏感点。\n\n权衡点：选择AES-256 → 安全性↑ 但 性能↓（响应时间50ms→120ms）→ 一个决策同时影响两个矛盾属性 → 权衡点。\n\nB错误：敏感点和权衡点的概念被颠倒了。\nC错误：没有描述已暴露的问题/隐患，不构成风险。\nD错误：题目明确说了响应时间增加，存在安全性与性能的矛盾。"},
-{id:11,tag:"ATAM评估",tagClass:"tag-arch",text:"在ATAM方法的九个步骤中，评估小组首先向利益相关者介绍ATAM方法（步骤1），然后由架构师呈现架构方案（步骤3），接下来需要构建一个用于组织和驱动分析的核心工具，该工具以树状结构组织系统的质量属性目标、场景及其优先级。这个步骤是：",options:["A. 步骤2：确定商业目标","B. 步骤4：创建质量属性效用树","C. 步骤5：分析架构方法","D. 步骤6：生成质量属性效用树"],answer:1,analysis:"正确答案：B\n\nATAM九个步骤：\n1. 介绍ATAM方法\n2. 介绍商业目标\n3. 呈现架构方案\n4. 创建质量属性效用树（Utility Tree）\n5. 分析架构方法\n6. 再次分析架构方法（使用效用树中高优先级场景）\n7. 头脑风暴和优先级排序场景\n8. 呈现结果\n9. 报告跟进"},
-{id:12,tag:"ABSD方法",tagClass:"tag-arch",text:"关于ABSD（基于架构的软件设计）方法，以下说法正确的是：",options:["A. ABSD是一种自底向上的架构设计方法，从底层模块逐步向上构建架构","B. ABSD以架构风格为核心，以质量属性需求和功能需求为驱动来构建软件架构","C. ABSD只需要关注功能需求，非功能需求由后续设计阶段处理","D. ABSD是一种瀑布式开发方法，架构设计完成后不能迭代修改"],answer:1,analysis:"正确答案：B\n\nABSD方法核心特征：\n- 是一种自顶向下、递归的架构设计方法\n- 三个基础：功能分解、架构风格选择、质量属性需求\n- 以质量属性需求和功能需求为驱动\n- 架构设计是一个迭代过程，不是一次性完成"},
-{id:13,tag:"ABSD方法",tagClass:"tag-arch",text:"在ABSD方法中，架构设计师首先根据系统的质量属性需求和商业需求选择合适的架构风格，然后在此基础上进行功能分解和模块划分。当发现所选架构风格无法满足某些质量属性需求时，需要调整或混合使用其他架构风格。这一过程体现了ABSD的哪个核心思想？",options:["A. 架构文档驱动开发","B. 架构需求与架构设计的迭代螺旋","C. 测试驱动架构设计","D. 代码自动生成"],answer:1,analysis:"正确答案：B\n\nABSD的迭代螺旋思想：\n- 架构设计不是线性的，而是需求→设计→评估→调整的螺旋过程\n- 选择架构风格后，评估是否满足质量属性需求\n- 不满足时，调整或混合使用其他架构风格\n- 整个过程是迭代的，不是一次性的"},
-{id:14,tag:"4+1视图",tagClass:"tag-arch",text:"在Kruchten提出的4+1视图模型中，开发人员关注的模块划分、代码组织、类图和包图等属于哪个视图？",options:["A. 逻辑视图","B. 开发视图","C. 进程视图","D. 物理视图"],answer:1,analysis:"正确答案：B\n\n4+1视图模型：\n1. 逻辑视图：最终用户关注，功能需求，类图、状态图\n2. 开发视图：程序员关注，模块划分、代码组织，包图、组件图\n3. 进程视图：系统集成者关注，并发性、同步，活动图、序列图\n4. 物理视图：系统工程师关注，部署拓扑，部署图\n5. 场景：+1视图，用例图"},
-{id:15,tag:"4+1视图",tagClass:"tag-arch",text:"某分布式系统需要部署在多台服务器上，架构师需要规划系统的部署拓扑，包括服务器节点、网络连接、数据复制策略等。同时需要考虑系统的并发处理能力和运行时的通信机制。以上需求分别对应4+1视图模型中的哪两个视图？",options:["A. 逻辑视图和进程视图","B. 物理视图和进程视图","C. 物理视图和开发视图","D. 进程视图和逻辑视图"],answer:1,analysis:"正确答案：B\n\n部署拓扑、服务器节点、网络连接 → 物理视图（静态部署结构）\n并发处理能力、运行时通信机制 → 进程视图（动态运行时行为）"},
-{id:16,tag:"MVC/MVP/MVVM",tagClass:"tag-arch",text:"某Android应用开发团队决定将原有的MVC架构改为MVP架构。在MVP模式中，以下关于各组件职责的描述，正确的是：",options:["A. Model负责处理用户输入，View负责业务逻辑，Presenter负责数据存储","B. View负责显示和用户交互，Presenter作为中间层协调View和Model，Model负责业务逻辑和数据","C. Presenter直接操作View的UI控件，View持有Presenter的引用并直接调用其方法","D. MVP中View和Model之间可以直接通信，Presenter只负责转发"],answer:1,analysis:"正确答案：B\n\nMVP模式：\n- Model：业务逻辑和数据存取\n- View：界面显示和用户交互（被动视图）\n- Presenter：中间层，协调View和Model\n\n核心约束：View和Model不直接通信，所有交互通过Presenter中转。"},
-{id:17,tag:"MVC/MVP/MVVM",tagClass:"tag-arch",text:"某前端项目使用Vue.js框架开发单页应用。在MVVM模式中，View和ViewModel之间的数据同步机制与MVP模式相比最大的区别是：",options:["A. MVVM需要手动编写代码实现View和ViewModel的数据同步","B. MVVM通过数据绑定机制自动保持View和ViewModel的数据同步，Presenter模式中Presenter需要手动更新View","C. MVVM中ViewModel直接操作DOM元素来更新View","D. MVVM不支持双向数据绑定，只能从ViewModel到View单向同步"],answer:1,analysis:"正确答案：B\n\nMVVM vs MVP核心区别：\nMVP：Presenter通过接口手动调用View方法更新UI\nMVVM：通过数据绑定自动同步，不需要手动编写同步代码"},
-{id:18,tag:"架构文档化",tagClass:"tag-arch",text:"关于软件架构文档化，以下说法错误的是：",options:["A. 架构文档应从多个视角（视图）来描述系统，不同视角服务于不同的利益相关者","B. 架构文档一旦完成，在整个项目生命周期中不需要再更新","C. 架构文档中应记录关键的架构决策及其做出该决策的理由（决策依据）","D. 架构文档应包含系统的质量属性需求以及架构如何满足这些需求的说明"],answer:1,analysis:"正确答案：B\n\n架构文档是'活的文档'，需要随项目演进而更新。架构决策可能因需求变化而调整，文档应与实际架构保持一致。"}
+{id:1,tag:"架构风格",tagClass:"tag-arch",text:"某编译器的设计中，源代码经过词法分析生成Token流，Token流传给语法分析器生成语法树，语法树再传给语义分析器，最终生成中间代码。整个过程中数据在各处理阶段之间单向流动，每个阶段只接收上一阶段的输出作为输入。该编译器最符合哪种架构风格？",options:["A. 主程序-子程序风格","B. 管道-过滤器风格","C. 层次结构风格","D. 黑板系统风格"],answer:1,analysis:"正确答案：B\n\n管道-过滤器风格的核心特征：\n- 数据在构件之间单向流动（管道）\n- 每个构件（过滤器）独立处理输入、产生输出\n- 构件之间不共享状态，仅通过数据流连接\n\n编译器的经典流水线：词法分析→语法分析→语义分析→代码生成，完美匹配管道-过滤器模型。"},
+{id:2,tag:"架构风格",tagClass:"tag-arch",text:"某电商平台的促销规则引擎需要在运行时动态加载和执行不同的促销规则（如满减、打折、赠品等），运营人员随时可能添加新的规则脚本。系统需要在不停机的情况下解释执行这些规则。该规则引擎最适合采用哪种架构风格？",options:["A. 管道-过滤器风格","B. 解释器风格","C. 事件驱动风格","D. 过程控制风格"],answer:1,analysis:"正确答案：B\n\n解释器风格的核心特征：\n- 提供一个虚拟机，可以解释执行自定义的语言或规则\n- 程序可以在运行时改变行为（动态加载规则/脚本）\n- 适用于需要高度灵活性和可定制性的场景\n\n关键词：'动态加载'+'执行规则脚本'+'不停机' → 解释器风格"},
+{id:3,tag:"架构风格",tagClass:"tag-arch",text:"某智能家居控制系统中，温度传感器检测到室温超过30度后，系统自动触发空调开启；空调运行后，系统发出通知到用户手机APP。各设备模块之间通过消息进行通信，彼此不知道对方的存在。该系统最符合哪种架构风格？",options:["A. 管道-过滤器风格","B. 层次结构风格","C. 进程间通信风格","D. 事件驱动风格（隐式调用）"],answer:3,analysis:"正确答案：D\n\n事件驱动风格（隐式调用）的核心特征：\n- 构件不直接调用彼此，而是通过事件/消息间接通信\n- 事件的发送者不知道谁会接收和处理该事件\n- 构件之间高度解耦，典型模式：发布-订阅（Pub-Sub）"},
+{id:4,tag:"架构风格",tagClass:"tag-arch",text:"某公司开发一个企业级ERP系统，将系统分为基础设施层、数据访问层、业务逻辑层和表示层。每一层只能调用其下一层提供的接口，不能跨层调用，也不能调用上层。该ERP系统最符合哪种架构风格？",options:["A. 管道-过滤器风格","B. 层次结构风格","C. 客户端-服务器风格","D. 独立构件风格"],answer:1,analysis:"正确答案：B\n\n层次结构风格核心：系统按层次组织，每层只能调用其直接下层的接口，层与层之间通过接口交互，隐藏内部实现。"},
+{id:5,tag:"质量属性",tagClass:"tag-arch",text:"某银行核心系统需要在每秒处理10万笔交易，且任何一笔交易的响应时间不超过200毫秒。为此，架构师引入了内存数据库缓存热点数据，并采用连接池管理数据库连接。这些措施主要为了提升系统的哪个质量属性？",options:["A. 可用性","B. 可修改性","C. 性能","D. 安全性"],answer:2,analysis:"正确答案：C\n\n性能关注：响应时间（200ms）和吞吐量（10万TPS）。'内存缓存'+'连接池'是典型的性能优化策略。"},
+{id:6,tag:"质量属性",tagClass:"tag-arch",text:"某在线教育平台要求全年故障停机时间不超过5分钟（即年可用率99.999%）。架构师采用了双活数据中心部署，两个数据中心同时对外提供服务，任何一个数据中心故障时，另一个可以无缝接管全部流量。这一措施主要为了提升哪个质量属性？",options:["A. 性能","B. 可用性","C. 可伸缩性","D. 互操作性"],answer:1,analysis:"正确答案：B\n\n可用性关注系统正常运行时间比例。'年可用率99.999%'+'双活数据中心'+'无缝接管' → 典型的可用性策略（冗余+故障转移）。"},
+{id:7,tag:"质量属性",tagClass:"tag-arch",text:"某医院信息系统需要与医保系统、检验系统（LIS）、影像系统（PACS）等多个外部系统进行数据交换和业务协同。架构师在设计时采用HL7和FHIR等标准协议进行系统集成。这主要为了提升系统的哪个质量属性？",options:["A. 可修改性","B. 安全性","C. 可伸缩性","D. 互操作性"],answer:3,analysis:"正确答案：D\n\n互操作性关注系统与其他系统交换数据和协作的能力。'与多个外部系统数据交换'+'采用标准协议' → 互操作性。"},
+{id:8,tag:"质量属性",tagClass:"tag-arch",text:"某社交平台在重大新闻事件期间，用户访问量从日常的100万骤增到3000万。架构师通过自动扩缩容机制，在负载增长时自动增加服务器实例，负载降低时自动回收资源。这主要体现了系统哪个质量属性的提升？",options:["A. 可用性","B. 可修改性","C. 可伸缩性","D. 安全性"],answer:2,analysis:"正确答案：C\n\n可伸缩性关注系统在负载增加时保持性能水平的能力。'自动扩缩容'应对'100万→3000万'负载变化 → 可伸缩性。"},
+{id:9,tag:"ATAM评估",tagClass:"tag-arch",text:"在ATAM架构评估中，评估小组分析某电商系统时发现：为了提高性能，架构师将数据库读写操作合并到同一个连接中，减少连接建立开销。但这样一来，读写操作相互阻塞，在高并发场景下可能导致整个系统卡死。在ATAM中，这一发现应被记录为：",options:["A. 敏感点","B. 权衡点","C. 风险","D. 非风险"],answer:2,analysis:"正确答案：C\n\n风险：架构决策中已经暴露的问题或隐患。'读写合并'+'高并发下可能导致系统卡死' → 已暴露的隐患 → 风险。\n记忆口诀：'可能导致问题/隐患'→风险；'为了A但牺牲B'→权衡点。"},
+{id:10,tag:"ATAM评估",tagClass:"tag-arch",text:"某系统的ATAM评估过程中，评估小组在效用树的构建阶段，针对'数据机密性'这一质量属性场景，识别出以下发现：将数据加密算法从AES-128升级到AES-256时，系统的数据机密性评级从3级提升到5级（满分5级），同时系统的平均响应时间从50ms增加到120ms。关于加密算法的选择，以下说法正确的是：",options:["A. 加密算法强度是安全性的敏感点，加密算法选择是安全性与性能之间的权衡点","B. 加密算法强度是安全性的权衡点，加密算法选择是敏感点","C. 加密算法强度是风险，加密算法选择是非风险","D. 加密算法强度是安全性的敏感点，但不存在权衡点"],answer:0,analysis:"正确答案：A\n\n敏感点：算法强度变化→安全性评级3→5（一个属性显著变化）。\n权衡点：选择AES-256→安全性↑但性能↓（50ms→120ms），同时影响两个矛盾属性。"},
+{id:11,tag:"ATAM评估",tagClass:"tag-arch",text:"在ATAM方法的九个步骤中，评估小组首先向利益相关者介绍ATAM方法（步骤1），然后由架构师呈现架构方案（步骤3），接下来需要构建一个用于组织和驱动分析的核心工具，该工具以树状结构组织系统的质量属性目标、场景及其优先级。这个步骤是：",options:["A. 步骤2：确定商业目标","B. 步骤4：创建质量属性效用树","C. 步骤5：分析架构方法","D. 步骤6：生成质量属性效用树"],answer:1,analysis:"正确答案：B\n\nATAM九步骤：1.介绍ATAM→2.商业目标→3.呈现架构→4.创建效用树→5.分析架构方法→6.再次分析→7.头脑风暴场景→8.呈现结果→9.报告跟进"},
+{id:12,tag:"ABSD方法",tagClass:"tag-arch",text:"关于ABSD（基于架构的软件设计）方法，以下说法正确的是：",options:["A. ABSD是一种自底向上的架构设计方法，从底层模块逐步向上构建架构","B. ABSD以架构风格为核心，以质量属性需求和功能需求为驱动来构建软件架构","C. ABSD只需要关注功能需求，非功能需求由后续设计阶段处理","D. ABSD是一种瀑布式开发方法，架构设计完成后不能迭代修改"],answer:1,analysis:"正确答案：B\n\nABSD是自顶向下、递归的架构设计方法，以架构风格为核心，以质量属性需求和功能需求为驱动，支持迭代。"},
+{id:13,tag:"ABSD方法",tagClass:"tag-arch",text:"在ABSD方法中，架构设计师首先根据系统的质量属性需求和商业需求选择合适的架构风格，然后在此基础上进行功能分解和模块划分。当发现所选架构风格无法满足某些质量属性需求时，需要调整或混合使用其他架构风格。这一过程体现了ABSD的哪个核心思想？",options:["A. 架构文档驱动开发","B. 架构需求与架构设计的迭代螺旋","C. 测试驱动架构设计","D. 代码自动生成"],answer:1,analysis:"正确答案：B\n\nABSD的迭代螺旋思想：架构设计是需求→设计→评估→调整的螺旋过程，不是一次性的。"},
+{id:14,tag:"4+1视图",tagClass:"tag-arch",text:"在Kruchten提出的4+1视图模型中，开发人员关注的模块划分、代码组织、类图和包图等属于哪个视图？",options:["A. 逻辑视图","B. 开发视图","C. 进程视图","D. 物理视图"],answer:1,analysis:"正确答案：B\n\n开发视图（程序员关注）：模块划分、代码组织，包图、组件图。\n逻辑视图（用户关注）：功能需求，类图、状态图。\n进程视图（集成者关注）：并发性、同步。\n物理视图（工程师关注）：部署拓扑。"},
+{id:15,tag:"4+1视图",tagClass:"tag-arch",text:"某分布式系统需要部署在多台服务器上，架构师需要规划系统的部署拓扑，包括服务器节点、网络连接、数据复制策略等。同时需要考虑系统的并发处理能力和运行时的通信机制。以上需求分别对应4+1视图模型中的哪两个视图？",options:["A. 逻辑视图和进程视图","B. 物理视图和进程视图","C. 物理视图和开发视图","D. 进程视图和逻辑视图"],answer:1,analysis:"正确答案：B\n\n部署拓扑→物理视图（静态部署）；并发处理能力+运行时通信→进程视图（动态行为）。"},
+{id:16,tag:"MVC/MVP/MVVM",tagClass:"tag-arch",text:"某Android应用开发团队决定将原有的MVC架构改为MVP架构。在MVP模式中，以下关于各组件职责的描述，正确的是：",options:["A. Model负责处理用户输入，View负责业务逻辑，Presenter负责数据存储","B. View负责显示和用户交互，Presenter作为中间层协调View和Model，Model负责业务逻辑和数据","C. Presenter直接操作View的UI控件，View持有Presenter的引用并直接调用其方法","D. MVP中View和Model之间可以直接通信，Presenter只负责转发"],answer:1,analysis:"正确答案：B\n\nMVP：Model（业务逻辑+数据），View（界面+交互，被动视图），Presenter（中间层协调）。核心约束：View和Model不直接通信。"},
+{id:17,tag:"MVC/MVP/MVVM",tagClass:"tag-arch",text:"某前端项目使用Vue.js框架开发单页应用。在MVVM模式中，View和ViewModel之间的数据同步机制与MVP模式相比最大的区别是：",options:["A. MVVM需要手动编写代码实现View和ViewModel的数据同步","B. MVVM通过数据绑定机制自动保持View和ViewModel的数据同步，Presenter模式中Presenter需要手动更新View","C. MVVM中ViewModel直接操作DOM元素来更新View","D. MVVM不支持双向数据绑定，只能从ViewModel到View单向同步"],answer:1,analysis:"正确答案：B\n\nMVVM通过数据绑定自动同步；MVP中Presenter需手动调用View接口更新。"},
+{id:18,tag:"架构文档化",tagClass:"tag-arch",text:"关于软件架构文档化，以下说法错误的是：",options:["A. 架构文档应从多个视角（视图）来描述系统，不同视角服务于不同的利益相关者","B. 架构文档一旦完成，在整个项目生命周期中不需要再更新","C. 架构文档中应记录关键的架构决策及其做出该决策的理由（决策依据）","D. 架构文档应包含系统的质量属性需求以及架构如何满足这些需求的说明"],answer:1,analysis:"正确答案：B\n\n架构文档是'活的文档'，需要随项目演进而更新。"}
 ];
 
-// --- Part 2: Q19-30 Software Engineering ---
 const part2 = [
 {id:19,tag:"开发模型",tagClass:"tag-se",text:"某团队开发一款医疗影像诊断系统，需求在项目初期已经非常明确且稳定，客户要求系统必须经过严格验证后才能交付使用。该团队应优先选择哪种开发模型？",options:["A. 喷泉模型","B. 瀑布模型","C. 螺旋模型","D. 原型模型"],answer:"B",analysis:"瀑布模型适用于需求明确、稳定且需要严格验证的场景（如医疗、军工等安全关键系统）。"},
-{id:20,tag:"敏捷方法",tagClass:"tag-se",text:"某互联网公司采用Scrum方法开发一个社交平台。在一个Sprint中，团队发现产品待办列表（Product Backlog）中的某条用户故事过大，无法在一个Sprint内完成。正确的做法是？",options:["A. 将该用户故事直接放入当前Sprint，Sprint结束时以未完成状态返回Product Backlog","B. 延长当前Sprint的周期直到该用户故事完成","C. 将该用户故事拆分为更小的用户故事，选取其中可在本Sprint完成的部分纳入Sprint Backlog","D. 由Product Owner决定是否增加团队人数来完成该用户故事"],answer:"C",analysis:"Scrum原则要求Sprint时间盒固定，不可随意延长；大用户故事应拆分为足够小的条目，选取本Sprint能完成的部分。"},
-{id:21,tag:"开发模型",tagClass:"tag-se",text:"某公司计划开发一个全新的智能客服系统，核心算法采用最新的大语言模型技术，技术方案尚不成熟，且市场竞争要求尽快上线试运行。综合考虑风险控制与快速交付，最合适的开发模型是？",options:["A. 瀑布模型","B. 增量模型","C. 螺旋模型","D. V模型"],answer:"C",analysis:"螺旋模型的核心特点是风险驱动，每轮迭代都包含风险分析环节。本题关键词：技术方案不成熟（高风险）、市场竞争（需快速反馈）。"},
-{id:22,tag:"需求工程",tagClass:"tag-se",text:"在某图书管理系统的需求获取过程中，分析师发现用户经常抱怨现有系统的操作流程繁琐，但无法清晰描述期望的操作方式。此时最适合采用的需求获取方法是？",options:["A. 问卷调查","B. 文档分析","C. 原型法","D. 数据库逆向工程"],answer:"C",analysis:"当用户知道问题在哪但无法清晰表达需求时，原型法是最有效的需求获取方法。"},
-{id:23,tag:"需求工程",tagClass:"tag-se",text:"以下关于软件需求分类的描述，正确的是？",options:["A. '系统应支持1000个用户同时在线'属于功能需求","B. '用户密码必须以加密形式存储'属于非功能需求","C. '系统响应时间不超过3秒'属于功能需求","D. '管理员可以删除用户账户'属于非功能需求"],answer:"B",analysis:"选项A的并发数是性能需求→非功能需求；选项C的响应时间是性能需求→非功能需求；选项D的删除账户是具体功能→功能需求。选项B的密码加密存储属于安全性需求→非功能需求。"},
-{id:24,tag:"软件测试",tagClass:"tag-se",text:"对以下程序段进行白盒测试：\n\nif (A > 1 && B == 0) {\n    X = X / A;\n}\nif (A == 2 || X > 1) {\n    X = X + 1;\n}\n\n若要达到条件组合覆盖，至少需要多少个测试用例？",options:["A. 3个","B. 4个","C. 6个","D. 8个"],answer:"B",analysis:"条件组合覆盖要求每个判定中所有条件的真假组合至少出现一次。第一个判定有2个条件4种组合，第二个判定有2个条件4种组合。通过精心设计测试数据可以复用，最少4个测试用例。"},
-{id:25,tag:"软件测试",tagClass:"tag-se",text:"某银行系统的核心交易模块由5个模块组成（A、B、C、D、E），其中A调用B和C，B调用D，C调用D和E。在进行集成测试时，若采用自顶向下的增殖式测试策略，且将模块E作为桩模块（stub）处理，则第一个被实际集成的模块组合是？",options:["A. A + 桩(B) + 桩(C)","B. D + E","C. A + B + C + 桩(D) + 桩(E)","D. B + D + 桩(E)"],answer:"A",analysis:"自顶向下集成测试从顶层模块开始，逐步用桩模块替代下层模块。顶层模块是A，第一步应测试A，用桩模块代替B和C。"},
-{id:26,tag:"软件测试",tagClass:"tag-se",text:"某系统上线运行后发现一个缺陷：当用户快速连续点击提交按钮时，系统会重复生成订单。测试团队在修复后，除了验证该缺陷已修复外，还执行了完整回归测试。关于此次测试活动，以下描述正确的是？",options:["A. 验证缺陷已修复属于回归测试","B. 完整回归测试的目的是确认修复未引入新缺陷","C. 重复订单问题应在系统测试阶段通过黑盒测试发现，与集成测试无关","D. 回归测试只需重新执行发现该缺陷的那个测试用例即可"],answer:"B",analysis:"选项A错误：验证缺陷已修复属于确认测试（再测试），不属于回归测试。选项B正确：回归测试的核心目的是确认修改没有引入新的缺陷或导致原有功能退化。"},
-{id:27,tag:"UML",tagClass:"tag-se",text:"在UML 2.0中，以下哪种图最适合用来描述多个对象之间的交互顺序，尤其能清晰表达对象之间消息传递的时间先后顺序？",options:["A. 通信图（Communication Diagram）","B. 序列图（Sequence Diagram）","C. 活动图（Activity Diagram）","D. 定时图（Timing Diagram）"],answer:"B",analysis:"序列图（顺序图）的核心特征就是按时间顺序（从上到下）展示对象之间的消息传递。"},
-{id:28,tag:"UML",tagClass:"tag-se",text:"某在线教育平台需要建模如下场景：学生选课时，系统首先检查课程容量，若未满则创建选课记录并扣减课程剩余名额，同时向学生发送确认通知。若需要用UML图来精确描述这一业务流程中的并发行为和分支逻辑，最适合使用的图是？",options:["A. 用例图（Use Case Diagram）","B. 对象图（Object Diagram）","C. 活动图（Activity Diagram）","D. 组件图（Component Diagram）"],answer:"C",analysis:"活动图擅长描述业务流程中的分支（判断课程是否满）、并发（创建记录和发送通知可并行）等控制逻辑。"},
-{id:29,tag:"软件维护",tagClass:"tag-se",text:"某电商平台运行三年后，因国家出台新的个人信息保护法规，需要对用户数据的收集、存储和处理流程进行调整。这种维护活动属于？",options:["A. 改正性维护","B. 适应性维护","C. 完善性维护","D. 预防性维护"],answer:"B",analysis:"因外部环境变化（法律法规变化）而被迫修改，属于适应性维护。"},
-{id:30,tag:"配置管理",tagClass:"tag-se",text:"在软件配置管理中，关于基线（Baseline）的描述，以下说法正确的是？",options:["A. 基线一旦建立就不能再进行任何变更","B. 基线是经过正式审查和批准的产品规格或代码，作为后续开发的基准","C. 每个开发人员每天的代码提交都是一个基线","D. 基线只适用于代码，不适用于需求文档和设计文档"],answer:"B",analysis:"基线是经正式审查和批准的中间产品，作为后续工作的基准。基线可变更但需走正式的变更控制流程（CCB审批）。"}
+{id:20,tag:"敏捷方法",tagClass:"tag-se",text:"某互联网公司采用Scrum方法开发一个社交平台。在一个Sprint中，团队发现产品待办列表（Product Backlog）中的某条用户故事过大，无法在一个Sprint内完成。正确的做法是？",options:["A. 将该用户故事直接放入当前Sprint，Sprint结束时以未完成状态返回Product Backlog","B. 延长当前Sprint的周期直到该用户故事完成","C. 将该用户故事拆分为更小的用户故事，选取其中可在本Sprint完成的部分纳入Sprint Backlog","D. 由Product Owner决定是否增加团队人数来完成该用户故事"],answer:"C",analysis:"Scrum原则：Sprint时间盒固定不可延长；大用户故事应拆分为可在一个Sprint完成的小条目。"},
+{id:21,tag:"开发模型",tagClass:"tag-se",text:"某公司计划开发一个全新的智能客服系统，核心算法采用最新的大语言模型技术，技术方案尚不成熟，且市场竞争要求尽快上线试运行。综合考虑风险控制与快速交付，最合适的开发模型是？",options:["A. 瀑布模型","B. 增量模型","C. 螺旋模型","D. V模型"],answer:"C",analysis:"螺旋模型核心特点是风险驱动，每轮迭代包含风险分析。'技术不成熟（高风险）+市场要求快速反馈' → 螺旋模型。"},
+{id:22,tag:"需求工程",tagClass:"tag-se",text:"在某图书管理系统的需求获取过程中，分析师发现用户经常抱怨现有系统的操作流程繁琐，但无法清晰描述期望的操作方式。此时最适合采用的需求获取方法是？",options:["A. 问卷调查","B. 文档分析","C. 原型法","D. 数据库逆向工程"],answer:"C",analysis:"用户知道问题但无法清晰表达需求时，原型法最有效——通过构建可交互原型让用户体验后反馈。"},
+{id:23,tag:"需求工程",tagClass:"tag-se",text:"以下关于软件需求分类的描述，正确的是？",options:["A. '系统应支持1000个用户同时在线'属于功能需求","B. '用户密码必须以加密形式存储'属于非功能需求","C. '系统响应时间不超过3秒'属于功能需求","D. '管理员可以删除用户账户'属于非功能需求"],answer:"B",analysis:"A的并发数→性能需求（非功能）；C的响应时间→性能需求（非功能）；D的删除账户→具体功能（功能需求）。B的密码加密→安全性需求（非功能需求）。"},
+{id:24,tag:"软件测试",tagClass:"tag-se",text:"对以下程序段进行白盒测试：\n\nif (A > 1 && B == 0) {\n    X = X / A;\n}\nif (A == 2 || X > 1) {\n    X = X + 1;\n}\n\n若要达到条件组合覆盖，至少需要多少个测试用例？",options:["A. 3个","B. 4个","C. 6个","D. 8个"],answer:"B",analysis:"条件组合覆盖要求每个判定中所有条件真假组合至少出现一次。两个判定各有2条件4组合，精心设计可复用，最少4个用例。"},
+{id:25,tag:"软件测试",tagClass:"tag-se",text:"某银行系统的核心交易模块由5个模块组成（A、B、C、D、E），其中A调用B和C，B调用D，C调用D和E。在进行集成测试时，若采用自顶向下的增殖式测试策略，且将模块E作为桩模块（stub）处理，则第一个被实际集成的模块组合是？",options:["A. A + 桩(B) + 桩(C)","B. D + E","C. A + B + C + 桩(D) + 桩(E)","D. B + D + 桩(E)"],answer:"A",analysis:"自顶向下：从顶层模块A开始，用桩模块替代B和C。第一步测试A+桩(B)+桩(C)。"},
+{id:26,tag:"软件测试",tagClass:"tag-se",text:"某系统上线运行后发现一个缺陷：当用户快速连续点击提交按钮时，系统会重复生成订单。测试团队在修复后，除了验证该缺陷已修复外，还执行了完整回归测试。关于此次测试活动，以下描述正确的是？",options:["A. 验证缺陷已修复属于回归测试","B. 完整回归测试的目的是确认修复未引入新缺陷","C. 重复订单问题应在系统测试阶段通过黑盒测试发现，与集成测试无关","D. 回归测试只需重新执行发现该缺陷的那个测试用例即可"],answer:"B",analysis:"验证缺陷已修复→确认测试（非回归测试）。回归测试目的：确认修改没有引入新缺陷或导致原有功能退化。"},
+{id:27,tag:"UML",tagClass:"tag-se",text:"在UML 2.0中，以下哪种图最适合用来描述多个对象之间的交互顺序，尤其能清晰表达对象之间消息传递的时间先后顺序？",options:["A. 通信图（Communication Diagram）","B. 序列图（Sequence Diagram）","C. 活动图（Activity Diagram）","D. 定时图（Timing Diagram）"],answer:"B",analysis:"序列图（顺序图）按时间顺序（从上到下）展示对象之间的消息传递，最擅长表达时间先后顺序。"},
+{id:28,tag:"UML",tagClass:"tag-se",text:"某在线教育平台需要建模如下场景：学生选课时，系统首先检查课程容量，若未满则创建选课记录并扣减课程剩余名额，同时向学生发送确认通知。若需要用UML图来精确描述这一业务流程中的并发行为和分支逻辑，最适合使用的图是？",options:["A. 用例图（Use Case Diagram）","B. 对象图（Object Diagram）","C. 活动图（Activity Diagram）","D. 组件图（Component Diagram）"],answer:"C",analysis:"活动图擅长描述业务流程中的分支（判断课程是否满）和并发（创建记录和发送通知并行）。"},
+{id:29,tag:"软件维护",tagClass:"tag-se",text:"某电商平台运行三年后，因国家出台新的个人信息保护法规，需要对用户数据的收集、存储和处理流程进行调整。这种维护活动属于？",options:["A. 改正性维护","B. 适应性维护","C. 完善性维护","D. 预防性维护"],answer:"B",analysis:"因外部环境变化（法律法规变化）而修改→适应性维护。改正性=修bug；完善性=用户主动要求增加功能；预防性=主动改造提高可维护性。"},
+{id:30,tag:"配置管理",tagClass:"tag-se",text:"在软件配置管理中，关于基线（Baseline）的描述，以下说法正确的是？",options:["A. 基线一旦建立就不能再进行任何变更","B. 基线是经过正式审查和批准的产品规格或代码，作为后续开发的基准","C. 每个开发人员每天的代码提交都是一个基线","D. 基线只适用于代码，不适用于需求文档和设计文档"],answer:"B",analysis:"基线是经正式审查和批准的中间产品，作为后续工作的基准。可变更但需走正式变更控制流程（CCB审批）。"}
 ];
 
-// --- Part 3: Q31-42 Computer Architecture + OS ---
 const part3 = [
-{id:31,tag:"流水线",tagClass:"tag-os",text:"某处理器采用4级流水线（取指、分析、执行、写回），每级流水段的时间分别为2ns、3ns、2ns、2ns。若连续执行100条指令，则该流水线的实际吞吐率为（　　）。",options:["A. 100/303 ns⁻¹","B. 100/306 ns⁻¹","C. 100/309 ns⁻¹","D. 100/400 ns⁻¹"],answer:"C",analysis:"时钟周期取各段最长时间：Δt = max(2,3,2,2) = 3ns。执行时间 = (k+(n-1))×Δt = (4+99)×3 = 309ns。吞吐率 TP = 100/309 ns⁻¹。"},
-{id:32,tag:"流水线",tagClass:"tag-os",text:"某5级流水线，各段执行时间均为Δt。不采用流水线时执行10条指令需要50Δt，采用流水线后执行10条指令需要14Δt，则该流水线的加速比为（　　）。",options:["A. 25/7","B. 50/14","C. 5/2","D. 10/3"],answer:"A",analysis:"加速比 S = T非流水 / T流水 = 50Δt / 14Δt = 50/14 = 25/7 ≈ 3.57。"},
-{id:33,tag:"存储体系",tagClass:"tag-os",text:"某计算机的Cache容量为64KB，主存块大小为64B，采用4路组相联映射方式。该Cache的组数为（　　）。",options:["A. 256","B. 512","C. 1024","D. 4096"],answer:"A",analysis:"Cache总块数 = 64KB / 64B = 1024块。4路组相联：组数 = 1024 / 4 = 256组。"},
-{id:34,tag:"存储体系",tagClass:"tag-os",text:"某计算机系统主存访问时间为200ns，Cache访问时间为20ns，Cache命中率为90%。若系统先访问Cache，未命中时再访问主存（层次结构），则平均访问时间为（　　）。",options:["A. 38ns","B. 40ns","C. 56ns","D. 62ns"],answer:"A",analysis:"平均访问时间 ta = h×tc + (1-h)×tm = 0.9×20 + 0.1×200 = 18 + 20 = 38ns。"},
-{id:35,tag:"存储管理",tagClass:"tag-os",text:"某系统采用分页存储管理，页面大小为4KB，某进程的页表如下（页号→页框号）：0→3，1→5，2→8，3→2，4→7。逻辑地址十六进制为0x2A1F，其对应的物理地址是（　　）。",options:["A. 0x5A1F","B. 0x7A1F","C. 0x8A1F","D. 0x2A1F"],answer:"C",analysis:"页号 = 0x2A1F / 0x1000 = 2，页内偏移 = 0xA1F。查页表第2页→页框号8。物理地址 = 8×0x1000 + 0xA1F = 0x8A1F。"},
-{id:36,tag:"死锁",tagClass:"tag-os",text:"某系统中有同类资源12个，有4个进程竞争该资源，每个进程最多需要X个资源。为保证系统不会发生死锁，X的最大值是（　　）。",options:["A. 3","B. 4","C. 5","D. 6"],answer:"A",analysis:"不死锁条件：n×(X-1)+1 ≤ m，即 4×(X-1)+1 ≤ 12，4X-3 ≤ 12，X ≤ 3.75。X取整最大为3。"},
-{id:37,tag:"PV操作",tagClass:"tag-os",text:"PV操作是实现进程同步与互斥的常用机制。某系统中有3个进程P1、P2、P3共享一个缓冲区，P1向缓冲区写入数据，P2和P3分别从缓冲区读取数据。要求P1写入后P2和P3才能读取，P2和P3都读取完毕后P1才能继续写入。初始时信号量S1=0，S2=0，S3=0。下列PV操作安排正确的是（　　）。",options:["A. P1: V(S1); V(S2); P(S3); P(S3);   P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","B. P1: P(S3); P(S3); V(S1); V(S2);   P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","C. P1: V(S1); V(S2); P(S3);          P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","D. P1: V(S1); V(S1); P(S3); P(S3);   P2: P(S1); 读; V(S3);   P3: P(S1); 读; V(S3);"],answer:"A",analysis:"P1写入后V(S1)通知P2、V(S2)通知P3；P2等S1、P3等S2互不干扰；P2和P3各读完后V(S3)通知P1；P1需等两个P(S3)确保P2和P3都读完。"},
-{id:38,tag:"页面置换",tagClass:"tag-os",text:"某系统采用请求分页存储管理，分配给某进程3个页框，初始为空。依次访问页号：1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 8次","B. 9次","C. 10次","D. 12次"],answer:"C",analysis:"LRU逐步模拟，3个页框：前3次缺页装入1,2,3；第4次缺页淘汰1装入4；第5次缺页淘汰2装入1；第6次缺页淘汰3装入2；第7次缺页淘汰4装入5；第8次命中1；第9次命中2；第10次缺页淘汰5装入3；第11次缺页淘汰1装入4；第12次缺页淘汰2装入5。共10次缺页。"},
-{id:39,tag:"页面置换",tagClass:"tag-os",text:"关于Belady异常，下列说法正确的是（　　）。",options:["A. LRU算法可能出现Belady异常","B. FIFO算法可能出现Belady异常","C. OPT（最优置换）算法可能出现Belady异常","D. 所有页面置换算法都可能出现Belady异常"],answer:"B",analysis:"Belady异常是指增加页框数反而导致缺页率上升的现象。只有FIFO算法可能出现。LRU和OPT属于栈式算法，不会出现Belady异常。"},
-{id:40,tag:"磁盘调度",tagClass:"tag-os",text:"某磁盘有100个柱面（编号0~99），磁头当前位于第25号柱面，移动方向为柱面号增大方向。请求队列依次到达：60, 80, 10, 45, 90, 30。采用SCAN（电梯调度）算法，磁头依次访问的柱面序列为（　　）。",options:["A. 30, 45, 60, 80, 90, 10","B. 60, 80, 90, 45, 30, 10","C. 30, 45, 60, 80, 90, 然后10","D. 60, 45, 30, 10, 80, 90"],answer:"C",analysis:"SCAN沿当前方向扫描到端再反向。当前25号，方向增大：先服务30, 45, 60, 80, 90，反向服务10。"},
-{id:41,tag:"指令系统",tagClass:"tag-os",text:"下列关于指令系统的叙述中，错误的是（　　）。",options:["A. RISC指令长度固定，CISC指令长度可变","B. RISC一般采用硬布线控制器，CISC一般采用微程序控制器","C. RISC寄存器数量较少，寻址方式丰富","D. RISC适合流水线执行，大多数指令在一个时钟周期内完成"],answer:"C",analysis:"RISC的特点是寄存器数量较多，寻址方式简单；CISC寄存器数量较少，寻址方式丰富。选项C将两者颠倒了。"},
-{id:42,tag:"指令系统",tagClass:"tag-os",text:"在指令系统中，操作数在主存中的实际地址可以通过多种寻址方式获得。若指令中地址码字段给出的值为A，寄存器R的内容为1000H，则寄存器间接寻址方式下，操作数的有效地址是（　　）。",options:["A. A的值","B. 寄存器R中的值1000H","C. A + 1000H","D. 主存中以1000H为地址的单元中的内容"],answer:"B",analysis:"寄存器间接寻址：操作数的有效地址存放在寄存器中，即EA = (R) = 1000H。"}
+{id:31,tag:"流水线",tagClass:"tag-os",text:"某处理器采用4级流水线（取指、分析、执行、写回），每级流水段的时间分别为2ns、3ns、2ns、2ns。若连续执行100条指令，则该流水线的实际吞吐率为（　　）。",options:["A. 100/303 ns⁻¹","B. 100/306 ns⁻¹","C. 100/309 ns⁻¹","D. 100/400 ns⁻¹"],answer:"C",analysis:"Δt = max(2,3,2,2) = 3ns。T = (4+99)×3 = 309ns。TP = 100/309 ns⁻¹。"},
+{id:32,tag:"流水线",tagClass:"tag-os",text:"某5级流水线，各段执行时间均为Δt。不采用流水线时执行10条指令需要50Δt，采用流水线后执行10条指令需要14Δt，则该流水线的加速比为（　　）。",options:["A. 25/7","B. 50/14","C. 5/2","D. 10/3"],answer:"A",analysis:"S = T非流水/T流水 = 50Δt/14Δt = 50/14 = 25/7 ≈ 3.57。"},
+{id:33,tag:"存储体系",tagClass:"tag-os",text:"某计算机的Cache容量为64KB，主存块大小为64B，采用4路组相联映射方式。该Cache的组数为（　　）。",options:["A. 256","B. 512","C. 1024","D. 4096"],answer:"A",analysis:"总块数 = 64KB/64B = 1024。4路组相联：组数 = 1024/4 = 256组。"},
+{id:34,tag:"存储体系",tagClass:"tag-os",text:"某计算机系统主存访问时间为200ns，Cache访问时间为20ns，Cache命中率为90%。若系统先访问Cache，未命中时再访问主存（层次结构），则平均访问时间为（　　）。",options:["A. 38ns","B. 40ns","C. 56ns","D. 62ns"],answer:"A",analysis:"ta = h×tc + (1-h)×tm = 0.9×20 + 0.1×200 = 18 + 20 = 38ns。"},
+{id:35,tag:"存储管理",tagClass:"tag-os",text:"某系统采用分页存储管理，页面大小为4KB，某进程的页表如下（页号→页框号）：0→3，1→5，2→8，3→2，4→7。逻辑地址十六进制为0x2A1F，其对应的物理地址是（　　）。",options:["A. 0x5A1F","B. 0x7A1F","C. 0x8A1F","D. 0x2A1F"],answer:"C",analysis:"页号 = 0x2A1F/0x1000 = 2，偏移 = 0xA1F。查表第2页→页框8。物理地址 = 8×0x1000+0xA1F = 0x8A1F。"},
+{id:36,tag:"死锁",tagClass:"tag-os",text:"某系统中有同类资源12个，有4个进程竞争该资源，每个进程最多需要X个资源。为保证系统不会发生死锁，X的最大值是（　　）。",options:["A. 3","B. 4","C. 5","D. 6"],answer:"A",analysis:"n×(X-1)+1 ≤ m → 4(X-1)+1 ≤ 12 → X ≤ 3.75。X最大为3。"},
+{id:37,tag:"PV操作",tagClass:"tag-os",text:"PV操作是实现进程同步与互斥的常用机制。某系统中有3个进程P1、P2、P3共享一个缓冲区，P1向缓冲区写入数据，P2和P3分别从缓冲区读取数据。要求P1写入后P2和P3才能读取，P2和P3都读取完毕后P1才能继续写入。初始时信号量S1=0，S2=0，S3=0。下列PV操作安排正确的是（　　）。",options:["A. P1: V(S1); V(S2); P(S3); P(S3);   P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","B. P1: P(S3); P(S3); V(S1); V(S2);   P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","C. P1: V(S1); V(S2); P(S3);          P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","D. P1: V(S1); V(S1); P(S3); P(S3);   P2: P(S1); 读; V(S3);   P3: P(S1); 读; V(S3);"],answer:"A",analysis:"P1先V(S1)V(S2)通知P2/P3可读，再两个P(S3)等P2/P3都读完。B错在先P会永久阻塞；C只等1个P(S3)不保险；D中P2/P3用同一信号量会冲突。"},
+{id:38,tag:"页面置换",tagClass:"tag-os",text:"某系统采用请求分页存储管理，分配给某进程3个页框，初始为空。依次访问页号：1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 8次","B. 9次","C. 10次","D. 12次"],answer:"C",analysis:"LRU模拟3页框：前3次缺页装1,2,3→第4次淘汰1装4→第5次淘汰2装1→第6次淘汰3装2→第7次淘汰4装5→8命中1→9命中2→第10次淘汰5装3→11次淘汰1装4→12次淘汰2装5。共10次缺页。"},
+{id:39,tag:"页面置换",tagClass:"tag-os",text:"关于Belady异常，下列说法正确的是（　　）。",options:["A. LRU算法可能出现Belady异常","B. FIFO算法可能出现Belady异常","C. OPT（最优置换）算法可能出现Belady异常","D. 所有页面置换算法都可能出现Belady异常"],answer:"B",analysis:"Belady异常：增加页框数反导致缺页率上升。只有FIFO可能出现。LRU和OPT是栈式算法，不会出现。"},
+{id:40,tag:"磁盘调度",tagClass:"tag-os",text:"某磁盘有100个柱面（编号0~99），磁头当前位于第25号柱面，移动方向为柱面号增大方向。请求队列依次到达：60, 80, 10, 45, 90, 30。采用SCAN（电梯调度）算法，磁头依次访问的柱面序列为（　　）。",options:["A. 30, 45, 60, 80, 90, 10","B. 60, 80, 90, 45, 30, 10","C. 30, 45, 60, 80, 90, 然后10","D. 60, 45, 30, 10, 80, 90"],answer:"C",analysis:"SCAN沿增大方向：先服务30,45,60,80,90，到端后反向服务10。"},
+{id:41,tag:"指令系统",tagClass:"tag-os",text:"下列关于指令系统的叙述中，错误的是（　　）。",options:["A. RISC指令长度固定，CISC指令长度可变","B. RISC一般采用硬布线控制器，CISC一般采用微程序控制器","C. RISC寄存器数量较少，寻址方式丰富","D. RISC适合流水线执行，大多数指令在一个时钟周期内完成"],answer:"C",analysis:"RISC寄存器数量较多，寻址方式简单；CISC寄存器较少，寻址方式丰富。C选项将两者颠倒了。"},
+{id:42,tag:"指令系统",tagClass:"tag-os",text:"在指令系统中，操作数在主存中的实际地址可以通过多种寻址方式获得。若指令中地址码字段给出的值为A，寄存器R的内容为1000H，则寄存器间接寻址方式下，操作数的有效地址是（　　）。",options:["A. A的值","B. 寄存器R中的值1000H","C. A + 1000H","D. 主存中以1000H为地址的单元中的内容"],answer:"B",analysis:"寄存器间接寻址：EA = (R) = 1000H。有效地址就是寄存器中的值。"}
 ];
 
-// --- Part 4: Q43-75 Database, Network, Security, Reliability, Math, IP, New Topics, English ---
 const part4 = [
-{id:43,tag:"数据库",tagClass:"tag-db",text:"设有关系模式R(A, B, C, D)，函数依赖集F = {A→B, B→C, A→D}。则R的最高范式是（ ）。",options:["A. 1NF","B. 2NF","C. 3NF","D. BCNF"],answer:"B",analysis:"候选键为A（A+ = {A,B,C,D}）。满足2NF（无部分依赖）。不满足3NF：存在传递依赖A↣C（通过B传递）。R的最高范式为2NF。"},
-{id:44,tag:"数据库",tagClass:"tag-db",text:"有关系模式R(A, B, C)，函数依赖集F = {A→B, B→A, B→C}。下列说法正确的是（ ）。",options:["A. R的候选键为A，属于BCNF","B. R的候选键为A和B，属于BCNF","C. R的候选键为A，属于3NF但不属于BCNF","D. R的候选键为A和B，属于3NF但不属于BCNF"],answer:"B",analysis:"A和B互相决定，都是候选键。所有决定因素都是候选键，因此R属于BCNF。"},
+{id:43,tag:"数据库",tagClass:"tag-db",text:"设有关系模式R(A, B, C, D)，函数依赖集F = {A→B, B→C, A→D}。则R的最高范式是（ ）。",options:["A. 1NF","B. 2NF","C. 3NF","D. BCNF"],answer:"B",analysis:"候选键A（A+={A,B,C,D}）。满足2NF（无部分依赖）。不满足3NF：存在传递依赖A↣C。最高2NF。"},
+{id:44,tag:"数据库",tagClass:"tag-db",text:"有关系模式R(A, B, C)，函数依赖集F = {A→B, B→A, B→C}。下列说法正确的是（ ）。",options:["A. R的候选键为A，属于BCNF","B. R的候选键为A和B，属于BCNF","C. R的候选键为A，属于3NF但不属于BCNF","D. R的候选键为A和B，属于3NF但不属于BCNF"],answer:"B",analysis:"A和B互相决定，都是候选键。所有决定因素都是候选键→BCNF。"},
 {id:45,tag:"数据库",tagClass:"tag-db",text:"有关系R和S如下所示，关系代数表达式 π_{A,B}(σ_{R.C=S.C ∧ S.D>2}(R ⋈ S)) 的结果是（ ）。\nR:\nA  B  C\n1  2  3\n4  5  6\n7  8  3\n\nS:\nC  D\n3  4\n6  1\n3  2",options:["A. 只有(1,2)","B. (1,2)和(7,8)","C. (1,2)和(4,5)和(7,8)","D. (1,2)和(7,8)和(4,5)"],answer:"B",analysis:"自然连接后筛选S.D>2，保留(1,2,3,4)和(7,8,3,4)。投影A,B得(1,2)和(7,8)。"},
-{id:46,tag:"数据库",tagClass:"tag-db",text:"在数据库并发控制中，若事务T1读取了数据项X的值后，事务T2修改了X并提交，之后T1再次读取X时得到了不同的值，这种现象称为（ ）。",options:["A. 丢失修改","B. 不可重复读","C. 读脏数据","D. 幻读"],answer:"B",analysis:"不可重复读：同一事务内两次读取同一数据项得到不同结果。"},
-{id:47,tag:"分布式",tagClass:"tag-db",text:"根据CAP定理，以下说法正确的是（ ）。",options:["A. 分布式系统可以同时满足一致性、可用性和分区容错性","B. 在发生网络分区时，系统必须在一致性和可用性之间做出选择","C. NoSQL数据库都选择牺牲一致性来换取可用性","D. BASE理论要求系统在任何时刻都保持强一致性"],answer:"B",analysis:"CAP定理指出分布式系统最多同时满足C、A、P中的两个。网络分区不可避免时（P必须满足），需在C和A之间权衡。"},
-{id:48,tag:"NoSQL",tagClass:"tag-db",text:"关于NoSQL数据库，以下分类对应正确的是（ ）。",options:["A. Redis——列族存储","B. HBase——文档存储","C. MongoDB——键值存储","D. Neo4j——图数据库"],answer:"D",analysis:"Neo4j是图数据库。Redis是键值存储，HBase是列族存储，MongoDB是文档存储。"},
-{id:49,tag:"网络协议",tagClass:"tag-net",text:"在TCP/IP协议栈中，以下协议与层次的对应关系正确的是（ ）。",options:["A. ARP协议工作在传输层","B. ICMP协议工作在数据链路层","C. TCP协议工作在网络层","D. UDP协议工作在传输层"],answer:"D",analysis:"UDP和TCP都工作在传输层。ARP工作在网络层，ICMP是网络层协议。"},
-{id:50,tag:"网络协议",tagClass:"tag-net",text:"关于HTTPS协议，以下说法错误的是（ ）。",options:["A. HTTPS默认使用443端口","B. HTTPS使用SSL/TLS协议对通信内容进行加密","C. HTTPS可以完全防止服务器被伪造","D. HTTPS在建立连接时需要数字证书来验证服务器身份"],answer:"C",analysis:"HTTPS不能完全防止服务器被伪造——如果CA被入侵或用户信任了非法CA签发的证书，仍可能遭受中间人攻击。选项C表述过于绝对。"},
-{id:51,tag:"网络安全",tagClass:"tag-net",text:"某企业需要在公共网络上建立安全的远程连接，要求对传输数据进行加密，并能同时保护多种应用层协议。最适合的方案是（ ）。",options:["A. 在路由器上配置包过滤防火墙","B. 部署SSL VPN","C. 使用应用代理网关","D. 部署IDS入侵检测系统"],answer:"B",analysis:"SSL VPN可在公共网络上建立安全的加密通道，支持多种应用层协议的远程安全访问。"},
-{id:52,tag:"IP子网",tagClass:"tag-net",text:"某公司获得IP地址块192.168.10.0/24，需要划分为6个子网，每个子网至少容纳20台主机。下列子网掩码最合适的是（ ）。",options:["A. 255.255.255.192","B. 255.255.255.224","C. 255.255.255.240","D. 255.255.255.248"],answer:"B",analysis:"借3位主机位（2³=8≥6子网），每子网2⁵-2=30台主机（≥20）。子网掩码255.255.255.224（/27）。"},
-{id:53,tag:"加密算法",tagClass:"tag-sec",text:"在信息安全中，以下属于对称加密算法的是（ ）。",options:["A. RSA","B. ECC","C. AES","D. DSA"],answer:"C",analysis:"AES是对称加密算法。RSA和ECC是非对称加密，DSA是数字签名算法。"},
-{id:54,tag:"数字签名",tagClass:"tag-sec",text:"发送方用自己的私钥对消息摘要进行加密生成数字签名，接收方用发送方的公钥进行验证。数字签名不能提供的功能是（ ）。",options:["A. 身份认证","B. 数据完整性","C. 不可否认性","D. 消息保密性"],answer:"D",analysis:"数字签名不加密消息本身，不提供保密性。可提供身份认证、数据完整性、不可否认性。"},
-{id:55,tag:"等级保护",tagClass:"tag-sec",text:"根据我国网络安全等级保护2.0标准，以下说法正确的是（ ）。",options:["A. 等级保护共分为三级","B. 第三级要求对遭受攻击后能进行追踪溯源","C. 第二级以上系统需要强制测评","D. 第一级为自主保护级，不需要备案"],answer:"D",analysis:"等保2.0共分五级。第一级（自主保护级）不需要备案；第三级起需强制测评和备案；第四级要求追踪溯源。"},
-{id:56,tag:"哈希算法",tagClass:"tag-sec",text:"某安全系统需要选择一种哈希算法用于验证文件完整性，要求输出长度为256位。以下最适合选择的是（ ）。",options:["A. MD5","B. SHA-1","C. SHA-256","D. DES"],answer:"C",analysis:"SHA-256输出256位哈希值。MD5输出128位，SHA-1输出160位，DES是加密算法而非哈希算法。"},
-{id:57,tag:"可靠性",tagClass:"tag-reliability",text:"某系统由两个相同的子系统并联组成，每个子系统的可靠度为0.9。则该并联系统的可靠度为（ ）。",options:["A. 0.81","B. 0.90","C. 0.95","D. 0.99"],answer:"D",analysis:"并联系统可靠度R = 1 - (1-R₁)(1-R₂) = 1 - 0.1×0.1 = 1 - 0.01 = 0.99。"},
-{id:58,tag:"可靠性",tagClass:"tag-reliability",text:"某系统的平均无故障时间MTBF为1000小时，平均修复时间MTTR为10小时。该系统的可用性为（ ）。",options:["A. 90.9%","B. 98.0%","C. 99.0%","D. 99.9%"],answer:"C",analysis:"可用性 = MTBF / (MTBF + MTTR) = 1000 / (1000 + 10) ≈ 99.0%。"},
-{id:59,tag:"性能评价",tagClass:"tag-reliability",text:"以下不属于软件性能评价指标的是（ ）。",options:["A. 响应时间","B. 吞吐量","C. 资源利用率","D. 代码复杂度"],answer:"D",analysis:"代码复杂度是软件质量度量指标，不属于性能评价指标。性能指标包括响应时间、吞吐量、并发用户数、资源利用率等。"},
-{id:60,tag:"项目管理",tagClass:"tag-math",text:"某项目有7个活动，各活动的紧前活动和持续时间如下表所示。关键路径的长度是（ ）周。\n活动  紧前活动  持续时间(周)\nA     —         3\nB     —         2\nC     A         4\nD     A,B       3\nE     C         2\nF     D         5\nG     E,F       1",options:["A. 11周","B. 12周","C. 13周","D. 14周"],answer:"B",analysis:"路径A→D→F→G = 3+3+5+1 = 12周（最长，即关键路径）。路径A→C→E→G = 10周，路径B→D→F→G = 11周。"},
-{id:61,tag:"挣值管理",tagClass:"tag-math",text:"某项目计划到第6周末完成价值480万元的工作（PV），实际完成了价值420万元的工作（EV），实际花费了460万元（AC）。则项目的成本绩效指数CPI和进度绩效指数SPI分别为（ ）。",options:["A. CPI=0.91, SPI=0.88","B. CPI=0.91, SPI=1.10","C. CPI=1.10, SPI=0.88","D. CPI=0.88, SPI=0.91"],answer:"A",analysis:"CPI = EV/AC = 420/460 ≈ 0.91；SPI = EV/PV = 420/480 ≈ 0.88。CPI<1成本超支，SPI<1进度落后。"},
-{id:62,tag:"风险管理",tagClass:"tag-math",text:"在项目风险管理中，风险定性分析的主要目的是（ ）。",options:["A. 计算每个风险的精确财务损失金额","B. 对风险进行优先级排序，确定哪些风险需要进一步定量分析或采取应对措施","C. 制定风险应对策略并分配风险责任人","D. 监控已识别风险的状态并跟踪风险响应效果"],answer:"B",analysis:"风险定性分析通过评估概率和影响进行优先级排序。选项A是定量分析，选项C是应对规划，选项D是风险监控。"},
-{id:63,tag:"知识产权",tagClass:"tag-ip",text:"根据我国《计算机软件保护条例》，以下关于软件著作权的说法正确的是（ ）。",options:["A. 软件著作权自软件开发完成之日起产生，但须登记后才受法律保护","B. 软件著作权的保护期限为作者终生及其死亡后50年","C. 软件著作权自软件开发完成之日起自动产生，无需登记","D. 合作开发的软件，著作权保护期限以最后死亡的作者计算"],answer:"C",analysis:"软件著作权自开发完成之日起自动产生，无需登记即受法律保护。登记只是加强保护的自愿行为。"},
-{id:64,tag:"知识产权",tagClass:"tag-ip",text:"某公司独立开发了一项新技术并准备申请专利。根据我国专利法，以下说法正确的是（ ）。",options:["A. 发明专利的保护期限为20年，自授权之日起计算","B. 实用新型专利的保护期限为10年，自申请之日起计算","C. 外观设计专利的保护期限为15年，自授权之日起计算","D. 同样的发明创造可以同时授予多个专利权"],answer:"B",analysis:"发明专利20年、实用新型10年、外观设计15年，均自申请日起计算。"},
-{id:65,tag:"标准化",tagClass:"tag-ip",text:"在国际标准化组织ISO的标准体系中，以下关于标准级别的说法正确的是（ ）。",options:["A. GB/T开头的标准属于国家强制性标准","B. ISO标准等同于我国的国家强制性标准","C. 我国国家标准GB为强制性标准，GB/T为推荐性标准","D. 企业标准必须严于国家标准才能制定"],answer:"C",analysis:"GB为强制性国家标准，GB/T为推荐性国家标准（T代表推荐）。ISO标准各国可自愿采用。"},
-{id:66,tag:"云原生",tagClass:"tag-new",text:"在云原生架构中，Service Mesh（服务网格）的核心功能是（ ）。",options:["A. 提供容器镜像的构建和打包服务","B. 为服务间通信提供透明的流量管理、安全加密和可观测性","C. 负责容器的编排、调度和弹性伸缩","D. 提供持续集成和持续交付的自动化流水线"],answer:"B",analysis:"Service Mesh通过Sidecar代理为服务间通信提供流量管理、安全（mTLS）和可观测性。选项C是Kubernetes的功能，选项D是CI/CD工具的功能。"},
-{id:67,tag:"容器化",tagClass:"tag-new",text:"关于容器化技术和虚拟机的对比，以下说法正确的是（ ）。",options:["A. 容器通过Hypervisor虚拟化硬件资源，每个容器运行独立的操作系统内核","B. 容器共享宿主机的操作系统内核，启动速度快于虚拟机","C. 虚拟机的隔离性弱于容器，因此更适合多租户环境","D. Docker容器和虚拟机在资源隔离和安全边界方面完全等价"],answer:"B",analysis:"容器共享宿主机内核，无需启动完整操作系统，启动速度远快于虚拟机。虚拟机隔离性强于容器。"},
-{id:68,tag:"ArchiMate",tagClass:"tag-new",text:"ArchiMate是一种企业架构建模语言，其核心层不包括以下（ ）。",options:["A. 业务层（Business Layer）","B. 应用层（Application Layer）","C. 技术层（Technology Layer）","D. 数据层（Data Layer）"],answer:"D",analysis:"ArchiMate核心层包括业务层、应用层、技术层三个。数据不是独立的核心层，而是分布在应用层和业务层中。"},
-{id:69,tag:"零信任",tagClass:"tag-new",text:"零信任架构（Zero Trust Architecture, ZTA）的核心原则是（ ）。",options:["A. 内部网络是可信的，只需对外部访问进行严格认证","B. 基于网络位置建立信任，位于安全区域的设备可自动获得访问权限","C. 不论用户或设备位于网络内部还是外部，都不给予默认信任，每次访问都需要持续验证和授权","D. 仅依赖防火墙和VPN即可保障企业安全"],answer:"C",analysis:"零信任核心原则为'Never trust, always verify'——不给予任何实体默认信任，每次资源访问都需要身份验证和授权。"},
-{id:70,tag:"MLOps",tagClass:"tag-new",text:"关于MLOps（机器学习运维），以下说法正确的是（ ）。",options:["A. MLOps仅关注模型训练阶段的超参数调优","B. MLOps将DevOps理念应用于机器学习系统，覆盖数据处理、模型训练、部署和监控的全生命周期管理","C. MLOps不需要版本控制，因为模型文件不需要像代码一样管理","D. MLOps仅适用于深度学习模型，不适用于传统机器学习模型"],answer:"B",analysis:"MLOps将DevOps的自动化、CI/CD理念应用于ML系统，覆盖数据版本管理、特征工程、模型训练、部署到监控的完整生命周期。"},
-{id:71,tag:"专业英语",tagClass:"tag-en",text:"In microservices architecture, the system is decomposed into small, independently deployable services, each owning its own data store and communicating through lightweight protocols such as REST or message queues. This approach improves scalability and enables teams to develop, deploy, and scale services independently. However, it also introduces challenges such as distributed data consistency and increased operational complexity. This architectural style refers to ___.",options:["A. Monolithic Architecture","B. Service-Oriented Architecture (SOA)","C. Microservices Architecture","D. Event-Driven Architecture"],answer:"C",analysis:"描述的是微服务架构（Microservices Architecture）的核心特征。"},
-{id:72,tag:"专业英语",tagClass:"tag-en",text:"A software engineering practice automates the integration, build, testing, and deployment of application code. Developers commit code to a shared repository, triggering an automated pipeline that compiles the code, runs unit and integration tests, and deploys the verified artifacts to production or staging environments. This practice is commonly known as ___.",options:["A. Continuous Integration/Continuous Delivery (CI/CD)","B. Waterfall Development","C. Feature Toggling","D. Blue-Green Deployment"],answer:"A",analysis:"描述的是CI/CD流水线的核心流程。"},
-{id:73,tag:"专业英语",tagClass:"tag-en",text:"In a distributed ledger system, all participating nodes must agree on the current state of the ledger without relying on a central authority. Various protocols, such as Proof of Work and Proof of Stake, are used to ensure that transactions are validated and added to the chain only when a majority of nodes reach agreement. This process is referred to as ___.",options:["A. Two-Phase Commit","B. Consensus Mechanism","C. Distributed Locking","D. Leader Election"],answer:"B",analysis:"描述的是区块链中的共识机制（Consensus Mechanism）。"},
-{id:74,tag:"专业英语",tagClass:"tag-en",text:"A security model assumes that threats may originate from both outside and inside the network perimeter. It eliminates the concept of a trusted internal network and requires strict identity verification for every user and device attempting to access resources, regardless of their location. Access decisions are made dynamically based on real-time context and policy evaluation. This security approach is known as ___.",options:["A. Defense in Depth","B. Zero Trust Architecture","C. Virtual Private Network (VPN)","D. Role-Based Access Control (RBAC)"],answer:"B",analysis:"描述的是零信任架构（Zero Trust Architecture）。"},
-{id:75,tag:"专业英语",tagClass:"tag-en",text:"A distributed computing paradigm processes data at or near the source of data generation, rather than sending all data to a centralized cloud or data center. By performing computation closer to end devices such as IoT sensors and mobile phones, this approach reduces latency, conserves bandwidth, and improves response times for time-sensitive applications. This paradigm is called ___.",options:["A. Grid Computing","B. Edge Computing","C. Cluster Computing","D. Mainframe Computing"],answer:"B",analysis:"描述的是边缘计算（Edge Computing）。"}
+{id:46,tag:"数据库",tagClass:"tag-db",text:"在数据库并发控制中，若事务T1读取了数据项X的值后，事务T2修改了X并提交，之后T1再次读取X时得到了不同的值，这种现象称为（ ）。",options:["A. 丢失修改","B. 不可重复读","C. 读脏数据","D. 幻读"],answer:"B",analysis:"同一事务两次读取同一数据得到不同结果→不可重复读。"},
+{id:47,tag:"分布式",tagClass:"tag-db",text:"根据CAP定理，以下说法正确的是（ ）。",options:["A. 分布式系统可以同时满足一致性、可用性和分区容错性","B. 在发生网络分区时，系统必须在一致性和可用性之间做出选择","C. NoSQL数据库都选择牺牲一致性来换取可用性","D. BASE理论要求系统在任何时刻都保持强一致性"],answer:"B",analysis:"CAP：最多同时满足C、A、P中的两个。网络分区不可避免时需在C和A之间权衡。"},
+{id:48,tag:"NoSQL",tagClass:"tag-db",text:"关于NoSQL数据库，以下分类对应正确的是（ ）。",options:["A. Redis——列族存储","B. HBase——文档存储","C. MongoDB——键值存储","D. Neo4j——图数据库"],answer:"D",analysis:"Neo4j=图数据库。Redis=键值存储，HBase=列族存储，MongoDB=文档存储。"},
+{id:49,tag:"网络协议",tagClass:"tag-net",text:"在TCP/IP协议栈中，以下协议与层次的对应关系正确的是（ ）。",options:["A. ARP协议工作在传输层","B. ICMP协议工作在数据链路层","C. TCP协议工作在网络层","D. UDP协议工作在传输层"],answer:"D",analysis:"UDP和TCP都工作在传输层。ARP在网络层，ICMP是网络层协议。"},
+{id:50,tag:"网络协议",tagClass:"tag-net",text:"关于HTTPS协议，以下说法错误的是（ ）。",options:["A. HTTPS默认使用443端口","B. HTTPS使用SSL/TLS协议对通信内容进行加密","C. HTTPS可以完全防止服务器被伪造","D. HTTPS在建立连接时需要数字证书来验证服务器身份"],answer:"C",analysis:"HTTPS不能完全防止服务器被伪造。若CA被入侵或用户信任非法证书，仍可遭受中间人攻击。"},
+{id:51,tag:"网络安全",tagClass:"tag-net",text:"某企业需要在公共网络上建立安全的远程连接，要求对传输数据进行加密，并能同时保护多种应用层协议。最适合的方案是（ ）。",options:["A. 在路由器上配置包过滤防火墙","B. 部署SSL VPN","C. 使用应用代理网关","D. 部署IDS入侵检测系统"],answer:"B",analysis:"SSL VPN建立安全加密通道，支持多种应用层协议的远程安全访问。"},
+{id:52,tag:"IP子网",tagClass:"tag-net",text:"某公司获得IP地址块192.168.10.0/24，需要划分为6个子网，每个子网至少容纳20台主机。下列子网掩码最合适的是（ ）。",options:["A. 255.255.255.192","B. 255.255.255.224","C. 255.255.255.240","D. 255.255.255.248"],answer:"B",analysis:"借3位（2³=8≥6子网），每子网2⁵-2=30台（≥20）。掩码/27=255.255.255.224。"},
+{id:53,tag:"加密算法",tagClass:"tag-sec",text:"在信息安全中，以下属于对称加密算法的是（ ）。",options:["A. RSA","B. ECC","C. AES","D. DSA"],answer:"C",analysis:"AES是对称加密。RSA和ECC是非对称加密，DSA是数字签名算法。"},
+{id:54,tag:"数字签名",tagClass:"tag-sec",text:"发送方用自己的私钥对消息摘要进行加密生成数字签名，接收方用发送方的公钥进行验证。数字签名不能提供的功能是（ ）。",options:["A. 身份认证","B. 数据完整性","C. 不可否认性","D. 消息保密性"],answer:"D",analysis:"数字签名不加密消息本身，不提供保密性。可提供身份认证、完整性、不可否认性。"},
+{id:55,tag:"等级保护",tagClass:"tag-sec",text:"根据我国网络安全等级保护2.0标准，以下说法正确的是（ ）。",options:["A. 等级保护共分为三级","B. 第三级要求对遭受攻击后能进行追踪溯源","C. 第二级以上系统需要强制测评","D. 第一级为自主保护级，不需要备案"],answer:"D",analysis:"等保2.0共五级。第一级不需备案；第三级起强制测评；第四级要求追踪溯源。"},
+{id:56,tag:"哈希算法",tagClass:"tag-sec",text:"某安全系统需要选择一种哈希算法用于验证文件完整性，要求输出长度为256位。以下最适合选择的是（ ）。",options:["A. MD5","B. SHA-1","C. SHA-256","D. DES"],answer:"C",analysis:"SHA-256输出256位。MD5=128位，SHA-1=160位，DES是加密算法不是哈希。"},
+{id:57,tag:"可靠性",tagClass:"tag-reliability",text:"某系统由两个相同的子系统并联组成，每个子系统的可靠度为0.9。则该并联系统的可靠度为（ ）。",options:["A. 0.81","B. 0.90","C. 0.95","D. 0.99"],answer:"D",analysis:"R = 1-(1-0.9)(1-0.9) = 1-0.01 = 0.99。"},
+{id:58,tag:"可靠性",tagClass:"tag-reliability",text:"某系统的平均无故障时间MTBF为1000小时，平均修复时间MTTR为10小时。该系统的可用性为（ ）。",options:["A. 90.9%","B. 98.0%","C. 99.0%","D. 99.9%"],answer:"C",analysis:"可用性 = MTBF/(MTBF+MTTR) = 1000/1010 ≈ 99.0%。"},
+{id:59,tag:"性能评价",tagClass:"tag-reliability",text:"以下不属于软件性能评价指标的是（ ）。",options:["A. 响应时间","B. 吞吐量","C. 资源利用率","D. 代码复杂度"],answer:"D",analysis:"代码复杂度是软件质量指标，非性能指标。性能指标：响应时间、吞吐量、并发数、资源利用率。"},
+{id:60,tag:"项目管理",tagClass:"tag-math",text:"某项目有7个活动，各活动的紧前活动和持续时间如下表所示。关键路径的长度是（ ）周。\n活动  紧前活动  持续时间(周)\nA     —         3\nB     —         2\nC     A         4\nD     A,B       3\nE     C         2\nF     D         5\nG     E,F       1",options:["A. 11周","B. 12周","C. 13周","D. 14周"],answer:"B",analysis:"关键路径A→D→F→G = 3+3+5+1 = 12周。A→C→E→G=10周，B→D→F→G=11周。"},
+{id:61,tag:"挣值管理",tagClass:"tag-math",text:"某项目计划到第6周末完成价值480万元的工作（PV），实际完成了价值420万元的工作（EV），实际花费了460万元（AC）。则项目的成本绩效指数CPI和进度绩效指数SPI分别为（ ）。",options:["A. CPI=0.91, SPI=0.88","B. CPI=0.91, SPI=1.10","C. CPI=1.10, SPI=0.88","D. CPI=0.88, SPI=0.91"],answer:"A",analysis:"CPI=EV/AC=420/460≈0.91；SPI=EV/PV=420/480≈0.88。均<1，成本超支且进度落后。"},
+{id:62,tag:"风险管理",tagClass:"tag-math",text:"在项目风险管理中，风险定性分析的主要目的是（ ）。",options:["A. 计算每个风险的精确财务损失金额","B. 对风险进行优先级排序，确定哪些风险需要进一步定量分析或采取应对措施","C. 制定风险应对策略并分配风险责任人","D. 监控已识别风险的状态并跟踪风险响应效果"],answer:"B",analysis:"定性分析：评估概率和影响进行优先级排序。A=定量分析，C=应对规划，D=风险监控。"},
+{id:63,tag:"知识产权",tagClass:"tag-ip",text:"根据我国《计算机软件保护条例》，以下关于软件著作权的说法正确的是（ ）。",options:["A. 软件著作权自软件开发完成之日起产生，但须登记后才受法律保护","B. 软件著作权的保护期限为作者终生及其死亡后50年","C. 软件著作权自软件开发完成之日起自动产生，无需登记","D. 合作开发的软件，著作权保护期限以最后死亡的作者计算"],answer:"C",analysis:"软件著作权自开发完成之日起自动产生，无需登记即受保护。登记只是自愿行为。"},
+{id:64,tag:"知识产权",tagClass:"tag-ip",text:"某公司独立开发了一项新技术并准备申请专利。根据我国专利法，以下说法正确的是（ ）。",options:["A. 发明专利的保护期限为20年，自授权之日起计算","B. 实用新型专利的保护期限为10年，自申请之日起计算","C. 外观设计专利的保护期限为15年，自授权之日起计算","D. 同样的发明创造可以同时授予多个专利权"],answer:"B",analysis:"发明20年、实用新型10年、外观设计15年，均自申请日起计算。"},
+{id:65,tag:"标准化",tagClass:"tag-ip",text:"在国际标准化组织ISO的标准体系中，以下关于标准级别的说法正确的是（ ）。",options:["A. GB/T开头的标准属于国家强制性标准","B. ISO标准等同于我国的国家强制性标准","C. 我国国家标准GB为强制性标准，GB/T为推荐性标准","D. 企业标准必须严于国家标准才能制定"],answer:"C",analysis:"GB=强制性，GB/T=推荐性（T代表推荐）。ISO标准各国可自愿采用。"},
+{id:66,tag:"云原生",tagClass:"tag-new",text:"在云原生架构中，Service Mesh（服务网格）的核心功能是（ ）。",options:["A. 提供容器镜像的构建和打包服务","B. 为服务间通信提供透明的流量管理、安全加密和可观测性","C. 负责容器的编排、调度和弹性伸缩","D. 提供持续集成和持续交付的自动化流水线"],answer:"B",analysis:"Service Mesh通过Sidecar代理提供流量管理、mTLS安全和可观测性。C是K8s功能，D是CI/CD功能。"},
+{id:67,tag:"容器化",tagClass:"tag-new",text:"关于容器化技术和虚拟机的对比，以下说法正确的是（ ）。",options:["A. 容器通过Hypervisor虚拟化硬件资源，每个容器运行独立的操作系统内核","B. 容器共享宿主机的操作系统内核，启动速度快于虚拟机","C. 虚拟机的隔离性弱于容器，因此更适合多租户环境","D. Docker容器和虚拟机在资源隔离和安全边界方面完全等价"],answer:"B",analysis:"容器共享宿主机内核，无需启动完整OS，启动速度远快于VM。VM隔离性强于容器。"},
+{id:68,tag:"ArchiMate",tagClass:"tag-new",text:"ArchiMate是一种企业架构建模语言，其核心层不包括以下（ ）。",options:["A. 业务层（Business Layer）","B. 应用层（Application Layer）","C. 技术层（Technology Layer）","D. 数据层（Data Layer）"],answer:"D",analysis:"ArchiMate核心三层：业务层、应用层、技术层。数据不是独立核心层。"},
+{id:69,tag:"零信任",tagClass:"tag-new",text:"零信任架构（Zero Trust Architecture, ZTA）的核心原则是（ ）。",options:["A. 内部网络是可信的，只需对外部访问进行严格认证","B. 基于网络位置建立信任，位于安全区域的设备可自动获得访问权限","C. 不论用户或设备位于网络内部还是外部，都不给予默认信任，每次访问都需要持续验证和授权","D. 仅依赖防火墙和VPN即可保障企业安全"],answer:"C",analysis:"零信任：Never trust, always verify。不给任何实体默认信任，每次访问需验证和授权。"},
+{id:70,tag:"MLOps",tagClass:"tag-new",text:"关于MLOps（机器学习运维），以下说法正确的是（ ）。",options:["A. MLOps仅关注模型训练阶段的超参数调优","B. MLOps将DevOps理念应用于机器学习系统，覆盖数据处理、模型训练、部署和监控的全生命周期管理","C. MLOps不需要版本控制，因为模型文件不需要像代码一样管理","D. MLOps仅适用于深度学习模型，不适用于传统机器学习模型"],answer:"B",analysis:"MLOps将DevOps理念应用于ML全生命周期：数据版本→特征工程→训练→部署→监控。"},
+{id:71,tag:"专业英语",tagClass:"tag-en",text:"In microservices architecture, the system is decomposed into small, independently deployable services, each owning its own data store and communicating through lightweight protocols such as REST or message queues. This approach improves scalability and enables teams to develop, deploy, and scale services independently. However, it also introduces challenges such as distributed data consistency and increased operational complexity. This architectural style refers to ___.",options:["A. Monolithic Architecture","B. Service-Oriented Architecture (SOA)","C. Microservices Architecture","D. Event-Driven Architecture"],answer:"C",analysis:"描述微服务架构核心特征：小型独立部署服务，各自数据存储，轻量级协议通信。"},
+{id:72,tag:"专业英语",tagClass:"tag-en",text:"A software engineering practice automates the integration, build, testing, and deployment of application code. Developers commit code to a shared repository, triggering an automated pipeline that compiles the code, runs unit and integration tests, and deploys the verified artifacts to production or staging environments. This practice is commonly known as ___.",options:["A. Continuous Integration/Continuous Delivery (CI/CD)","B. Waterfall Development","C. Feature Toggling","D. Blue-Green Deployment"],answer:"A",analysis:"描述CI/CD流水线：自动构建、测试、部署。"},
+{id:73,tag:"专业英语",tagClass:"tag-en",text:"In a distributed ledger system, all participating nodes must agree on the current state of the ledger without relying on a central authority. Various protocols, such as Proof of Work and Proof of Stake, are used to ensure that transactions are validated and added to the chain only when a majority of nodes reach agreement. This process is referred to as ___.",options:["A. Two-Phase Commit","B. Consensus Mechanism","C. Distributed Locking","D. Leader Election"],answer:"B",analysis:"描述区块链共识机制：PoW、PoS等算法确保无中心化环境下达成一致。"},
+{id:74,tag:"专业英语",tagClass:"tag-en",text:"A security model assumes that threats may originate from both outside and inside the network perimeter. It eliminates the concept of a trusted internal network and requires strict identity verification for every user and device attempting to access resources, regardless of their location. Access decisions are made dynamically based on real-time context and policy evaluation. This security approach is known as ___.",options:["A. Defense in Depth","B. Zero Trust Architecture","C. Virtual Private Network (VPN)","D. Role-Based Access Control (RBAC)"],answer:"B",analysis:"描述零信任架构：消除可信内部网络概念，每次访问都需严格验证。"},
+{id:75,tag:"专业英语",tagClass:"tag-en",text:"A distributed computing paradigm processes data at or near the source of data generation, rather than sending all data to a centralized cloud or data center. By performing computation closer to end devices such as IoT sensors and mobile phones, this approach reduces latency, conserves bandwidth, and improves response times for time-sensitive applications. This paradigm is called ___.",options:["A. Grid Computing","B. Edge Computing","C. Cluster Computing","D. Mainframe Computing"],answer:"B",analysis:"描述边缘计算：在数据源附近处理数据，降低延迟、节省带宽。"}
 ];
 
-// Normalize all answers to letter format
+// Normalize answers
 const allQuestions = [...part1, ...part2, ...part3, ...part4];
-
-// Normalize part1 answers from 0-based index to letter
 allQuestions.forEach(q => {
   if (typeof q.answer === 'number') {
-    q.answer = String.fromCharCode(65 + q.answer); // 0→A, 1→B, 2→C, 3→D
+    q.answer = String.fromCharCode(65 + q.answer);
   }
 });
 
 // ========== STATE ==========
 let userAnswers = {};
-let startTime = Date.now();
+let currentQ = 1;
+let totalElapsed = 0; // seconds accumulated while page is open
+let timerStartMark = Date.now(); // when current session started
 let timerInterval;
 let submitted = false;
-const STORAGE_KEY = 'arch_mock_75_v1';
+const STORAGE_KEY = 'arch_mock_75_v2';
 
 // ========== INIT ==========
 function init() {
   loadProgress();
-  renderNav();
-  renderQuestions();
+  renderAnswerCard();
+  renderQuestion(currentQ);
   startTimer();
   updateProgress();
 }
@@ -209,18 +235,29 @@ function loadProgress() {
     if (saved) {
       const data = JSON.parse(saved);
       userAnswers = data.answers || {};
-      startTime = data.startTime || Date.now();
+      totalElapsed = data.totalElapsed || 0;
+      currentQ = data.currentQ || 1;
     }
+    timerStartMark = Date.now();
   } catch(e) {}
 }
 
 function saveProgress() {
+  // accumulate elapsed time before saving
+  const sessionElapsed = Math.floor((Date.now() - timerStartMark) / 1000);
+  const currentTotal = totalElapsed + sessionElapsed;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       answers: userAnswers,
-      startTime: startTime
+      totalElapsed: currentTotal,
+      currentQ: currentQ
     }));
   } catch(e) {}
+}
+
+function getRemaining() {
+  const sessionElapsed = Math.floor((Date.now() - timerStartMark) / 1000);
+  return Math.max(0, 150 * 60 - (totalElapsed + sessionElapsed));
 }
 
 function startTimer() {
@@ -229,8 +266,7 @@ function startTimer() {
 }
 
 function updateTimerDisplay() {
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const remaining = Math.max(0, 150 * 60 - elapsed);
+  const remaining = getRemaining();
   const min = Math.floor(remaining / 60);
   const sec = remaining % 60;
   document.getElementById('timer').textContent =
@@ -241,69 +277,62 @@ function updateTimerDisplay() {
   }
 }
 
-// ========== RENDER ==========
-function getTagClass(tag) {
-  if (tag.includes('架构') || tag.includes('ATAM') || tag.includes('ABSD') || tag.includes('视图') || tag.includes('MVC') || tag.includes('文档')) return 'tag-arch';
-  if (tag.includes('开发') || tag.includes('敏捷') || tag.includes('需求') || tag.includes('测试') || tag.includes('UML') || tag.includes('维护') || tag.includes('配置')) return 'tag-se';
-  if (tag.includes('流水') || tag.includes('存储') || tag.includes('死锁') || tag.includes('PV') || tag.includes('页面') || tag.includes('磁盘') || tag.includes('指令')) return 'tag-os';
-  if (tag.includes('数据') || tag.includes('分布式') || tag.includes('NoSQL')) return 'tag-db';
-  if (tag.includes('网络') || tag.includes('IP') || tag.includes('协议')) return 'tag-net';
-  if (tag.includes('加密') || tag.includes('签名') || tag.includes('等级') || tag.includes('哈希') || tag.includes('安全')) return 'tag-sec';
-  if (tag.includes('可靠') || tag.includes('性能')) return 'tag-reliability';
-  if (tag.includes('项目') || tag.includes('挣值') || tag.includes('风险') || tag.includes('数学')) return 'tag-math';
-  if (tag.includes('产权') || tag.includes('标准')) return 'tag-ip';
-  if (tag.includes('云原生') || tag.includes('容器') || tag.includes('Archi') || tag.includes('零信任') || tag.includes('MLOps')) return 'tag-new';
-  if (tag.includes('英语') || tag.includes('English')) return 'tag-en';
-  return 'tag-arch';
+// ========== ANSWER CARD ==========
+function renderAnswerCard() {
+  const card = document.getElementById('answer-card');
+  let html = '<div class="ac-grid">';
+  for (let i = 1; i <= 75; i++) {
+    const cls = (i === currentQ ? ' current' : '') + (userAnswers[i] ? ' done' : '');
+    html += `<button class="ac-btn${cls}" id="acb-${i}" onclick="goToQ(${i})">${i}</button>`;
+  }
+  html += '</div>';
+  card.innerHTML = html;
 }
 
-function renderNav() {
-  const nav = document.getElementById('nav-bar');
-  const sections = [
-    {title:'软件架构（Q1-18）',start:1,end:18},
-    {title:'软件工程（Q19-30）',start:19,end:30},
-    {title:'组成原理与操作系统（Q31-42）',start:31,end:42},
-    {title:'数据库与分布式（Q43-48）',start:43,end:48},
-    {title:'网络与安全（Q49-56）',start:49,end:56},
-    {title:'可靠性与数学（Q57-62）',start:57,end:62},
-    {title:'知识产权与标准化（Q63-65）',start:63,end:65},
-    {title:'新技术与英语（Q66-75）',start:66,end:75}
-  ];
-  let html = '';
-  sections.forEach(s => {
-    html += `<div class="section-title">${s.title}</div><div class="nav-grid">`;
-    for (let i = s.start; i <= s.end; i++) {
-      html += `<button class="nav-btn${userAnswers[i]?' done':''}" id="nav-${i}" onclick="scrollToQ(${i})">${i}</button>`;
-    }
-    html += '</div>';
-  });
-  nav.innerHTML = html;
+function updateAnswerCard() {
+  // update current highlight
+  document.querySelectorAll('.ac-btn').forEach(b => b.classList.remove('current'));
+  const cur = document.getElementById('acb-' + currentQ);
+  if (cur) cur.classList.add('current');
 }
 
-function renderQuestions() {
-  const area = document.getElementById('questions-area');
-  let html = '';
-  allQuestions.forEach(q => {
-    const answered = userAnswers[q.id] ? ' answered' : '';
-    const tagClass = q.tagClass || getTagClass(q.tag);
-    html += `<div class="question-card${answered}" id="qcard-${q.id}">
-      <div class="q-header">
-        <span class="q-num">${q.id}</span>
-        <span class="q-tag ${tagClass}">${q.tag}</span>
-      </div>
-      <div class="q-text">${q.text}</div>
-      <div class="options">`;
-    q.options.forEach((opt, idx) => {
-      const letter = String.fromCharCode(65 + idx);
-      const selected = userAnswers[q.id] === letter ? ' selected' : '';
-      html += `<div class="option${selected}" onclick="selectOption(${q.id},'${letter}')">
+function markAnswerCard(qId) {
+  const btn = document.getElementById('acb-' + qId);
+  if (btn && !btn.classList.contains('done')) btn.classList.add('done');
+}
+
+// ========== QUESTION DISPLAY ==========
+function renderQuestion(qId) {
+  const q = allQuestions.find(x => x.id === qId);
+  if (!q) return;
+
+  const tagClass = q.tagClass || 'tag-arch';
+  let html = `<div class="q-card">
+    <div class="q-title">第${qId}题</div>
+    <div class="q-text">${q.text}</div>
+    <div class="q-options">`;
+
+  q.options.forEach((opt, idx) => {
+    const letter = String.fromCharCode(65 + idx);
+    const selected = userAnswers[qId] === letter ? ' selected' : '';
+    html += `<div class="q-opt${selected}" onclick="selectOption(${qId},'${letter}')">
+      <div class="opt-radio"></div>
+      <div class="opt-content">
         <span class="opt-letter">${letter}.</span>
         <span class="opt-text">${opt.substring(3)}</span>
-      </div>`;
-    });
-    html += '</div></div>';
+      </div>
+    </div>`;
   });
-  area.innerHTML = html;
+
+  html += '</div></div>';
+  document.getElementById('q-display').innerHTML = html;
+
+  // update nav buttons
+  document.getElementById('prev-btn').disabled = (qId <= 1);
+  document.getElementById('next-btn').disabled = (qId >= 75);
+  document.getElementById('next-btn').textContent = qId >= 75 ? '已是最后一题' : '下一题 ▶';
+
+  updateAnswerCard();
 }
 
 function selectOption(qId, letter) {
@@ -313,42 +342,53 @@ function selectOption(qId, letter) {
   updateProgress();
 
   // Update option UI
-  const card = document.getElementById(`qcard-${qId}`);
-  card.querySelectorAll('.option').forEach(opt => {
-    opt.classList.remove('selected');
+  const card = document.querySelector('.q-card');
+  card.querySelectorAll('.q-opt').forEach(opt => opt.classList.remove('selected'));
+  card.querySelectorAll('.q-opt').forEach(opt => {
+    const ltr = opt.querySelector('.opt-letter').textContent;
+    if (ltr === letter + '.') opt.classList.add('selected');
   });
-  card.querySelectorAll('.option').forEach(opt => {
-    if (opt.querySelector('.opt-letter').textContent === letter + '.') {
-      opt.classList.add('selected');
-    }
-  });
-  card.classList.add('answered');
 
-  // Update nav
-  const navBtn = document.getElementById(`nav-${qId}`);
-  if (navBtn) navBtn.classList.add('done');
+  markAnswerCard(qId);
+}
+
+function goToQ(id) {
+  currentQ = id;
+  saveProgress();
+  renderQuestion(id);
+  document.getElementById('right-panel').scrollTop = 0;
+}
+
+function prevQ() {
+  if (currentQ > 1) goToQ(currentQ - 1);
+}
+
+function nextQ() {
+  if (currentQ < 75) goToQ(currentQ + 1);
 }
 
 function updateProgress() {
   const answered = Object.keys(userAnswers).length;
-  const pct = Math.round((answered / 75) * 100);
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = pct + '%';
-  document.getElementById('stats').textContent = `已答 ${answered}/75 题`;
-}
-
-function scrollToQ(id) {
-  document.getElementById(`qcard-${id}`).scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('stats').textContent = `已答 ${answered}/75`;
 }
 
 // ========== SUBMIT ==========
+function confirmSubmit() {
+  const answered = Object.keys(userAnswers).length;
+  const unanswered = 75 - answered;
+  let msg = '确定要交卷吗？';
+  if (unanswered > 0) msg += `\n\n还有 ${unanswered} 题未作答。`;
+  if (confirm(msg)) submitExam();
+}
+
 function submitExam() {
   if (submitted) return;
   submitted = true;
   clearInterval(timerInterval);
 
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const timeUsed = Math.floor(elapsed / 60) + '分' + (elapsed % 60) + '秒';
+  const sessionElapsed = Math.floor((Date.now() - timerStartMark) / 1000);
+  const finalElapsed = totalElapsed + sessionElapsed;
+  const timeUsed = Math.floor(finalElapsed / 60) + '分' + (finalElapsed % 60) + '秒';
 
   let correct = 0;
   let wrongList = [];
@@ -366,60 +406,76 @@ function submitExam() {
     }
   });
 
-  const score = Math.round(correct / 75 * 100);
-  const pass = score >= 45 ? 'PASS' : 'FAIL';
+  const score = correct;
+  const pass = score >= 45;
 
-  // Build report
-  let reportHtml = `
+  let html = `
     <div class="score-box">
       <div class="score">${score}分</div>
-      <div class="label">正确 ${correct}/75 · 用时 ${timeUsed} · ${pass === 'PASS' ? '✅ 通过' : '❌ 未通过（需45分）'}</div>
+      <div class="label">正确 ${correct}/75 · 用时 ${timeUsed} · ${pass ? '通过（≥45分）' : '未通过（需≥45分）'}</div>
     </div>
-    <div class="summary">
+    <div class="summary-box">
       <h3>分类统计</h3>
-      <table>
-        <tr><th>知识点</th><th>正确/总数</th><th>正确率</th></tr>`;
+      <table><tr><th>知识点</th><th>正确/总数</th><th>正确率</th></tr>`;
 
   Object.keys(categoryStats).forEach(cat => {
     const s = categoryStats[cat];
     const rate = Math.round(s.correct / s.total * 100);
     const color = rate >= 60 ? '#4caf50' : rate >= 40 ? '#ff9800' : '#e53935';
-    reportHtml += `<tr><td>${cat}</td><td>${s.correct}/${s.total}</td><td style="color:${color};font-weight:bold">${rate}%</td></tr>`;
+    html += `<tr><td>${cat}</td><td>${s.correct}/${s.total}</td><td style="color:${color};font-weight:bold">${rate}%</td></tr>`;
   });
 
-  reportHtml += `</table></div>
-    <div class="summary">
-      <h3>错题回顾（${wrongList.length}题）</h3>`;
+  html += `</table></div><div class="summary-box"><h3>错题回顾（${wrongList.length}题）</h3>`;
 
   wrongList.forEach(q => {
     const yourAns = userAnswers[q.id] || '未作答';
-    reportHtml += `<div class="review-card wrong">
-      <div class="q-header">
-        <span class="q-num">${q.id}</span>
-        <span class="q-tag ${q.tagClass || getTagClass(q.tag)}">${q.tag}</span>
+    html += `<div class="review-card wrong">
+      <div class="r-header">
+        <span class="r-num">第${q.id}题</span>
       </div>
-      <div class="q-text">${q.text}</div>
-      <div class="your-answer">你的答案：${yourAns}</div>
-      <div class="correct-answer">正确答案：${q.answer}</div>
-      <div class="analysis">${q.analysis}</div>
+      <div class="r-text">${q.text}</div>
+      <div class="r-your">你的答案：${yourAns}</div>
+      <div class="r-correct">正确答案：${q.answer}</div>
+      <div class="r-analysis">${q.analysis}</div>
     </div>`;
   });
 
   if (wrongList.length === 0) {
-    reportHtml += '<p style="text-align:center;color:#4caf50;font-size:1.1em;padding:20px">全部正确，满分通过！🎉</p>';
+    html += '<p style="text-align:center;color:#4caf50;font-size:1.1em;padding:20px">全部正确，满分通过！</p>';
   }
 
-  reportHtml += '</div>';
+  html += '</div>';
 
-  document.getElementById('quiz-container').style.display = 'none';
-  const reportEl = document.getElementById('report');
-  reportEl.innerHTML = reportHtml;
-  reportEl.style.display = 'block';
-  window.scrollTo(0, 0);
+  document.querySelector('.main-wrap').style.display = 'none';
+  const rw = document.getElementById('report-wrap');
+  document.getElementById('report-inner').innerHTML = html;
+  rw.style.display = 'block';
 
-  // Clear saved progress
   localStorage.removeItem(STORAGE_KEY);
 }
+
+// Save on page close/refresh to pause timer
+window.addEventListener('beforeunload', function() {
+  const sessionElapsed = Math.floor((Date.now() - timerStartMark) / 1000);
+  totalElapsed += sessionElapsed;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      answers: userAnswers,
+      totalElapsed: totalElapsed,
+      currentQ: currentQ
+    }));
+  } catch(e) {}
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  if (submitted) return;
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevQ(); }
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); nextQ(); }
+  if (['A','B','C','D'].includes(e.key.toUpperCase())) {
+    selectOption(currentQ, e.key.toUpperCase());
+  }
+});
 
 init();
 </script>
