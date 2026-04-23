@@ -6,53 +6,53 @@
 <title>系统架构设计师 - 综合知识全真模拟（75题）</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'SimSun','Microsoft YaHei',serif;background:#e8edf3;color:#333;line-height:1.8;font-size:14px}
+body{font-family:'SimSun','Microsoft YaHei',serif;background:#e8edf3;color:#333;line-height:1.8;font-size:16px}
 /* === TOP BAR === */
-.top-bar{background:#3a7bd5;color:#fff;padding:0 16px;height:42px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.12)}
-.top-bar .exam-title{font-size:14px;font-weight:bold}
-.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:12px}
-.top-bar .timer{font-size:15px;font-weight:bold;font-variant-numeric:tabular-nums;background:rgba(255,255,255,.18);padding:3px 12px;border-radius:3px}
+.top-bar{background:#3a7bd5;color:#fff;padding:0 18px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.top-bar .exam-title{font-size:16px;font-weight:bold}
+.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:14px}
+.top-bar .timer{font-size:17px;font-weight:bold;font-variant-numeric:tabular-nums;background:rgba(255,255,255,.18);padding:4px 14px;border-radius:3px}
 .top-bar .stats{opacity:.9}
-.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:4px 18px;border-radius:3px;font-size:12px;font-weight:bold;cursor:pointer}
+.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:5px 20px;border-radius:3px;font-size:14px;font-weight:bold;cursor:pointer}
 .top-bar .submit-top:hover{background:#f0f0f0}
 /* === MAIN LAYOUT === */
-.main-wrap{display:flex;height:calc(100vh - 42px);overflow:hidden}
+.main-wrap{display:flex;height:calc(100vh - 48px);overflow:hidden}
 /* === LEFT PANEL === */
-.left-panel{width:220px;min-width:220px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column;overflow:hidden}
-.left-panel .panel-title{padding:10px 12px 6px;font-size:13px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
-.answer-card-area{flex:1;overflow-y:auto;padding:6px 8px}
+.left-panel{width:250px;min-width:250px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column;overflow:hidden}
+.left-panel .panel-title{padding:12px 14px 8px;font-size:15px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.answer-card-area{flex:1;overflow-y:auto;padding:8px 10px}
 .answer-card-area::-webkit-scrollbar{width:3px}
 .answer-card-area::-webkit-scrollbar-thumb{background:#ccc;border-radius:2px}
-.ac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
-.ac-btn{aspect-ratio:1;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
+.ac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.ac-btn{aspect-ratio:1;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
 .ac-btn:hover{background:#e0ecfa}
 .ac-btn.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5;font-weight:bold}
 .ac-btn.done{background:#5eba5e;border-color:#4da64d;color:#fff}
 .ac-btn.done.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
 /* bottom info */
-.left-bottom{padding:8px 12px;border-top:1px solid #eee;font-size:11px;color:#888;line-height:1.5}
+.left-bottom{padding:10px 14px;border-top:1px solid #eee;font-size:13px;color:#888;line-height:1.5}
 .left-bottom span{display:inline-block;margin-right:8px}
-.lb-square{width:10px;height:10px;border-radius:1px;display:inline-block;vertical-align:middle;margin-right:3px}
+.lb-square{width:12px;height:12px;border-radius:1px;display:inline-block;vertical-align:middle;margin-right:3px}
 /* === RIGHT PANEL === */
-.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:16px 24px}
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
 .right-panel::-webkit-scrollbar{width:6px}
 .right-panel::-webkit-scrollbar-thumb{background:#c5cdd8;border-radius:3px}
 /* question display */
 .q-display{max-width:800px;margin:0 auto}
-.q-card{background:#fff;padding:20px 24px;margin-bottom:12px;border:1px solid #dde3eb}
-.q-card .q-title{font-size:14px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
-.q-card .q-text{font-size:14px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
-.q-options{display:flex;flex-direction:column;gap:6px}
-.q-opt{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;cursor:pointer;font-size:14px;line-height:1.7;transition:all .1s}
+.q-card{background:#fff;padding:24px 28px;margin-bottom:14px;border:1px solid #dde3eb}
+.q-card .q-title{font-size:16px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
+.q-card .q-text{font-size:16px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;cursor:pointer;font-size:16px;line-height:1.7;transition:all .1s}
 .q-opt:hover{background:#f5f8fc}
 .q-opt.selected{background:#e8f0fe}
-.q-opt .opt-radio{width:15px;height:15px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative;transition:all .1s}
+.q-opt .opt-radio{width:17px;height:17px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative;transition:all .1s}
 .q-opt.selected .opt-radio{border-color:#3a7bd5}
-.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2px;left:2px;width:8px;height:8px;background:#3a7bd5;border-radius:50%}
+.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2.5px;left:2.5px;width:9px;height:9px;background:#3a7bd5;border-radius:50%}
 .q-opt .opt-content{flex:1}
 /* nav arrows */
 .q-nav-arrows{display:flex;justify-content:space-between;max-width:800px;margin:0 auto 16px;padding:0 4px}
-.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:6px 20px;cursor:pointer;font-size:12px;color:#555}
+.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:8px 24px;cursor:pointer;font-size:14px;color:#555}
 .q-nav-btn:hover{background:#e0ecfa;border-color:#90b8e0;color:#3a7bd5}
 .q-nav-btn:disabled{opacity:.3;cursor:not-allowed}
 /* === REPORT === */
@@ -162,7 +162,7 @@ const part3 = [
 {id:37,tag:"PV操作",tagClass:"tag-os",text:"PV操作是实现进程同步与互斥的常用机制。某系统中有3个进程P1、P2、P3共享一个缓冲区，P1向缓冲区写入数据，P2和P3分别从缓冲区读取数据。要求P1写入后P2和P3才能读取，P2和P3都读取完毕后P1才能继续写入。初始时信号量S1=0，S2=0，S3=0。下列PV操作安排正确的是（　　）。",options:["A. P1: V(S1); V(S2); P(S3); P(S3);   P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","B. P1: P(S3); P(S3); V(S1); V(S2);   P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","C. P1: V(S1); V(S2); P(S3);          P2: P(S1); 读; V(S3);   P3: P(S2); 读; V(S3);","D. P1: V(S1); V(S1); P(S3); P(S3);   P2: P(S1); 读; V(S3);   P3: P(S1); 读; V(S3);"],answer:"A",analysis:"P1先V(S1)V(S2)通知P2/P3可读，再两个P(S3)等P2/P3都读完。B错在先P会永久阻塞；C只等1个P(S3)不保险；D中P2/P3用同一信号量会冲突。"},
 {id:38,tag:"页面置换",tagClass:"tag-os",text:"某系统采用请求分页存储管理，分配给某进程3个页框，初始为空。依次访问页号：1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 8次","B. 9次","C. 10次","D. 12次"],answer:"C",analysis:"LRU模拟3页框：前3次缺页装1,2,3→第4次淘汰1装4→第5次淘汰2装1→第6次淘汰3装2→第7次淘汰4装5→8命中1→9命中2→第10次淘汰5装3→11次淘汰1装4→12次淘汰2装5。共10次缺页。"},
 {id:39,tag:"页面置换",tagClass:"tag-os",text:"关于Belady异常，下列说法正确的是（　　）。",options:["A. LRU算法可能出现Belady异常","B. FIFO算法可能出现Belady异常","C. OPT（最优置换）算法可能出现Belady异常","D. 所有页面置换算法都可能出现Belady异常"],answer:"B",analysis:"Belady异常：增加页框数反导致缺页率上升。只有FIFO可能出现。LRU和OPT是栈式算法，不会出现。"},
-{id:40,tag:"磁盘调度",tagClass:"tag-os",text:"某磁盘有100个柱面（编号0~99），磁头当前位于第25号柱面，移动方向为柱面号增大方向。请求队列依次到达：60, 80, 10, 45, 90, 30。采用SCAN（电梯调度）算法，磁头依次访问的柱面序列为（　　）。",options:["A. 30, 45, 60, 80, 90, 10","B. 60, 80, 90, 45, 30, 10","C. 30, 45, 60, 80, 90, 然后10","D. 60, 45, 30, 10, 80, 90"],answer:"C",analysis:"SCAN沿增大方向：先服务30,45,60,80,90，到端后反向服务10。"},
+{id:40,tag:"磁盘调度",tagClass:"tag-os",text:"某磁盘有100个柱面（编号0~99），磁头当前位于第25号柱面，移动方向为柱面号增大方向。请求队列依次到达：60, 80, 10, 45, 90, 30。采用SCAN（电梯调度）算法，磁头依次访问的柱面序列为（　　）。",options:["A. 30, 45, 60, 80, 90","B. 60, 80, 90, 45, 30, 10","C. 30, 45, 60, 80, 90, 然后10","D. 60, 45, 30, 10, 80, 90"],answer:"C",analysis:"SCAN沿增大方向：先服务30,45,60,80,90，到端后反向服务10。"},
 {id:41,tag:"指令系统",tagClass:"tag-os",text:"下列关于指令系统的叙述中，错误的是（　　）。",options:["A. RISC指令长度固定，CISC指令长度可变","B. RISC一般采用硬布线控制器，CISC一般采用微程序控制器","C. RISC寄存器数量较少，寻址方式丰富","D. RISC适合流水线执行，大多数指令在一个时钟周期内完成"],answer:"C",analysis:"RISC寄存器数量较多，寻址方式简单；CISC寄存器较少，寻址方式丰富。C选项将两者颠倒了。"},
 {id:42,tag:"指令系统",tagClass:"tag-os",text:"在指令系统中，操作数在主存中的实际地址可以通过多种寻址方式获得。若指令中地址码字段给出的值为A，寄存器R的内容为1000H，则寄存器间接寻址方式下，操作数的有效地址是（　　）。",options:["A. A的值","B. 寄存器R中的值1000H","C. A + 1000H","D. 主存中以1000H为地址的单元中的内容"],answer:"B",analysis:"寄存器间接寻址：EA = (R) = 1000H。有效地址就是寄存器中的值。"}
 ];

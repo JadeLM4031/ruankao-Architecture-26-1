@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专项5 - PV操作·LRU·子网·等级保护·关键路径</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'SimSun','Microsoft YaHei',serif;background:#e8edf3;color:#333;line-height:1.8;font-size:16px}
+.top-bar{background:#3a7bd5;color:#fff;padding:0 18px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.top-bar .exam-title{font-size:16px;font-weight:bold}
+.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:14px}
+.top-bar .stats{opacity:.9}
+.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:5px 20px;border-radius:3px;font-size:14px;font-weight:bold;cursor:pointer}
+.main-wrap{display:flex;height:calc(100vh - 48px);overflow:hidden}
+.left-panel{width:250px;min-width:250px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column;overflow:hidden}
+.left-panel .panel-title{padding:12px 14px 8px;font-size:15px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.answer-card-area{flex:1;overflow-y:auto;padding:8px 10px}
+.ac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.ac-btn{aspect-ratio:1;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
+.ac-btn:hover{background:#e0ecfa}
+.ac-btn.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5;font-weight:bold}
+.ac-btn.done{background:#5eba5e;border-color:#4da64d;color:#fff}
+.ac-btn.done.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
+.left-bottom{padding:10px 14px;border-top:1px solid #eee;font-size:13px;color:#888;line-height:1.5}
+.left-bottom span{display:inline-block;margin-right:8px}
+.lb-square{width:12px;height:12px;border-radius:1px;display:inline-block;vertical-align:middle;margin-right:3px}
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.q-display{max-width:800px;margin:0 auto}
+.q-card{background:#fff;padding:24px 28px;margin-bottom:14px;border:1px solid #dde3eb}
+.q-card .q-title{font-size:16px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
+.q-card .q-text{font-size:16px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;cursor:pointer;font-size:16px;line-height:1.7;transition:all .1s}
+.q-opt:hover{background:#f5f8fc}
+.q-opt.selected{background:#e8f0fe}
+.q-opt .opt-radio{width:17px;height:17px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative;transition:all .1s}
+.q-opt.selected .opt-radio{border-color:#3a7bd5}
+.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2.5px;left:2.5px;width:9px;height:9px;background:#3a7bd5;border-radius:50%}
+.q-opt .opt-content{flex:1}
+.q-nav-arrows{display:flex;justify-content:space-between;max-width:800px;margin:0 auto 16px;padding:0 4px}
+.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:8px 24px;cursor:pointer;font-size:14px;color:#555}
+.q-nav-btn:hover{background:#e0ecfa;border-color:#90b8e0;color:#3a7bd5}
+.q-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.report-wrap{display:none;flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.report-wrap .report-inner{max-width:800px;margin:0 auto}
+.score-box{background:linear-gradient(135deg,#3a7bd5,#2b6cb0);color:#fff;border-radius:8px;padding:28px;text-align:center;margin-bottom:16px}
+.score-box .score{font-size:3.2em;font-weight:bold}
+.score-box .label{font-size:.9em;opacity:.9;margin-top:4px}
+.summary-box{background:#fff;border-radius:6px;padding:16px;margin-bottom:12px;border:1px solid #e2e8f0}
+.summary-box h3{margin-bottom:10px;color:#2b6cb0;font-size:14px;border-left:3px solid #2b6cb0;padding-left:8px}
+.summary-box table{width:100%;border-collapse:collapse;font-size:13px}
+.summary-box th,.summary-box td{padding:7px 10px;border-bottom:1px solid #eee;text-align:center}
+.summary-box th{background:#f5f7fa;font-weight:600;color:#555}
+.review-card{background:#fff;border-radius:6px;padding:16px 20px;margin-bottom:10px;border:1px solid #e2e8f0;border-left:4px solid #4caf50}
+.review-card.wrong{border-left-color:#e53935}
+.review-card .r-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.review-card .r-num{background:#3a7bd5;color:#fff;border-radius:3px;padding:1px 8px;font-size:12px}
+.review-card .r-text{font-size:13px;margin-bottom:8px;white-space:pre-wrap;line-height:1.7}
+.review-card .r-your{font-size:12px;color:#e53935;margin-bottom:3px}
+.review-card .r-correct{font-size:12px;color:#4caf50;margin-bottom:3px}
+.review-card .r-analysis{font-size:12px;color:#666;background:#f5f7fa;padding:10px;border-radius:4px;margin-top:6px;white-space:pre-wrap;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="exam-title">专项5 · PV操作·LRU·子网·等级保护·关键路径</div>
+  <div class="right-info">
+    <div class="stats" id="stats">已答 0/15</div>
+    <button class="submit-top" onclick="confirmSubmit()">交卷</button>
+  </div>
+</div>
+<div class="main-wrap">
+  <div class="left-panel">
+    <div class="panel-title">答题卡（共15题）</div>
+    <div class="answer-card-area" id="answer-card"></div>
+    <div class="left-bottom">
+      <span><i class="lb-square" style="background:#fff;border:1px solid #ccc"></i>未答</span>
+      <span><i class="lb-square" style="background:#5eba5e"></i>已答</span>
+      <span><i class="lb-square" style="background:#3a7bd5"></i>当前</span>
+    </div>
+  </div>
+  <div class="right-panel" id="right-panel">
+    <div class="q-display" id="q-display"></div>
+    <div class="q-nav-arrows">
+      <button class="q-nav-btn" id="prev-btn" onclick="prevQ()">◀ 上一题</button>
+      <button class="q-nav-btn" id="next-btn" onclick="nextQ()">下一题 ▶</button>
+    </div>
+  </div>
+</div>
+<div class="report-wrap" id="report-wrap">
+  <div class="report-inner" id="report-inner"></div>
+</div>
+
+<script>
+const allQuestions = [
+// ========== PV操作（5题） ==========
+{id:1,text:"桌上有一个盘子，最多放1个水果。父亲专向盘中放苹果，母亲专向盘中放橘子。儿子专等吃橘子，女儿专等吃苹果。初始信号量：plate=1（盘子空位），apple=0（苹果数），orange=0（橘子数）。下列PV操作正确的是（　　）。",options:["A. 父亲: P(plate); 放苹果; V(apple);   母亲: P(plate); 放橘子; V(orange);   儿子: P(orange); 吃橘子; V(plate);   女儿: P(apple); 吃苹果; V(plate);","B. 父亲: V(apple); 放苹果; P(plate);   母亲: V(orange); 放橘子; P(plate);   儿子: P(orange); 吃橘子; V(plate);   女儿: P(apple); 吃苹果; V(plate);","C. 父亲: P(plate); 放苹果; V(apple);   母亲: P(plate); 放橘子; V(orange);   儿子: P(apple); 吃橘子; V(plate);   女儿: P(orange); 吃苹果; V(plate);","D. 父亲: P(apple); 放苹果; V(plate);   母亲: P(orange); 放橘子; V(plate);   儿子: P(plate); 吃橘子; V(orange);   女儿: P(plate); 吃苹果; V(apple);"],answer:"A",analysis:"这是经典的生产者-消费者变体。\n\n分析：\n- 盘子容量1→需要互斥：plate=1表示空位\n- 苹果和橘子是两种不同的资源：apple=0, orange=0\n\n父亲（苹果生产者）：P(plate)等空位→放苹果→V(apple)通知有苹果\n母亲（橘子生产者）：P(plate)等空位→放橘子→V(orange)通知有橘子\n儿子（橘子消费者）：P(orange)等橘子→吃→V(plate)释放空位\n女儿（苹果消费者）：P(apple)等苹果→吃→V(plate)释放空位\n\nB错：先V后P没有同步效果\nC错：儿子应该P(orange)不是P(apple)，女儿应该P(apple)不是P(orange)\nD错：父亲应该P(plate)等空位不是P(apple)"},
+
+{id:2,text:"某共享缓冲区大小为N（N>1），生产者进程向缓冲区写入数据，消费者进程从缓冲区读取数据。为保证正确同步与互斥，至少需要几个信号量？",options:["A. 1个","B. 2个","C. 3个","D. 4个"],answer:"C",analysis:"缓冲区大小N>1时，需要3个信号量：\n1. empty=N：记录空位数（生产者用）\n2. full=0：记录数据数（消费者用）\n3. mutex=1：互斥访问缓冲区（防止同时读写）\n\n注意：当N=1时，empty和full已经隐含了互斥功能（empty+full=1），可以省略mutex。但N>1时必须有mutex，否则多个生产者可能同时写入同一位置。"},
+
+{id:3,text:"某系统中P1和P2两个进程需要互斥访问临界区，初始信号量S=1。下列操作能正确实现互斥的是（　　）。",options:["A. P1: P(S); 临界区; V(S);    P2: P(S); 临界区; V(S);","B. P1: V(S); 临界区; P(S);    P2: V(S); 临界区; P(S);","C. P1: P(S); 临界区; P(S);    P2: V(S); 临界区; V(S);","D. P1: P(S); V(S); 临界区;    P2: P(S); V(S); 临界区;"],answer:"A",analysis:"互斥访问的标准模式：P(S)进入临界区，V(S)退出临界区。\n\nS初始=1：\n- P1先P(S)→S=0→进入临界区\n- P2想P(S)→S=-1→阻塞等待\n- P1完成→V(S)→S=0→唤醒P2\n- P2进入临界区\n\nB错：先V后P=先开门后锁门，没有互斥效果\nC错：P1做两次P会死锁（第二次P时S已为0）\nD错：临界区在V之后，没有保护"},
+
+{id:4,text:"某系统有写者进程和读者进程共享一个数据区。要求：允许多个读者同时读，但写者写时不允许任何人读或写。初始信号量rw=1, mutex=1, readcount=0。下列操作正确的是（　　）。",options:["A. 读者: P(mutex); readcount++; if(readcount==1) P(rw); V(mutex); 读; P(mutex); readcount--; if(readcount==0) V(rw); V(mutex);    写者: P(rw); 写; V(rw);","B. 读者: P(rw); 读; V(rw);    写者: P(rw); 写; V(rw);","C. 读者: P(mutex); readcount++; V(mutex); 读; P(mutex); readcount--; V(mutex);    写者: P(rw); 写; V(rw);","D. 读者: P(rw); P(mutex); readcount++; V(mutex); 读; P(mutex); readcount--; V(mutex); V(rw);    写者: P(rw); 写; V(rw);"],answer:"A",analysis:"读者-写者问题（读者优先）：\n\n关键思路：\n- rw信号量：保证写者之间、写者与读者之间互斥\n- mutex信号量：保护readcount变量的修改\n- readcount：记录当前读者数量\n\n第一个读者负责P(rw)锁住（阻止写者），最后一个读者负责V(rw)解锁（允许写者）。\n\nB错：读者也用rw互斥=同一时间只能一个读者，不满足'多个读者同时读'\nC错：没有在第一个读者时P(rw)，写者可能在读者读的时候写入\nD错：每个读者都P(rw)→同一时间只能一个读者读"},
+
+{id:5,text:"某系统中P1执行V(S1)后，P2才能开始执行。初始S1=0。下列操作正确的是（　　）。",options:["A. P1: ...; V(S1);    P2: P(S1); ...;","B. P1: P(S1); ...;    P2: V(S1); ...;","C. P1: V(S1); P(S1);    P2: P(S1); V(S1);","D. P1: ...; P(S1);    P2: ...; V(S1);"],answer:"A",analysis:"简单的前趋同步：P1先执行，执行到某点后通知P2可以开始。\n\nS1初始=0：\n- P1先执行...→执行到某点→V(S1)→S1=1（通知P2）\n- P2一开始就P(S1)→如果S1=0则等待→直到P1执行V(S1)后S1=1→P2才能继续\n\nB错：P1等P2的通知，顺序反了\nC错：P1先V再P会把自己阻塞\nD错：P1等P2的通知，顺序反了\n\n口诀：先完成的V，后开始的P"},
+
+// ========== LRU/FIFO页面置换（4题） ==========
+{id:6,text:"某系统分配给某进程3个页框，初始为空。依次访问页号：1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 8次","B. 9次","C. 10次","D. 12次"],answer:"C",analysis:"LRU逐步模拟（括号从左到右=最近→最久）：\n1(缺):{1} | 2(缺):{2,1} | 3(缺):{3,2,1} | 4(缺)淘汰1:{4,3,2} | 1(缺)淘汰2:{1,4,3} | 2(缺)淘汰3:{2,1,4} | 5(缺)淘汰4:{5,2,1} | 1(命中):{1,5,2} | 2(命中):{2,1,5} | 3(缺)淘汰5:{3,2,1} | 4(缺)淘汰1:{4,3,2} | 5(缺)淘汰2:{5,4,3}\n缺页：第1,2,3,4,5,6,7,10,11,12次 = 10次。\n\n注意第8步：访问1时页框为{5,2,1}，1在最右（最久），但1在页框中→命中，移到最左→{1,5,2}。"},
+
+{id:7,text:"某系统分配给某进程4个页框，初始为空。依次访问页号：1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 6次","B. 8次","C. 9次","D. 10次"],answer:"B",analysis:"4个页框LRU模拟（括号从左到右=最近→最久）：\n1(缺):{1} | 2(缺):{2,1} | 3(缺):{3,2,1} | 4(缺):{4,3,2,1} | 1(命中):{1,4,3,2} | 2(命中):{2,1,4,3} | 5(缺)淘汰3:{5,2,1,4} | 1(命中):{1,5,2,4} | 2(命中):{2,1,5,4} | 3(缺)淘汰4:{3,2,1,5} | 4(缺)淘汰5:{4,3,2,1} | 5(缺)淘汰1:{5,4,3,2}\n缺页：第1,2,3,4,7,10,11,12次 = 8次。\n\n对比：3个页框时10次缺页，4个页框时8次缺页。LRU是栈式算法，增加页框数缺页不会增加。"},
+
+{id:8,text:"采用FIFO页面置换算法，3个页框，访问序列：1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5。改用4个页框时缺页次数反而变多，这种现象称为（　　）。",options:["A. 饥饿现象","B. 抖动现象","C. Belady异常","D. 死锁现象"],answer:"C",analysis:"Belady异常：增加页框数反而导致缺页率上升。\n\n验证本题：\n3个页框FIFO：前3次缺页→4淘汰1→1淘汰2→2淘汰3→5淘汰4→1命中→2命中→3淘汰1→4淘汰2→5淘汰5 = 10次缺页\n4个页框FIFO：前4次缺页→1淘汰1→2淘汰2→5淘汰3→1淘汰4→2淘汰5→3淘汰1→4淘汰2→5淘汰3 = ...（实际更多）\n\n只有FIFO可能出现Belady异常。LRU和OPT是栈式算法，不会出现。\n\n饥饿=某进程长期得不到服务\n抖动=频繁缺页导致大部分时间在换页\n死锁=循环等待资源"},
+
+{id:9,text:"某系统分配给某进程3个页框，初始为空。访问序列：3, 2, 1, 3, 2, 4, 3, 2, 1, 4。采用OPT（最优置换）算法时，缺页次数为（　　）。",options:["A. 5次","B. 6次","C. 7次","D. 8次"],answer:"A",analysis:"OPT淘汰将来最久不使用的页面：\n\n3(缺):{3} | 2(缺):{2,3} | 1(缺):{1,2,3} | 3(命中) | 2(命中) | 4(缺)：页框{1,2,3}，看将来[3,2,1,4]，3在位置7最近→留3，2在位置8→留2，1在位置9最远→淘汰1→{4,2,3} | 3(命中) | 2(命中) | 1(缺)：页框{4,2,3}，看将来[4]，4在位置10出现，3和2不再出现→淘汰3→{1,2,4} | 4(命中)\n\n缺页：第1,2,3,6,9次 = 5次。\n\nOPT是最优算法，缺页次数一定是所有算法中最少的。"},
+
+// ========== IP子网划分（3题） ==========
+{id:10,text:"某公司获得IP地址块192.168.1.0/24，需要划分为至少5个子网。则子网掩码应为（　　）。",options:["A. 255.255.255.192","B. 255.255.255.224","C. 255.255.255.240","D. 255.255.255.248"],answer:"B",analysis:"需要至少5个子网：\n借2位→2²=4个子网（不够）\n借3位→2³=8个子网（够5个）✓\n\n借3位后主机位剩5位，每子网2⁵-2=30台主机。\n子网掩码 = 255.255.255.(11100000)₂ = 255.255.255.224\n\n/24借3位 = /27\n/27 = 255.255.255.224"},
+
+{id:11,text:"IP地址172.16.25.0/24需要划分为子网，每个子网至少容纳25台主机。最多可以划分多少个子网？",options:["A. 2个","B. 4个","C. 6个","D. 8个"],answer:"D",analysis:"每个子网至少25台主机→主机位至少5位（2⁵-2=30≥25）\n\n/24有8位主机位，留5位给主机→剩3位给子网→2³=8个子网\n\n/24划分子网对照：\n- 借1位→2子网，每子网126台\n- 借2位→4子网，每子网62台\n- 借3位→8子网，每子网30台 ✓（30≥25）\n- 借4位→16子网，每子网14台（不够25）\n\n所以最多借3位=8个子网。"},
+
+{id:12,text:"某主机IP地址为192.168.10.130/26，该主机所在子网的网络地址是（　　）。",options:["A. 192.168.10.0","B. 192.168.10.64","C. 192.168.10.128","D. 192.168.10.192"],answer:"C",analysis:"/26 = 255.255.255.192 = 子网掩码前26位为1，后6位为0。\n\nIP: 192.168.10.130 = 192.168.10.10000010\n掩码: 255.255.255.192 = 255.255.255.11000000\n\n网络地址 = IP AND 掩码 = 192.168.10.10000000 = 192.168.10.128\n\n/26每个子网大小 = 2⁶ = 64\n子网范围：.0-.63, .64-.127, .128-.191, .192-.255\n130落在.128-.191这个子网里→网络地址=192.168.10.128"},
+
+// ========== 等级保护（1题） ==========
+{id:13,text:"根据网络安全等级保护2.0标准，以下说法错误的是（　　）。",options:["A. 等级保护共分为五级","B. 第二级以上系统需要强制测评","C. 第三级系统每年至少进行一次测评","D. 第四级系统要求具备追踪溯源能力"],answer:"B",analysis:"等保2.0五个级别：\n\n第一级（自主保护级）：不需备案，不需强制测评\n第二级（指导保护级）：需要备案，但不需要强制测评\n第三级（监督保护级）：需要备案，每年至少测评1次\n第四级（强制保护级）：需要备案，每半年至少测评1次，要求追踪溯源\n第五级（专控保护级）：最高级别\n\nB错误：第三级以上才需要强制测评，不是第二级以上。"},
+
+// ========== 关键路径（2题） ==========
+{id:14,text:"某项目有6个活动，各活动的紧前活动和持续时间如下：\n活动  紧前活动  持续时间(天)\nA     —         5\nB     —         3\nC     A         4\nD     B         6\nE     C,D       3\nF     E         2\n关键路径长度为（　　）。",options:["A. 14天","B. 16天","C. 18天","D. 20天"],answer:"A",analysis:"找出所有路径并计算长度：\n路径1: A→C→E→F = 5+4+3+2 = 14天\n路径2: B→D→E→F = 3+6+3+2 = 14天\n\n两条路径都是14天，都是关键路径。\n关键路径长度 = 14天。\n\n关键路径 = 从起点到终点最长的那条路径（决定项目最短完成时间）。"},
+
+{id:15,text:"某项目活动的最早开始时间ES、最迟开始时间LS如下表：\n活动  ES  LS\nA     0   0\nB     0   2\nC     5   5\nD     3   5\nE     9   9\nF     12  12\n其中总时差为0的活动是（　　）。",options:["A. A、B、C","B. A、C、E、F","C. B、D","D. 全部活动"],answer:"B",analysis:"总时差 = LS - ES\nA: 0-0=0 ✓ 关键活动\nB: 2-0=2 ✗ 非关键\nC: 5-5=0 ✓ 关键活动\nD: 5-3=2 ✗ 非关键\nE: 9-9=0 ✓ 关键活动\nF: 12-12=0 ✓ 关键活动\n\n总时差=0的活动是关键活动，由关键活动组成的路径就是关键路径。\n关键路径：A→C→E→F"}
+];
+
+let userAnswers = {};
+let currentQ = 1;
+let submitted = false;
+const STORAGE_KEY = 'arch_spec5_v1';
+const TOTAL = allQuestions.length;
+
+function init() {
+  loadProgress();
+  renderAnswerCard();
+  renderQuestion(currentQ);
+  updateProgress();
+}
+
+function loadProgress() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) { const data = JSON.parse(saved); userAnswers = data.answers || {}; currentQ = data.currentQ || 1; }
+  } catch(e) {}
+}
+
+function saveProgress() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ answers: userAnswers, currentQ: currentQ })); } catch(e) {}
+}
+
+function renderAnswerCard() {
+  const card = document.getElementById('answer-card');
+  let html = '<div class="ac-grid">';
+  for (let i = 1; i <= TOTAL; i++) {
+    const cls = (i === currentQ ? ' current' : '') + (userAnswers[i] ? ' done' : '');
+    html += `<button class="ac-btn${cls}" id="acb-${i}" onclick="goToQ(${i})">${i}</button>`;
+  }
+  html += '</div>';
+  card.innerHTML = html;
+}
+
+function updateAnswerCard() {
+  document.querySelectorAll('.ac-btn').forEach(b => b.classList.remove('current'));
+  const cur = document.getElementById('acb-' + currentQ);
+  if (cur) cur.classList.add('current');
+}
+
+function markAnswerCard(qId) {
+  const btn = document.getElementById('acb-' + qId);
+  if (btn && !btn.classList.contains('done')) btn.classList.add('done');
+}
+
+function renderQuestion(qId) {
+  const q = allQuestions.find(x => x.id === qId);
+  if (!q) return;
+  let html = `<div class="q-card"><div class="q-title">第${qId}题（共${TOTAL}题）</div><div class="q-text">${q.text}</div><div class="q-options">`;
+  q.options.forEach((opt, idx) => {
+    const letter = String.fromCharCode(65 + idx);
+    const selected = userAnswers[qId] === letter ? ' selected' : '';
+    html += `<div class="q-opt${selected}" onclick="selectOption(${qId},'${letter}')"><div class="opt-radio"></div><div class="opt-content"><span>${opt}</span></div></div>`;
+  });
+  html += '</div></div>';
+  document.getElementById('q-display').innerHTML = html;
+  document.getElementById('prev-btn').disabled = (qId <= 1);
+  document.getElementById('next-btn').disabled = (qId >= TOTAL);
+  document.getElementById('next-btn').textContent = qId >= TOTAL ? '已是最后一题' : '下一题 ▶';
+  updateAnswerCard();
+}
+
+function selectOption(qId, letter) {
+  if (submitted) return;
+  userAnswers[qId] = letter;
+  saveProgress();
+  updateProgress();
+  const card = document.querySelector('.q-card');
+  card.querySelectorAll('.q-opt').forEach(opt => opt.classList.remove('selected'));
+  card.querySelectorAll('.q-opt').forEach(opt => {
+    if (opt.textContent.trim().startsWith(letter + '.')) opt.classList.add('selected');
+  });
+  markAnswerCard(qId);
+}
+
+function goToQ(id) { currentQ = id; saveProgress(); renderQuestion(id); document.getElementById('right-panel').scrollTop = 0; }
+function prevQ() { if (currentQ > 1) goToQ(currentQ - 1); }
+function nextQ() { if (currentQ < TOTAL) goToQ(currentQ + 1); }
+function updateProgress() { document.getElementById('stats').textContent = `已答 ${Object.keys(userAnswers).length}/${TOTAL}`; }
+
+function confirmSubmit() {
+  const unanswered = TOTAL - Object.keys(userAnswers).length;
+  let msg = '确定要交卷吗？';
+  if (unanswered > 0) msg += `还有 ${unanswered} 题未作答。`;
+  if (confirm(msg)) submitExam();
+}
+
+function submitExam() {
+  if (submitted) return;
+  submitted = true;
+
+  let correct = 0;
+  let wrongList = [];
+  let catStats = {};
+
+  const categories = {
+    1:'PV操作',2:'PV操作',3:'PV操作',4:'PV操作',5:'PV操作',
+    6:'LRU页面置换',7:'LRU页面置换',8:'LRU页面置换',9:'LRU页面置换',
+    10:'IP子网',11:'IP子网',12:'IP子网',
+    13:'等级保护',
+    14:'关键路径',15:'关键路径'
+  };
+
+  allQuestions.forEach(q => {
+    const cat = categories[q.id] || '其他';
+    if (!catStats[cat]) catStats[cat] = {total:0,correct:0};
+    catStats[cat].total++;
+    if (userAnswers[q.id] === q.answer) { correct++; catStats[cat].correct++; }
+    else wrongList.push(q);
+  });
+
+  const score = correct;
+  const pct = Math.round(correct / TOTAL * 100);
+
+  let html = `<div class="score-box"><div class="score">${score}/${TOTAL}</div><div class="label">正确率 ${pct}%</div></div>
+    <div class="summary-box"><h3>分类统计</h3><table><tr><th>知识点</th><th>正确/总数</th><th>正确率</th></tr>`;
+  Object.keys(catStats).forEach(cat => {
+    const s = catStats[cat]; const rate = Math.round(s.correct/s.total*100);
+    const color = rate>=60?'#4caf50':rate>=40?'#ff9800':'#e53935';
+    html += `<tr><td>${cat}</td><td>${s.correct}/${s.total}</td><td style="color:${color};font-weight:bold">${rate}%</td></tr>`;
+  });
+  html += `</table></div><div class="summary-box"><h3>错题回顾（${wrongList.length}题）</h3>`;
+  wrongList.forEach(q => {
+    html += `<div class="review-card wrong"><div class="r-header"><span class="r-num">第${q.id}题</span></div>
+      <div class="r-text">${q.text}</div><div class="r-your">你的答案：${userAnswers[q.id]||'未作答'}</div>
+      <div class="r-correct">正确答案：${q.answer}</div><div class="r-analysis">${q.analysis}</div></div>`;
+  });
+  if (wrongList.length === 0) html += '<p style="text-align:center;color:#4caf50;font-size:1.1em;padding:20px">全部正确！</p>';
+  html += '</div>';
+
+  document.querySelector('.main-wrap').style.display = 'none';
+  document.getElementById('report-inner').innerHTML = html;
+  document.getElementById('report-wrap').style.display = 'block';
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+document.addEventListener('keydown', function(e) {
+  if (submitted) return;
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevQ();}
+  if (e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextQ();}
+  if (['A','B','C','D'].includes(e.key.toUpperCase())) selectOption(currentQ, e.key.toUpperCase());
+});
+
+init();
+</script>
+</body>
+</html>

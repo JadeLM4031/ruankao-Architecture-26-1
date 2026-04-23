@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专项6 - LRU手算强化</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'SimSun','Microsoft YaHei',serif;background:#e8edf3;color:#333;line-height:1.8;font-size:16px}
+.top-bar{background:#3a7bd5;color:#fff;padding:0 18px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.top-bar .exam-title{font-size:16px;font-weight:bold}
+.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:14px}
+.top-bar .stats{opacity:.9}
+.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:5px 20px;border-radius:3px;font-size:14px;font-weight:bold;cursor:pointer}
+.main-wrap{display:flex;height:calc(100vh - 48px);overflow:hidden}
+.left-panel{width:250px;min-width:250px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column}
+.left-panel .panel-title{padding:12px 14px 8px;font-size:15px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.answer-card-area{flex:1;overflow-y:auto;padding:8px 10px}
+.ac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.ac-btn{aspect-ratio:1.3;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
+.ac-btn:hover{background:#e0ecfa}
+.ac-btn.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5;font-weight:bold}
+.ac-btn.done{background:#5eba5e;border-color:#4da64d;color:#fff}
+.ac-btn.done.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
+.left-bottom{padding:10px 14px;border-top:1px solid #eee;font-size:13px;color:#888}
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.q-display{max-width:800px;margin:0 auto}
+.q-card{background:#fff;padding:24px 28px;margin-bottom:14px;border:1px solid #dde3eb}
+.q-card .q-title{font-size:16px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
+.q-card .q-text{font-size:16px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;cursor:pointer;font-size:16px;line-height:1.7;transition:all .1s}
+.q-opt:hover{background:#f5f8fc}
+.q-opt.selected{background:#e8f0fe}
+.q-opt .opt-radio{width:17px;height:17px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative}
+.q-opt.selected .opt-radio{border-color:#3a7bd5}
+.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2.5px;left:2.5px;width:9px;height:9px;background:#3a7bd5;border-radius:50%}
+.q-opt .opt-content{flex:1}
+.q-nav-arrows{display:flex;justify-content:space-between;max-width:800px;margin:0 auto 16px;padding:0 4px}
+.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:8px 24px;cursor:pointer;font-size:14px;color:#555}
+.q-nav-btn:hover{background:#e0ecfa;color:#3a7bd5}
+.q-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.report-wrap{display:none;flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.report-wrap .report-inner{max-width:800px;margin:0 auto}
+.score-box{background:linear-gradient(135deg,#3a7bd5,#2b6cb0);color:#fff;border-radius:8px;padding:28px;text-align:center;margin-bottom:16px}
+.score-box .score{font-size:3.2em;font-weight:bold}
+.score-box .label{font-size:.9em;opacity:.9;margin-top:4px}
+.review-card{background:#fff;border-radius:6px;padding:16px 20px;margin-bottom:10px;border:1px solid #e2e8f0;border-left:4px solid #e53935}
+.review-card .r-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.review-card .r-num{background:#3a7bd5;color:#fff;border-radius:3px;padding:1px 8px;font-size:12px}
+.review-card .r-text{font-size:13px;margin-bottom:8px;white-space:pre-wrap;line-height:1.7}
+.review-card .r-your{font-size:12px;color:#e53935;margin-bottom:3px}
+.review-card .r-correct{font-size:12px;color:#4caf50;margin-bottom:3px}
+.review-card .r-analysis{font-size:12px;color:#666;background:#f5f7fa;padding:10px;border-radius:4px;margin-top:6px;white-space:pre-wrap;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="exam-title">专项6 · LRU手算强化（5题）</div>
+  <div class="right-info">
+    <div class="stats" id="stats">已答 0/5</div>
+    <button class="submit-top" onclick="confirmSubmit()">交卷</button>
+  </div>
+</div>
+<div class="main-wrap">
+  <div class="left-panel">
+    <div class="panel-title">答题卡</div>
+    <div class="answer-card-area" id="answer-card"></div>
+    <div class="left-bottom">3个页框 · LRU算法</div>
+  </div>
+  <div class="right-panel" id="right-panel">
+    <div class="q-display" id="q-display"></div>
+    <div class="q-nav-arrows">
+      <button class="q-nav-btn" id="prev-btn" onclick="prevQ()">◀ 上一题</button>
+      <button class="q-nav-btn" id="next-btn" onclick="nextQ()">下一题 ▶</button>
+    </div>
+  </div>
+</div>
+<div class="report-wrap" id="report-wrap">
+  <div class="report-inner" id="report-inner"></div>
+</div>
+
+<script>
+const allQuestions = [
+{id:1,text:"某系统分配给某进程3个页框，初始为空。依次访问页号：4, 3, 2, 1, 4, 3, 5, 4, 3, 2, 1, 5。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 7次","B. 8次","C. 9次","D. 10次"],answer:"D",
+analysis:"LRU逐步模拟（括号从左到右=最近→最久）：\n\n步骤  访问  页框{近→久}        结果\n1     4    {4}                 缺页①\n2     3    {3,4}               缺页②\n3     2    {2,3,4}             缺页③\n4     1    {1,2,3} 淘汰4       缺页④\n5     4    {4,1,2} 淘汰3       缺页⑤\n6     3    {3,4,1} 淘汰2       缺页⑥\n7     5    {5,3,4} 淘汰1       缺页⑦\n8     4    {4,5,3}             命中（4移到最左）\n9     3    {3,4,5}             命中（3移到最左）\n10    2    {2,3,4} 淘汰5       缺页⑧\n11    1    {1,2,3} 淘汰4       缺页⑨\n12    5    {5,1,2} 淘汰3       缺页⑩\n\n共10次缺页。命中：第8、9步。"},
+
+{id:2,text:"某系统分配给某进程3个页框，初始为空。依次访问页号：1, 2, 3, 4, 2, 1, 5, 6, 2, 1, 2, 3。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 8次","B. 9次","C. 10次","D. 11次"],answer:"C",
+analysis:"LRU逐步模拟（括号从左到右=最近→最久）：\n\n步骤  访问  页框{近→久}        结果\n1     1    {1}                 缺页①\n2     2    {2,1}               缺页②\n3     3    {3,2,1}             缺页③\n4     4    {4,3,2} 淘汰1       缺页④\n5     2    {2,4,3}             命中（2移到最左）\n6     1    {1,2,4} 淘汰3       缺页⑤\n7     5    {5,1,2} 淘汰4       缺页⑥\n8     6    {6,5,1} 淘汰2       缺页⑦\n9     2    {2,6,5} 淘汰1       缺页⑧\n10    1    {1,2,6} 淘汰5       缺页⑨\n11    2    {2,1,6}             命中（2移到最左）\n12    3    {3,2,1} 淘汰6       缺页⑩\n\n共10次缺页。命中：第5、11步。"},
+
+{id:3,text:"某系统分配给某进程3个页框，初始为空。依次访问页号：7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 10次","B. 11次","C. 12次","D. 13次"],answer:"C",
+analysis:"LRU逐步模拟（括号从左到右=最近→最久）：\n\n步骤  访问  页框{近→久}        结果\n1     7    {7}                 缺页①\n2     0    {0,7}               缺页②\n3     1    {1,0,7}             缺页③\n4     2    {2,1,0} 淘汰7       缺页④\n5     0    {0,2,1}             命中\n6     3    {3,0,2} 淘汰1       缺页⑤\n7     0    {0,3,2}             命中\n8     4    {4,0,3} 淘汰2       缺页⑥\n9     2    {2,4,0} 淘汰3       缺页⑦\n10    3    {3,2,4} 淘汰0       缺页⑧\n11    0    {0,3,2} 淘汰4       缺页⑨\n12    3    {3,0,2}             命中\n13    2    {2,3,0}             命中\n14    1    {1,2,3} 淘汰0       缺页⑩\n15    2    {2,1,3}             命中\n16    0    {0,2,1} 淘汰3       缺页⑪\n17    1    {1,0,2}             命中\n18    7    {7,1,0} 淘汰2       缺页⑫\n19    0    {0,7,1}             命中\n20    1    {1,0,7}             命中\n\n共12次缺页。命中：第5,7,12,13,15,17,19,20步（8次命中）。"},
+
+{id:4,text:"某系统分配给某进程3个页框，初始为空。依次访问页号：2, 3, 2, 1, 5, 2, 4, 5, 3, 2, 5, 2。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 5次","B. 6次","C. 7次","D. 8次"],answer:"C",
+analysis:"LRU逐步模拟（括号从左到右=最近→最久）：\n\n步骤  访问  页框{近→久}        结果\n1     2    {2}                 缺页①\n2     3    {3,2}               缺页②\n3     2    {2,3}               命中（2移到最左）\n4     1    {1,2,3}             缺页③（不满直接加）\n5     5    {5,1,2} 淘汰3       缺页④\n6     2    {2,5,1}             命中（2移到最左）\n7     4    {4,2,5} 淘汰1       缺页⑤\n8     5    {5,4,2}             命中（5移到最左）\n9     3    {3,5,4} 淘汰2       缺页⑥\n10    2    {2,3,5} 淘汰4       缺页⑦\n11    5    {5,2,3}             命中（5移到最左）\n12    2    {2,5,3}             命中（2移到最左）\n\n共7次缺页。命中：第3,6,8,11,12步（5次命中）。"},
+
+{id:5,text:"某系统分配给某进程3个页框，初始为空。依次访问页号：3, 1, 2, 1, 3, 4, 1, 4, 2, 3, 4, 3。采用LRU页面置换算法时，缺页次数为（　　）。",options:["A. 5次","B. 6次","C. 7次","D. 8次"],answer:"B",
+analysis:"LRU逐步模拟（括号从左到右=最近→最久）：\n\n步骤  访问  页框{近→久}        结果\n1     3    {3}                 缺页①\n2     1    {1,3}               缺页②\n3     2    {2,1,3}             缺页③\n4     1    {1,2,3}             命中（1移到最左）\n5     3    {3,1,2}             命中（3移到最左）\n6     4    {4,3,1} 淘汰2       缺页④\n7     1    {1,4,3}             命中（1移到最左）\n8     4    {4,1,3}             命中（4移到最左）\n9     2    {2,4,1} 淘汰3       缺页⑤\n10    3    {3,2,4} 淘汰1       缺页⑥\n11    4    {4,3,2}             命中（4移到最左）\n12    3    {3,4,2}             命中（3移到最左）\n\n共6次缺页。命中：第4,5,7,8,11,12步（6次命中）。"}
+];
+
+let userAnswers = {};
+let currentQ = 1;
+let submitted = false;
+const STORAGE_KEY = 'arch_spec6_v1';
+const TOTAL = allQuestions.length;
+
+function init(){loadProgress();renderAnswerCard();renderQuestion(currentQ);updateProgress();}
+function loadProgress(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){const d=JSON.parse(s);userAnswers=d.answers||{};currentQ=d.currentQ||1;}}catch(e){}}
+function saveProgress(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({answers:userAnswers,currentQ:currentQ}));}catch(e){}}
+function renderAnswerCard(){const c=document.getElementById('answer-card');let h='<div class="ac-grid">';for(let i=1;i<=TOTAL;i++){const cls=(i===currentQ?' current':'')+(userAnswers[i]?' done':'');h+=`<button class="ac-btn${cls}" id="acb-${i}" onclick="goToQ(${i})">${i}</button>`;}h+='</div>';c.innerHTML=h;}
+function updateAnswerCard(){document.querySelectorAll('.ac-btn').forEach(b=>b.classList.remove('current'));const c=document.getElementById('acb-'+currentQ);if(c)c.classList.add('current');}
+function markAnswerCard(q){const b=document.getElementById('acb-'+q);if(b&&!b.classList.contains('done'))b.classList.add('done');}
+function renderQuestion(qId){const q=allQuestions.find(x=>x.id===qId);if(!q)return;let h=`<div class="q-card"><div class="q-title">第${qId}题（共${TOTAL}题）</div><div class="q-text">${q.text}</div><div class="q-options">`;q.options.forEach((o,i)=>{const l=String.fromCharCode(65+i);const s=userAnswers[qId]===l?' selected':'';h+=`<div class="q-opt${s}" onclick="selectOption(${qId},'${l}')"><div class="opt-radio"></div><div class="opt-content"><span>${o}</span></div></div>`;});h+='</div></div>';document.getElementById('q-display').innerHTML=h;document.getElementById('prev-btn').disabled=(qId<=1);document.getElementById('next-btn').disabled=(qId>=TOTAL);document.getElementById('next-btn').textContent=qId>=TOTAL?'已是最后一题':'下一题 ▶';updateAnswerCard();}
+function selectOption(qId,l){if(submitted)return;userAnswers[qId]=l;saveProgress();updateProgress();const c=document.querySelector('.q-card');c.querySelectorAll('.q-opt').forEach(o=>o.classList.remove('selected'));c.querySelectorAll('.q-opt').forEach(o=>{if(o.textContent.trim().startsWith(l+'.'))o.classList.add('selected');});markAnswerCard(qId);}
+function goToQ(id){currentQ=id;saveProgress();renderQuestion(id);document.getElementById('right-panel').scrollTop=0;}
+function prevQ(){if(currentQ>1)goToQ(currentQ-1);}
+function nextQ(){if(currentQ<TOTAL)goToQ(currentQ+1);}
+function updateProgress(){document.getElementById('stats').textContent=`已答 ${Object.keys(userAnswers).length}/${TOTAL}`;}
+function confirmSubmit(){const u=TOTAL-Object.keys(userAnswers).length;let m='确定要交卷吗？';if(u>0)m+=`还有 ${u} 题未作答。`;if(confirm(m))submitExam();}
+function submitExam(){if(submitted)return;submitted=true;let correct=0,wrongList=[];allQuestions.forEach(q=>{if(userAnswers[q.id]===q.answer)correct++;else wrongList.push(q);});const pct=Math.round(correct/TOTAL*100);let h=`<div class="score-box"><div class="score">${correct}/${TOTAL}</div><div class="label">正确率 ${pct}%</div></div>`;if(wrongList.length>0){h+=`<div class="review-card" style="border-left-color:#3a7bd5"><div class="r-header"><span class="r-num">错题解析</span></div></div>`;wrongList.forEach(q=>{h+=`<div class="review-card"><div class="r-header"><span class="r-num">第${q.id}题</span></div><div class="r-text">${q.text}</div><div class="r-your">你的答案：${userAnswers[q.id]||'未作答'}</div><div class="r-correct">正确答案：${q.answer}</div><div class="r-analysis">${q.analysis}</div></div>`;});}else{h+='<p style="text-align:center;color:#4caf50;font-size:1.1em;padding:20px">全部正确！</p>';}document.querySelector('.main-wrap').style.display='none';document.getElementById('report-inner').innerHTML=h;document.getElementById('report-wrap').style.display='block';localStorage.removeItem(STORAGE_KEY);}
+document.addEventListener('keydown',function(e){if(submitted)return;if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevQ();}if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextQ();}if(['A','B','C','D'].includes(e.key.toUpperCase()))selectOption(currentQ,e.key.toUpperCase());});
+init();
+</script>
+</body>
+</html>
