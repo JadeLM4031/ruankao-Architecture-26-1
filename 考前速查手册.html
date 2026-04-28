@@ -1,0 +1,1427 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>系统架构设计师 · 考前速查手册</title>
+    <style>
+      :root {
+        --blue: #3a7bd5;
+        --bg: #f5f7fa;
+        --card: #fff;
+        --text: #2c3e50;
+        --light: #ecf0f6;
+        --green: #27ae60;
+        --orange: #e67e22;
+        --red: #e74c3c;
+        --purple: #8e44ad;
+        --teal: #16a085;
+        --border: #dce3eb;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.8;
+        font-size: 15px;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: linear-gradient(135deg, #3a7bd5, #2b6cb0);
+      }
+      .top-bar {
+        color: #fff;
+        padding: 14px 16px;
+        text-align: center;
+      }
+      .top-bar h1 {
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      .top-bar .sub {
+        font-size: 12px;
+        opacity: 0.85;
+        margin-top: 2px;
+      }
+      .nav {
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        padding: 0 4px;
+      }
+      .nav::-webkit-scrollbar {
+        display: none;
+      }
+      .nav a {
+        display: inline-block;
+        padding: 10px 14px;
+        font-size: 13px;
+        color: #555;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        transition: 0.15s;
+      }
+      .nav a.active {
+        color: var(--blue);
+        border-bottom-color: var(--blue);
+        font-weight: 600;
+      }
+      .content {
+        padding: 12px 14px 60px;
+        margin-top: 8px;
+      }
+      .sec {
+        display: none;
+      }
+      .sec.active {
+        display: block;
+      }
+      .card {
+        background: var(--card);
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      }
+      .card h2 {
+        font-size: 16px;
+        color: var(--blue);
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--light);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .card h2 .icon {
+        font-size: 18px;
+      }
+      .card h3 {
+        font-size: 14px;
+        color: var(--text);
+        margin: 12px 0 6px;
+        font-weight: 600;
+      }
+      .card p,
+      .card li {
+        font-size: 14px;
+        line-height: 1.9;
+      }
+      .card ul {
+        padding-left: 18px;
+      }
+      .card ul li {
+        margin-bottom: 2px;
+      }
+      .card ul li::marker {
+        color: var(--blue);
+      }
+      .tips {
+        background: #fff8e1;
+        border-left: 3px solid var(--orange);
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 13px;
+        color: #795548;
+      }
+      .tips::before {
+        content: "⚡ ";
+        font-weight: bold;
+      }
+      .trap {
+        background: #fde8e8;
+        border-left: 3px solid var(--red);
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 13px;
+        color: #b71c1c;
+      }
+      .trap::before {
+        content: "🚫 ";
+        font-weight: bold;
+      }
+      .key {
+        background: #e8f5e9;
+        border-left: 3px solid var(--green);
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin: 8px 0;
+        font-size: 13px;
+        color: #2e7d32;
+      }
+      .key::before {
+        content: "✅ ";
+        font-weight: bold;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0;
+        font-size: 13px;
+      }
+      th {
+        background: var(--blue);
+        color: #fff;
+        padding: 7px 10px;
+        text-align: left;
+        font-weight: 600;
+      }
+      td {
+        padding: 7px 10px;
+        border-bottom: 1px solid var(--light);
+      }
+      tr:nth-child(even) td {
+        background: #f8fafc;
+      }
+      .formula {
+        background: #f0f4ff;
+        border: 1px solid #d0ddf0;
+        border-radius: 6px;
+        padding: 10px 14px;
+        margin: 8px 0;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        text-align: center;
+        color: #1a237e;
+        letter-spacing: 0.5px;
+      }
+      .mnemonic {
+        background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+        border: 1px dashed var(--green);
+        border-radius: 6px;
+        padding: 10px 14px;
+        margin: 8px 0;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+        color: #2e7d32;
+      }
+      .vs {
+        display: flex;
+        gap: 8px;
+        margin: 8px 0;
+      }
+      .vs > div {
+        flex: 1;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 13px;
+      }
+      .vs .a {
+        border-top: 3px solid var(--blue);
+      }
+      .vs .b {
+        border-top: 3px solid var(--purple);
+      }
+      .vs .title {
+        font-weight: 700;
+        margin-bottom: 4px;
+        font-size: 14px;
+      }
+      .back-top {
+        position: fixed;
+        bottom: 20px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        background: var(--blue);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(58, 123, 213, 0.4);
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .tag {
+        display: inline-block;
+        background: var(--light);
+        color: var(--blue);
+        padding: 1px 8px;
+        border-radius: 3px;
+        font-size: 12px;
+        margin: 1px 2px;
+        font-weight: 500;
+      }
+      @media (max-width: 400px) {
+        body {
+          font-size: 14px;
+        }
+        .card {
+          padding: 12px;
+        }
+        .formula {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="top-bar">
+        <h1>系统架构设计师 · 考前速查手册</h1>
+        <div class="sub">针对薄弱点整理 · 手机随时查阅</div>
+      </div>
+
+      <div class="nav" id="nav">
+        <a href="#" class="active" data-s="s1">ATAM</a>
+        <a href="#" data-s="s2">架构风格</a>
+        <a href="#" data-s="s3">质量属性</a>
+        <a href="#" data-s="s4">UML</a>
+        <a href="#" data-s="s5">TCP/IP</a>
+        <a href="#" data-s="s6">区块链</a>
+        <a href="#" data-s="s7">LRU/FIFO</a>
+        <a href="#" data-s="s8">PV操作</a>
+        <a href="#" data-s="s9">流水线</a>
+        <a href="#" data-s="s10">Cache/死锁</a>
+        <a href="#" data-s="s11">子网划分</a>
+        <a href="#" data-s="s12">挣值分析</a>
+        <a href="#" data-s="s13">关键路径</a>
+        <a href="#" data-s="s14">等级保护</a>
+        <a href="#" data-s="s15">云原生</a>
+        <a href="#" data-s="s16">加密/签名</a>
+        <a href="#" data-s="s17">案例话术</a>
+      </div>
+    </div>
+
+    <div class="content" id="content">
+      <!-- ============ S1: ATAM ============ -->
+      <div class="sec active" id="s1">
+        <div class="card">
+          <h2><span class="icon">📐</span>ATAM 架构评估核心概念</h2>
+
+          <h3>六个关键概念（必背）</h3>
+          <table>
+            <tr>
+              <th>概念</th>
+              <th>标准定义</th>
+              <th>判断关键词</th>
+            </tr>
+            <tr>
+              <td><b>敏感点</b></td>
+              <td>一个架构决策影响<b>一个</b>质量属性</td>
+              <td>只涉及1个质量属性，影响显著</td>
+            </tr>
+            <tr>
+              <td><b>权衡点</b></td>
+              <td>一个架构决策影响<b>多个</b>质量属性（此升彼降）</td>
+              <td>涉及≥2个质量属性</td>
+            </tr>
+            <tr>
+              <td><b>风险</b></td>
+              <td>架构决策存在<b>潜在负面结果</b></td>
+              <td>"团队能力不足""经验欠缺""可能成为瓶颈"</td>
+            </tr>
+            <tr>
+              <td><b>非风险</b></td>
+              <td>经过分析，架构决策<b>没有问题</b></td>
+              <td>"有效满足需求""没有负面影响"</td>
+            </tr>
+          </table>
+
+          <div class="trap">
+            敏感点 vs 风险陷阱："主库写入可能成为瓶颈"看似风险，但它分析的是对性能这<b>一个</b>属性的影响 →
+            是<b>敏感点</b>。"团队能力不足"这种组织层面不确定因素才是<b>风险</b>。
+          </div>
+
+          <h3>ATAM评估九步法</h3>
+          <ol>
+            <li>介绍ATAM方法</li>
+            <li>介绍业务驱动因素</li>
+            <li>介绍架构方案</li>
+            <li>识别架构方法</li>
+            <li>生成质量属性效用树 <span class="tag">重点</span></li>
+            <li>分析架构方法</li>
+            <li>头脑风暴场景并排序</li>
+            <li>再次分析架构方法</li>
+            <li>报告结果</li>
+          </ol>
+
+          <h3>效用树四级结构</h3>
+          <div class="formula">根节点 → 质量属性 → 质量属性细化 → 场景</div>
+          <p>每个场景带<b>优先级</b>（高/中/低），高优先级场景用于驱动后续分析。</p>
+        </div>
+      </div>
+
+      <!-- ============ S2: 架构风格 ============ -->
+      <div class="sec" id="s2">
+        <div class="card">
+          <h2><span class="icon">🏗️</span>五大架构风格速查</h2>
+
+          <h3>1. 数据流风格</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">管道-过滤器</div>
+              构件（过滤器）有输入端和输出端<br />
+              通过<b>管道</b>传递数据流<br />
+              <b>不共享状态</b><br />
+              ✅ 支持并行、高内聚低耦合<br />
+              ❌ 不适合交互式应用
+            </div>
+            <div class="b">
+              <div class="title">批处理</div>
+              每步处理完整数据集<br />
+              前一步完全结束后才开始下一步<br />
+              适合：数据转换、报表生成
+            </div>
+          </div>
+
+          <h3>2. 调用/返回风格</h3>
+          <table>
+            <tr>
+              <th>子风格</th>
+              <th>特点</th>
+              <th>典型应用</th>
+            </tr>
+            <tr>
+              <td>主程序/子程序</td>
+              <td>自顶向下调用</td>
+              <td>传统过程式编程</td>
+            </tr>
+            <tr>
+              <td>面向对象</td>
+              <td>封装+继承+多态</td>
+              <td>Java/C#应用</td>
+            </tr>
+            <tr>
+              <td>层次结构</td>
+              <td>分层，每层只与相邻层交互</td>
+              <td>TCP/IP协议栈、OSI七层</td>
+            </tr>
+          </table>
+
+          <h3>3. 独立构件风格</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">进程通信</div>
+              消息传递<br />
+              同步/异步通信<br />
+              解耦构件
+            </div>
+            <div class="b">
+              <div class="title">事件驱动（隐式调用）</div>
+              构件不直接调用<br />
+              通过<b>事件</b>触发<br />
+              ✅ 复用性高、可扩展<br />
+              ❌ 放弃了对计算的控制<br />
+              典型：GUI、MVC中的观察者
+            </div>
+          </div>
+
+          <h3>4. 虚拟机风格（重点！）</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">解释器</div>
+              核心组件：<br />
+              • <b>解释引擎</b><br />
+              • <b>被解释的程序</b><br />
+              • <b>程序状态</b><br />
+              ✅ 灵活性高<br />
+              ❌ 性能低<br />
+              典型：JVM、Python解释器
+            </div>
+            <div class="b">
+              <div class="title">基于规则的系统</div>
+              规则库 + 推理引擎<br />
+              适合：专家系统<br />
+              事实 + 规则 → 结论
+            </div>
+          </div>
+
+          <h3>5. 仓库风格（重点！）</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">黑板系统</div>
+              三大核心构件：<br />
+              • <b>黑板</b>（共享数据结构）<br />
+              • <b>知识源</b>（独立处理模块）<br />
+              • <b>控制器</b>（调度策略）<br />
+              适合：语音识别、图像处理、AI推理<br />
+              没有确定性解法的复杂问题
+            </div>
+            <div class="b">
+              <div class="title">数据库系统</div>
+              中央数据存储<br />
+              客户端查询/更新<br />
+              传统C/S架构
+            </div>
+          </div>
+
+          <div class="tips">
+            秒杀口诀：<b>数调独虚仓</b> — 数据流、调用返回、独立构件、虚拟机、仓库。解释器和黑板是案例填空高频考点，组件名称必须精确记忆。
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S3: 质量属性 ============ -->
+      <div class="sec" id="s3">
+        <div class="card">
+          <h2><span class="icon">⭐</span>质量属性辨析</h2>
+
+          <h3>六大质量属性关键词</h3>
+          <table>
+            <tr>
+              <th>属性</th>
+              <th>关键词</th>
+              <th>常见策略</th>
+            </tr>
+            <tr>
+              <td><b>性能</b></td>
+              <td>响应时间、吞吐量、延迟、并发</td>
+              <td>增加计算资源、减少计算开销、并发/并行、缓存</td>
+            </tr>
+            <tr>
+              <td><b>可用性</b></td>
+              <td>持续运行、停机时间、故障恢复、MTBF</td>
+              <td>冗余、心跳检测、故障转移、主从切换</td>
+            </tr>
+            <tr>
+              <td><b>可修改性</b></td>
+              <td>新增模块、插件扩展、接口变更</td>
+              <td>信息隐藏、接口抽象、松耦合、AOP</td>
+            </tr>
+            <tr>
+              <td><b>可维护性</b></td>
+              <td>修bug、定位问题、日常运维便利</td>
+              <td>模块化、日志、监控、文档</td>
+            </tr>
+            <tr>
+              <td><b>可伸缩性</b></td>
+              <td>增加机器、增加用户、水平/垂直扩展</td>
+              <td>负载均衡、分片、弹性伸缩</td>
+            </tr>
+            <tr>
+              <td><b>互操作性</b></td>
+              <td>与外部系统交互、数据交换、API集成</td>
+              <td>标准协议、中间件、适配器</td>
+            </tr>
+          </table>
+
+          <h3>三组易混辨析</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">性能 vs 可用性</div>
+              带具体时间指标 → <b>性能</b><br />
+              持续运行不中断 → <b>可用性</b>
+            </div>
+            <div class="b">
+              <div class="title">可修改 vs 可维护</div>
+              加功能/加代码 → <b>可修改性</b><br />
+              修bug/找问题 → <b>可维护性</b>
+            </div>
+          </div>
+          <div class="vs">
+            <div class="a">
+              <div class="title">可修改 vs 可伸缩</div>
+              加功能模块 → <b>可修改性</b><br />
+              加机器/加用户 → <b>可伸缩性</b>
+            </div>
+            <div class="b">
+              <div class="title">可修改 vs 互操作</div>
+              改自己的代码 → <b>可修改性</b><br />
+              跟外部系统打交道 → <b>互操作性</b>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S4: UML ============ -->
+      <div class="sec" id="s4">
+        <div class="card">
+          <h2><span class="icon">📊</span>UML 图分类</h2>
+
+          <h3>13种图速记</h3>
+          <div class="mnemonic">行为图口诀："用活状序"</div>
+
+          <table>
+            <tr>
+              <th>结构图（静态6种）</th>
+              <th>行为图（动态7种）</th>
+            </tr>
+            <tr>
+              <td>类图 <span class="tag">最常用</span></td>
+              <td>用例图 <span class="tag">最常用</span></td>
+            </tr>
+            <tr>
+              <td>对象图</td>
+              <td>活动图</td>
+            </tr>
+            <tr>
+              <td>包图</td>
+              <td>状态机图 <span class="tag">案例高频</span></td>
+            </tr>
+            <tr>
+              <td>组件图</td>
+              <td>序列图（顺序图）<span class="tag">最常用</span></td>
+            </tr>
+            <tr>
+              <td>部署图</td>
+              <td>通信图（协作图）</td>
+            </tr>
+            <tr>
+              <td>组合结构图</td>
+              <td>定时图</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>交互概览图</td>
+            </tr>
+          </table>
+
+          <div class="trap">用例图是<b>行为图</b>，不是结构图！考试常考。</div>
+
+          <h3>类间关系（耦合度从弱到强）</h3>
+          <div class="formula">依赖 → 关联 → 聚合 → 组合 → 泛化(继承) → 实现</div>
+          <ul>
+            <li><b>聚合</b>：整体与部分可分离（雁群和大雁）</li>
+            <li><b>组合</b>：整体与部分不可分离（鸟和翅膀）</li>
+            <li><b>泛化</b>：继承关系（is-a）</li>
+            <li><b>实现</b>：接口实现（implements）</li>
+          </ul>
+
+          <h3>状态图核心术语</h3>
+          <ul>
+            <li><b>状态（State）</b>：对象在生命周期中的条件</li>
+            <li><b>转换（Transition）</b>：从一个状态到另一个状态</li>
+            <li><b>事件（Event）</b>：触发转换的条件</li>
+            <li><b>动作（Action）</b>：转换时执行的操作</li>
+            <li><b>守卫条件（Guard）</b>：[条件表达式]，满足才触发转换</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============ S5: TCP/IP ============ -->
+      <div class="sec" id="s5">
+        <div class="card">
+          <h2><span class="icon">🌐</span>TCP/IP 协议族</h2>
+
+          <h3>四层模型</h3>
+          <table>
+            <tr>
+              <th>层次</th>
+              <th>功能</th>
+              <th>核心协议</th>
+            </tr>
+            <tr>
+              <td><b>应用层</b></td>
+              <td>为用户提供网络服务</td>
+              <td>HTTP、FTP、SMTP、DNS、DHCP、Telnet、SNMP、POP3、IMAP</td>
+            </tr>
+            <tr>
+              <td><b>传输层</b></td>
+              <td>端到端通信</td>
+              <td><b>TCP</b>（可靠、面向连接）、<b>UDP</b>（不可靠、无连接）</td>
+            </tr>
+            <tr>
+              <td><b>网络层</b></td>
+              <td>路由和寻址</td>
+              <td><b>IP</b>、ICMP、ARP、RARP、OSPF、BGP</td>
+            </tr>
+            <tr>
+              <td><b>网络接口层</b></td>
+              <td>物理链路传输</td>
+              <td>Ethernet、PPP、MAC</td>
+            </tr>
+          </table>
+
+          <h3>协议速记</h3>
+          <div class="mnemonic">可靠TCP三次握，无连接UDP快如飞</div>
+
+          <h3>易混协议辨析</h3>
+          <table>
+            <tr>
+              <th>协议</th>
+              <th>端口</th>
+              <th>用途</th>
+            </tr>
+            <tr>
+              <td>HTTP</td>
+              <td>80</td>
+              <td>网页浏览</td>
+            </tr>
+            <tr>
+              <td>HTTPS</td>
+              <td>443</td>
+              <td>加密网页</td>
+            </tr>
+            <tr>
+              <td>FTP</td>
+              <td>20/21</td>
+              <td>文件传输</td>
+            </tr>
+            <tr>
+              <td>SMTP</td>
+              <td>25</td>
+              <td>发邮件</td>
+            </tr>
+            <tr>
+              <td>POP3</td>
+              <td>110</td>
+              <td>收邮件（下载后删除）</td>
+            </tr>
+            <tr>
+              <td>IMAP</td>
+              <td>143</td>
+              <td>收邮件（服务器同步）</td>
+            </tr>
+            <tr>
+              <td>DNS</td>
+              <td>53</td>
+              <td>域名解析</td>
+            </tr>
+            <tr>
+              <td>DHCP</td>
+              <td>67/68</td>
+              <td>自动分配IP</td>
+            </tr>
+            <tr>
+              <td>SNMP</td>
+              <td>161</td>
+              <td>网络管理</td>
+            </tr>
+            <tr>
+              <td>Telnet</td>
+              <td>23</td>
+              <td>远程登录（明文不安全）</td>
+            </tr>
+            <tr>
+              <td>SSH</td>
+              <td>22</td>
+              <td>加密远程登录</td>
+            </tr>
+          </table>
+
+          <h3>TCP vs UDP</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">TCP</div>
+              面向连接（三次握手）<br />
+              可靠传输、有序<br />
+              流量控制、拥塞控制<br />
+              适合：网页、邮件、文件传输
+            </div>
+            <div class="b">
+              <div class="title">UDP</div>
+              无连接<br />
+              不可靠、无序<br />
+              开销小、速度快<br />
+              适合：视频流、DNS、直播
+            </div>
+          </div>
+
+          <h3>ARP 与 ICMP</h3>
+          <ul>
+            <li><b>ARP</b>：IP地址 → MAC地址（地址解析协议）</li>
+            <li><b>RARP</b>：MAC地址 → IP地址（反向）</li>
+            <li><b>ICMP</b>：网络差错报告和控制（ping命令基于ICMP）</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============ S6: 区块链 ============ -->
+      <div class="sec" id="s6">
+        <div class="card">
+          <h2><span class="icon">🔗</span>区块链核心概念</h2>
+
+          <h3>四大核心概念</h3>
+          <table>
+            <tr>
+              <th>概念</th>
+              <th>说明</th>
+            </tr>
+            <tr>
+              <td><b>链式哈希结构</b></td>
+              <td>每个区块包含前一区块的哈希值，保证<b>不可篡改</b></td>
+            </tr>
+            <tr>
+              <td><b>智能合约</b></td>
+              <td>链上自动执行的代码，满足条件自动触发（如以太坊Solidity）</td>
+            </tr>
+            <tr>
+              <td><b>共识机制</b></td>
+              <td>分布式节点达成一致的算法</td>
+            </tr>
+            <tr>
+              <td><b>去中心化</b></td>
+              <td>无中心化服务器，P2P网络，节点对等</td>
+            </tr>
+          </table>
+
+          <h3>共识机制对比</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">PoW（工作量证明）</div>
+              算力竞争出块<br />
+              ✅ 安全性高<br />
+              ❌ 耗能大、速度慢<br />
+              代表：比特币
+            </div>
+            <div class="b">
+              <div class="title">PoS（权益证明）</div>
+              持币量决定出块权<br />
+              ✅ 节能、速度快<br />
+              ❌ 需质押、富者愈富<br />
+              代表：以太坊2.0
+            </div>
+          </div>
+
+          <h3>安全风险</h3>
+          <ul>
+            <li><b>51%攻击</b>：控制超过半数算力可篡改交易</li>
+            <li><b>智能合约漏洞</b>：代码漏洞导致资金损失（如DAO事件）</li>
+            <li><b>私钥丢失</b>：无法找回，资产永久丢失</li>
+          </ul>
+
+          <div class="tips">案例答题关键词：不可篡改、可追溯、去中心化、共识机制、智能合约。遇到区块链题至少写出这五个。</div>
+        </div>
+      </div>
+
+      <!-- ============ S7: LRU/FIFO ============ -->
+      <div class="sec" id="s7">
+        <div class="card">
+          <h2><span class="icon">📄</span>LRU / FIFO / OPT 页面置换</h2>
+
+          <h3>LRU 手算方法</h3>
+          <div class="key">维护列表：左边=最近使用的，右边=最久没用的。命中→移到最左；缺页→淘汰最右，新页加最左。</div>
+
+          <h3>三种算法对比</h3>
+          <table>
+            <tr>
+              <th>算法</th>
+              <th>淘汰策略</th>
+              <th>Belady异常</th>
+            </tr>
+            <tr>
+              <td><b>OPT</b></td>
+              <td>淘汰将来最久不用的（向后看）</td>
+              <td>不会</td>
+            </tr>
+            <tr>
+              <td><b>LRU</b></td>
+              <td>淘汰过去最近最久未用的（向前看）</td>
+              <td>不会</td>
+            </tr>
+            <tr>
+              <td><b>FIFO</b></td>
+              <td>淘汰最早进入的</td>
+              <td><b>可能</b></td>
+            </tr>
+          </table>
+
+          <div class="trap">Belady异常 = 增加页框数反而缺页率上升。<b>只有FIFO可能出现</b>。LRU和OPT是栈式算法，不会。</div>
+
+          <h3>缺页率公式</h3>
+          <div class="formula">缺页率 = 缺页次数 / 总访问次数</div>
+
+          <h3>快速判断技巧</h3>
+          <ul>
+            <li>前N次访问（N=页框数）必为缺页（初始为空）</li>
+            <li>刚被淘汰的页面如果马上又被访问，一定缺页</li>
+            <li>序列中有连续重复的页号 → 命中机会多</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============ S8: PV操作 ============ -->
+      <div class="sec" id="s8">
+        <div class="card">
+          <h2><span class="icon">🔄</span>PV 操作</h2>
+
+          <h3>基本规则</h3>
+          <div class="formula">P(S)：S=S-1，若S&lt;0则阻塞等待 &nbsp;|&nbsp; V(S)：S=S+1，若有等待进程则唤醒</div>
+          <div class="mnemonic">P = 申请等待 &nbsp;|&nbsp; V = 释放通知</div>
+
+          <h3>生产者-消费者</h3>
+          <p>缓冲区容量N。empty=N, full=0, mutex=1：</p>
+          <div class="formula">
+            生产者：P(empty) → P(mutex) → 写 → V(mutex) → V(full)<br />
+            消费者：P(full) → P(mutex) → 读 → V(mutex) → V(empty)
+          </div>
+          <div class="key">P的顺序不能反（先P(empty)再P(mutex)，否则死锁）。V的顺序无所谓。N=1时可省略mutex。</div>
+
+          <h3>多读者-写者</h3>
+          <div class="formula">
+            读者：P(mutex); rc++; if(rc==1)P(rw); V(mutex); 读; P(mutex); rc--; if(rc==0)V(rw); V(mutex)<br />
+            写者：P(rw); 写; V(rw)
+          </div>
+
+          <h3>前趋同步</h3>
+          <div class="formula">P1先完成：V(S) &nbsp;|&nbsp; P2后开始：P(S) &nbsp;|&nbsp; 信号量S=0</div>
+
+          <h3>做题三问</h3>
+          <ol>
+            <li><b>谁等谁？</b> → 先完成的V，后开始的P</li>
+            <li><b>有没有互斥？</b> → 共享资源需要mutex</li>
+            <li><b>信号量初始值？</b> → 一般题目会给出</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- ============ S9: 流水线 ============ -->
+      <div class="sec" id="s9">
+        <div class="card">
+          <h2><span class="icon">⚡</span>流水线计算</h2>
+
+          <h3>三个核心公式</h3>
+          <div class="formula">时钟周期：Δt = max(各段时间)</div>
+          <div class="formula">总时间：T = (级数k + 指令数n - 1) × Δt</div>
+          <div class="formula">吞吐率：TP = n / T &nbsp;|&nbsp; 加速比：S = 不用流水线时间 / T</div>
+
+          <h3>计算示例</h3>
+          <p>4级流水线，各段2ns/3ns/2ns/2ns，100条指令：</p>
+          <ul>
+            <li>Δt = max(2,3,2,2) = <b>3ns</b></li>
+            <li>T = (4+100-1)×3 = 103×3 = <b>309ns</b></li>
+            <li>TP = 100/309 ns⁻¹</li>
+            <li>不用流水线：每条9ns×100=900ns，S=900/309≈<b>2.91</b></li>
+          </ul>
+
+          <h3>气泡（Stall）</h3>
+          <div class="formula">实际时间 = 理想时间 + m×(n-1)×Δt（m=每条指令插入的气泡数）</div>
+        </div>
+      </div>
+
+      <!-- ============ S10: Cache/死锁 ============ -->
+      <div class="sec" id="s10">
+        <div class="card">
+          <h2><span class="icon">💾</span>Cache 映射 + 死锁资源计算</h2>
+
+          <h3>Cache三种映射</h3>
+          <table>
+            <tr>
+              <th>方式</th>
+              <th>规则</th>
+              <th>优点</th>
+              <th>缺点</th>
+            </tr>
+            <tr>
+              <td>直接映射</td>
+              <td>块号%行数=固定行</td>
+              <td>速度快</td>
+              <td>冲突多</td>
+            </tr>
+            <tr>
+              <td>全相联</td>
+              <td>任意块放任意行</td>
+              <td>冲突最少</td>
+              <td>硬件复杂</td>
+            </tr>
+            <tr>
+              <td>N路组相联</td>
+              <td>先分组，组内N路任选</td>
+              <td>平衡</td>
+              <td>—</td>
+            </tr>
+          </table>
+
+          <h3>计算公式</h3>
+          <div class="formula">总行数 = Cache容量/块大小 &nbsp;|&nbsp; 组数 = 总行数/N</div>
+
+          <h3>RISC vs CISC</h3>
+          <table>
+            <tr>
+              <th>特征</th>
+              <th>RISC</th>
+              <th>CISC</th>
+            </tr>
+            <tr>
+              <td>指令数量</td>
+              <td>少</td>
+              <td>多</td>
+            </tr>
+            <tr>
+              <td>指令长度</td>
+              <td><b>固定</b></td>
+              <td><b>可变</b></td>
+            </tr>
+            <tr>
+              <td>寻址方式</td>
+              <td><b>简单（少）</b></td>
+              <td><b>丰富（多）</b></td>
+            </tr>
+            <tr>
+              <td>寄存器数量</td>
+              <td><b>多（>100）</b></td>
+              <td>少</td>
+            </tr>
+            <tr>
+              <td>控制器</td>
+              <td><b>硬布线</b></td>
+              <td><b>微程序</b></td>
+            </tr>
+            <tr>
+              <td>流水线</td>
+              <td><b>适合（大多1周期）</b></td>
+              <td>不适合</td>
+            </tr>
+            <tr>
+              <td>代表</td>
+              <td>ARM、MIPS</td>
+              <td>x86</td>
+            </tr>
+          </table>
+
+          <h3>死锁资源计算</h3>
+          <div class="formula">m ≥ n×(X-1) + 1</div>
+          <p>m=资源总数，n=进程数，X=每个进程最多需要的资源数</p>
+          <div class="tips">含义：最坏情况每个进程各拿(X-1)个（差1个就能完成），再留至少1个给某个进程先完成释放。</div>
+
+          <h3>寻址方式</h3>
+          <table>
+            <tr>
+              <th>方式</th>
+              <th>类比</th>
+            </tr>
+            <tr>
+              <td>立即寻址</td>
+              <td>直接给你钱</td>
+            </tr>
+            <tr>
+              <td>直接寻址</td>
+              <td>给你门牌号</td>
+            </tr>
+            <tr>
+              <td>寄存器寻址</td>
+              <td>钱在你口袋</td>
+            </tr>
+            <tr>
+              <td>寄存器间接寻址</td>
+              <td>口袋里有张纸条写着门牌号</td>
+            </tr>
+            <tr>
+              <td>基址寻址</td>
+              <td>门牌号+楼栋偏移</td>
+            </tr>
+            <tr>
+              <td>变址寻址</td>
+              <td>数组遍历（基址+下标）</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============ S11: 子网划分 ============ -->
+      <div class="sec" id="s11">
+        <div class="card">
+          <h2><span class="icon">🔢</span>IP 子网划分</h2>
+
+          <h3>核心公式</h3>
+          <div class="formula">子网数 = 2^n &nbsp;|&nbsp; 每子网主机数 = 2^m - 2</div>
+          <p>n=借的主机位数，m=剩余主机位数（减2=网络地址+广播地址）</p>
+
+          <h3>常用掩码对照表</h3>
+          <table>
+            <tr>
+              <th>CIDR</th>
+              <th>子网掩码</th>
+              <th>借位</th>
+              <th>子网数</th>
+              <th>每子网主机</th>
+            </tr>
+            <tr>
+              <td>/25</td>
+              <td>255.255.255.128</td>
+              <td>1</td>
+              <td>2</td>
+              <td>126</td>
+            </tr>
+            <tr>
+              <td>/26</td>
+              <td>255.255.255.192</td>
+              <td>2</td>
+              <td>4</td>
+              <td>62</td>
+            </tr>
+            <tr>
+              <td>/27</td>
+              <td>255.255.255.224</td>
+              <td>3</td>
+              <td>8</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>/28</td>
+              <td>255.255.255.240</td>
+              <td>4</td>
+              <td>16</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>/29</td>
+              <td>255.255.255.248</td>
+              <td>5</td>
+              <td>32</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>/30</td>
+              <td>255.255.255.252</td>
+              <td>6</td>
+              <td>64</td>
+              <td>2</td>
+            </tr>
+          </table>
+
+          <h3>求网络地址</h3>
+          <div class="formula">网络地址 = IP地址 AND 子网掩码</div>
+          <p>
+            例：IP 192.168.10.130/26<br />
+            130 = 10000010，/26掩码末字节=11000000(192)<br />
+            AND = 10000000 = 128 → 网络地址 = 192.168.10.128
+          </p>
+        </div>
+      </div>
+
+      <!-- ============ S12: 挣值分析 ============ -->
+      <div class="sec" id="s12">
+        <div class="card">
+          <h2><span class="icon">💰</span>挣值分析</h2>
+
+          <h3>三个基本量</h3>
+          <table>
+            <tr>
+              <th>符号</th>
+              <th>名称</th>
+              <th>含义</th>
+            </tr>
+            <tr>
+              <td><b>PV</b></td>
+              <td>计划值</td>
+              <td>到某时点<b>计划</b>完成的工作预算</td>
+            </tr>
+            <tr>
+              <td><b>EV</b></td>
+              <td>挣值</td>
+              <td>到某时点<b>实际完成</b>的工作预算</td>
+            </tr>
+            <tr>
+              <td><b>AC</b></td>
+              <td>实际成本</td>
+              <td>到某时点<b>实际花费</b></td>
+            </tr>
+          </table>
+
+          <h3>四个偏差指标</h3>
+          <div class="formula">
+            CV = EV - AC（成本偏差）>0=节约<br />
+            SV = EV - PV（进度偏差）>0=超前<br />
+            CPI = EV / AC（成本绩效指数）>1=节约<br />
+            SPI = EV / PV（进度绩效指数）>1=超前
+          </div>
+
+          <div class="mnemonic">EV永远是分子！"偏差"用减法，"指数"用除法</div>
+
+          <h3>预测公式</h3>
+          <div class="formula">
+            BAC = 完工总预算<br />
+            EAC = BAC / CPI（典型偏差时）<br />
+            ETC = EAC - AC（还需花多少）<br />
+            VAC = BAC - EAC（完工偏差）
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S13: 关键路径 ============ -->
+      <div class="sec" id="s13">
+        <div class="card">
+          <h2><span class="icon">🗺️</span>关键路径</h2>
+
+          <div class="formula">关键路径 = 从起点到终点<b>最长</b>的路径 = 项目最短完成时间</div>
+
+          <h3>总时差</h3>
+          <div class="formula">总时差 = 最迟开始LS - 最早开始ES</div>
+          <div class="key">总时差=0的活动 = 关键活动。关键活动连起来 = 关键路径。</div>
+
+          <h3>做题方法</h3>
+          <ol>
+            <li><b>列举路径法</b>（小项目）：画出所有路径，最长的是关键路径</li>
+            <li><b>ES/LS法</b>（给了表格）：找总时差=0的活动，连成路径</li>
+          </ol>
+
+          <h3>易错点</h3>
+          <ul>
+            <li>关键路径<b>不一定只有一条</b></li>
+            <li>关键活动delay一天 = 项目晚一天</li>
+            <li>非关键活动的总时差 = 可以拖延而不影响总工期的天数</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============ S14: 等级保护 ============ -->
+      <div class="sec" id="s14">
+        <div class="card">
+          <h2><span class="icon">🛡️</span>等级保护 2.0</h2>
+
+          <h3>五个级别</h3>
+          <table>
+            <tr>
+              <th>级别</th>
+              <th>名称</th>
+              <th>备案</th>
+              <th>测评</th>
+              <th>适用</th>
+            </tr>
+            <tr>
+              <td>一级</td>
+              <td>自主保护级</td>
+              <td>不需</td>
+              <td>不需</td>
+              <td>小型系统</td>
+            </tr>
+            <tr>
+              <td>二级</td>
+              <td>指导保护级</td>
+              <td><b>需备案</b></td>
+              <td>不需强制测评</td>
+              <td>一般系统</td>
+            </tr>
+            <tr>
+              <td>三级</td>
+              <td>监督保护级</td>
+              <td>需备案</td>
+              <td><b>每年至少1次</b></td>
+              <td>重要系统（银行、电商）</td>
+            </tr>
+            <tr>
+              <td>四级</td>
+              <td>强制保护级</td>
+              <td>需备案</td>
+              <td><b>每半年至少1次</b></td>
+              <td>极重要（国防）</td>
+            </tr>
+            <tr>
+              <td>五级</td>
+              <td>专控保护级</td>
+              <td>需备案</td>
+              <td>更频繁</td>
+              <td>国家安全</td>
+            </tr>
+          </table>
+
+          <div class="trap">"第二级以上需要强制测评" → 错！<b>第三级以上</b>才需要。"等级保护共分三级" → 错！<b>五级</b>。</div>
+        </div>
+      </div>
+
+      <!-- ============ S15: 云原生 ============ -->
+      <div class="sec" id="s15">
+        <div class="card">
+          <h2><span class="icon">☁️</span>云原生六大技术</h2>
+
+          <table>
+            <tr>
+              <th>技术</th>
+              <th>说明</th>
+              <th>场景关键词</th>
+            </tr>
+            <tr>
+              <td><b>容器化</b></td>
+              <td>Docker等，应用打包隔离运行</td>
+              <td>环境不一致</td>
+            </tr>
+            <tr>
+              <td><b>微服务</b></td>
+              <td>单体拆分为独立部署的小服务</td>
+              <td>一个故障拖垮整体</td>
+            </tr>
+            <tr>
+              <td><b>DevOps</b></td>
+              <td>开发运维一体化，CI/CD</td>
+              <td>发布需停机</td>
+            </tr>
+            <tr>
+              <td><b>服务网格</b></td>
+              <td>Istio等，微服务间通信管理</td>
+              <td>服务间调用复杂</td>
+            </tr>
+            <tr>
+              <td><b>不可变基础设施</b></td>
+              <td>容器镜像不可变，替换而非修改</td>
+              <td>配置漂移</td>
+            </tr>
+            <tr>
+              <td><b>声明式API</b></td>
+              <td>描述期望状态而非操作步骤</td>
+              <td>K8s编排</td>
+            </tr>
+          </table>
+
+          <h3>其他高频技术概念</h3>
+          <table>
+            <tr>
+              <th>概念</th>
+              <th>要点</th>
+            </tr>
+            <tr>
+              <td><b>CAP定理</b></td>
+              <td>一致性C、可用性A、分区容忍P，三者只能满足两个。分布式系统必选P，所以是在CA之间选。</td>
+            </tr>
+            <tr>
+              <td><b>BASE</b></td>
+              <td>Basically Available（基本可用）、Soft State（软状态）、Eventually Consistent（最终一致性）</td>
+            </tr>
+            <tr>
+              <td><b>绞杀者模式</b></td>
+              <td>单体→微服务迁移：新建微服务→路由切换→逐步替换→下线旧模块</td>
+            </tr>
+            <tr>
+              <td><b>Lambda vs Kappa</b></td>
+              <td>Lambda=批处理+流处理双通道；Kappa=只用流处理（简化版）</td>
+            </tr>
+            <tr>
+              <td><b>零信任</b></td>
+              <td>从不信任，始终验证；四大特性：身份认证、设备验证、最小权限、微隔离</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============ S16: 加密/签名 ============ -->
+      <div class="sec" id="s16">
+        <div class="card">
+          <h2><span class="icon">🔐</span>加密与数字签名</h2>
+
+          <h3>对称 vs 非对称加密</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">对称加密</div>
+              同一把密钥加解密<br />
+              ✅ 速度快<br />
+              ❌ 密钥分发困难<br />
+              代表：AES、DES、3DES
+            </div>
+            <div class="b">
+              <div class="title">非对称加密</div>
+              公钥加密、私钥解密<br />
+              ✅ 解决密钥分发<br />
+              ❌ 速度慢<br />
+              代表：RSA、ECC
+            </div>
+          </div>
+
+          <h3>数字签名完整流程</h3>
+          <ol>
+            <li>发送方对消息做<b>哈希</b>（摘要）</li>
+            <li>用发送方的<b>私钥</b>加密摘要 → 签名</li>
+            <li>用接收方的<b>公钥</b>加密消息 → 保密</li>
+            <li>接收方用自己的<b>私钥</b>解密消息</li>
+            <li>用发送方的<b>公钥</b>解密签名 → 验证</li>
+            <li>对消息做哈希，与解密的摘要对比</li>
+          </ol>
+
+          <div class="key">先哈希再签名（不直接签名原文，签名摘要）。签名=私钥加密摘要，验证=公钥解密摘要。</div>
+
+          <h3>密码存储</h3>
+          <div class="trap">密码存储用<b>加盐哈希</b>（Salt+Hash），不是加密！加密可逆，哈希不可逆。</div>
+        </div>
+      </div>
+
+      <!-- ============ S17: 案例话术 ============ -->
+      <div class="sec" id="s17">
+        <div class="card">
+          <h2><span class="icon">📝</span>案例答题话术模板</h2>
+
+          <h3>架构风格对比答题模板</h3>
+          <div class="formula">
+            ① 选择XX风格（结论）<br />
+            ② 优势：XX方面具有XX特点（如：事件驱动在实时性方面具有响应快的特点）<br />
+            ③ 劣势：XX方面存在XX不足<br />
+            ④ 适用场景：适合XX类型系统
+          </div>
+
+          <h3>扩展性/可修改性问法答题模板</h3>
+          <div class="formula">
+            ① 定义标准接口（接口层抽象）<br />
+            ② 采用注册机制（插件注册发现）<br />
+            ③ 使用配置化/规则化方式（声明式扩展）<br />
+            ④ 具体技术：SPI机制、策略模式、观察者模式
+          </div>
+
+          <h3>案例三步法</h3>
+          <ol>
+            <li><b>结论</b>：直接回答问题</li>
+            <li><b>具体技术名词+原理</b>：用专业术语，不用通俗描述</li>
+            <li><b>逐条对应背景条件</b>：把题目中的条件逐条回应（值2-3分）</li>
+          </ol>
+
+          <div class="trap">常见失分原因：只写关键词不展开、不用专业术语、不对应题目背景条件。</div>
+
+          <h3>分页地址转换公式</h3>
+          <div class="formula">
+            页号 = 逻辑地址 / 页面大小（整除）<br />
+            页内偏移 = 逻辑地址 % 页面大小<br />
+            物理地址 = 页框号 × 页面大小 + 页内偏移
+          </div>
+          <p>页面4KB时十六进制快速法：页号=高位部分（去掉末3位hex），偏移=末3位hex</p>
+        </div>
+      </div>
+    </div>
+    <!-- /content -->
+
+    <button class="back-top" id="backTop" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">↑</button>
+
+    <script>
+      // 动态计算header高度，给content留出空间
+      function adjustPadding() {
+        const header = document.querySelector(".header")
+        const content = document.getElementById("content")
+        if (header && content) {
+          content.style.paddingTop = header.offsetHeight + 8 + "px"
+        }
+      }
+      adjustPadding()
+      window.addEventListener("resize", adjustPadding)
+
+      // 导航切换
+      const nav = document.getElementById("nav")
+      const secs = document.querySelectorAll(".sec")
+      const links = nav.querySelectorAll("a")
+
+      links.forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault()
+          const id = a.dataset.s
+          links.forEach((l) => l.classList.remove("active"))
+          a.classList.add("active")
+          secs.forEach((s) => s.classList.remove("active"))
+          document.getElementById(id).classList.add("active")
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        })
+      })
+
+      // 滑动导航到当前tab
+      nav.addEventListener("click", (e) => {
+        if (e.target.tagName === "A") {
+          e.target.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
+        }
+      })
+
+      // 回到顶部按钮
+      const btn = document.getElementById("backTop")
+      window.addEventListener("scroll", () => {
+        btn.style.display = window.scrollY > 300 ? "flex" : "none"
+      })
+    </script>
+  </body>
+</html>
