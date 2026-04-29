@@ -308,6 +308,8 @@
         <a href="#" data-s="s15">云原生</a>
         <a href="#" data-s="s16">加密/签名</a>
         <a href="#" data-s="s17">案例话术</a>
+        <a href="#" data-s="s18">内聚/耦合</a>
+        <a href="#" data-s="s19">覆盖测试</a>
       </div>
     </div>
 
@@ -622,7 +624,118 @@
         <div class="card">
           <h2><span class="icon">🌐</span>TCP/IP 协议族</h2>
 
-          <h3>四层模型</h3>
+          <h3>OSI 七层模型（必背）</h3>
+          <table>
+            <tr>
+              <th>层号</th>
+              <th>名称</th>
+              <th>功能</th>
+              <th>核心协议/设备</th>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><b>应用层</b></td>
+              <td>为用户提供网络服务接口</td>
+              <td>HTTP、FTP、SMTP、DNS、DHCP、Telnet、SNMP、POP3、IMAP、SSH</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><b>表示层</b></td>
+              <td>数据格式转换、加密解密、压缩解压</td>
+              <td>JPEG、ASCII、SSL/TLS、MPEG</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><b>会话层</b></td>
+              <td>建立/管理/终止会话（通信同步）</td>
+              <td>NetBIOS、RPC、SQL会话</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><b>传输层</b></td>
+              <td>端到端可靠传输、流量控制</td>
+              <td><b>TCP</b>、<b>UDP</b>、SPX</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><b>网络层</b></td>
+              <td>路由选择、寻址、拥塞控制</td>
+              <td><b>IP</b>、ICMP、ARP、RARP、OSPF、BGP、IGMP</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><b>数据链路层</b></td>
+              <td>帧封装、差错检测、MAC寻址</td>
+              <td>Ethernet、PPP、HDLC、Frame Relay、VLAN、STP</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td><b>物理层</b></td>
+              <td>比特流传输、电气/机械特性</td>
+              <td>RS-232、RJ-45、光纤、双绞线、中继器、集线器</td>
+            </tr>
+          </table>
+          <div class="mnemonic">七层从下到上：物 数 网 传 会 表 应（物理→数据链路→网络→传输→会话→表示→应用）</div>
+
+          <h3>OSI vs TCP/IP 对照</h3>
+          <table>
+            <tr>
+              <th>OSI七层</th>
+              <th>TCP/IP四层</th>
+              <th>对应关系</th>
+            </tr>
+            <tr>
+              <td>应用层、表示层、会话层</td>
+              <td><b>应用层</b></td>
+              <td>OSI上三层合并为TCP/IP应用层</td>
+            </tr>
+            <tr>
+              <td>传输层</td>
+              <td><b>传输层</b></td>
+              <td>一一对应</td>
+            </tr>
+            <tr>
+              <td>网络层</td>
+              <td><b>网络层（网际层）</b></td>
+              <td>一一对应</td>
+            </tr>
+            <tr>
+              <td>数据链路层、物理层</td>
+              <td><b>网络接口层</b></td>
+              <td>OSI下两层合并为TCP/IP网络接口层</td>
+            </tr>
+          </table>
+
+          <h3>每层对应网络设备</h3>
+          <table>
+            <tr>
+              <th>层次</th>
+              <th>设备</th>
+              <th>作用</th>
+            </tr>
+            <tr>
+              <td>物理层</td>
+              <td>中继器、集线器（Hub）</td>
+              <td>信号放大/再生，不识别地址</td>
+            </tr>
+            <tr>
+              <td>数据链路层</td>
+              <td>网桥、交换机（Switch）</td>
+              <td>根据MAC地址转发帧</td>
+            </tr>
+            <tr>
+              <td>网络层</td>
+              <td>路由器（Router）</td>
+              <td>根据IP地址路由转发</td>
+            </tr>
+            <tr>
+              <td>传输层及以上</td>
+              <td>网关（Gateway）</td>
+              <td>协议转换，连接不同体系网络</td>
+            </tr>
+          </table>
+
+          <div class="trap">交换机工作在<b>数据链路层</b>（看MAC地址），路由器工作在<b>网络层</b>（看IP地址）。集线器（Hub）工作在<b>物理层</b>，只是广播信号，不识别任何地址。</div>
           <table>
             <tr>
               <th>层次</th>
@@ -1447,6 +1560,81 @@
             物理地址 = 页框号 × 页面大小 + 页内偏移
           </div>
           <p>页面4KB时十六进制快速法：页号=高位部分（去掉末3位hex），偏移=末3位hex</p>
+        </div>
+      </div>
+
+      <!-- ============ S18: 内聚/耦合 ============ -->
+      <div class="sec" id="s18">
+        <div class="card">
+          <h2><span class="icon">🧩</span>内聚与耦合</h2>
+
+          <h3>七种内聚（从低到高，功能内聚最优）</h3>
+          <table>
+            <tr><th>类型</th><th>含义</th><th>类比</th></tr>
+            <tr><td><b>偶然内聚</b></td><td>几个功能硬凑在一起，毫无关联</td><td>随机分到一组的人</td></tr>
+            <tr><td><b>逻辑内聚</b></td><td>逻辑上相关的功能放一起，由参数决定执行哪个</td><td>同一类工具放一个抽屉</td></tr>
+            <tr><td><b>时间内聚</b></td><td>同一时间段执行的功能放一起</td><td>晨起流程：刷牙洗脸穿衣</td></tr>
+            <tr><td><b>过程内聚</b></td><td>按特定顺序执行的处理步骤放一起</td><td>按步骤的菜谱</td></tr>
+            <tr><td><b>通信内聚</b></td><td>操作同一数据集的功能放一起</td><td>都操作"学生表"的增删改查</td></tr>
+            <tr><td><b>顺序内聚</b></td><td>一个功能的输出是另一个的输入</td><td>流水线：A的产出给B</td></tr>
+            <tr><td><b>功能内聚</b></td><td>所有元素共同完成一个单一功能</td><td>只做一件事且做好</td></tr>
+          </table>
+          <div class="mnemonic">内聚从低到高：偶逻时过通顺功（偶然→逻辑→时间→过程→通信→顺序→功能）</div>
+
+          <h3>七种耦合（从低到高，非直接耦合最优）</h3>
+          <table>
+            <tr><th>类型</th><th>含义</th><th>类比</th></tr>
+            <tr><td><b>非直接耦合</b></td><td>两模块无直接关系，通过主模块间接联系</td><td>互不认识，通过中间人联系</td></tr>
+            <tr><td><b>数据耦合</b></td><td>只通过<b>简单数据参数</b>传递信息</td><td>只传纸条不传原件</td></tr>
+            <tr><td><b>标记耦合</b></td><td>通过<b>数据结构（记录/对象）</b>传递信息</td><td>传整个档案袋</td></tr>
+            <tr><td><b>控制耦合</b></td><td>传递<b>控制信息</b>（开关/标志），一个模块控制另一个的执行</td><td>远程遥控器</td></tr>
+            <tr><td><b>外部耦合</b></td><td>共享<b>外部数据格式/通信协议/设备</b></td><td>共用同一台打印机</td></tr>
+            <tr><td><b>公共耦合</b></td><td>共享<b>全局数据结构/公共变量</b></td><td>共用一块白板</td></tr>
+            <tr><td><b>内容耦合</b></td><td>一个模块直接访问另一个模块的<b>内部数据/代码</b></td><td>直接翻别人的抽屉</td></tr>
+          </table>
+          <div class="mnemonic">耦合从低到高：无数标控外公内（非直接→数据→标记→控制→外部→公共→内容）</div>
+
+          <div class="trap">考试陷阱："传递整个数据结构"是<b>标记耦合</b>不是数据耦合。数据耦合只传简单参数（int、string）。传递控制标志（flag/开关）是<b>控制耦合</b>。</div>
+        </div>
+      </div>
+
+      <!-- ============ S19: 覆盖测试 ============ -->
+      <div class="sec" id="s19">
+        <div class="card">
+          <h2><span class="icon">🧪</span>白盒测试 · 逻辑覆盖</h2>
+
+          <h3>六种覆盖强度排序（从弱到强）</h3>
+          <div class="formula">语句覆盖 &lt; 判定覆盖 &lt; 条件覆盖 &lt; 判定/条件覆盖 &lt; 条件组合覆盖 &lt; 路径覆盖</div>
+
+          <h3>逐一详解</h3>
+          <table>
+            <tr><th>覆盖类型</th><th>要求</th><th>说明</th></tr>
+            <tr><td><b>语句覆盖</b></td><td>每条语句至少执行一次</td><td>最弱，只管"跑过"，连分支都可能没覆盖全</td></tr>
+            <tr><td><b>判定覆盖</b><br>（分支覆盖）</td><td>每个判定的真假分支至少执行一次</td><td>覆盖了分支，但不管条件内部的各个子条件</td></tr>
+            <tr><td><b>条件覆盖</b></td><td>每个条件的真假至少取一次</td><td>管到每个子条件，但组合情况不一定覆盖</td></tr>
+            <tr><td><b>判定/条件覆盖</b></td><td>同时满足判定覆盖和条件覆盖</td><td>既覆盖分支又覆盖每个条件，但条件组合不一定全</td></tr>
+            <tr><td><b>条件组合覆盖</b></td><td>所有条件的<b>真假组合</b>至少出现一次</td><td>最强（除路径覆盖外），用例数最多</td></tr>
+            <tr><td><b>路径覆盖</b></td><td>覆盖程序中所有可能的执行路径</td><td>理论上最强，但路径数可能爆炸（循环导致无限路径）</td></tr>
+          </table>
+
+          <h3>快速判断技巧</h3>
+          <ul>
+            <li>题目问"最弱的覆盖" → <b>语句覆盖</b></li>
+            <li>题目问"保证每个条件真假都取到" → <b>条件覆盖</b></li>
+            <li>题目问"所有条件组合都要覆盖" → <b>条件组合覆盖</b></li>
+            <li>题目问"覆盖所有可能执行路径" → <b>路径覆盖</b></li>
+            <li>条件组合覆盖的用例数 = 2^n（n=条件个数），如2个条件→4个用例</li>
+          </ul>
+
+          <div class="trap">条件覆盖 ≠ 判定覆盖。条件覆盖管每个子条件的真假，但可能出现：每个条件都取过真假，但判定结果只取了真没取假。所以二者独立，判定/条件覆盖是同时满足两者。</div>
+
+          <h3>白盒 vs 黑盒 vs 其他</h3>
+          <table>
+            <tr><th>类型</th><th>方法</th><th>关注点</th></tr>
+            <tr><td><b>白盒测试</b></td><td>逻辑覆盖、路径分析</td><td>内部代码结构</td></tr>
+            <tr><td><b>黑盒测试</b></td><td>等价类划分、边界值分析、因果图</td><td>功能是否正确，不看代码</td></tr>
+            <tr><td><b>回归测试</b></td><td>修改后重新测试</td><td>确认修改没引入新bug</td></tr>
+          </table>
         </div>
       </div>
     </div>
