@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>总复习专项 · 薄弱知识点综合测试</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'SimSun','Microsoft YaHei',serif;background:#e8edf3;color:#333;line-height:1.8;font-size:16px}
+.top-bar{background:#3a7bd5;color:#fff;padding:0 18px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.top-bar .exam-title{font-size:16px;font-weight:bold}
+.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:14px}
+.top-bar .stats{opacity:.9}
+.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:5px 20px;border-radius:3px;font-size:14px;font-weight:bold;cursor:pointer}
+.main-wrap{display:flex;height:calc(100vh - 48px);overflow:hidden}
+.left-panel{width:250px;min-width:250px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column}
+.left-panel .panel-title{padding:12px 14px 8px;font-size:15px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.answer-card-area{flex:1;overflow-y:auto;padding:8px 10px}
+.ac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.ac-btn{aspect-ratio:1.3;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
+.ac-btn:hover{background:#e0ecfa}
+.ac-btn.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5;font-weight:bold}
+.ac-btn.done{background:#5eba5e;border-color:#4da64d;color:#fff}
+.ac-btn.done.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
+.left-bottom{padding:10px 14px;border-top:1px solid #eee;font-size:13px;color:#888}
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.q-display{max-width:800px;margin:0 auto}
+.q-card{background:#fff;padding:24px 28px;margin-bottom:14px;border:1px solid #dde3eb}
+.q-card .q-title{font-size:16px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
+.q-card .q-text{font-size:16px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;cursor:pointer;font-size:16px;line-height:1.7;transition:all .1s}
+.q-opt:hover{background:#f5f8fc}
+.q-opt.selected{background:#e8f0fe}
+.q-opt .opt-radio{width:17px;height:17px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative}
+.q-opt.selected .opt-radio{border-color:#3a7bd5}
+.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2.5px;left:2.5px;width:9px;height:9px;background:#3a7bd5;border-radius:50%}
+.q-opt .opt-content{flex:1}
+.q-nav-arrows{display:flex;justify-content:space-between;max-width:800px;margin:0 auto 16px;padding:0 4px}
+.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:8px 24px;cursor:pointer;font-size:14px;color:#555}
+.q-nav-btn:hover{background:#e0ecfa;color:#3a7bd5}
+.q-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.report-wrap{display:none;flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.report-wrap .report-inner{max-width:800px;margin:0 auto}
+.score-box{background:linear-gradient(135deg,#3a7bd5,#2b6cb0);color:#fff;border-radius:8px;padding:28px;text-align:center;margin-bottom:16px}
+.score-box .score{font-size:3.2em;font-weight:bold}
+.score-box .label{font-size:.9em;opacity:.9;margin-top:4px}
+.review-card{background:#fff;border-radius:6px;padding:16px 20px;margin-bottom:10px;border:1px solid #e2e8f0;border-left:4px solid #e53935}
+.review-card .r-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.review-card .r-num{background:#3a7bd5;color:#fff;border-radius:3px;padding:1px 8px;font-size:12px}
+.review-card .r-text{font-size:13px;margin-bottom:8px;white-space:pre-wrap;line-height:1.7}
+.review-card .r-your{font-size:12px;color:#e53935;margin-bottom:3px}
+.review-card .r-correct{font-size:12px;color:#4caf50;margin-bottom:3px}
+.review-card .r-analysis{font-size:12px;color:#666;background:#f5f7fa;padding:10px;border-radius:4px;margin-top:6px;white-space:pre-wrap;line-height:1.7}
+.section-tag{display:inline-block;background:#3a7bd5;color:#fff;padding:1px 8px;border-radius:3px;font-size:11px;margin-right:6px}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="exam-title">总复习专项 · 薄弱知识点综合测试（25题）</div>
+  <div class="right-info">
+    <div class="stats" id="stats">已答 0/25</div>
+    <button class="submit-top" onclick="confirmSubmit()">交卷</button>
+  </div>
+</div>
+<div class="main-wrap">
+  <div class="left-panel">
+    <div class="panel-title">答题卡</div>
+    <div class="answer-card-area" id="answer-card"></div>
+    <div class="left-bottom">薄弱知识点综合 · 选择题20+简答题5</div>
+  </div>
+  <div class="right-panel" id="right-panel">
+    <div class="q-display" id="q-display"></div>
+    <div class="q-nav-arrows">
+      <button class="q-nav-btn" id="prev-btn" onclick="prevQ()">◀ 上一题</button>
+      <button class="q-nav-btn" id="next-btn" onclick="nextQ()">下一题 ▶</button>
+    </div>
+  </div>
+</div>
+<div class="report-wrap" id="report-wrap">
+  <div class="report-inner" id="report-inner"></div>
+</div>
+
+<script>
+const allQuestions = [
+
+// ====== ATAM (Q1-Q3) ======
+{id:1,text:"在ATAM架构评估中，\"加密机制增加了CPU开销，影响性能\"这一描述属于（　　）。",options:["A. 敏感点","B. 权衡点","C. 风险","D. 非风险"],answer:"B",
+analysis:"加密机制影响了两个质量属性：安全性（提升）和性能（降低），属于此升彼降的关系，因此是权衡点。如果只影响一个质量属性则是敏感点。"},
+
+{id:2,text:"在ATAM评估中，\"团队缺乏微服务架构的实施经验\"属于（　　）。",options:["A. 敏感点","B. 权衡点","C. 风险","D. 非风险"],answer:"C",
+analysis:"涉及团队能力、经验等组织层面的不确定因素，属于风险。风险=存在潜在负面结果的架构决策。"},
+
+{id:3,text:"ATAM评估中，效用树的结构从上到下依次为（　　）。",options:["A. 场景→质量属性→质量属性细化","B. 质量属性→质量属性细化→场景","C. 质量属性细化→质量属性→场景","D. 根节点→场景→质量属性"],answer:"B",
+analysis:"效用树四级结构：根节点→质量属性→质量属性细化→场景。每个场景带优先级（高/中/低）。"},
+
+// ====== 架构风格 (Q4-Q6) ======
+{id:4,text:"解释器架构风格的三个核心组件是（　　）。",options:["A. 解释引擎、被解释的程序、程序状态","B. 解释引擎、编译器、目标代码","C. 虚拟机、字节码、类加载器","D. 解释引擎、语法树、符号表"],answer:"A",
+analysis:"解释器核心组件：解释引擎、被解释的程序、程序状态。案例填空高频考点，必须精确记忆。"},
+
+{id:5,text:"黑板系统架构风格的三大核心构件是（　　）。",options:["A. 黑板、知识源、控制器","B. 黑板、数据库、推理引擎","C. 共享内存、处理器、调度器","D. 中心节点、工作节点、负载均衡器"],answer:"A",
+analysis:"黑板系统三大构件：黑板（共享数据结构）、知识源（独立处理模块）、控制器（调度策略）。适用于没有确定性解法的复杂问题，如语音识别、图像处理。"},
+
+{id:6,text:"以下架构风格中，构件之间不共享状态的是（　　）。",options:["A. 管道-过滤器","B. 黑板系统","C. 数据库系统","D. 解释器"],answer:"A",
+analysis:"管道-过滤器的构件间不共享状态，通过管道传递数据流。黑板系统和数据库系统都是仓库风格，核心就是共享数据。"},
+
+// ====== 质量属性 (Q7-Q8) ======
+{id:7,text:"\"系统应能够在不停机的情况下增加新的服务器节点\"，这属于哪个质量属性？（　　）",options:["A. 可修改性","B. 可维护性","C. 可伸缩性","D. 互操作性"],answer:"C",
+analysis:"增加服务器/增加用户 → 可伸缩性。可修改性是加功能模块，可维护性是修bug找问题，互操作性是与外部系统交互。"},
+
+{id:8,text:"\"通过引入XML数据交换格式实现与外部系统的数据对接\"，这主要体现了哪个质量属性？（　　）",options:["A. 可修改性","B. 可伸缩性","C. 可用性","D. 互操作性"],answer:"D",
+analysis:"与外部系统交互、数据交换 → 互操作性。改自己的代码是可修改性，加机器加用户是可伸缩性。"},
+
+// ====== UML (Q9-Q10) ======
+{id:9,text:"UML 2.0中，用例图属于以下哪类？（　　）",options:["A. 结构图","B. 行为图","C. 交互图","D. 实现图"],answer:"B",
+analysis:"用例图是行为图，不是结构图！这是考试高频陷阱。行为图口诀\"用活状序\"：用例、活动、状态机、序列图。"},
+
+{id:10,text:"在UML状态图中，从一个状态到另一个状态的连线称为（　　），其上的方括号[条件]称为（　　）。",options:["A. 事件、动作","B. 转换、守卫条件","C. 转换、事件","D. 动作、守卫条件"],answer:"B",
+analysis:"状态之间连线=转换（Transition），方括号中的条件=守卫条件（Guard），满足守卫条件时才触发转换。"},
+
+// ====== 计算机网络 OSI (Q11-Q13) ======
+{id:11,text:"交换机工作在OSI模型的哪一层？（　　）",options:["A. 物理层","B. 数据链路层","C. 网络层","D. 传输层"],answer:"B",
+analysis:"交换机根据MAC地址转发帧 → 数据链路层。路由器根据IP地址路由 → 网络层。集线器（Hub）只广播信号 → 物理层。"},
+
+{id:12,text:"SSL/TLS协议工作在OSI模型的哪一层？（　　）",options:["A. 应用层","B. 传输层","C. 会话层","D. 表示层"],answer:"D",
+analysis:"SSL/TLS负责数据加密解密和格式转换 → 表示层。表示层的功能：数据格式转换、加密解密、压缩解压。"},
+
+{id:13,text:"ping命令基于以下哪个协议？（　　）",options:["A. ARP","B. ICMP","C. IGMP","D. RARP"],answer:"B",
+analysis:"ping命令基于ICMP（互联网控制报文协议），用于网络差错报告和控制。ARP是IP→MAC地址解析，IGMP是组播管理，RARP是MAC→IP。"},
+
+// ====== 区块链 (Q14-Q15) ======
+{id:14,text:"区块链六层模型中，负责经济激励、奖励出块节点的层级是（　　）。",options:["A. 共识层","B. 合约层","C. 激励层","D. 应用层"],answer:"C",
+analysis:"六层从下到上：数据层→网络层→共识层→激励层→合约层→应用层。激励层负责经济激励机制，发行代币，奖励出块节点。"},
+
+{id:15,text:"智能合约部署和执行的运行环境是（　　）。",options:["A. 操作系统内核","B. 链上虚拟机（如EVM）","C. 中心化服务器","D. 浏览器客户端"],answer:"B",
+analysis:"智能合约运行在链上虚拟机中（如以太坊的EVM）。部署后代码不可篡改，条件满足时自动执行，无需第三方中介。"},
+
+// ====== 内聚/耦合 (Q16-Q17) ======
+{id:16,text:"模块A通过传递一个完整的Student对象给模块B，这种耦合属于（　　）。",options:["A. 数据耦合","B. 标记耦合","C. 控制耦合","D. 公共耦合"],answer:"B",
+analysis:"传递整个数据结构（对象/记录）→标记耦合。只传简单参数（int/string）→数据耦合。传递控制标志（flag）→控制耦合。"},
+
+{id:17,text:"一个模块中的多个处理步骤按特定顺序执行，前一步的输出是后一步的输入，这种内聚属于（　　）。",options:["A. 过程内聚","B. 通信内聚","C. 顺序内聚","D. 功能内聚"],answer:"C",
+analysis:"一个功能的输出是另一个的输入 → 顺序内聚。注意区分：过程内聚=按顺序执行但无输入输出关系；通信内聚=操作同一数据集；顺序内聚=有数据传递关系。"},
+
+// ====== 覆盖测试 (Q18) ======
+{id:18,text:"若要保证每个判定中所有条件的真假组合至少出现一次，应采用（　　）。",options:["A. 条件覆盖","B. 判定/条件覆盖","C. 条件组合覆盖","D. 路径覆盖"],answer:"C",
+analysis:"所有条件的真假组合至少出现一次 → 条件组合覆盖。条件覆盖只管每个条件取过真假，不管组合。条件组合覆盖的用例数=2^n（n=条件数）。"},
+
+// ====== 计算题 (Q19-Q23) ======
+{id:19,text:"5级流水线，各段时间3ns/2ns/4ns/2ns/3ns，200条指令，总执行时间为（　　）。",options:["A. 824ns","B. 816ns","C. 800ns","D. 836ns"],answer:"B",
+analysis:"Δt=max(3,2,4,2,3)=4ns\nT=(k+n-1)×Δt=(5+200-1)×4=204×4=816ns"},
+
+{id:20,text:"系统有20个同类资源，5个进程，为防止死锁，每个进程最多需要的资源数为（　　）。",options:["A. 4","B. 5","C. 3","D. 6"],answer:"A",
+analysis:"公式：m≥n×(X-1)+1\n20≥5×(X-1)+1\n19≥5X-5\n24≥5X\nX≤4.8 → 最多4个\n验证X=4：5个进程各持3个=15个，剩5个，至少1个进程可拿到第4个→完成释放→不死锁\n验证X=5：5个进程各持4个=20个，剩0个→全部等待→死锁！"},
+
+{id:21,text:"32KB Cache，64B块大小，8路组相联，组数为（　　）。",options:["A. 32组","B. 64组","C. 128组","D. 256组"],answer:"B",
+analysis:"总行数=32KB/64B=512行\n组数=512/8=64组"},
+
+{id:22,text:"某公司需要6个子网，每个子网至少25台主机，从192.168.1.0/24划分，子网掩码应为（　　）。",options:["A. 255.255.255.192","B. 255.255.255.224","C. 255.255.255.240","D. 255.255.255.248"],answer:"B",
+analysis:"需要6个子网：2^3=8≥6，借3位\n/24借3位=/27\n掩码=255.255.255.224\n剩余5位给主机：2^5-2=30≥25 ✓"},
+
+{id:23,text:"PV=200万，EV=180万，AC=210万，以下判断正确的是（　　）。",options:["A. 成本节约，进度超前","B. 成本超支，进度滞后","C. 成本节约，进度滞后","D. 成本超支，进度超前"],answer:"B",
+analysis:"CV=EV-AC=180-210=-30<0 → 成本超支\nSV=EV-PV=180-200=-20<0 → 进度滞后\nCPI=180/210≈0.86<1 → 超支\nSPI=180/200=0.9<1 → 滞后"},
+
+// ====== 综合应用 (Q24-Q25) ======
+{id:24,text:"3个页框，LRU算法，访问序列1,3,2,1,2,4,1,4,3,2，缺页次数为（　　）。",options:["A. 5次","B. 6次","C. 7次","D. 8次"],answer:"B",
+analysis:"LRU逐步模拟（左近右久）：\n1→{1}缺①\n3→{3,1}缺②\n2→{2,3,1}缺③\n1→{1,2,3}命中\n2→{2,1,3}命中\n4→{4,2,1}淘汰3 缺④\n1→{1,4,2}命中\n4→{4,1,2}命中\n3→{3,4,1}淘汰2 缺⑤\n2→{2,3,4}淘汰1 缺⑥\n共6次缺页"},
+
+{id:25,text:"活动A(3天)→C(4天)→E(2天)，活动B(5天)→D(3天)→E(2天)。关键路径和总工期为（　　）。",options:["A. A→C→E，9天","B. B→D→E，10天","C. A→C→E，10天","D. B→D→E，11天"],answer:"B",
+analysis:"路径1：A→C→E=3+4+2=9天\n路径2：B→D→E=5+3+2=10天\n关键路径=最长路径=B→D→E，总工期10天。"}
+];
+
+let userAnswers = {};
+let currentQ = 1;
+let submitted = false;
+const STORAGE_KEY = 'arch_final_review_v1';
+const TOTAL = allQuestions.length;
+
+function init(){loadProgress();renderAnswerCard();renderQuestion(currentQ);updateProgress();}
+function loadProgress(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){const d=JSON.parse(s);userAnswers=d.answers||{};currentQ=d.currentQ||1;}}catch(e){}}
+function saveProgress(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({answers:userAnswers,currentQ:currentQ}));}catch(e){}}
+function renderAnswerCard(){const c=document.getElementById('answer-card');let h='<div class="ac-grid">';for(let i=1;i<=TOTAL;i++){const cls=(i===currentQ?' current':'')+(userAnswers[i]?' done':'');h+=`<button class="ac-btn${cls}" id="acb-${i}" onclick="goToQ(${i})">${i}</button>`;}h+='</div>';c.innerHTML=h;}
+function updateAnswerCard(){document.querySelectorAll('.ac-btn').forEach(b=>b.classList.remove('current'));const c=document.getElementById('acb-'+currentQ);if(c)c.classList.add('current');}
+function markAnswerCard(q){const b=document.getElementById('acb-'+q);if(b&&!b.classList.contains('done'))b.classList.add('done');}
+function renderQuestion(qId){const q=allQuestions.find(x=>x.id===qId);if(!q)return;let tag='';if(qId<=3)tag='<span class="section-tag">ATAM</span>';else if(qId<=6)tag='<span class="section-tag">架构风格</span>';else if(qId<=8)tag='<span class="section-tag">质量属性</span>';else if(qId<=10)tag='<span class="section-tag">UML</span>';else if(qId<=13)tag='<span class="section-tag">网络</span>';else if(qId<=15)tag='<span class="section-tag">区块链</span>';else if(qId<=17)tag='<span class="section-tag">内聚耦合</span>';else if(qId===18)tag='<span class="section-tag">覆盖测试</span>';else if(qId<=23)tag='<span class="section-tag">计算题</span>';else tag='<span class="section-tag">综合</span>';let h=`<div class="q-card"><div class="q-title">${tag}第${qId}题（共${TOTAL}题）</div><div class="q-text">${q.text}</div><div class="q-options">`;q.options.forEach((o,i)=>{const l=String.fromCharCode(65+i);const s=userAnswers[qId]===l?' selected':'';h+=`<div class="q-opt${s}" onclick="selectOption(${qId},'${l}')"><div class="opt-radio"></div><div class="opt-content"><span>${o}</span></div></div>`;});h+='</div></div>';document.getElementById('q-display').innerHTML=h;document.getElementById('prev-btn').disabled=(qId<=1);document.getElementById('next-btn').disabled=(qId>=TOTAL);document.getElementById('next-btn').textContent=qId>=TOTAL?'已是最后一题':'下一题 ▶';updateAnswerCard();}
+function selectOption(qId,l){if(submitted)return;userAnswers[qId]=l;saveProgress();updateProgress();const c=document.querySelector('.q-card');c.querySelectorAll('.q-opt').forEach(o=>o.classList.remove('selected'));c.querySelectorAll('.q-opt').forEach(o=>{if(o.textContent.trim().startsWith(l+'.'))o.classList.add('selected');});markAnswerCard(qId);}
+function goToQ(id){currentQ=id;saveProgress();renderQuestion(id);document.getElementById('right-panel').scrollTop=0;}
+function prevQ(){if(currentQ>1)goToQ(currentQ-1);}
+function nextQ(){if(currentQ<TOTAL)goToQ(currentQ+1);}
+function updateProgress(){document.getElementById('stats').textContent=`已答 ${Object.keys(userAnswers).length}/${TOTAL}`;}
+function confirmSubmit(){const u=TOTAL-Object.keys(userAnswers).length;let m='确定要交卷吗？';if(u>0)m+=`还有 ${u} 题未作答。`;if(confirm(m))submitExam();}
+function submitExam(){if(submitted)return;submitted=true;let correct=0,wrongList=[];allQuestions.forEach(q=>{if(userAnswers[q.id]===q.answer)correct++;else wrongList.push(q);});const pct=Math.round(correct/TOTAL*100);let pass=pct>=80?'🎉 恭喜过关！':'⚠️ 未达标，需要继续复习';let h=`<div class="score-box"><div class="score">${correct}/${TOTAL}</div><div class="label">正确率 ${pct}% · ${pass}</div></div>`;if(wrongList.length>0){h+=`<div class="review-card" style="border-left-color:#3a7bd5"><div class="r-header"><span class="r-num">错题解析</span></div></div>`;wrongList.forEach(q=>{h+=`<div class="review-card"><div class="r-header"><span class="r-num">第${q.id}题</span></div><div class="r-text">${q.text}</div><div class="r-your">你的答案：${userAnswers[q.id]||'未作答'}</div><div class="r-correct">正确答案：${q.answer}</div><div class="r-analysis">${q.analysis}</div></div>`;});}else{h+='<p style="text-align:center;color:#4caf50;font-size:1.1em;padding:20px">全部正确！完美过关！</p>';}document.querySelector('.main-wrap').style.display='none';document.getElementById('report-inner').innerHTML=h;document.getElementById('report-wrap').style.display='block';localStorage.removeItem(STORAGE_KEY);}
+document.addEventListener('keydown',function(e){if(submitted)return;if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevQ();}if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextQ();}if(['A','B','C','D'].includes(e.key.toUpperCase()))selectOption(currentQ,e.key.toUpperCase());});
+init();
+</script>
+</body>
+</html>
