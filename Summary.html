@@ -369,8 +369,10 @@
         <a href="#" data-s="s17">案例话术</a>
         <a href="#" data-s="s18">内聚/耦合</a>
         <a href="#" data-s="s19">覆盖测试</a>
+        <a href="#" data-s="s20">设计模式</a>
+        <a href="#" data-s="s21">排序算法</a>
         <span class="nav-sep">|</span>
-        <a href="#" data-s="s20" class="nav-essay">论文模板</a>
+        <a href="#" data-s="s22" class="nav-essay">论文模板</a>
       </div>
     </div>
 
@@ -1698,8 +1700,332 @@
           </table>
         </div>
       </div>
-      <!-- ============ S20: 论文模板 ============ -->
+      <!-- ============ S20: 设计模式 ============ -->
       <div class="sec" id="s20">
+        <div class="card">
+          <h2><span class="icon">🧩</span>设计模式速查（23种）</h2>
+
+          <h3>三大分类</h3>
+          <div class="mnemonic">创建型5 + 结构型7 + 行为型11 = 23种</div>
+          <table>
+            <tr><th>类型</th><th>核心目的</th><th>包含模式</th></tr>
+            <tr><td><b>创建型</b></td><td>对象怎么创建</td><td>工厂方法、抽象工厂、单例、建造者、原型</td></tr>
+            <tr><td><b>结构型</b></td><td>类和对象怎么组合</td><td>适配器、桥接、组合、装饰器、外观、享元、代理</td></tr>
+            <tr><td><b>行为型</b></td><td>对象之间怎么交互</td><td>责任链、命令、解释器、迭代器、中介者、备忘录、观察者、状态、策略、模板方法、访问者</td></tr>
+          </table>
+
+          <h3>速记口诀</h3>
+          <div class="mnemonic">创建：工抽单建原 &nbsp;|&nbsp; 结构：适桥组装外享代 &nbsp;|&nbsp; 行为：责命解迭中备观状策模访</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🏭</span>创建型模式（5种）</h2>
+
+          <table>
+            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
+            <tr>
+              <td><b>工厂方法</b></td>
+              <td>定义创建对象的接口，由子类决定实例化哪个类</td>
+              <td>不知道具体要创建哪个类的实例</td>
+            </tr>
+            <tr>
+              <td><b>抽象工厂</b></td>
+              <td>创建一系列相关对象的接口，无需指定具体类</td>
+              <td>需要创建产品族（如跨平台UI组件）</td>
+            </tr>
+            <tr>
+              <td><b>单例</b></td>
+              <td>确保一个类只有一个实例+全局访问点</td>
+              <td>配置管理、线程池、日志、数据库连接池</td>
+            </tr>
+            <tr>
+              <td><b>建造者</b></td>
+              <td>将复杂对象的构建与表示分离，分步骤构建</td>
+              <td>对象有很多可选参数（如SQL查询构建）</td>
+            </tr>
+            <tr>
+              <td><b>原型</b></td>
+              <td>通过复制已有实例来创建新实例（clone）</td>
+              <td>创建成本高，复制比new更高效</td>
+            </tr>
+          </table>
+
+          <div class="trap">单例的懒汉式=第一次使用时创建（延迟加载）；饿汉式=类加载时就创建。考试经常考反。</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🏗️</span>结构型模式（7种）</h2>
+
+          <table>
+            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
+            <tr>
+              <td><b>适配器</b></td>
+              <td>将一个类的接口转换为客户端期望的另一个接口</td>
+              <td>兼容旧接口、整合第三方库</td>
+            </tr>
+            <tr>
+              <td><b>桥接</b></td>
+              <td>将抽象部分与实现部分分离，使它们可以独立变化</td>
+              <td>避免多层继承爆炸（如形状×颜色）</td>
+            </tr>
+            <tr>
+              <td><b>组合</b></td>
+              <td>将对象组合成树形结构，统一处理单个对象和组合对象</td>
+              <td>文件系统、菜单树、组织架构</td>
+            </tr>
+            <tr>
+              <td><b>装饰器</b></td>
+              <td>动态地为对象添加额外职责，不修改原有类</td>
+              <td>Java IO流、为对象加功能但不想改原类</td>
+            </tr>
+            <tr>
+              <td><b>外观</b></td>
+              <td>为子系统提供一个统一的高层接口</td>
+              <td>简化复杂子系统的调用（如一键下单）</td>
+            </tr>
+            <tr>
+              <td><b>享元</b></td>
+              <td>共享细粒度对象，减少内存用量</td>
+              <td>大量相似对象（如字符编辑器中的字符对象）</td>
+            </tr>
+            <tr>
+              <td><b>代理</b></td>
+              <td>为其他对象提供代理以控制对它的访问</td>
+              <td>远程代理、虚拟代理、保护代理、缓存代理</td>
+            </tr>
+          </table>
+
+          <div class="vs">
+            <div class="a">
+              <div class="title">装饰器 vs 代理</div>
+              装饰器：<b>增强</b>功能，不改变接口<br />
+              代理：<b>控制</b>访问，可能改变行为
+            </div>
+            <div class="b">
+              <div class="title">适配器 vs 桥接</div>
+              适配器：<b>事后</b>补救，让不兼容的接口能一起工作<br />
+              桥接：<b>事前</b>设计，将抽象与实现分离
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🎯</span>行为型模式（11种 · 高频6种）</h2>
+
+          <table>
+            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
+            <tr>
+              <td><b>观察者</b> <span class="tag">高频</span></td>
+              <td>一对多依赖，对象状态变化时自动通知所有观察者</td>
+              <td>事件监听、消息推送、MVC中的Model-View</td>
+            </tr>
+            <tr>
+              <td><b>策略</b> <span class="tag">高频</span></td>
+              <td>封装算法族，使它们可以互相替换</td>
+              <td>排序算法切换、支付方式选择、折扣计算</td>
+            </tr>
+            <tr>
+              <td><b>模板方法</b> <span class="tag">高频</span></td>
+              <td>定义算法骨架，将某些步骤延迟到子类实现</td>
+              <td>框架设计（如JUnit的setUp/tearDown）</td>
+            </tr>
+            <tr>
+              <td><b>命令</b> <span class="tag">高频</span></td>
+              <td>将请求封装为对象，支持撤销、队列、日志</td>
+              <td>撤销/重做操作、任务队列、宏命令</td>
+            </tr>
+            <tr>
+              <td><b>状态</b> <span class="tag">高频</span></td>
+              <td>允许对象在内部状态改变时改变其行为</td>
+              <td>订单状态机、审批流程、游戏角色状态</td>
+            </tr>
+            <tr>
+              <td><b>责任链</b> <span class="tag">高频</span></td>
+              <td>将请求沿链传递，直到有对象处理它</td>
+              <td>审批流程（员工→经理→总监）、异常处理链</td>
+            </tr>
+            <tr>
+              <td>迭代器</td>
+              <td>提供顺序访问聚合对象元素的方法，不暴露内部</td>
+              <td>遍历集合对象</td>
+            </tr>
+            <tr>
+              <td>中介者</td>
+              <td>用中介对象封装多个对象之间的交互</td>
+              <td>聊天室、航空管制、GUI组件协调</td>
+            </tr>
+            <tr>
+              <td>备忘录</td>
+              <td>在不破坏封装的前提下捕获和恢复对象内部状态</td>
+              <td>撤销操作、存档/读档</td>
+            </tr>
+            <tr>
+              <td>解释器</td>
+              <td>为语言定义文法表示，并设计解释器解释语句</td>
+              <td>正则表达式、SQL解析、数学表达式求值</td>
+            </tr>
+            <tr>
+              <td>访问者</td>
+              <td>在不修改元素类的前提下定义新操作</td>
+              <td>编译器AST遍历、文档导出（PDF/HTML）</td>
+            </tr>
+          </table>
+
+          <div class="vs">
+            <div class="a">
+              <div class="title">策略 vs 状态</div>
+              策略：客户端<b>主动选择</b>算法<br />
+              状态：对象<b>自动切换</b>行为（状态变了行为就变）
+            </div>
+            <div class="b">
+              <div class="title">观察者 vs 中介者</div>
+              观察者：一对多<b>通知</b>（发布-订阅）<br />
+              中介者：多对多<b>协调</b>（中心化通信）
+            </div>
+          </div>
+
+          <div class="trap">命令模式 vs 策略模式：命令封装的是"请求/操作"（可撤销、可排队），策略封装的是"算法/行为"（可替换）。考试常混淆。</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">📐</span>SOLID原则（设计模式基础）</h2>
+
+          <table>
+            <tr><th>原则</th><th>全称</th><th>含义</th></tr>
+            <tr><td><b>S</b></td><td>单一职责原则</td><td>一个类只有一个引起它变化的原因</td></tr>
+            <tr><td><b>O</b></td><td>开闭原则</td><td>对扩展开放，对修改关闭</td></tr>
+            <tr><td><b>L</b></td><td>里氏替换原则</td><td>子类可以替换父类出现的地方</td></tr>
+            <tr><td><b>I</b></td><td>接口隔离原则</td><td>客户端不应依赖它不需要的接口</td></tr>
+            <tr><td><b>D</b></td><td>依赖倒置原则</td><td>高层不依赖低层，都依赖抽象</td></tr>
+          </table>
+
+          <div class="mnemonic">口诀：单开里接依（单开里接衣）</div>
+          <div class="trap">依赖倒置 ≠ 依赖注入。依赖倒置是原则（都依赖抽象），依赖注入是实现方式（由外部注入依赖）。</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🎯</span>案例题高频考法</h2>
+
+          <h3>考法1：选择合适的设计模式</h3>
+          <div class="key">
+            题目关键词 → 模式：<br />
+            "动态添加职责" → <b>装饰器</b><br />
+            "接口不兼容/转换" → <b>适配器</b><br />
+            "封装请求/撤销" → <b>命令</b><br />
+            "一对多通知" → <b>观察者</b><br />
+            "算法可替换" → <b>策略</b><br />
+            "状态改变行为" → <b>状态</b><br />
+            "统一高层接口" → <b>外观</b><br />
+            "树形结构" → <b>组合</b><br />
+            "控制访问" → <b>代理</b>
+          </div>
+
+          <h3>考法2：对比两种模式的区别</h3>
+          <div class="key">
+            答题模板：<br />
+            ① 模式A的核心是XX，适用于XX场景<br />
+            ② 模式B的核心是XX，适用于XX场景<br />
+            ③ 本题场景是XX，应选XX模式
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S21: 排序算法 ============ -->
+      <div class="sec" id="s21">
+        <div class="card">
+          <h2><span class="icon">📊</span>排序算法速查（8种）</h2>
+
+          <h3>总览对比表</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table style="min-width:520px">
+            <tr><th>算法</th><th>最好</th><th>平均</th><th>最坏</th><th>空间</th><th>稳定</th></tr>
+            <tr><td><b>冒泡排序</b></td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>✅</td></tr>
+            <tr><td><b>选择排序</b></td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>❌</td></tr>
+            <tr><td><b>插入排序</b></td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>✅</td></tr>
+            <tr><td><b>希尔排序</b></td><td>O(n log n)</td><td>O(n^1.3)</td><td>O(n²)</td><td>O(1)</td><td>❌</td></tr>
+            <tr><td><b>快速排序</b></td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td><td>❌</td></tr>
+            <tr><td><b>归并排序</b></td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td><td>✅</td></tr>
+            <tr><td><b>堆排序</b></td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td><td>❌</td></tr>
+            <tr><td><b>基数排序</b></td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(n+r)</td><td>✅</td></tr>
+          </table>
+          </div>
+          <div class="mnemonic">稳定的：冒插归基（冒泡、插入、归并、基数）</div>
+
+          <h3>稳定性辨析（高频考点）</h3>
+          <div class="trap">
+            <b>选择排序不稳定</b>：例 [5, 8, 5, 2, 9]，第一趟选最小值2与第一个5交换，两个5的相对顺序改变。<br />
+            <b>快速排序不稳定</b>：partition过程中相等元素可能被交换到不同侧。<br />
+            <b>堆排序不稳定</b>：堆调整过程中相等元素的相对位置可能改变。
+          </div>
+          <div class="key">简单记忆：O(n log n)的四个算法中，只有<b>归并排序</b>是稳定的。</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🔍</span>各算法核心要点</h2>
+
+          <h3>冒泡排序</h3>
+          <p>相邻元素两两比较，每趟把最大值"冒"到末尾。最好O(n)（已有序，一趟就停），最坏O(n²)（逆序）。</p>
+
+          <h3>选择排序</h3>
+          <p>每趟从剩余元素中选最小值放到已排序末尾。<b>不稳定</b>，比较次数始终为n(n-1)/2，与初始顺序无关。</p>
+
+          <h3>插入排序</h3>
+          <p>将元素插入到已排序序列的正确位置。最好O(n)（已有序），最坏O(n²)（逆序）。<b>小规模数据或基本有序时效率高</b>。</p>
+
+          <h3>希尔排序</h3>
+          <p>缩小增量的插入排序。先按大间隔分组做插入排序，逐步缩小间隔。平均O(n^1.3)，<b>不稳定</b>。</p>
+
+          <h3>快速排序</h3>
+          <p>选基准值(pivot)，partition分为左右两部分，递归排序。平均O(n log n)，<b>最坏O(n²)</b>（已有序+选首元素为基准）。空间O(log n)（递归栈）。</p>
+          <div class="trap">快排最坏情况：数组已有序+选第一个元素为基准→退化为O(n²)。优化：三数取中法选基准。</div>
+
+          <h3>归并排序</h3>
+          <p>分治法：拆成两半分别排序，再合并。时间<b>始终O(n log n)</b>（最好最坏都一样），空间O(n)（需要辅助数组）。<b>唯一稳定的O(n log n)排序</b>。</p>
+
+          <h3>堆排序</h3>
+          <p>建大顶堆+反复取堆顶+调整。时间始终O(n log n)，空间O(1)。<b>不稳定</b>。适合大数据量+空间受限场景。</p>
+
+          <h3>基数排序</h3>
+          <p>按位分配收集：从最低位到最高位，每轮用稳定排序（如计数排序）。时间O(d(n+r))，d=位数，r=基数。<b>适合整数/字符串排序</b>。</p>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🎯</span>排序算法选择（案例题考法）</h2>
+
+          <h3>场景选型</h3>
+          <table>
+            <tr><th>场景</th><th>推荐算法</th><th>理由</th></tr>
+            <tr><td>数据量小（n≤50）</td><td>插入排序</td><td>简单、常数因子小、稳定</td></tr>
+            <tr><td>数据基本有序</td><td>插入排序</td><td>最好O(n)</td></tr>
+            <tr><td>数据量大、随机分布</td><td>快速排序</td><td>平均性能最优</td></tr>
+            <tr><td>需要稳定排序+大数据量</td><td>归并排序</td><td>唯一稳定的O(n log n)</td></tr>
+            <tr><td>空间受限、不要求稳定</td><td>堆排序</td><td>O(1)空间</td></tr>
+            <tr><td>整数且范围不大</td><td>基数排序/计数排序</td><td>可达到O(n)</td></tr>
+            <tr><td>外部排序（数据在磁盘）</td><td>归并排序</td><td>顺序访问，适合磁盘IO</td></tr>
+          </table>
+
+          <h3>易混对比</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">快速排序 vs 归并排序</div>
+              快排：先partition再递归，<b>不稳定</b><br />
+              归并：先递归再合并，<b>稳定</b><br />
+              快排空间O(log n)，归并空间O(n)
+            </div>
+            <div class="b">
+              <div class="title">堆排序 vs 快速排序</div>
+              堆排：最坏也是O(n log n)，空间O(1)<br />
+              快排：最坏O(n²)，但平均更快<br />
+              堆排不稳定，快排也不稳定
+            </div>
+          </div>
+
+          <div class="trap">考试陷阱："平均性能最好的排序"→快排。"最坏情况下仍为O(n log n)"→归并/堆排。"稳定的O(n log n)排序"→只有归并。</div>
+        </div>
+      </div>
+
+      <!-- ============ S22: 论文模板 ============ -->
+      <div class="sec" id="s22">
         <div class="card">
           <h2><span class="icon">📄</span>论文万能模板 v4 · 无人机智能管控平台</h2>
 

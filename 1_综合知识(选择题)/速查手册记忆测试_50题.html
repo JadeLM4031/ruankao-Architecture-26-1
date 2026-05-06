@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>速查手册记忆测试 · 50题</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Microsoft YaHei',sans-serif;background:#e8edf3;color:#333;line-height:1.8;font-size:16px}
+.top-bar{background:#3a7bd5;color:#fff;padding:0 18px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.top-bar .exam-title{font-size:16px;font-weight:bold}
+.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:14px}
+.top-bar .stats{opacity:.9}
+.top-bar .timer{font-variant-numeric:tabular-nums;font-weight:600}
+.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:5px 20px;border-radius:3px;font-size:14px;font-weight:bold;cursor:pointer}
+.main-wrap{display:flex;height:calc(100vh - 48px);overflow:hidden}
+.left-panel{width:250px;min-width:250px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column}
+.left-panel .panel-title{padding:12px 14px 8px;font-size:15px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.answer-card-area{flex:1;overflow-y:auto;padding:8px 10px}
+.ac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.ac-btn{aspect-ratio:1.3;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
+.ac-btn:hover{background:#e0ecfa}
+.ac-btn.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5;font-weight:bold}
+.ac-btn.done{background:#5eba5e;border-color:#4da64d;color:#fff}
+.ac-btn.done.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
+.left-bottom{padding:10px 14px;border-top:1px solid #eee;font-size:13px;color:#888}
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.q-display{max-width:800px;margin:0 auto}
+.q-card{background:#fff;padding:24px 28px;margin-bottom:14px;border:1px solid #dde3eb}
+.q-card .q-title{font-size:16px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
+.q-card .q-text{font-size:16px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
+.q-card .q-text .fill-blank{display:inline-block;border-bottom:2px solid #3a7bd5;min-width:160px;padding:2px 8px;color:#3a7bd5;font-weight:600}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;cursor:pointer;font-size:16px;line-height:1.7;transition:all .1s;border-radius:4px}
+.q-opt:hover{background:#f5f8fc}
+.q-opt.selected{background:#e8f0fe}
+.q-opt .opt-radio{width:17px;height:17px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative}
+.q-opt.selected .opt-radio{border-color:#3a7bd5}
+.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2.5px;left:2.5px;width:9px;height:9px;background:#3a7bd5;border-radius:50%}
+.q-opt .opt-content{flex:1}
+.fill-input-wrap{margin-top:12px}
+.fill-input-wrap input{width:100%;max-width:400px;padding:10px 14px;font-size:16px;border:2px solid #d5dce6;border-radius:6px;font-family:inherit}
+.fill-input-wrap input:focus{outline:none;border-color:#3a7bd5}
+.q-nav-arrows{display:flex;justify-content:space-between;max-width:800px;margin:0 auto 16px;padding:0 4px}
+.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:8px 24px;cursor:pointer;font-size:14px;color:#555}
+.q-nav-btn:hover{background:#e0ecfa;color:#3a7bd5}
+.q-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.section-tag{display:inline-block;background:#3a7bd5;color:#fff;padding:1px 8px;border-radius:3px;font-size:11px;margin-right:6px}
+/* 报告 */
+.report-wrap{display:none;flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.report-wrap .report-inner{max-width:800px;margin:0 auto}
+.score-box{background:linear-gradient(135deg,#3a7bd5,#2b6cb0);color:#fff;border-radius:8px;padding:28px;text-align:center;margin-bottom:16px}
+.score-box .score{font-size:3.2em;font-weight:bold}
+.score-box .label{font-size:.9em;opacity:.9;margin-top:4px}
+.review-card{background:#fff;border-radius:6px;padding:16px 20px;margin-bottom:10px;border:1px solid #e2e8f0;border-left:4px solid #e53935}
+.review-card .r-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.review-card .r-num{background:#3a7bd5;color:#fff;border-radius:3px;padding:1px 8px;font-size:12px}
+.review-card .r-text{font-size:13px;margin-bottom:8px;white-space:pre-wrap;line-height:1.7}
+.review-card .r-your{font-size:12px;color:#e53935;margin-bottom:3px}
+.review-card .r-correct{font-size:12px;color:#4caf50;margin-bottom:3px}
+.review-card .r-analysis{font-size:12px;color:#666;background:#f5f7fa;padding:10px;border-radius:4px;margin-top:6px;white-space:pre-wrap;line-height:1.7}
+.review-card.correct-card{border-left-color:#4caf50}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="exam-title">速查手册记忆测试（50题）</div>
+  <div class="right-info">
+    <div class="timer" id="timer">00:00</div>
+    <div class="stats" id="stats">已答 0/50</div>
+    <button class="submit-top" onclick="confirmSubmit()">交卷</button>
+  </div>
+</div>
+<div class="main-wrap" id="mainWrap">
+  <div class="left-panel">
+    <div class="panel-title">答题卡</div>
+    <div class="answer-card-area" id="answer-card"></div>
+    <div class="left-bottom">速查手册全覆盖 · 选择43+填空7</div>
+  </div>
+  <div class="right-panel" id="right-panel">
+    <div class="q-display" id="q-display"></div>
+    <div class="q-nav-arrows">
+      <button class="q-nav-btn" id="prev-btn" onclick="prevQ()">◀ 上一题</button>
+      <button class="q-nav-btn" id="next-btn" onclick="nextQ()">下一题 ▶</button>
+    </div>
+  </div>
+</div>
+<div class="report-wrap" id="report-wrap">
+  <div class="report-inner" id="report-inner"></div>
+</div>
+
+<script>
+const allQuestions=[
+{id:1,sec:"ATAM",type:"choice",text:"ATAM中，一个架构决策同时影响多个质量属性（此升彼降），这属于：",opts:["敏感点","权衡点","风险","非风险"],ans:"B",
+explain:"权衡点 = 影响≥2个质量属性。敏感点只影响1个。"},
+{id:2,sec:"ATAM",type:"choice",text:"『团队能力不足，可能影响系统质量』在ATAM中属于：",opts:["敏感点","权衡点","风险","非风险"],ans:"C",
+explain:"涉及组织层面的不确定因素，是风险。不是敏感点（敏感点只分析技术对质量属性的影响）。"},
+{id:3,sec:"ATAM",type:"choice",text:"『采用Redis缓存，缓存命中率可达85%』在ATAM中最可能属于：",opts:["敏感点","权衡点","风险","非风险"],ans:"D",
+explain:"经过分析没有问题，是非风险。"},
+{id:4,sec:"ATAM",type:"choice",text:"ATAM效用树的四级结构是：",opts:["根节点→质量属性→场景→优先级","根节点→质量属性→质量属性细化→场景","根节点→架构决策→质量属性→场景","根节点→业务需求→技术方案→风险"],ans:"B",
+explain:"根节点→质量属性→质量属性细化→场景。每个场景带优先级（高/中/低）。"},
+{id:5,sec:"ATAM",type:"choice",text:"ATAM评估九步法中，第5步的主要目的是：",opts:["介绍业务驱动因素","识别架构方法","确定评估的优先级和重点","报告评估结果"],ans:"C",
+explain:"第5步生成质量属性效用树，产生场景并标注优先级，确定后续分析的重点。"},
+{id:6,sec:"架构风格",type:"choice",text:"五大架构风格口诀『数调独虚仓』中的『仓』指的是：",opts:["数据库系统","仓库风格","缓存系统","数据仓库"],ans:"B",
+explain:"仓库风格，包括黑板系统和数据库系统两种。"},
+{id:7,sec:"架构风格",type:"fill",text:"黑板系统的三大核心构件是：黑板、______、控制器",ans:"知识源",
+explain:"黑板（共享数据结构）、知识源（独立处理模块）、控制器（调度策略）。"},
+{id:8,sec:"架构风格",type:"choice",text:"解释器架构风格的核心组件不包括：",opts:["解释引擎","被解释的程序","知识源","程序状态"],ans:"C",
+explain:"知识源是黑板系统的。解释器三组件：解释引擎、被解释的程序、程序状态。"},
+{id:9,sec:"架构风格",type:"choice",text:"管道-过滤器风格的特点是：",opts:["构件之间共享状态","构件有输入端和输出端，通过管道传递数据流","通过事件触发构件","中央数据存储"],ans:"B",
+explain:"管道-过滤器不共享状态，通过管道传递数据流，支持并行处理。"},
+{id:10,sec:"架构风格",type:"choice",text:"事件驱动（隐式调用）风格的特点是：",opts:["构件直接调用","构件不直接调用，通过事件触发","通过管道传递数据","通过解释器执行"],ans:"B",
+explain:"事件驱动=构件不直接调用，通过事件触发。典型应用：GUI、MVC中的观察者。"},
+{id:11,sec:"质量属性",type:"choice",text:"『系统需要支持日均2000万次查询』主要对应哪个质量属性？",opts:["可用性","性能","可伸缩性","互操作性"],ans:"B",
+explain:"带具体时间/数量指标（响应时间、吞吐量）→ 性能。"},
+{id:12,sec:"质量属性",type:"choice",text:"『系统需要支持新增功能模块而不影响现有模块』属于：",opts:["可维护性","可修改性","可伸缩性","互操作性"],ans:"B",
+explain:"加功能/加代码 → 可修改性。修bug/找问题 → 可维护性。加机器/加用户 → 可伸缩性。"},
+{id:13,sec:"质量属性",type:"choice",text:"以下哪项是可用性的常见策略？",opts:["缓存、并行计算","冗余、心跳检测、故障转移","信息隐藏、接口抽象","负载均衡、分片"],ans:"B",
+explain:"冗余、心跳检测、故障转移、主从切换都是可用性策略。"},
+{id:14,sec:"UML",type:"choice",text:"用例图属于UML的哪一类？",opts:["结构图","行为图","交互图","部署图"],ans:"B",
+explain:"用例图是行为图！考试常考这个陷阱。"},
+{id:15,sec:"UML",type:"choice",text:"UML中，『鸟和翅膀』的关系属于：",opts:["聚合","组合","泛化","依赖"],ans:"B",
+explain:"组合=整体与部分不可分离（鸟和翅膀）。聚合=可分离（雁群和大雁）。"},
+{id:16,sec:"UML",type:"choice",text:"UML类间关系耦合度从弱到强的正确顺序是：",opts:["依赖→关联→聚合→组合→泛化→实现","关联→依赖→聚合→组合→实现→泛化","依赖→关联→组合→聚合→泛化→实现","关联→依赖→组合→聚合→实现→泛化"],ans:"A",
+explain:"依赖→关联→聚合→组合→泛化(继承)→实现。"},
+{id:17,sec:"UML",type:"choice",text:"在状态图中，[条件表达式]满足才触发转换，这称为：",opts:["事件","动作","守卫条件（Guard）","状态"],ans:"C",
+explain:"守卫条件=[条件表达式]，满足才触发转换。事件是触发条件，动作是转换时执行的操作。"},
+{id:18,sec:"UML",type:"choice",text:"UML共有多少种图？其中结构图几种、行为图几种？",opts:["12种：结构5+行为7","13种：结构6+行为7","14种：结构7+行为7","13种：结构5+行为8"],ans:"B",
+explain:"13种图：结构图6种+行为图7种。口诀『用活状序』。"},
+{id:19,sec:"TCP/IP",type:"choice",text:"交换机工作在OSI的哪一层？",opts:["物理层","数据链路层","网络层","传输层"],ans:"B",
+explain:"交换机看MAC地址→数据链路层。路由器看IP地址→网络层。集线器→物理层。"},
+{id:20,sec:"TCP/IP",type:"choice",text:"DNS协议使用的端口号是：",opts:["25","53","80","110"],ans:"B",
+explain:"DNS=53, HTTP=80, HTTPS=443, SMTP=25, POP3=110, FTP=20/21, SSH=22, Telnet=23。"},
+{id:21,sec:"TCP/IP",type:"choice",text:"ARP协议的功能是：",opts:["IP地址→MAC地址","MAC地址→IP地址","域名→IP地址","路由选择"],ans:"A",
+explain:"ARP=IP→MAC（地址解析）。RARP=MAC→IP（反向）。DNS=域名→IP。"},
+{id:22,sec:"TCP/IP",type:"fill",text:"OSI七层从下到上依次是：物理层、______、网络层、传输层、会话层、表示层、应用层",ans:"数据链路层",
+explain:"口诀：物数网传会表应。"},
+{id:23,sec:"区块链",type:"choice",text:"区块链六层模型中，『智能合约』属于哪一层？",opts:["数据层","共识层","合约层","应用层"],ans:"C",
+explain:"六层：数据层→网络层→共识层→激励层→合约层→应用层。合约层包含智能合约的部署和执行环境。"},
+{id:24,sec:"区块链",type:"choice",text:"PoS（权益证明）与PoW（工作量证明）相比的主要优势是：",opts:["安全性更高","节能、速度快","去中心化程度更高","更适合比特币"],ans:"B",
+explain:"PoS持币量决定出块权，节能速度快。PoW算力竞争，耗能大但安全性高。"},
+{id:25,sec:"LRU/FIFO",type:"choice",text:"Belady异常（增加页框数反而缺页率上升）只可能出现在哪种算法中？",opts:["OPT","LRU","FIFO","CLOCK"],ans:"C",
+explain:"只有FIFO可能出现Belady异常。LRU和OPT是栈式算法，不会出现。"},
+{id:26,sec:"PV操作",type:"choice",text:"生产者-消费者问题中，P操作的顺序不能反（先P(empty)再P(mutex)），否则会导致：",opts:["性能下降","死锁","数据丢失","活锁"],ans:"B",
+explain:"如果先P(mutex)再P(empty)，mutex占用后empty=0时阻塞，消费者也需要mutex才能消费→死锁。"},
+{id:27,sec:"流水线",type:"fill",text:"4级流水线，各段时间2ns/3ns/2ns/2ns，时钟周期Δt=______ns",ans:"3",
+explain:"Δt = max(各段时间) = max(2,3,2,2) = 3ns。"},
+{id:28,sec:"流水线",type:"choice",text:"流水线总时间的计算公式是：",opts:["T = n × Δt","T = (k + n - 1) × Δt","T = k × n × Δt","T = (k + n) × Δt"],ans:"B",
+explain:"T = (级数k + 指令数n - 1) × Δt。第一条指令需要k个周期，之后每条只需1个周期。"},
+{id:29,sec:"Cache/死锁",type:"choice",text:"RISC处理器的控制器通常采用：",opts:["微程序控制","硬布线控制","存储逻辑控制","流水线控制"],ans:"B",
+explain:"RISC=硬布线控制，CISC=微程序控制。RISC指令少且固定长度，适合硬布线。"},
+{id:30,sec:"Cache/死锁",type:"choice",text:"3个进程，每个最多需要5个同类资源，系统至少需要多少个资源才不会死锁？",opts:["13","12","11","10"],ans:"A",
+explain:"m ≥ n×(X-1) + 1 = 3×4+1 = 13。最坏情况每个进程各拿4个（差1个），再留1个给某个进程先完成。"},
+{id:31,sec:"子网划分",type:"choice",text:"/26的子网掩码是：",opts:["255.255.255.128","255.255.255.192","255.255.255.224","255.255.255.240"],ans:"B",
+explain:"/26借2位，末字节=11000000=192。/25=128, /26=192, /27=224, /28=240。"},
+{id:32,sec:"子网划分",type:"choice",text:"/27的子网可以有多少台主机？",opts:["30","62","126","14"],ans:"A",
+explain:"/27剩余5位主机位，2^5-2=30台。减2=网络地址+广播地址。"},
+{id:33,sec:"挣值分析",type:"choice",text:"挣值分析中，CV=EV-AC=-5万，说明：",opts:["进度超前5万","进度落后5万","成本超支5万","成本节约5万"],ans:"C",
+explain:"CV(成本偏差)<0=超支。SV(进度偏差)<0=落后。EV永远是分子！"},
+{id:34,sec:"挣值分析",type:"fill",text:"挣值分析中，CPI=______（用EV/AC/PV回答）",ans:"EV/AC",
+explain:"CPI=EV/AC（成本绩效指数）。SPI=EV/PV（进度绩效指数）。>1=好，<1=差。"},
+{id:35,sec:"关键路径",type:"choice",text:"关键路径是项目中：",opts:["最短的路径","最长的路径","活动最多的路径","耗时最少的路径"],ans:"B",
+explain:"关键路径=从起点到终点最长的路径=项目最短完成时间。总时差=0的活动是关键活动。"},
+{id:36,sec:"等级保护",type:"choice",text:"以下关于等级保护2.0的说法正确的是：",opts:["第二级以上需要强制测评","第三级以上需要每年至少1次测评","等级保护共分三级","第一级需要备案"],ans:"B",
+explain:"第三级以上才需要定期测评（三级每年1次，四级每半年1次）。等级保护共五级。"},
+{id:37,sec:"云原生",type:"choice",text:"CAP定理指出分布式系统无法同时满足三个特性，其中必须选择的是：",opts:["一致性C","可用性A","分区容忍P","三者都可以不选"],ans:"C",
+explain:"分布式系统必选P（分区容忍），所以在CA之间做选择。"},
+{id:38,sec:"云原生",type:"choice",text:"『从不信任，始终验证』描述的是：",opts:["零信任","区块链","微服务","DevOps"],ans:"A",
+explain:"零信任四大特性：身份认证、设备验证、最小权限、微隔离。"},
+{id:39,sec:"加密/签名",type:"choice",text:"数字签名的正确流程是：",opts:["发送方私钥加密原文→接收方公钥解密","先哈希原文，再用发送方私钥加密摘要","接收方私钥签名→发送方公钥验证","直接用对称密钥签名"],ans:"B",
+explain:"先哈希再签名（不直接签名原文）。签名=私钥加密摘要，验证=公钥解密摘要。"},
+{id:40,sec:"加密/签名",type:"choice",text:"密码存储应该使用：",opts:["对称加密","非对称加密","加盐哈希（Salt+Hash）","Base64编码"],ans:"C",
+explain:"密码存储用加盐哈希，不是加密！加密可逆，哈希不可逆。"},
+{id:41,sec:"内聚/耦合",type:"choice",text:"『几个功能硬凑在一起，毫无关联』属于哪种内聚？",opts:["逻辑内聚","偶然内聚","时间内聚","过程内聚"],ans:"B",
+explain:"偶然内聚=随机凑一起，最低级。口诀：偶逻时过通顺功。"},
+{id:42,sec:"内聚/耦合",type:"choice",text:"『传递整个数据结构（记录/对象）』属于哪种耦合？",opts:["数据耦合","标记耦合","控制耦合","公共耦合"],ans:"B",
+explain:"标记耦合=传数据结构。数据耦合=只传简单参数（int、string）。控制耦合=传控制标志（flag）。"},
+{id:43,sec:"覆盖测试",type:"choice",text:"六种逻辑覆盖中，最弱的是：",opts:["判定覆盖","条件覆盖","语句覆盖","路径覆盖"],ans:"C",
+explain:"语句覆盖<判定覆盖<条件覆盖<判定/条件覆盖<条件组合覆盖<路径覆盖。"},
+{id:44,sec:"覆盖测试",type:"choice",text:"『保证每个条件的真假都至少取到一次』属于：",opts:["语句覆盖","判定覆盖","条件覆盖","条件组合覆盖"],ans:"C",
+explain:"条件覆盖=每个条件真假至少取一次。条件组合覆盖=所有条件的真假组合全覆盖。"},
+{id:45,sec:"设计模式",type:"choice",text:"『动态地为对象添加额外职责，不修改原有类』是哪种设计模式？",opts:["代理","装饰器","适配器","桥接"],ans:"B",
+explain:"动态添加职责→装饰器。控制访问→代理。接口转换→适配器。抽象与实现分离→桥接。"},
+{id:46,sec:"设计模式",type:"choice",text:"『封装请求为对象，支持撤销、队列、日志』是哪种设计模式？",opts:["策略","命令","观察者","状态"],ans:"B",
+explain:"命令模式=封装请求/操作（可撤销、可排队）。策略=封装算法（可替换）。"},
+{id:47,sec:"设计模式",type:"choice",text:"开闭原则（OCP）的含义是：",opts:["一个类只有一个变化原因","对扩展开放，对修改关闭","子类可以替换父类","高层不依赖低层"],ans:"B",
+explain:"S=单一职责，O=对扩展开放对修改关闭，L=里氏替换，I=接口隔离，D=依赖倒置。"},
+{id:48,sec:"排序算法",type:"choice",text:"以下哪种排序算法是稳定的O(n log n)排序？",opts:["快速排序","堆排序","归并排序","希尔排序"],ans:"C",
+explain:"O(n log n)的四个算法中，只有归并排序是稳定的。口诀：稳定的→冒插归基。"},
+{id:49,sec:"排序算法",type:"choice",text:"快速排序最坏情况下时间复杂度退化为O(n²)的条件是：",opts:["数据量太大","数据全部相同","数组已有序且选第一个元素为基准","数据有小数"],ans:"C",
+explain:"已有序+选首元素为基准→每次partition只剩一侧→退化为O(n²)。优化：三数取中法。"},
+{id:50,sec:"论文模板",type:"choice",text:"论文万能模板中，第三部分（技术方案+问题故事）建议的首选组合是：",opts:["方案B+故事3+4","方案A+故事1+2","方案C+故事1+3","方案D+故事2+4"],ans:"B",
+explain:"方案A（服务拆分）+故事1（性能瓶颈）+故事2（数据不一致）是万能组合，适配大部分题目。"}
+];
+
+let userAnswers={};
+let currentQ=1;
+let submitted=false;
+const STORAGE_KEY='arch_memory_test_v1';
+const TOTAL=allQuestions.length;
+
+function init(){loadProgress();renderAnswerCard();renderQuestion(currentQ);updateProgress();startTimer();}
+function loadProgress(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){const d=JSON.parse(s);userAnswers=d.answers||{};currentQ=d.currentQ||1;}}catch(e){}}
+function saveProgress(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({answers:userAnswers,currentQ:currentQ}));}catch(e){}}
+
+function renderAnswerCard(){
+  const c=document.getElementById('answer-card');
+  let h='<div class="ac-grid">';
+  for(let i=1;i<=TOTAL;i++){
+    const cls=(i===currentQ?' current':'')+(userAnswers[i]?' done':'');
+    h+=`<button class="ac-btn${cls}" id="acb-${i}" onclick="goToQ(${i})">${i}</button>`;
+  }
+  h+='</div>';
+  c.innerHTML=h;
+}
+
+function updateAnswerCard(){
+  document.querySelectorAll('.ac-btn').forEach(b=>{
+    const id=parseInt(b.textContent);
+    b.classList.remove('current','done');
+    if(id===currentQ) b.classList.add('current');
+    if(userAnswers[id]) b.classList.add('done');
+  });
+}
+
+function renderQuestion(qId){
+  const q=allQuestions.find(x=>x.id===qId);
+  if(!q) return;
+  const letters=['A','B','C','D'];
+  let h=`<div class="q-card">`;
+  h+=`<div class="q-title"><span class="section-tag">${q.sec}</span>第${qId}题（共${TOTAL}题）${q.type==='fill'?' · 填空题':''}</div>`;
+  h+=`<div class="q-text">${q.text.replace(/______/g,'<span class="fill-blank">　　　　</span>')}</div>`;
+
+  if(q.type==='choice'){
+    h+=`<div class="q-options">`;
+    q.opts.forEach((o,i)=>{
+      const s=userAnswers[qId]===letters[i]?' selected':'';
+      h+=`<div class="q-opt${s}" onclick="selectOption(${qId},'${letters[i]}')"><div class="opt-radio"></div><div class="opt-content">${letters[i]}. ${o}</div></div>`;
+    });
+    h+=`</div>`;
+  } else {
+    const val=userAnswers[qId]||'';
+    h+=`<div class="fill-input-wrap"><input type="text" id="fill-input" value="${val}" placeholder="请输入答案" oninput="fillAnswer(${qId})"></div>`;
+  }
+  h+=`</div>`;
+  document.getElementById('q-display').innerHTML=h;
+  document.getElementById('prev-btn').disabled=(qId<=1);
+  document.getElementById('next-btn').disabled=(qId>=TOTAL);
+  document.getElementById('next-btn').textContent=qId>=TOTAL?'已是最后一题':'下一题 ▶';
+  updateAnswerCard();
+}
+
+function selectOption(qId,letter){
+  if(submitted) return;
+  userAnswers[qId]=letter;
+  saveProgress();
+  updateProgress();
+  const c=document.querySelector('.q-card');
+  c.querySelectorAll('.q-opt').forEach(o=>o.classList.remove('selected'));
+  c.querySelectorAll('.q-opt').forEach(o=>{
+    if(o.querySelector('.opt-content').textContent.trim().startsWith(letter+'.')) o.classList.add('selected');
+  });
+  updateAnswerCard();
+}
+
+function fillAnswer(qId){
+  if(submitted) return;
+  const el=document.getElementById('fill-input');
+  userAnswers[qId]=el?el.value.trim():'';
+  saveProgress();
+  updateProgress();
+  updateAnswerCard();
+}
+
+function goToQ(id){currentQ=id;saveProgress();renderQuestion(id);document.getElementById('right-panel').scrollTop=0;}
+function prevQ(){if(currentQ>1) goToQ(currentQ-1);}
+function nextQ(){if(currentQ<TOTAL) goToQ(currentQ+1);}
+function updateProgress(){document.getElementById('stats').textContent=`已答 ${Object.keys(userAnswers).filter(k=>userAnswers[k]).length}/${TOTAL}`;}
+
+function confirmSubmit(){
+  const u=TOTAL-Object.keys(userAnswers).filter(k=>userAnswers[k]).length;
+  let m='确定要交卷吗？';
+  if(u>0) m+=`还有 ${u} 题未作答。`;
+  if(confirm(m)) submitExam();
+}
+
+function submitExam(){
+  if(submitted) return;
+  submitted=true;
+  clearInterval(timerInterval);
+  let correct=0,wrongList=[];
+  const letters=['A','B','C','D'];
+
+  allQuestions.forEach(q=>{
+    const ua=userAnswers[q.id]||'';
+    let isCorrect=false;
+    if(q.type==='choice'){
+      isCorrect=(ua===q.ans);
+    } else {
+      isCorrect=(ua===q.ans);
+    }
+    if(isCorrect) correct++;
+    else wrongList.push(q);
+  });
+
+  const pct=Math.round(correct/TOTAL*100);
+  const pass=pct>=80?'🎉 恭喜过关！':'⚠️ 未达标，需要继续复习';
+  const timeStr=document.getElementById('timer').textContent;
+
+  let h=`<div class="score-box"><div class="score">${correct}/${TOTAL}</div><div class="label">正确率 ${pct}% \xB7 用时${timeStr} \xB7 ${pass}</div></div>`;
+
+  if(wrongList.length>0){
+    h+=`<div class="review-card" style="border-left-color:#3a7bd5"><div class="r-header"><span class="r-num">错题解析（${wrongList.length}题）</span></div></div>`;
+    wrongList.forEach(q=>{
+      const ua=userAnswers[q.id]||'未作答';
+      const letters=['A','B','C','D'];
+      let correctText, userText;
+      if(q.type==='choice'){
+        const ansIdx=letters.indexOf(q.ans);
+        correctText=q.ans+'. '+q.opts[ansIdx];
+        const uaIdx=letters.indexOf(ua);
+        userText=uaIdx>=0?ua+'. '+q.opts[uaIdx]:ua;
+      } else {
+        correctText=q.ans;
+        userText=ua;
+      }
+      h+=`<div class="review-card"><div class="r-header"><span class="r-num">第${q.id}题</span><span style="color:#999;font-size:12px">${q.sec}</span></div><div class="r-text">${q.text}</div><div class="r-your">你的答案：${userText}</div><div class="r-correct">正确答案：${correctText}</div><div class="r-analysis">${q.explain}</div></div>`;
+    });
+  } else {
+    h+='<p style="text-align:center;color:#4caf50;font-size:1.1em;padding:20px">全部正确！完美过关！</p>';
+  }
+
+  document.getElementById('mainWrap').style.display='none';
+  document.querySelector('.top-bar').style.display='none';
+  document.getElementById('report-inner').innerHTML=h;
+  document.getElementById('report-wrap').style.display='block';
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+// Timer
+let startTime=Date.now();
+let timerInterval=setInterval(()=>{
+  if(submitted) return;
+  const s=Math.floor((Date.now()-startTime)/1000);
+  const m=Math.floor(s/60);
+  const ss=s%60;
+  document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');
+},1000);
+
+// Keyboard shortcuts
+document.addEventListener('keydown',function(e){
+  if(submitted) return;
+  if(document.activeElement&&document.activeElement.tagName==='INPUT') return;
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevQ();}
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextQ();}
+  const q=allQuestions.find(x=>x.id===currentQ);
+  if(q&&q.type==='choice'){
+    const letters=['A','B','C','D'];
+    const idx=letters.indexOf(e.key.toUpperCase());
+    if(idx>=0&&idx<q.opts.length) selectOption(currentQ,letters[idx]);
+  }
+});
+
+init();
+</script>
+</body>
+</html>

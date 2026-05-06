@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案例精准答题强化 · 真题难度</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Microsoft YaHei','SimSun',sans-serif;background:#f0f2f5;color:#333;line-height:1.9;font-size:15px}
+.header{background:linear-gradient(135deg,#3a7bd5,#2b6cb0);color:#fff;padding:0 18px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header h1{font-size:16px;font-weight:700}
+.header .sub{font-size:12px;opacity:.85}
+.header .btn-submit{background:#fff;color:#3a7bd5;border:none;padding:5px 20px;border-radius:3px;font-size:14px;font-weight:700;cursor:pointer}
+.header .btn-submit:hover{background:#e8f0fe}
+.main-wrap{display:flex;height:calc(100vh - 48px);overflow:hidden}
+.left-panel{width:250px;min-width:250px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column}
+.left-panel .panel-title{padding:12px 14px 8px;font-size:15px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.case-list{flex:1;overflow-y:auto;padding:8px 10px}
+.case-item{border:1px solid #d5dce6;border-radius:4px;margin-bottom:8px;overflow:hidden}
+.case-head{display:flex;align-items:center;padding:10px 12px;cursor:pointer;font-size:14px;font-weight:600;color:#555;background:#fafbfc;transition:.15s;gap:8px}
+.case-head:hover{background:#e8f0fe}
+.case-head.active{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
+.case-head .case-num{width:24px;height:24px;border-radius:50%;background:#e0e0e0;color:#666;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.case-head.active .case-num{background:rgba(255,255,255,.25);color:#fff}
+.case-head.done .case-num{background:#5eba5e;color:#fff}
+.case-sub{padding:6px 12px 8px 44px;display:flex;flex-direction:column;gap:3px}
+.case-sub a{font-size:12px;color:#888;text-decoration:none;padding:3px 8px;border-radius:3px;transition:.1s}
+.case-sub a:hover{background:#f0f4ff;color:#3a7bd5}
+.case-sub a.active{background:#e8f0fe;color:#3a7bd5;font-weight:600}
+.left-bottom{padding:10px 14px;border-top:1px solid #eee;font-size:12px;color:#999;text-align:center}
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.content{max-width:900px;margin:0 auto}
+.case-sec{display:none}
+.case-sec.active{display:block}
+.card{background:#fff;border-radius:6px;padding:18px 20px;margin-bottom:14px;border:1px solid #e2e8f0}
+.card h2{font-size:15px;color:#3a7bd5;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #ecf0f6}
+.case-bg{background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:12px 14px;margin-bottom:12px;font-size:14px;line-height:1.9}
+.case-bg h3{font-size:14px;color:#2c3e50;margin-bottom:6px;font-weight:600}
+.q-box{background:#fff8e1;border-left:3px solid #e67e22;padding:10px 14px;border-radius:4px;margin:10px 0;font-size:14px}
+.q-box b{color:#e67e22}
+textarea{width:100%;min-height:180px;border:1px solid #d5dce6;border-radius:6px;padding:12px;font-size:14px;line-height:1.9;resize:vertical;font-family:inherit}
+textarea:focus{outline:none;border-color:#3a7bd5;box-shadow:0 0 0 2px rgba(58,123,213,.15)}
+.warn{background:#fde8e8;border-left:3px solid #e53935;padding:8px 12px;border-radius:4px;margin:10px 0;font-size:13px;color:#b71c1c}
+.warn::before{content:"注意：";font-weight:bold}
+.tip{background:#f3e5f5;border-left:3px solid #8e44ad;padding:8px 12px;border-radius:4px;margin:10px 0;font-size:13px;color:#6a1b9a}
+.tip::before{content:"答题要求：";font-weight:bold}
+.report-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.report-modal.show{display:flex}
+.report-box{background:#fff;border-radius:8px;width:90%;max-width:700px;max-height:85vh;display:flex;flex-direction:column}
+.report-box .rb-header{padding:14px 18px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between}
+.report-box .rb-header h3{font-size:15px;color:#333}
+.report-box .rb-header button{background:none;border:none;font-size:20px;cursor:pointer;color:#999}
+.report-box .rb-body{flex:1;overflow-y:auto;padding:14px 18px}
+.report-box .rb-body pre{white-space:pre-wrap;font-size:13px;line-height:1.8;font-family:inherit}
+.report-box .rb-footer{padding:10px 18px;border-top:1px solid #eee;text-align:right}
+.report-box .rb-footer button{background:#3a7bd5;color:#fff;border:none;padding:8px 20px;border-radius:4px;font-size:14px;cursor:pointer}
+.saved-hint{font-size:11px;color:#999;margin-top:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>案例精准答题强化（3题 × 25分）</h1>
+  <button class="btn-submit" onclick="submitExam()">交卷</button>
+</div>
+
+<div class="main-wrap">
+  <div class="left-panel">
+    <div class="panel-title">答题卡</div>
+    <div class="case-list" id="case-list"></div>
+    <div class="left-bottom">作答完成后点击右上角"交卷"</div>
+  </div>
+  <div class="right-panel">
+    <div class="content">
+
+  <!-- ====== 第1题 ====== -->
+  <div class="case-sec active" id="c1">
+    <div class="card">
+      <h2>第1题 · ATAM架构评估（25分）</h2>
+      <div class="case-bg">
+        <h3>项目背景</h3>
+        <p>某省交通运输厅拟建设"智慧交通综合管理平台"，整合全省高速公路监控、城市公交调度、出租车管理和网约车监管四大业务板块。系统需支持日均2000万次数据查询，高峰时段并发用户数达3万，同时需满足等保三级安全要求和7×24小时不间断运行。</p>
+        <p>项目组采用微服务架构，将系统拆分为监控数据采集服务、交通态势分析服务、公交调度服务、网约车监管服务、统一门户服务和运维管理服务共6个微服务。技术选型采用Spring Cloud框架，数据库使用MySQL主从集群+Redis缓存，消息队列使用RabbitMQ。</p>
+        <p>项目组邀请外部专家采用ATAM方法进行架构评估，评估过程中识别出以下架构决策和描述：</p>
+        <table style="width:100%;border-collapse:collapse;margin:8px 0;font-size:13px">
+          <tr><th style="background:#3a7bd5;color:#fff;padding:6px 10px;text-align:left">编号</th><th style="background:#3a7bd5;color:#fff;padding:6px 10px;text-align:left">架构决策/描述</th></tr>
+          <tr><td style="padding:6px 10px;border-bottom:1px solid #eee">决策①</td><td style="padding:6px 10px;border-bottom:1px solid #eee">采用Redis缓存热点查询数据，缓存命中率可达85%，但缓存与数据库之间存在数据不一致的风险窗口约为5秒</td></tr>
+          <tr><td style="padding:6px 10px;border-bottom:1px solid #eee">决策②</td><td style="padding:6px 10px;border-bottom:1px solid #eee">监控数据采集服务采用WebSocket长连接实时推送，单台服务器最多支撑5000个并发连接</td></tr>
+          <tr><td style="padding:6px 10px;border-bottom:1px solid #eee">决策③</td><td style="padding:6px 10px;border-bottom:1px solid #eee">团队在Spring Cloud方面有丰富经验，该技术选型是合理的</td></tr>
+          <tr><td style="padding:6px 10px;border-bottom:1px solid #eee">决策④</td><td style="padding:6px 10px;border-bottom:1px solid #eee">网约车监管服务与公交调度服务共享同一个MySQL数据库实例，以减少数据库运维成本</td></tr>
+          <tr><td style="padding:6px 10px;border-bottom:1px solid #eee">决策⑤</td><td style="padding:6px 10px;border-bottom:1px solid #eee">运维管理服务的开发人员对分布式链路追踪技术（如SkyWalking）了解不足，可能影响后期故障排查效率</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题1（8分）：</b>请分别判断决策①至⑤在ATAM中属于什么类型（敏感点、权衡点、风险、非风险），并简要说明理由。</div>
+      <textarea id="a1q1" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a1q1"></div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题2（9分）：</b>请为该系统构建ATAM效用树，列出"性能"和"可用性"两个质量属性的细化结构（至少各列出2个子属性），并为每个子属性设计一个评估场景，标注优先级（高/中/低）。</div>
+      <textarea id="a1q2" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a1q2"></div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题3（8分）：</b>针对决策④（两个服务共享数据库实例），请分析该决策可能带来的架构风险，并提出改进方案。</div>
+      <textarea id="a1q3" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a1q3"></div>
+    </div>
+
+    <div class="warn">决策②和决策④容易误判。决策②描述的是技术参数而非不确定因素；决策④是两个服务共享资源，需要从微服务架构原则分析。</div>
+    <div class="tip">答题要"结论+理由"，先写属于什么类型，再写为什么。理由必须对应ATAM的定义。</div>
+  </div>
+
+  <!-- ====== 第2题 ====== -->
+  <div class="case-sec" id="c2">
+    <div class="card">
+      <h2>第2题 · UML建模分析（25分）</h2>
+      <div class="case-bg">
+        <h3>项目背景</h3>
+        <p>某医院拟开发"在线问诊系统"，支持患者在线预约、视频问诊、电子处方和药品配送。系统分析阶段得到以下需求：</p>
+        <ul style="padding-left:20px;margin:8px 0">
+          <li>患者（Patient）可以预约多个医生（Doctor），一个医生可以接诊多个患者</li>
+          <li>每次问诊（Consultation）属于一个患者和一个医生，问诊结束后生成一份处方（Prescription）</li>
+          <li>一份处方包含多个处方项（PrescriptionItem），每个处方项对应一种药品（Medicine）</li>
+          <li>患者可以有多个收货地址（Address），但每个地址只属于一个患者</li>
+          <li>问诊有以下状态：待预约、已预约、进行中、已结束、已取消</li>
+          <li>系统规定：患者预约后30分钟内未支付诊金则自动取消；问诊过程中如果网络中断超过5分钟，系统自动结束问诊</li>
+        </ul>
+        <p>项目组的小王在进行UML建模时，有以下做法：</p>
+        <ul style="padding-left:20px;margin:8px 0">
+          <li>做法1：将用例图归类为结构图</li>
+          <li>做法2：将"处方与处方项"建模为聚合关系</li>
+          <li>做法3：在状态图中，"已预约→进行中"的转换只标注了事件"医生开始问诊"，未标注守卫条件</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题1（8分）：</b>请逐一分析小王的3个做法是否正确。如果不正确，请说明正确做法并给出理由。</div>
+      <textarea id="a2q1" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a2q1"></div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题2（9分）：</b>请描述问诊（Consultation）从"待预约"到"已结束"的完整状态转换过程。要求：每个转换必须包含触发事件和守卫条件，并覆盖异常路径。</div>
+      <textarea id="a2q2" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a2q2"></div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题3（8分）：</b>请文字描述"患者发起问诊"的序列图，涉及的对象包括：患者（Patient）、预约界面（UI）、问诊服务（ConsultationService）、支付服务（PaymentService）、消息队列（MQ）。要求标注消息的发送顺序和返回消息。</div>
+      <textarea id="a2q3" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a2q3"></div>
+    </div>
+
+    <div class="warn">做法2是陷阱——处方和处方项看起来像聚合，但仔细分析生命周期关系。做法3的守卫条件是高频丢分点。</div>
+  </div>
+
+  <!-- ====== 第3题 ====== -->
+  <div class="case-sec" id="c3">
+    <div class="card">
+      <h2>第3题 · 架构风格选择与分析（25分）</h2>
+      <div class="case-bg">
+        <h3>项目背景</h3>
+        <p>某金融科技公司拟建设"智能风控平台"，对每笔交易进行实时风险评估。系统需求如下：</p>
+        <ul style="padding-left:20px;margin:8px 0">
+          <li>日均交易量500万笔，峰值每秒3000笔</li>
+          <li>每笔交易需经过以下风控规则引擎依次处理：身份验证规则→交易频率规则→地理位置规则→金额异常规则→综合评分规则</li>
+          <li>风控规则需要频繁更新（每周至少更新2次），规则更新时不能停机</li>
+          <li>部分风控场景没有确定性算法（如反欺诈模型），需要多个分析模块协作推理</li>
+          <li>系统需要同时支持两种风控模式：规则引擎模式（确定性规则）和AI推理模式（非确定性分析）</li>
+        </ul>
+        <p>项目组讨论了以下两种架构方案：</p>
+        <p><b>方案一</b>：整个系统采用管道-过滤器架构风格，将每个风控规则引擎作为独立的过滤器。</p>
+        <p><b>方案二</b>：确定性风控采用管道-过滤器架构，AI推理风控采用黑板系统架构，两种架构通过共享数据总线集成。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题1（9分）：</b>请对比分析方案一和方案二的优缺点，并说明你推荐哪个方案，给出理由。</div>
+      <textarea id="a3q1" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a3q1"></div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题2（8分）：</b>针对你推荐的方案，请说明当需要新增一条风控规则（如"境外交易限额规则"）时，需要做哪些改动。如果采用方案二，请分别说明在管道-过滤器部分和黑板系统部分各需要做什么。</div>
+      <textarea id="a3q2" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a3q2"></div>
+    </div>
+
+    <div class="card">
+      <div class="q-box"><b>问题3（8分）：</b>在本案例中，黑板系统架构风格的三大核心构件分别对应什么具体内容？请逐一说明。如果要优化黑板系统的调度策略，使其优先处理高风险交易，应如何设计控制器？</div>
+      <textarea id="a3q3" oninput="save()" placeholder="在此作答..."></textarea>
+      <div class="saved-hint" id="hint-a3q3"></div>
+    </div>
+
+    <div class="warn">方案一看起来简单但不满足"两种风控模式"的需求。方案二更复杂但更合理——你需要分析为什么。</div>
+  </div>
+    </div>
+  </div>
+</div>
+
+<!-- 报告弹窗 -->
+<div class="report-modal" id="reportModal">
+  <div class="report-box">
+    <div class="rb-header">
+      <h3>答题报告</h3>
+      <button onclick="closeReport()">&times;</button>
+    </div>
+    <div class="rb-body">
+      <pre id="reportText"></pre>
+    </div>
+    <div class="rb-footer">
+      <button onclick="copyReport()">复制报告</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY='case_practice_v1';
+const fields=['a1q1','a1q2','a1q3','a2q1','a2q2','a2q3','a3q1','a3q2','a3q3'];
+const caseInfo=[
+  {id:'c1',name:'第1题 ATAM',subs:['问题1（8分）','问题2（9分）','问题3（8分）']},
+  {id:'c2',name:'第2题 UML',subs:['问题1（8分）','问题2（9分）','问题3（8分）']},
+  {id:'c3',name:'第3题 架构风格',subs:['问题1（9分）','问题2（8分）','问题3（8分）']}
+];
+let currentCase='c1';
+
+function renderCaseList(){
+  const el=document.getElementById('case-list');
+  let h='';
+  caseInfo.forEach((c,ci)=>{
+    const isActive=c.id===currentCase;
+    h+=`<div class="case-item">`;
+    h+=`<div class="case-head${isActive?' active':''}" onclick="switchCase('${c.id}')">`;
+    h+=`<span class="case-num">${ci+1}</span>${c.name}</div>`;
+    if(isActive){
+      h+=`<div class="case-sub">`;
+      c.subs.forEach((s,si)=>{
+        const fid=fields[ci*3+si];
+        const filled=document.getElementById(fid)&&document.getElementById(fid).value.trim();
+        h+=`<a href="#${fid}" class="active" onclick="scrollToQ('${fid}');return false">${s}${filled?' ✓':''}</a>`;
+      });
+      h+=`</div>`;
+    }
+    h+=`</div>`;
+  });
+  el.innerHTML=h;
+}
+
+function switchCase(id){
+  currentCase=id;
+  document.querySelectorAll('.case-sec').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  renderCaseList();
+}
+
+function scrollToQ(fid){
+  const el=document.getElementById(fid);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function save(){
+  const data={};
+  fields.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) data[id]=el.value;
+  });
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}catch(e){}
+  fields.forEach(id=>{
+    const h=document.getElementById('hint-'+id);
+    const el=document.getElementById(id);
+    if(h&&el&&el.value.trim()) h.textContent='已保存';
+    else if(h) h.textContent='';
+  });
+  renderCaseList();
+}
+
+function load(){
+  try{
+    const s=localStorage.getItem(STORAGE_KEY);
+    if(s){
+      const data=JSON.parse(s);
+      fields.forEach(id=>{
+        const el=document.getElementById(id);
+        if(el&&data[id]) el.value=data[id];
+      });
+    }
+  }catch(e){}
+}
+
+function submitExam(){
+  const unanswered=[];
+  const labels={'a1q1':'第1题-问题1','a1q2':'第1题-问题2','a1q3':'第1题-问题3',
+    'a2q1':'第2题-问题1','a2q2':'第2题-问题2','a2q3':'第2题-问题3',
+    'a3q1':'第3题-问题1','a3q2':'第3题-问题2','a3q3':'第3题-问题3'};
+  fields.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el||!el.value.trim()) unanswered.push(labels[id]);
+  });
+  if(unanswered.length>0){
+    if(!confirm('以下问题未作答：\n'+unanswered.join('\n')+'\n\n确定交卷？')) return;
+  }
+  generateReport();
+}
+
+function generateReport(){
+  let r='===== 案例分析答题报告 =====\n\n';
+  const qLabels=[
+    {id:'a1q1',label:'第1题-问题1（8分）'},
+    {id:'a1q2',label:'第1题-问题2（9分）'},
+    {id:'a1q3',label:'第1题-问题3（8分）'},
+    {id:'a2q1',label:'第2题-问题1（8分）'},
+    {id:'a2q2',label:'第2题-问题2（9分）'},
+    {id:'a2q3',label:'第2题-问题3（8分）'},
+    {id:'a3q1',label:'第3题-问题1（9分）'},
+    {id:'a3q2',label:'第3题-问题2（8分）'},
+    {id:'a3q3',label:'第3题-问题3（8分）'}
+  ];
+  qLabels.forEach(q=>{
+    const el=document.getElementById(q.id);
+    const val=el?el.value.trim():'';
+    r+='【'+q.label+'】\n';
+    r+= val || '（未作答）';
+    r+='\n\n';
+  });
+  r+='===== 报告结束 =====\n';
+  r+='请将以上内容发送给AI进行评分。';
+  document.getElementById('reportText').textContent=r;
+  document.getElementById('reportModal').classList.add('show');
+}
+
+function closeReport(){
+  document.getElementById('reportModal').classList.remove('show');
+}
+
+function copyReport(){
+  const text=document.getElementById('reportText').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.querySelector('.rb-footer button');
+    btn.textContent='已复制！';
+    setTimeout(()=>btn.textContent='复制报告',2000);
+  });
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeReport();
+});
+
+load();
+renderCaseList();
+</script>
+</body>
+</html>

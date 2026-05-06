@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>选择题专项突破 · 补充卷（广覆盖）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'SimSun','Microsoft YaHei',serif;background:#e8edf3;color:#333;line-height:1.8;font-size:16px}
+.top-bar{background:#3a7bd5;color:#fff;padding:0 18px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.top-bar .exam-title{font-size:16px;font-weight:bold}
+.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:14px}
+.top-bar .stats{opacity:.9}
+.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:5px 20px;border-radius:3px;font-size:14px;font-weight:bold;cursor:pointer}
+.main-wrap{display:flex;height:calc(100vh - 48px);overflow:hidden}
+.left-panel{width:250px;min-width:250px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column}
+.left-panel .panel-title{padding:12px 14px 8px;font-size:15px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.answer-card-area{flex:1;overflow-y:auto;padding:8px 10px}
+.ac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.ac-btn{aspect-ratio:1.3;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
+.ac-btn:hover{background:#e0ecfa}
+.ac-btn.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5;font-weight:bold}
+.ac-btn.done{background:#5eba5e;border-color:#4da64d;color:#fff}
+.ac-btn.done.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
+.left-bottom{padding:10px 14px;border-top:1px solid #eee;font-size:13px;color:#888}
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.q-display{max-width:800px;margin:0 auto}
+.q-card{background:#fff;padding:24px 28px;margin-bottom:14px;border:1px solid #dde3eb}
+.q-card .q-title{font-size:16px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
+.q-card .q-text{font-size:16px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;cursor:pointer;font-size:16px;line-height:1.7;transition:all .1s}
+.q-opt:hover{background:#f5f8fc}
+.q-opt.selected{background:#e8f0fe}
+.q-opt .opt-radio{width:17px;height:17px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative}
+.q-opt.selected .opt-radio{border-color:#3a7bd5}
+.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2.5px;left:2.5px;width:9px;height:9px;background:#3a7bd5;border-radius:50%}
+.q-opt .opt-content{flex:1}
+.q-nav-arrows{display:flex;justify-content:space-between;max-width:800px;margin:0 auto 16px;padding:0 4px}
+.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:8px 24px;cursor:pointer;font-size:14px;color:#555}
+.q-nav-btn:hover{background:#e0ecfa;color:#3a7bd5}
+.q-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.report-wrap{display:none;flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.report-wrap .report-inner{max-width:800px;margin:0 auto}
+.score-box{background:linear-gradient(135deg,#3a7bd5,#2b6cb0);color:#fff;border-radius:8px;padding:28px;text-align:center;margin-bottom:16px}
+.score-box .score{font-size:3.2em;font-weight:bold}
+.score-box .label{font-size:.9em;opacity:.9;margin-top:4px}
+.review-card{background:#fff;border-radius:6px;padding:16px 20px;margin-bottom:10px;border:1px solid #e2e8f0;border-left:4px solid #e53935}
+.review-card .r-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.review-card .r-num{background:#3a7bd5;color:#fff;border-radius:3px;padding:1px 8px;font-size:12px}
+.review-card .r-text{font-size:13px;margin-bottom:8px;white-space:pre-wrap;line-height:1.7}
+.review-card .r-your{font-size:12px;color:#e53935;margin-bottom:3px}
+.review-card .r-correct{font-size:12px;color:#4caf50;margin-bottom:3px}
+.review-card .r-analysis{font-size:12px;color:#666;background:#f5f7fa;padding:10px;border-radius:4px;margin-top:6px;white-space:pre-wrap;line-height:1.7}
+.section-tag{display:inline-block;background:#3a7bd5;color:#fff;padding:1px 8px;border-radius:3px;font-size:11px;margin-right:6px}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="exam-title">选择题专项突破 · 补充卷（30题）</div>
+  <div class="right-info">
+    <div class="stats" id="stats">已答 0/30</div>
+    <button class="submit-top" onclick="confirmSubmit()">交卷</button>
+  </div>
+</div>
+<div class="main-wrap">
+  <div class="left-panel">
+    <div class="panel-title">答题卡</div>
+    <div class="answer-card-area" id="answer-card"></div>
+    <div class="left-bottom">广覆盖补充 · 设计模式·OO·软件工程·数据库·安全·数学</div>
+  </div>
+  <div class="right-panel" id="right-panel">
+    <div class="q-display" id="q-display"></div>
+    <div class="q-nav-arrows">
+      <button class="q-nav-btn" id="prev-btn" onclick="prevQ()">上一题</button>
+      <button class="q-nav-btn" id="next-btn" onclick="nextQ()">下一题</button>
+    </div>
+  </div>
+</div>
+<div class="report-wrap" id="report-wrap">
+  <div class="report-inner" id="report-inner"></div>
+</div>
+
+<script>
+const allQuestions = [
+
+// ====== 设计模式 (Q1-Q4) ======
+{id:1,text:"以下设计模式中，属于结构型模式的是（　　）。",options:["A. 观察者模式","B. 工厂方法模式","C. 适配器模式","D. 策略模式"],answer:"C",
+analysis:"创建型：工厂方法、抽象工厂、单例、建造者、原型。结构型：适配器、桥接、组合、装饰器、外观、享元、代理。行为型：观察者、策略、模板方法、命令、状态等。适配器是结构型。"},
+
+{id:2,text:"某系统需要在不修改已有类的前提下为对象动态添加职责，应使用（　　）模式。",options:["A. 代理模式","B. 装饰器模式","C. 适配器模式","D. 组合模式"],answer:"B",
+analysis:"装饰器模式的核心：动态地为对象添加额外职责，不修改原有类代码。代理模式是控制访问，适配器模式是接口转换，组合模式是树形结构。"},
+
+{id:3,text:"以下关于单例模式的描述，不正确的是（　　）。",options:["A. 单例模式确保一个类只有一个实例","B. 单例模式提供一个全局访问点","C. 懒汉式单例在类加载时就创建实例","D. 单例模式属于创建型设计模式"],answer:"C",
+analysis:"懒汉式是在第一次使用时才创建实例（延迟加载）。饿汉式才是类加载时就创建实例。A、B、D都是单例模式的正确描述。"},
+
+{id:4,text:"某电商系统的订单处理中，需要将请求封装为对象，支持撤销操作和请求队列。应使用（　　）模式。",options:["A. 命令模式","B. 策略模式","C. 状态模式","D. 模板方法模式"],answer:"A",
+analysis:"命令模式将请求封装为对象，支持：撤销/重做、请求队列、日志记录。策略模式封装算法族，状态模式根据状态改变行为，模板方法定义算法骨架。"},
+
+// ====== 面向对象 (Q5-Q7) ======
+{id:5,text:"面向对象的封装特性是指（　　）。",options:["A. 子类自动拥有父类的属性和方法","B. 对象之间通过消息传递进行通信","C. 将对象的属性和行为结合在一起，隐藏内部实现细节","D. 同一操作在不同对象上有不同实现"],answer:"C",
+analysis:"封装=属性+行为结合+隐藏实现细节。A是继承，B是消息传递（面向对象的通信方式），D是多态。"},
+
+{id:6,text:"在UML类图中，'鸟'和'翅膀'之间的关系最适合建模为（　　）。",options:["A. 依赖关系","B. 关联关系","C. 聚合关系","D. 组合关系"],answer:"D",
+analysis:"鸟和翅膀是整体与部分不可分离的关系——鸟死了翅膀也不独立存在。这是组合关系的典型例子。聚合=可分离（雁群和大雁），组合=不可分离（鸟和翅膀）。"},
+
+{id:7,text:"面向对象设计中，'依赖倒置原则'是指（　　）。",options:["A. 高层模块不应依赖低层模块，两者都应依赖抽象","B. 一个类应该只有一个引起它变化的原因","C. 子类应该能够替换父类","D. 接口应该尽量小"],answer:"A",
+analysis:"依赖倒置原则(DIP)：高层不依赖低层，都依赖抽象；抽象不依赖细节，细节依赖抽象。B是单一职责原则(SRP)，C是里氏替换原则(LSP)，D是接口隔离原则(ISP)。"},
+
+// ====== 软件工程 (Q8-Q11) ======
+{id:8,text:"在软件开发模型中，适用于需求不明确、需要快速反馈的项目的是（　　）。",options:["A. 瀑布模型","B. 增量模型","C. 螺旋模型","D. 敏捷开发"],answer:"D",
+analysis:"敏捷开发强调迭代、快速反馈、拥抱变化，适合需求不明确的项目。瀑布模型适合需求明确，增量模型分批交付，螺旋模型强调风险分析但不是快速反馈。"},
+
+{id:9,text:"以下关于软件测试的描述，正确的是（　　）。",options:["A. 白盒测试关注程序内部结构，黑盒测试关注功能输入输出","B. 单元测试由用户执行","C. 回归测试是在测试开始前进行的","D. 集成测试主要测试单个模块的功能"],answer:"A",
+analysis:"白盒=看代码内部结构，黑盒=不看代码只看输入输出。B错误：单元测试由开发人员执行。C错误：回归测试是修改后重新测试。D错误：集成测试测试模块间接口。"},
+
+{id:10,text:"在软件需求分析阶段，功能需求和非功能需求的区别是（　　）。",options:["A. 功能需求描述系统做什么，非功能需求描述系统做得怎样","B. 功能需求由用户提出，非功能需求由开发人员决定","C. 非功能需求不影响系统架构","D. 功能需求只能用文字描述"],answer:"A",
+analysis:"功能需求=系统应该做什么（行为），非功能需求=系统做得怎么样（质量属性）。B错误：两者都可由用户或分析师提出。C错误：非功能需求直接影响架构设计。D错误：可用用例图等多种方式描述。"},
+
+{id:11,text:"软件维护中，'为适应环境变化而修改软件'属于（　　）。",options:["A. 纠正性维护","B. 适应性维护","C. 完善性维护","D. 预防性维护"],answer:"B",
+analysis:"适应性维护=适应环境变化（操作系统升级、硬件更换等）。纠正性维护=修bug。完善性维护=增加功能/提升性能。预防性维护=为将来改进做准备。"},
+
+// ====== 数据库 (Q12-Q14) ======
+{id:12,text:"关系数据库中，若关系R有m个元组，关系S有n个元组，则R×S（笛卡尔积）的元组数为（　　）。",options:["A. m+n","B. m×n","C. max(m,n)","D. min(m,n)"],answer:"B",
+analysis:"笛卡尔积R×S的元组数=m×n。R的每个元组与S的每个元组组合，产生m×n个元组。"},
+
+{id:13,text:"在SQL中，用于修改表中已有数据的语句是（　　）。",options:["A. INSERT","B. UPDATE","C. DELETE","D. ALTER"],answer:"B",
+analysis:"UPDATE修改已有数据，INSERT插入新数据，DELETE删除数据，ALTER修改表结构（不是数据）。"},
+
+{id:14,text:"数据库事务的ACID特性中，'事务执行的结果必须使数据库从一个一致性状态变到另一个一致性状态'描述的是（　　）。",options:["A. 原子性(Atomicity)","B. 一致性(Consistency)","C. 隔离性(Isolation)","D. 持久性(Durability)"],answer:"B",
+analysis:"一致性=数据库从一个一致性状态到另一个一致性状态。原子性=要么全做要么全不做。隔离性=并发事务互不干扰。持久性=提交后永久保存。"},
+
+// ====== 系统安全 (Q15-Q17) ======
+{id:15,text:"在信息安全中，'确保信息不被未授权访问'属于（　　）特性。",options:["A. 完整性","B. 机密性","C. 可用性","D. 不可否认性"],answer:"B",
+analysis:"机密性=不被未授权访问/泄露。完整性=不被未授权篡改。可用性=需要时能正常使用。不可否认性=发送方不能否认已发送的信息。"},
+
+{id:16,text:"以下加密算法中，属于非对称加密算法的是（　　）。",options:["A. AES","B. DES","C. RSA","D. 3DES"],answer:"C",
+analysis:"RSA是非对称加密（公钥加密、私钥解密）。AES、DES、3DES都是对称加密（同一密钥加解密）。"},
+
+{id:17,text:"PKI（公钥基础设施）中，负责签发和管理数字证书的是（　　）。",options:["A. RA（注册机构）","B. CA（认证中心）","C. KMC（密钥管理中心）","D. CRL（证书吊销列表）"],answer:"B",
+analysis:"CA(Certificate Authority)负责签发、管理和吊销数字证书。RA负责证书申请的注册审核。KMC负责密钥管理。CRL是已吊销证书的列表。"},
+
+// ====== 项目管理 (Q18-Q20) ======
+{id:18,text:"在项目管理中，'在不改变项目范围的前提下，缩短项目工期'属于（　　）。",options:["A. 赶工（Crashing）","B. 快速跟进（Fast Tracking）","C. 资源平衡","D. 范围蔓延"],answer:"A",
+analysis:"赶工=增加资源缩短工期（如加班、增加人手），会增加成本。快速跟进=并行执行原本顺序进行的活动，会增加风险。资源平衡=调整资源分配解决冲突。范围蔓延=不受控的范围扩大。"},
+
+{id:19,text:"某项目PV=100万，EV=80万，AC=90万，则该项目的成本偏差CV和进度偏差SV分别为（　　）。",options:["A. CV=-10万，SV=-20万","B. CV=10万，SV=20万","C. CV=-10万，SV=20万","D. CV=10万，SV=-20万"],answer:"A",
+analysis:"CV=EV-AC=80-90=-10万（成本超支）。SV=EV-PV=80-100=-20万（进度滞后）。CV<0=超支，SV<0=滞后。"},
+
+{id:20,text:"项目风险管理中，'购买保险'属于（　　）策略。",options:["A. 规避","B. 转移","C. 减轻","D. 接受"],answer:"B",
+analysis:"转移=将风险的影响转移给第三方（如购买保险、外包）。规避=消除风险来源。减轻=降低风险概率或影响。接受=承认风险存在但不采取行动。"},
+
+// ====== 知识产权 (Q21-Q22) ======
+{id:21,text:"根据我国著作权法，软件著作权自（　　）之日起产生。",options:["A. 软件发表","B. 软件登记","C. 软件开发完成","D. 软件销售"],answer:"C",
+analysis:"著作权自开发完成之日起自动产生，不需要发表、登记或销售。登记是自愿的，用于举证便利。"},
+
+{id:22,text:"以下行为中，不构成侵犯软件著作权的是（　　）。",options:["A. 未经许可复制他人软件","B. 为个人学习目的少量复制他人软件","C. 未经许可修改他人软件并发布","D. 未经许可销售他人软件的复制品"],answer:"B",
+analysis:"著作权法规定'合理使用'：为个人学习、研究或欣赏，少量复制他人已发表作品，不构成侵权。A、C、D都是侵权行为。"},
+
+// ====== 数学与算法 (Q23-Q25) ======
+{id:23,text:"在一个有向图中，若从顶点A到顶点B存在路径，则A是B的（　　）。",options:["A. 前驱","B. 后继","C. 祖先","D. 子孙"],answer:"C",
+analysis:"在有向图（或树）中，如果A到B有路径，A是B的祖先(ancestor)，B是A的子孙(descendant)。前驱(predecessor)是直接前一个节点，后继(successor)是直接后一个节点。"},
+
+{id:24,text:"对长度为n的有序数组进行二分查找，最坏情况下的时间复杂度为（　　）。",options:["A. O(n)","B. O(n²)","C. O(log n)","D. O(n log n)"],answer:"C",
+analysis:"二分查找每次将搜索范围减半，最坏情况需要log₂n次比较，时间复杂度O(log n)。前提：数组必须有序。"},
+
+{id:25,text:"以下排序算法中，平均时间复杂度为O(n log n)且稳定的排序算法是（　　）。",options:["A. 快速排序","B. 堆排序","C. 归并排序","D. 选择排序"],answer:"C",
+analysis:"归并排序：平均O(n log n)，稳定。快速排序：平均O(n log n)，不稳定。堆排序：O(n log n)，不稳定。选择排序：O(n²)，不稳定。"},
+
+// ====== 操作系统补充 (Q26-Q27) ======
+{id:26,text:"在操作系统中，进程从运行态变为就绪态的原因是（　　）。",options:["A. 进程完成执行","B. 时间片用完","C. 等待I/O操作","D. 发生死锁"],answer:"B",
+analysis:"运行态→就绪态：时间片用完（被调度程序抢占）。运行态→阻塞态：等待I/O。运行态→终止态：进程完成。阻塞态→就绪态：I/O完成。"},
+
+{id:27,text:"某系统采用页式虚拟存储管理，页面大小为4KB，逻辑地址为32位，则进程最多可有（　　）个页面。",options:["A. 2^20","B. 2^12","C. 2^32","D. 2^28"],answer:"A",
+analysis:"页面大小4KB=2^12B，页内偏移占12位。逻辑地址32位，页号占32-12=20位。最多2^20个页面。"},
+
+// ====== 新技术 (Q28-Q30) ======
+{id:28,text:"在微服务架构中，服务网格（Service Mesh）的主要作用是（　　）。",options:["A. 实现服务间的通信管理","B. 提供数据库连接池","C. 实现业务逻辑编排","D. 提供统一的用户界面"],answer:"A",
+analysis:"Service Mesh负责微服务间的通信管理，包括负载均衡、服务发现、熔断、限流、链路追踪等。典型实现：Istio、Linkerd。与业务逻辑无关。"},
+
+{id:29,text:"以下关于容器技术的描述，正确的是（　　）。",options:["A. 容器共享宿主机的操作系统内核","B. 容器比虚拟机更重","C. Docker容器不能跨平台运行","D. 容器不需要镜像"],answer:"A",
+analysis:"容器共享宿主机OS内核（轻量级），虚拟机有独立OS（重量级）。容器比虚拟机轻量。Docker容器可在任何安装Docker的平台上运行。容器基于镜像创建。"},
+
+{id:30,text:"在DevOps实践中，CI/CD的核心目标是（　　）。",options:["A. 减少开发人员数量","B. 实现代码的自动构建、测试和部署","C. 取消人工测试","D. 只在生产环境部署"],answer:"B",
+analysis:"CI(持续集成)=代码提交后自动构建+自动测试。CD(持续交付/持续部署)=自动将通过测试的代码部署到生产环境。核心是自动化，不是减少人员或取消测试。"}
+];
+
+let userAnswers = {};
+let currentQ = 1;
+let submitted = false;
+const STORAGE_KEY = 'arch_breakthrough_sup_v1';
+const TOTAL = allQuestions.length;
+
+function init(){loadProgress();renderAnswerCard();renderQuestion(currentQ);updateProgress();}
+function loadProgress(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){const d=JSON.parse(s);userAnswers=d.answers||{};currentQ=d.currentQ||1;}}catch(e){}}
+function saveProgress(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({answers:userAnswers,currentQ:currentQ}));}catch(e){}}
+function renderAnswerCard(){const c=document.getElementById('answer-card');let h='<div class="ac-grid">';for(let i=1;i<=TOTAL;i++){const cls=(i===currentQ?' current':'')+(userAnswers[i]?' done':'');h+=`<button class="ac-btn${cls}" id="acb-${i}" onclick="goToQ(${i})">${i}</button>`;}h+='</div>';c.innerHTML=h;}
+function updateAnswerCard(){document.querySelectorAll('.ac-btn').forEach(b=>b.classList.remove('current'));const c=document.getElementById('acb-'+currentQ);if(c)c.classList.add('current');}
+function markAnswerCard(q){const b=document.getElementById('acb-'+q);if(b&&!b.classList.contains('done'))b.classList.add('done');}
+function renderQuestion(qId){const q=allQuestions.find(x=>x.id===qId);if(!q)return;let tag='';if(qId<=4)tag='<span class="section-tag">设计模式</span>';else if(qId<=7)tag='<span class="section-tag">面向对象</span>';else if(qId<=11)tag='<span class="section-tag">软件工程</span>';else if(qId<=14)tag='<span class="section-tag">数据库</span>';else if(qId<=17)tag='<span class="section-tag">安全</span>';else if(qId<=20)tag='<span class="section-tag">项目管理</span>';else if(qId<=22)tag='<span class="section-tag">知识产权</span>';else if(qId<=25)tag='<span class="section-tag">数学算法</span>';else if(qId<=27)tag='<span class="section-tag">操作系统</span>';else tag='<span class="section-tag">新技术</span>';let h=`<div class="q-card"><div class="q-title">${tag}第${qId}题（共${TOTAL}题）</div><div class="q-text">${q.text}</div><div class="q-options">`;q.options.forEach((o,i)=>{const l=String.fromCharCode(65+i);const s=userAnswers[qId]===l?' selected':'';h+=`<div class="q-opt${s}" onclick="selectOption(${qId},'${l}')"><div class="opt-radio"></div><div class="opt-content"><span>${o}</span></div></div>`;});h+='</div></div>';document.getElementById('q-display').innerHTML=h;document.getElementById('prev-btn').disabled=(qId<=1);document.getElementById('next-btn').disabled=(qId>=TOTAL);document.getElementById('next-btn').textContent=qId>=TOTAL?'已是最后一题':'下一题';updateAnswerCard();}
+function selectOption(qId,l){if(submitted)return;userAnswers[qId]=l;saveProgress();updateProgress();const c=document.querySelector('.q-card');c.querySelectorAll('.q-opt').forEach(o=>o.classList.remove('selected'));c.querySelectorAll('.q-opt').forEach(o=>{if(o.textContent.trim().startsWith(l+'.'))o.classList.add('selected');});markAnswerCard(qId);}
+function goToQ(id){currentQ=id;saveProgress();renderQuestion(id);document.getElementById('right-panel').scrollTop=0;}
+function prevQ(){if(currentQ>1)goToQ(currentQ-1);}
+function nextQ(){if(currentQ<TOTAL)goToQ(currentQ+1);}
+function updateProgress(){document.getElementById('stats').textContent=`已答 ${Object.keys(userAnswers).length}/${TOTAL}`;}
+function confirmSubmit(){const u=TOTAL-Object.keys(userAnswers).length;let m='确定要交卷吗？';if(u>0)m+=`还有 ${u} 题未作答。`;if(confirm(m))submitExam();}
+function submitExam(){if(submitted)return;submitted=true;let correct=0,wrongList=[];allQuestions.forEach(q=>{if(userAnswers[q.id]===q.answer)correct++;else wrongList.push(q);});const pct=Math.round(correct/TOTAL*100);let pass=pct>=80?'恭喜过关！':'未达标，需要继续复习';let h=`<div class="score-box"><div class="score">${correct}/${TOTAL}</div><div class="label">正确率 ${pct}% · ${pass}</div></div>`;if(wrongList.length>0){h+=`<div class="review-card" style="border-left-color:#3a7bd5"><div class="r-header"><span class="r-num">错题解析</span></div></div>`;wrongList.forEach(q=>{h+=`<div class="review-card"><div class="r-header"><span class="r-num">第${q.id}题</span></div><div class="r-text">${q.text}</div><div class="r-your">你的答案：${userAnswers[q.id]||'未作答'}</div><div class="r-correct">正确答案：${q.answer}</div><div class="r-analysis">${q.analysis}</div></div>`;});}else{h+='<p style="text-align:center;color:#4caf50;font-size:1.1em;padding:20px">全部正确！完美过关！</p>';}document.querySelector('.main-wrap').style.display='none';document.getElementById('report-inner').innerHTML=h;document.getElementById('report-wrap').style.display='block';localStorage.removeItem(STORAGE_KEY);}
+document.addEventListener('keydown',function(e){if(submitted)return;if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevQ();}if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextQ();}if(['A','B','C','D'].includes(e.key.toUpperCase()))selectOption(currentQ,e.key.toUpperCase());});
+init();
+</script>
+</body>
+</html>
