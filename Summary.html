@@ -371,6 +371,8 @@
         <a href="#" data-s="s19">覆盖测试</a>
         <a href="#" data-s="s20">设计模式</a>
         <a href="#" data-s="s21">排序算法</a>
+        <a href="#" data-s="s23">4+1视图</a>
+        <a href="#" data-s="s24">法律法规</a>
         <span class="nav-sep">|</span>
         <a href="#" data-s="s22" class="nav-essay">论文模板</a>
       </div>
@@ -2235,6 +2237,172 @@
           </ol>
         </div>
       </div>
+      <!-- ============ S23: 4+1视图 ============ -->
+      <div class="sec" id="s23">
+        <div class="card">
+          <h2><span class="icon">🔭</span>Kruchten 4+1 视图模型</h2>
+
+          <h3>五个视图总览</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:7em"><col style="min-width:12em"><col style="min-width:10em"><col style="min-width:8em"></colgroup>
+            <tr><th>视图</th><th>关注点</th><th>对应UML图</th><th>使用者</th></tr>
+            <tr>
+              <td><b>逻辑视图</b></td>
+              <td>功能需求、领域模型、"做什么"</td>
+              <td>类图、对象图、状态图</td>
+              <td>最终用户</td>
+            </tr>
+            <tr>
+              <td><b>进程视图</b></td>
+              <td>并发、同步、运行时、"怎么运行"</td>
+              <td>活动图、序列图、通信图</td>
+              <td>系统集成者</td>
+            </tr>
+            <tr>
+              <td><b>开发视图</b></td>
+              <td>模块划分、代码结构、"怎么组织代码"</td>
+              <td>包图、组件图</td>
+              <td>程序员</td>
+            </tr>
+            <tr>
+              <td><b>物理视图</b></td>
+              <td>软件→硬件映射、"怎么部署"</td>
+              <td>部署图</td>
+              <td>系统工程师</td>
+            </tr>
+            <tr>
+              <td><b>场景视图(+1)</b></td>
+              <td>用例驱动，串联验证其他四个</td>
+              <td>用例图</td>
+              <td>所有利益相关者</td>
+            </tr>
+          </table>
+          </div>
+
+          <div class="mnemonic">速记：逻做什、进怎么跑、开怎么码、物怎么装、场串起来</div>
+
+          <h3>静态 vs 动态</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">静态结构</div>
+              逻辑视图、开发视图<br>描述系统的<b>结构组成</b>
+            </div>
+            <div class="b">
+              <div class="title">动态结构</div>
+              进程视图、物理视图<br>描述系统的<b>运行与部署</b>
+            </div>
+          </div>
+
+          <div class="trap">"物理视图"也叫"部署视图"，是同一概念的不同译法。"开发视图"也叫"实现视图"。</div>
+          <div class="trap">别混淆Hofmeister四视图（概念/模块/执行/代码），与Kruchten的4+1不同！</div>
+        </div>
+      </div>
+
+      <!-- ============ S24: 法律法规 ============ -->
+      <div class="sec" id="s24">
+        <div class="card">
+          <h2><span class="icon">⚖️</span>法律法规与知识产权</h2>
+
+          <h3>六大知识产权类型</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <tr><th>类型</th><th>取得方式</th><th>保护期限</th><th>续展</th></tr>
+            <tr>
+              <td><b>著作权</b></td>
+              <td>自动取得</td>
+              <td>作者终生+50年；单位发表后50年</td>
+              <td>不可</td>
+            </tr>
+            <tr>
+              <td><b>发明专利</b></td>
+              <td>申请+实质审查</td>
+              <td><b>20年</b>（自申请日）</td>
+              <td>不可</td>
+            </tr>
+            <tr>
+              <td><b>实用新型/外观设计</b></td>
+              <td>申请+形式审查</td>
+              <td><b>10年</b>（自申请日）</td>
+              <td>不可</td>
+            </tr>
+            <tr>
+              <td><b>商标权</b></td>
+              <td>需注册</td>
+              <td>10年（自核准注册日）</td>
+              <td><b>可以</b>，每次10年，次数不限</td>
+            </tr>
+            <tr>
+              <td><b>商业秘密</b></td>
+              <td>自动保护（需保密措施）</td>
+              <td>无固定期限</td>
+              <td>--</td>
+            </tr>
+          </table>
+          </div>
+          <div class="mnemonic">发明20实用10，商标10年可续展，著作权自动保50，商业秘密无期限</div>
+
+          <h3>软件著作权归属（高频！）</h3>
+          <table>
+            <tr><th>场景</th><th>无约定时归属</th></tr>
+            <tr><td>职务开发（本职工作）</td><td>归<b>单位</b></td></tr>
+            <tr><td>非职务开发（个人）</td><td>归<b>开发者个人</b></td></tr>
+            <tr><td>委托开发</td><td>归<b>受托人</b>（实际开发者）</td></tr>
+            <tr><td>合作开发</td><td><b>共同享有</b></td></tr>
+          </table>
+          <div class="trap">委托开发无约定时归<b>受托人（开发者）</b>，不是出资的委托方！出资≠有著作权。</div>
+          <div class="trap">"必须登记才能获得著作权"→错！著作权自软件开发<b>完成之日</b>起自动产生。</div>
+
+          <h3>软件著作权的权利</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:60px;white-space:nowrap"><col><col></colgroup>
+            <tr><th>类别</th><th>权利</th><th>保护期</th></tr>
+            <tr><td rowspan="4"><b>人身权</b></td><td>发表权</td><td>50年</td></tr>
+            <tr><td>署名权（开发者身份权）</td><td><b>永久</b></td></tr>
+            <tr><td>修改权</td><td><b>永久</b></td></tr>
+            <tr><td>保护作品完整权</td><td><b>永久</b></td></tr>
+            <tr><td><b>财产权</b></td><td>使用权、复制权、发行权、出租权、翻译权、转让权等</td><td>50年</td></tr>
+          </table>
+          </div>
+          <div class="trap">发表权是人身权但有50年期限；署名权、修改权才是<b>真正永久</b>的。</div>
+
+          <h3>专利申请原则</h3>
+          <div class="formula">先申请原则（不是先发明！）| 单一性原则 | 书面原则</div>
+          <div class="trap">中国专利采用<b>"先申请原则"</b>。两人同日申请→协商确定。商标采用"先注册原则"。</div>
+
+          <h3>合理使用（不构成侵权）</h3>
+          <div class="key">
+            以下可不经许可、不付报酬（但需指明作者）：<br />
+            ① 个人学习、研究或欣赏<br />
+            ② 课堂教学或科学研究（少量复制）<br />
+            ③ 国家机关执行公务<br />
+            ④ 新闻报道中不可避免地引用<br />
+            ⑤ 为介绍/评论某一作品而适当引用<br />
+            ⑥ 免费表演（未收费也未付报酬）<br />
+            ⑦ 翻译成少数民族语言文字在国内出版
+          </div>
+
+          <h3>侵权判断速判</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col><col style="min-width:60px;white-space:nowrap"><col></colgroup>
+            <tr><th>情形</th><th>结果</th><th>理由</th></tr>
+            <tr><td>个人学习复制一份</td><td>不侵权</td><td>合理使用</td></tr>
+            <tr><td>课堂教学少量复制</td><td>不侵权</td><td>合理使用</td></tr>
+            <tr><td>企业内部用盗版软件</td><td><b style="color:#e53935">侵权</b></td><td>非个人学习</td></tr>
+            <tr><td>独立创作相同作品</td><td>不侵权</td><td>独立创作≠抄袭</td></tr>
+            <tr><td>个人学习但放到网上传播</td><td><b style="color:#e53935">侵权</b></td><td>超出合理使用</td></tr>
+            <tr><td>保护期满后使用</td><td>不侵权</td><td>进入公共领域（仍需署名）</td></tr>
+          </table>
+          </div>
+
+          <h3>商业秘密四要件</h3>
+          <div class="formula">秘密性 + 价值性 + 实用性 + 保密性</div>
+          <div class="tips">商业秘密泄密即丧失保护。一旦公开，不再构成商业秘密。</div>
+        </div>
+      </div>
+
     </div>
     <!-- /content -->
 
