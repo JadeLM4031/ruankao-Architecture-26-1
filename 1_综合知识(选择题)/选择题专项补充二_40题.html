@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>选择题专项补充二 · 40题</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Microsoft YaHei',sans-serif;background:#e8edf3;color:#333;line-height:1.8;font-size:16px}
+.top-bar{background:#3a7bd5;color:#fff;padding:0 18px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.top-bar .exam-title{font-size:16px;font-weight:bold}
+.top-bar .right-info{display:flex;align-items:center;gap:20px;font-size:14px}
+.top-bar .stats{opacity:.9}
+.top-bar .timer{font-variant-numeric:tabular-nums;font-weight:600}
+.top-bar .submit-top{background:#fff;color:#3a7bd5;border:none;padding:5px 20px;border-radius:3px;font-size:14px;font-weight:bold;cursor:pointer}
+.main-wrap{display:flex;height:calc(100vh - 48px);overflow:hidden}
+.left-panel{width:250px;min-width:250px;background:#fff;border-right:1px solid #d5dce6;display:flex;flex-direction:column}
+.left-panel .panel-title{padding:12px 14px 8px;font-size:15px;font-weight:bold;color:#333;border-bottom:1px solid #eee;text-align:center}
+.answer-card-area{flex:1;overflow-y:auto;padding:8px 10px}
+.ac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.ac-btn{aspect-ratio:1.3;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#555;transition:all .1s}
+.ac-btn:hover{background:#e0ecfa}
+.ac-btn.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5;font-weight:bold}
+.ac-btn.done{background:#5eba5e;border-color:#4da64d;color:#fff}
+.ac-btn.done.current{background:#3a7bd5;color:#fff;border-color:#3a7bd5}
+.left-bottom{padding:10px 14px;border-top:1px solid #eee;font-size:13px;color:#888}
+.right-panel{flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.q-display{max-width:800px;margin:0 auto}
+.q-card{background:#fff;padding:24px 28px;margin-bottom:14px;border:1px solid #dde3eb}
+.q-card .q-title{font-size:16px;font-weight:bold;color:#333;margin-bottom:14px;line-height:1.8}
+.q-card .q-text{font-size:16px;margin-bottom:18px;line-height:1.8;white-space:pre-wrap;color:#333}
+.q-card .q-text .fill-blank{display:inline-block;border-bottom:2px solid #3a7bd5;min-width:160px;padding:2px 8px;color:#3a7bd5;font-weight:600}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;cursor:pointer;font-size:16px;line-height:1.7;transition:all .1s;border-radius:4px}
+.q-opt:hover{background:#f5f8fc}
+.q-opt.selected{background:#e8f0fe}
+.q-opt .opt-radio{width:17px;height:17px;border:1.5px solid #999;border-radius:50%;margin-top:5px;flex-shrink:0;position:relative}
+.q-opt.selected .opt-radio{border-color:#3a7bd5}
+.q-opt.selected .opt-radio::after{content:'';position:absolute;top:2.5px;left:2.5px;width:9px;height:9px;background:#3a7bd5;border-radius:50%}
+.q-opt .opt-content{flex:1}
+.fill-input-wrap{margin-top:12px}
+.fill-input-wrap input{width:100%;max-width:400px;padding:10px 14px;font-size:16px;border:2px solid #d5dce6;border-radius:6px;font-family:inherit}
+.fill-input-wrap input:focus{outline:none;border-color:#3a7bd5}
+.q-nav-arrows{display:flex;justify-content:space-between;max-width:800px;margin:0 auto 16px;padding:0 4px}
+.q-nav-btn{background:#fff;border:1px solid #ccc;border-radius:3px;padding:8px 24px;cursor:pointer;font-size:14px;color:#555}
+.q-nav-btn:hover{background:#e0ecfa;color:#3a7bd5}
+.q-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.section-tag{display:inline-block;background:#3a7bd5;color:#fff;padding:1px 8px;border-radius:3px;font-size:11px;margin-right:6px}
+.report-wrap{display:none;flex:1;overflow-y:auto;background:#f0f2f5;padding:20px 30px}
+.report-wrap .report-inner{max-width:800px;margin:0 auto}
+.score-box{background:linear-gradient(135deg,#3a7bd5,#2b6cb0);color:#fff;border-radius:8px;padding:28px;text-align:center;margin-bottom:16px}
+.score-box .score{font-size:3.2em;font-weight:bold}
+.score-box .label{font-size:.9em;opacity:.9;margin-top:4px}
+.review-card{background:#fff;border-radius:6px;padding:16px 20px;margin-bottom:10px;border:1px solid #e2e8f0;border-left:4px solid #e53935}
+.review-card .r-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.review-card .r-num{background:#3a7bd5;color:#fff;border-radius:3px;padding:1px 8px;font-size:12px}
+.review-card .r-text{font-size:13px;margin-bottom:8px;white-space:pre-wrap;line-height:1.7}
+.review-card .r-your{font-size:12px;color:#e53935;margin-bottom:3px}
+.review-card .r-correct{font-size:12px;color:#4caf50;margin-bottom:3px}
+.review-card .r-analysis{font-size:12px;color:#666;background:#f5f7fa;padding:10px;border-radius:4px;margin-top:6px;white-space:pre-wrap;line-height:1.7}
+.review-card.correct-card{border-left-color:#4caf50}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="exam-title">选择题专项补充二（40题）</div>
+  <div class="right-info">
+    <div class="timer" id="timer">00:00</div>
+    <div class="stats" id="stats">已答 0/40</div>
+    <button class="submit-top" onclick="confirmSubmit()">交卷</button>
+  </div>
+</div>
+<div class="main-wrap" id="mainWrap">
+  <div class="left-panel">
+    <div class="panel-title">答题卡</div>
+    <div class="answer-card-area" id="answer-card"></div>
+    <div class="left-bottom">未覆盖考点专项 · 40题</div>
+  </div>
+  <div class="right-panel" id="right-panel">
+    <div class="q-display" id="q-display"></div>
+    <div class="q-nav-arrows">
+      <button class="q-nav-btn" id="prev-btn" onclick="prevQ()">上一题</button>
+      <button class="q-nav-btn" id="next-btn" onclick="nextQ()">下一题</button>
+    </div>
+  </div>
+</div>
+<div class="report-wrap" id="report-wrap">
+  <div class="report-inner" id="report-inner"></div>
+</div>
+
+<script>
+const allQuestions=[
+
+// ===== 数学基础 =====
+{id:1,sec:"数理逻辑",type:"choice",text:"命题公式 P∨(P∧Q) 等价于：",opts:["P","Q","P∧Q","P∨Q"],ans:"A",
+explain:"吸收律：P∨(P∧Q) = P。同理 P∧(P∨Q) = P。这是命题逻辑的基本等值式。"},
+{id:2,sec:"数理逻辑",type:"choice",text:"命题公式 ¬(P→Q) 等价于：",opts:["¬P→¬Q","P∧¬Q","¬P∨Q","¬P∧¬Q"],ans:"B",
+explain:"P→Q 等价于 ¬P∨Q。所以 ¬(P→Q) = ¬(¬P∨Q) = P∧¬Q。即：否定蕴含 = 前件真且后件假。"},
+{id:3,sec:"概率计算",type:"choice",text:"某系统有三个独立组件，可靠度分别为0.8、0.9、0.7。至少一个正常工作的概率为：",opts:["0.504","0.496","0.994","0.8"],ans:"C",
+explain:"至少一个正常 = 1 - 全部故障 = 1 - (1-0.8)(1-0.9)(1-0.7) = 1 - 0.2x0.1x0.3 = 1 - 0.006 = 0.994。"},
+{id:4,sec:"图论",type:"choice",text:"有5个节点的连通无向图，最少需要多少条边？",opts:["3","4","5","6"],ans:"B",
+explain:"n个节点的连通无向图最少n-1条边（即生成树）。5个节点最少4条边。最多n(n-1)/2=10条边（完全图）。"},
+
+// ===== 嵌入式深入 =====
+{id:5,sec:"嵌入式",type:"choice",text:"嵌入式系统中，优先级反转问题的经典解决方案是：",opts:["增大优先级","优先级继承协议","取消低优先级任务","使用中断"],ans:"B",
+explain:"优先级继承：低优先级任务占用资源时，临时继承等待该资源的高优先级任务的优先级，用完资源后恢复。典型案例：火星探路者号。"},
+{id:6,sec:"嵌入式",type:"choice",text:"看门狗定时器（Watchdog Timer）的作用是：",opts:["计时功能","系统死机时自动复位重启","调试程序","电源管理"],ans:"B",
+explain:"看门狗=系统异常时自动恢复机制。程序正常运行时定期『喂狗』（重置计数器），死机后无法喂狗→超时→自动复位重启。"},
+
+// ===== 人工智能 =====
+{id:7,sec:"AI/大模型",type:"choice",text:"Transformer模型的核心机制是：",opts:["循环神经网络（RNN）","自注意力机制（Self-Attention）","卷积操作","决策树"],ans:"B",
+explain:"Transformer=自注意力机制，能并行处理序列中所有位置的关系。相比RNN无需逐步处理，训练效率更高。GPT/BERT都基于Transformer。"},
+{id:8,sec:"AI/大模型",type:"choice",text:"以下关于深度学习的说法正确的是：",opts:["深度学习不需要数据","深度学习可以自动提取特征，减少人工特征工程","深度学习只能处理图像","深度学习不需要GPU"],ans:"B",
+explain:"深度学习的核心优势：通过多层神经网络自动学习特征表示，减少人工特征工程。需要大量数据+GPU算力。"},
+{id:9,sec:"AI/大模型",type:"choice",text:"监督学习、无监督学习、强化学习的区别是：",opts:["计算速度不同","监督学习需要标注数据，无监督不需要标签，强化学习通过奖惩信号学习","监督学习只能分类","三者没有区别"],ans:"B",
+explain:"监督=有标签数据训练（分类/回归）。无监督=无标签数据找规律（聚类/降维）。强化=通过环境反馈的奖励/惩罚学习策略（下棋/自动驾驶）。"},
+
+// ===== 多媒体计算 =====
+{id:10,sec:"多媒体",type:"choice",text:"一幅1024x768的24位真彩色图像，未压缩的数据量为：",opts:["约0.75MB","约1.5MB","约2.25MB","约6MB"],ans:"C",
+explain:"数据量=宽x高x位深/8 = 1024x768x24/8 = 2359296字节 = 约2.25MB。24位真彩=每像素3字节(RGB各8位)。"},
+{id:11,sec:"多媒体",type:"choice",text:"CD音质的采样参数为44.1kHz/16bit/双声道，1分钟音频未压缩数据量约为：",opts:["约5MB","约10MB","约20MB","约40MB"],ans:"B",
+explain:"数据量=采样频率x量化位数x声道数x时间/8 = 44100x16x2x60/8 = 10584000字节 = 约10.1MB。"},
+
+// ===== 软件度量 =====
+{id:12,sec:"软件度量",type:"choice",text:"McCabe环形复杂度V(G)的计算公式为：",opts:["V(G) = 代码行数/100","V(G) = E - N + 2（E=边数，N=节点数）","V(G) = 判定节点数","V(G) = 模块数+1"],ans:"B",
+explain:"McCabe复杂度V(G) = E - N + 2。也可以数判定节点（if/while/for）：V(G) = 判定节点数 + 1。复杂度越高→测试越难→出错概率越大。建议V(G)<=10。"},
+{id:13,sec:"软件度量",type:"choice",text:"功能点分析（FPA）主要用于估算：",opts:["代码行数","软件规模（从用户视角）","开发人员数量","测试用例数"],ans:"B",
+explain:"FPA=Function Point Analysis，从用户视角估算软件规模，与实现技术无关。5个基本要素：外部输入、外部输出、外部查询、内部逻辑文件、外部接口文件。"},
+
+// ===== 操作系统：文件系统 =====
+{id:14,sec:"文件系统",type:"choice",text:"Linux文件系统中，inode（索引节点）存储的是：",opts:["文件名","文件内容","文件的元数据（权限、大小、数据块位置等）","目录结构"],ans:"C",
+explain:"inode=文件的元数据（权限、所有者、大小、时间戳、数据块指针）。文件名存在目录项中，不在inode里。删除文件=删除inode。"},
+{id:15,sec:"文件系统",type:"choice",text:"文件系统中，一级索引（每块1KB，指针4字节）最多寻址的数据块数为：",opts:["256","1024","128","512"],ans:"A",
+explain:"一个索引块1KB=1024字节，每个指针4字节，可存1024/4=256个指针。每个指针指向一个数据块，所以一级索引最多寻址256个数据块。"},
+
+// ===== 操作系统：作业调度 =====
+{id:16,sec:"作业调度",type:"choice",text:"时间片轮转（RR）调度中，时间片过大时退化为：",opts:["SJF调度","FCFS调度","优先级调度","多级反馈调度"],ans:"B",
+explain:"时间片轮转：时间片太短→频繁切换开销大；时间片太长→退化为先来先服务(FCFS)。一般取略大于一次典型交互所需时间。"},
+
+// ===== 网络深层 =====
+{id:17,sec:"网络",type:"choice",text:"HTTP状态码404表示：",opts:["服务器内部错误","请求被重定向","请求的资源未找到","请求成功"],ans:"C",
+explain:"200=成功。301/302=重定向。400=客户端请求错误。401=未认证。403=禁止访问。404=资源未找到。500=服务器内部错误。502=网关错误。503=服务不可用。"},
+{id:18,sec:"网络",type:"choice",text:"CDN（内容分发网络）的核心目的是：",opts:["加密传输","加速用户访问静态资源","域名解析","防火墙功能"],ans:"B",
+explain:"CDN=将内容缓存到离用户最近的边缘节点，减少延迟。用于加速静态资源（图片/视频/JS/CSS）访问。用户就近获取，不需要每次回源站。"},
+{id:19,sec:"网络",type:"choice",text:"IPv6地址长度为：",opts:["32位","64位","128位","256位"],ans:"C",
+explain:"IPv4=32位。IPv6=128位。IPv6地址用冒号分隔的8组十六进制数表示（如2001:0db8::1）。IPv6不需要NAT，地址空间巨大。"},
+
+// ===== 数据库深层 =====
+{id:20,sec:"数据库",type:"choice",text:"关系代数中，从关系中选取满足条件的元组（行），该操作称为：",opts:["投影（Projection）","选择（Selection）","连接（Join）","并（Union）"],ans:"B",
+explain:"选择=选行（水平方向，用sigma表示）。投影=选列（垂直方向，用pi表示）。连接=合并两个关系的行。"},
+{id:21,sec:"数据库",type:"choice",text:"关系代数中，消除重复列并合并两个关系，该操作称为：",opts:["选择","投影","自然连接（Natural Join）","笛卡尔积"],ans:"C",
+explain:"自然连接=在公共属性上做等值连接，并去除重复列。笛卡尔积=所有组合（不去重不匹配）。等值连接=指定列匹配但不自动去重。"},
+{id:22,sec:"数据库",type:"choice",text:"以下哪种NoSQL数据库最适合存储社交关系（好友关系、关注链）？",opts:["键值存储（Redis）","文档存储（MongoDB）","列族存储（HBase）","图数据库（Neo4j）"],ans:"D",
+explain:"图数据库=存储实体和关系，适合社交网络、知识图谱、推荐系统。键值=简单缓存。文档=JSON类数据。列族=海量数据写入。"},
+{id:23,sec:"数据库",type:"choice",text:"分布式数据库中，两阶段提交（2PC）协议用于保证：",opts:["性能最优","分布式事务的原子性","数据压缩","负载均衡"],ans:"B",
+explain:"2PC=Two-Phase Commit：阶段一（准备）→所有参与者投票；阶段二（提交/回滚）→协调者根据投票结果决定。保证所有节点要么都提交要么都回滚。"},
+
+// ===== 算法 =====
+{id:24,sec:"算法",type:"choice",text:"以下算法中，属于贪心算法的是：",opts:["归并排序","Dijkstra最短路径","快速排序","动态规划背包问题"],ans:"B",
+explain:"贪心=每步选局部最优。Dijkstra每步选最近节点=贪心。归并/快排=分治。0-1背包=动态规划（贪心得不到最优解）。Prim/Kruskal最小生成树也是贪心。"},
+{id:25,sec:"算法",type:"choice",text:"二分查找的时间复杂度为：",opts:["O(n)","O(n log n)","O(log n)","O(1)"],ans:"C",
+explain:"二分查找每次排除一半，n个元素最多log2(n)次比较。前提：数据必须有序（已排序数组）。"},
+{id:26,sec:"算法",type:"choice",text:"哈夫曼编码的核心思想是：",opts:["等长编码","出现频率高的字符用短编码，频率低的用长编码","所有字符用相同位数","随机编码"],ans:"B",
+explain:"哈夫曼编码=最优前缀编码。频率高→短码，频率低→长码。构造方法：每次取频率最小的两个节点合并。总编码长度最短。"},
+
+// ===== 知识产权细节 =====
+{id:27,sec:"知识产权",type:"choice",text:"以下哪种情况属于职务作品，著作权归单位所有？",opts:["下班后用自己电脑写的小说","利用单位物质条件、为完成工作任务开发的软件","公开发表的论文","参加编程竞赛的作品"],ans:"B",
+explain:"职务作品=利用法人/组织的物质技术条件创作、或为完成工作任务创作。著作权归单位，作者享有署名权。"},
+{id:28,sec:"知识产权",type:"choice",text:"GPL协议的核心要求是：",opts:["可以闭源使用","修改后的代码必须同样以GPL开源","不需要署名","只能用于个人"],ans:"B",
+explain:"GPL=强copyleft协议，修改和衍生的代码必须同样开源。MIT/BSD=宽松协议，可闭源使用。Apache=宽松但要求保留版权声明。"},
+{id:29,sec:"知识产权",type:"choice",text:"软件著作权自何时起产生？",opts:["登记之日起","发表之日起","开发完成之日起","申请批准之日起"],ans:"C",
+explain:"软件著作权=开发完成之日自动产生（不需要登记）。登记只是取得初步证据，方便维权。专利才需要申请批准。"},
+
+// ===== 系统工程 =====
+{id:30,sec:"系统工程",type:"choice",text:"QFD（质量功能展开）的核心工具是：",opts:["甘特图","质量屋（House of Quality）","PERT图","鱼骨图"],ans:"B",
+explain:"QFD=Quality Function Deployment，将用户需求转化为技术规格。核心工具=质量屋，左侧用户需求，上方技术特性，中间关系矩阵。"},
+
+// ===== 开发方法 =====
+{id:31,sec:"开发方法",type:"choice",text:"RUP（统一软件开发过程）的四个阶段依次是：",opts:["需求→设计→编码→测试","初始→细化→构造→移交","计划→执行→监控→收尾","分析→设计→实现→测试"],ans:"B",
+explain:"RUP四阶段：初始（确定范围）→细化（架构设计）→构造（编码测试）→移交（部署交付）。RUP是用例驱动、以架构为中心、迭代增量的开发过程。"},
+{id:32,sec:"开发方法",type:"choice",text:"净室软件工程（Cleanroom）的核心思想是：",opts:["快速迭代","通过数学验证而非测试来保证质量","面向对象设计","敏捷开发"],ans:"B",
+explain:"净室工程=不依赖测试，而是通过形式化规约和数学证明来保证正确性。开发者在『干净的环境』中工作，强调零缺陷。"},
+
+// ===== 软件维护 =====
+{id:33,sec:"软件维护",type:"choice",text:"以下哪种维护占比最高（约占总维护工作的60-80%）？",opts:["改正性维护","适应性维护","完善性维护","预防性维护"],ans:"C",
+explain:"完善性维护=为增强功能、改善性能而修改（占比最高60-80%）。改正性=修bug（17-21%）。适应性=适应环境变化（18-25%）。预防性=提高可维护性（最少）。"},
+
+// ===== 数据结构 =====
+{id:34,sec:"数据结构",type:"choice",text:"深度优先搜索（DFS）使用的数据结构是：",opts:["队列","栈","堆","链表"],ans:"B",
+explain:"DFS=栈（后进先出），递归本质也是栈。BFS=队列（先进先出）。堆=优先队列。"},
+{id:35,sec:"数据结构",type:"choice",text:"哈希表解决冲突的常见方法不包括：",opts:["开放定址法","链地址法","再哈希法","归并法"],ans:"D",
+explain:"哈希冲突解决：开放定址法（线性/二次探测）、链地址法（拉链法）、再哈希法（双哈希函数）。归并法是排序算法，与哈希无关。"},
+
+// ===== 性能评价 =====
+{id:36,sec:"性能评价",type:"choice",text:"计算机性能评价中，MIPS表示：",opts:["每秒百万条浮点运算","每秒执行百万条指令","内存带宽","磁盘转速"],ans:"B",
+explain:"MIPS=Million Instructions Per Second（每秒百万条指令）。MFLOPS=每秒百万次浮点运算。CPI=执行一条指令所需的时钟周期数。"},
+
+// ===== 英语题 =====
+{id:37,sec:"英语",type:"choice",text:"In software engineering, _____ refers to the process of combining separate modules and testing them as a group.",opts:["unit testing","integration testing","regression testing","stress testing"],ans:"B",
+explain:"Integration testing=集成测试，将已测试的模块组合在一起进行测试。Unit=单元测试（单个模块）。Regression=回归测试。Stress=压力测试。"},
+{id:38,sec:"英语",type:"choice",text:"The _____ principle in object-oriented design states that a class should have only one reason to change.",opts:["Open-Closed","Single Responsibility","Liskov Substitution","Dependency Inversion"],ans:"B",
+explain:"Single Responsibility Principle(SRP)=单一职责原则，一个类只有一个变化原因。OCP=对扩展开放对修改关闭。LSP=里氏替换。DIP=依赖倒置。"},
+{id:39,sec:"英语",type:"choice",text:"A _____ is a design pattern that provides a simplified interface to a complex subsystem.",opts:["Proxy","Facade","Adapter","Bridge"],ans:"B",
+explain:"Facade(外观模式)=为复杂子系统提供简化接口。Proxy=控制访问。Adapter=接口转换。Bridge=抽象与实现分离。"},
+
+// ===== 综合 =====
+{id:40,sec:"综合",type:"choice",text:"以下关于软件重构（Refactoring）的说法正确的是：",opts:["重构会改变软件的外部行为","重构是在不改变外部行为的前提下改善内部结构","重构就是重写代码","重构只适用于面向对象程序"],ans:"B",
+explain:"重构=在不改变软件外部行为的前提下，改善代码内部结构（可读性、可维护性）。不是重写，不是改功能，任何编程范式都适用。"}
+];
+
+let userAnswers={};
+let currentQ=1;
+let submitted=false;
+const STORAGE_KEY='arch_supplement2_v1';
+const TOTAL=allQuestions.length;
+
+function init(){loadProgress();renderAnswerCard();renderQuestion(currentQ);updateProgress();startTimer();}
+function loadProgress(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){const d=JSON.parse(s);userAnswers=d.answers||{};currentQ=d.currentQ||1;}}catch(e){}}
+function saveProgress(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({answers:userAnswers,currentQ:currentQ}));}catch(e){}}
+
+function renderAnswerCard(){
+  const c=document.getElementById('answer-card');
+  let h='<div class="ac-grid">';
+  for(let i=1;i<=TOTAL;i++){
+    const cls=(i===currentQ?' current':'')+(userAnswers[i]?' done':'');
+    h+=`<button class="ac-btn${cls}" id="acb-${i}" onclick="goToQ(${i})">${i}</button>`;
+  }
+  h+='</div>';
+  c.innerHTML=h;
+}
+
+function updateAnswerCard(){
+  document.querySelectorAll('.ac-btn').forEach(b=>{
+    const id=parseInt(b.textContent);
+    b.classList.remove('current','done');
+    if(id===currentQ) b.classList.add('current');
+    if(userAnswers[id]) b.classList.add('done');
+  });
+}
+
+function renderQuestion(qId){
+  const q=allQuestions.find(x=>x.id===qId);
+  if(!q) return;
+  const letters=['A','B','C','D'];
+  let h=`<div class="q-card">`;
+  h+=`<div class="q-title"><span class="section-tag">${q.sec}</span>第${qId}题（共${TOTAL}题）${q.type==='fill'?' · 填空题':''}</div>`;
+  h+=`<div class="q-text">${q.text.replace(/______/g,'<span class="fill-blank">　　　　</span>')}</div>`;
+  if(q.type==='choice'){
+    h+=`<div class="q-options">`;
+    q.opts.forEach((o,i)=>{
+      const s=userAnswers[qId]===letters[i]?' selected':'';
+      h+=`<div class="q-opt${s}" onclick="selectOption(${qId},'${letters[i]}')"><div class="opt-radio"></div><div class="opt-content">${letters[i]}. ${o}</div></div>`;
+    });
+    h+=`</div>`;
+  } else {
+    const val=userAnswers[qId]||'';
+    h+=`<div class="fill-input-wrap"><input type="text" id="fill-input" value="${val}" placeholder="请输入答案" oninput="fillAnswer(${qId})"></div>`;
+  }
+  h+=`</div>`;
+  document.getElementById('q-display').innerHTML=h;
+  document.getElementById('prev-btn').disabled=(qId<=1);
+  document.getElementById('next-btn').disabled=(qId>=TOTAL);
+  document.getElementById('next-btn').textContent=qId>=TOTAL?'已是最后一题':'下一题';
+  updateAnswerCard();
+}
+
+function selectOption(qId,letter){
+  if(submitted) return;
+  userAnswers[qId]=letter;
+  saveProgress();
+  updateProgress();
+  const c=document.querySelector('.q-card');
+  c.querySelectorAll('.q-opt').forEach(o=>o.classList.remove('selected'));
+  c.querySelectorAll('.q-opt').forEach(o=>{
+    if(o.querySelector('.opt-content').textContent.trim().startsWith(letter+'.')) o.classList.add('selected');
+  });
+  updateAnswerCard();
+}
+
+function fillAnswer(qId){
+  if(submitted) return;
+  const el=document.getElementById('fill-input');
+  userAnswers[qId]=el?el.value.trim():'';
+  saveProgress();
+  updateProgress();
+  updateAnswerCard();
+}
+
+function goToQ(id){currentQ=id;saveProgress();renderQuestion(id);document.getElementById('right-panel').scrollTop=0;}
+function prevQ(){if(currentQ>1) goToQ(currentQ-1);}
+function nextQ(){if(currentQ<TOTAL) goToQ(currentQ+1);}
+function updateProgress(){document.getElementById('stats').textContent=`已答 ${Object.keys(userAnswers).filter(k=>userAnswers[k]).length}/${TOTAL}`;}
+
+function confirmSubmit(){
+  const u=TOTAL-Object.keys(userAnswers).filter(k=>userAnswers[k]).length;
+  let m='确定要交卷吗？';
+  if(u>0) m+=`还有 ${u} 题未作答。`;
+  if(confirm(m)) submitExam();
+}
+
+function submitExam(){
+  if(submitted) return;
+  submitted=true;
+  clearInterval(timerInterval);
+  let correct=0,wrongList=[];
+  allQuestions.forEach(q=>{
+    const ua=userAnswers[q.id]||'';
+    let isCorrect=(ua===q.ans);
+    if(isCorrect) correct++;
+    else wrongList.push(q);
+  });
+  const pct=Math.round(correct/TOTAL*100);
+  const pass=pct>=80?'恭喜过关！':'未达标，需要继续复习';
+  const timeStr=document.getElementById('timer').textContent;
+  let h=`<div class="score-box"><div class="score">${correct}/${TOTAL}</div><div class="label">正确率 ${pct}% · 用时${timeStr} · ${pass}</div></div>`;
+  if(wrongList.length>0){
+    h+=`<div class="review-card" style="border-left-color:#3a7bd5"><div class="r-header"><span class="r-num">错题解析（${wrongList.length}题）</span></div></div>`;
+    wrongList.forEach(q=>{
+      const ua=userAnswers[q.id]||'未作答';
+      const letters=['A','B','C','D'];
+      let correctText, userText;
+      if(q.type==='choice'){
+        const ansIdx=letters.indexOf(q.ans);
+        correctText=q.ans+'. '+q.opts[ansIdx];
+        const uaIdx=letters.indexOf(ua);
+        userText=uaIdx>=0?ua+'. '+q.opts[uaIdx]:ua;
+      } else {
+        correctText=q.ans;
+        userText=ua;
+      }
+      h+=`<div class="review-card"><div class="r-header"><span class="r-num">第${q.id}题</span><span style="color:#999;font-size:12px">${q.sec}</span></div><div class="r-text">${q.text}</div><div class="r-your">你的答案：${userText}</div><div class="r-correct">正确答案：${correctText}</div><div class="r-analysis">${q.explain}</div></div>`;
+    });
+  } else {
+    h+='<p style="text-align:center;color:#4caf50;font-size:1.1em;padding:20px">全部正确！</p>';
+  }
+  document.getElementById('mainWrap').style.display='none';
+  document.querySelector('.top-bar').style.display='none';
+  document.getElementById('report-inner').innerHTML=h;
+  document.getElementById('report-wrap').style.display='block';
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+let startTime=Date.now();
+let timerInterval=setInterval(()=>{
+  if(submitted) return;
+  const s=Math.floor((Date.now()-startTime)/1000);
+  const m=Math.floor(s/60);
+  const ss=s%60;
+  document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');
+},1000);
+
+document.addEventListener('keydown',function(e){
+  if(submitted) return;
+  if(document.activeElement&&document.activeElement.tagName==='INPUT') return;
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevQ();}
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextQ();}
+  const q=allQuestions.find(x=>x.id===currentQ);
+  if(q&&q.type==='choice'){
+    const letters=['A','B','C','D'];
+    const idx=letters.indexOf(e.key.toUpperCase());
+    if(idx>=0&&idx<q.opts.length) selectOption(currentQ,letters[idx]);
+  }
+});
+
+init();
+</script>
+</body>
+</html>

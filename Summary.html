@@ -372,7 +372,9 @@
         <a href="#" data-s="s20">设计模式</a>
         <a href="#" data-s="s21">排序算法</a>
         <a href="#" data-s="s23">4+1视图</a>
-        <a href="#" data-s="s24">法律法规</a>
+        <a href="#" data-s="s24">开发模型</a>
+        <a href="#" data-s="s25">Redis缓存</a>
+        <a href="#" data-s="s26">法律法规</a>
         <span class="nav-sep">|</span>
         <a href="#" data-s="s22" class="nav-essay">论文模板</a>
       </div>
@@ -384,7 +386,7 @@
         <div class="card">
           <h2><span class="icon">📐</span>ATAM 架构评估核心概念</h2>
 
-          <h3>六个关键概念（必背）</h3>
+          <h3>四个关键概念（必背）</h3>
           <table>
             <tr>
               <th>概念</th>
@@ -541,9 +543,6 @@
             </div>
           </div>
 
-          <div class="tips">
-            秒杀口诀：<b>数调独虚仓</b> — 数据流、调用返回、独立构件、虚拟机、仓库。解释器和黑板是案例填空高频考点，组件名称必须精确记忆。
-          </div>
         </div>
       </div>
 
@@ -623,9 +622,6 @@
       <div class="sec" id="s4">
         <div class="card">
           <h2><span class="icon">📊</span>UML 图分类</h2>
-
-          <h3>13种图速记</h3>
-          <div class="mnemonic">行为图口诀："用活状序"</div>
 
           <table>
             <tr>
@@ -740,8 +736,6 @@
               <td>RS-232、RJ-45、光纤、双绞线、中继器、集线器</td>
             </tr>
           </table>
-          <div class="mnemonic">七层从下到上：物 数 网 传 会 表 应（物理→数据链路→网络→传输→会话→表示→应用）</div>
-
           <h3>OSI vs TCP/IP 对照</h3>
           <table>
             <tr>
@@ -992,8 +986,6 @@
               <td>面向用户的<b>DApp</b>（去中心化应用），如数字货币、供应链溯源、数字身份、NFT、DeFi</td>
             </tr>
           </table>
-          <div class="mnemonic">六层速记：数 网 共 激 合 应（数据层→网络层→共识层→激励层→合约层→应用层）</div>
-
           <h3>智能合约详解（案例300字答题模板）</h3>
           <div class="key">
             智能合约是部署在区块链上的<b>可自动执行的程序代码</b>，由以太坊首次提出并实现。它以<b>"如果-那么"</b>的逻辑形式定义交易规则，当预设条件被满足时，合约<b>自动触发执行</b>，无需第三方中介干预。<br /><br />
@@ -1644,7 +1636,6 @@
             <tr><td><b>顺序内聚</b></td><td>一个功能的输出是另一个的输入</td><td>流水线：A的产出给B</td></tr>
             <tr><td><b>功能内聚</b></td><td>所有元素共同完成一个单一功能</td><td>只做一件事且做好</td></tr>
           </table>
-          <div class="mnemonic">内聚从低到高：偶逻时过通顺功（偶然→逻辑→时间→过程→通信→顺序→功能）</div>
 
           <h3>七种耦合（从低到高，非直接耦合最优）</h3>
           <table>
@@ -1657,7 +1648,6 @@
             <tr><td><b>公共耦合</b></td><td>共享<b>全局数据结构/公共变量</b></td><td>共用一块白板</td></tr>
             <tr><td><b>内容耦合</b></td><td>一个模块直接访问另一个模块的<b>内部数据/代码</b></td><td>直接翻别人的抽屉</td></tr>
           </table>
-          <div class="mnemonic">耦合从低到高：无数标控外公内（非直接→数据→标记→控制→外部→公共→内容）</div>
 
           <div class="trap">考试陷阱："传递整个数据结构"是<b>标记耦合</b>不是数据耦合。数据耦合只传简单参数（int、string）。传递控制标志（flag/开关）是<b>控制耦合</b>。</div>
         </div>
@@ -1716,8 +1706,6 @@
             <tr><td><b>行为型</b></td><td>对象之间怎么交互</td><td>责任链、命令、解释器、迭代器、中介者、备忘录、观察者、状态、策略、模板方法、访问者</td></tr>
           </table>
 
-          <h3>速记口诀</h3>
-          <div class="mnemonic">创建：工抽单建原 &nbsp;|&nbsp; 结构：适桥组装外享代 &nbsp;|&nbsp; 行为：责命解迭中备观状策模访</div>
         </div>
 
         <div class="card">
@@ -1901,7 +1889,6 @@
             <tr><td><b>D</b></td><td>依赖倒置原则</td><td>高层不依赖低层，都依赖抽象</td></tr>
           </table>
 
-          <div class="mnemonic">口诀：单开里接依（单开里接衣）</div>
           <div class="trap">依赖倒置 ≠ 依赖注入。依赖倒置是原则（都依赖抽象），依赖注入是实现方式（由外部注入依赖）。</div>
         </div>
 
@@ -1951,7 +1938,6 @@
             <tr><td><b>基数排序</b></td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(n+r)</td><td>✅</td></tr>
           </table>
           </div>
-          <div class="mnemonic">稳定的：冒插归基（冒泡、插入、归并、基数）</div>
 
           <h3>稳定性辨析（高频考点）</h3>
           <div class="trap">
@@ -2299,8 +2285,141 @@
         </div>
       </div>
 
-      <!-- ============ S24: 法律法规 ============ -->
+      <!-- ============ S24: 开发模型 ============ -->
       <div class="sec" id="s24">
+        <div class="card">
+          <h2><span class="icon">🔄</span>系统开发方法对比</h2>
+          <h3>六大开发模型</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:4em"><col style="min-width:10em"><col style="min-width:8em"><col></colgroup>
+            <tr><th>模型</th><th>核心特点</th><th>适用场景</th><th>关键词</th></tr>
+            <tr><td><b>瀑布模型</b></td><td>线性顺序、文档驱动、阶段间有里程碑</td><td>需求明确、变更少</td><td>文档驱动、阶段固化</td></tr>
+            <tr><td><b>原型模型</b></td><td>快速构建初步版本确认需求</td><td>需求不明确</td><td>需求模糊、快速验证</td></tr>
+            <tr><td><b>螺旋模型</b></td><td>风险驱动、迭代、每圈含四阶段（目标/风险/开发/评审）</td><td>大型复杂、高风险</td><td>风险分析、迭代</td></tr>
+            <tr><td><b>增量模型</b></td><td>分批交付、每次交付一个可用增量</td><td>需要快速交付部分功能</td><td>分批交付、逐步完善</td></tr>
+            <tr><td><b>喷泉模型</b></td><td>面向对象、迭代无间隙（各阶段可交叉）</td><td>OO开发项目</td><td>无间隙、迭代、面向对象</td></tr>
+            <tr><td><b>敏捷方法</b></td><td>拥抱变化、人本主义、短迭代、持续反馈</td><td>需求变化频繁</td><td>Scrum、迭代、拥抱变化</td></tr>
+          </table>
+          </div>
+          <div class="tips">考试常考"给场景选模型"——看需求是否明确、项目规模、风险高低。</div>
+          <h3>RUP四阶段</h3>
+          <div class="formula"><b>初始</b>（确定范围）→ <b>细化</b>（架构设计）→ <b>构造</b>（编码测试）→ <b>移交</b>（部署交付）</div>
+          <div class="trap">RUP是<b>用例驱动、以架构为中心、迭代增量</b>的开发过程。不要和瀑布混淆。</div>
+          <h3>需求工程方法速查</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:8em"><col></colgroup>
+            <tr><th>方法</th><th>说明</th></tr>
+            <tr><td><b>访谈</b></td><td>面对面问用户（考试标准术语，不是"口头问答"）</td></tr>
+            <tr><td><b>原型法</b></td><td>快速做初步版本确认需求（不是"快速模型"）</td></tr>
+            <tr><td><b>问卷调查</b></td><td>发给大量用户填</td></tr>
+            <tr><td><b>头脑风暴</b></td><td>大家坐一起想</td></tr>
+            <tr><td><b>观察法</b></td><td>跟着用户上班看（常考）</td></tr>
+            <tr><td><b>文档分析</b></td><td>读现有系统文档</td></tr>
+          </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S25: Redis缓存 ============ -->
+      <div class="sec" id="s25">
+        <div class="card">
+          <h2><span class="icon">⚡</span>Redis 缓存三大问题</h2>
+
+          <h3>雪崩 / 击穿 / 穿透 速判</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:4em"><col style="min-width:14em"><col style="min-width:14em"></colgroup>
+            <tr><th>问题</th><th>是什么</th><th>解决方案</th></tr>
+            <tr>
+              <td><b>雪崩</b></td>
+              <td>大量缓存<b>同时过期</b>，或Redis宕机，瞬间所有请求打到数据库</td>
+              <td>① 过期时间加随机偏移（避免同时失效）<br/>② 热点数据永不过期<br/>③ Redis集群（高可用）<br/>④ 限流+降级</td>
+            </tr>
+            <tr>
+              <td><b>击穿</b></td>
+              <td>某个<b>热点key过期</b>的瞬间，大量并发请求同时打到数据库</td>
+              <td>① 互斥锁（只放一个请求去查DB）<br/>② 热点key永不过期<br/>③ 提前异步刷新</td>
+            </tr>
+            <tr>
+              <td><b>穿透</b></td>
+              <td>查询<b>根本不存在</b>的数据（缓存和DB都没有），每次请求都穿透到数据库</td>
+              <td>① 布隆过滤器（前置拦截）<br/>② 缓存空值（key→null，设短TTL）<br/>③ 参数校验（拦截非法请求）</td>
+            </tr>
+          </table>
+          </div>
+          <div class="trap">
+            <b>记忆口诀</b>：<br/>
+            雪崩 = <b>大面积同时过期</b>（像雪崩一样大面积坍塌）<br/>
+            击穿 = <b>一个热点key被突破</b>（像子弹击穿靶心）<br/>
+            穿透 = <b>查不存在的数据，缓存形同虚设</b>（直接穿透到DB）<br/><br/>
+            <b>三者共同危害</b>：数据库承受不住瞬间高并发→宕机→级联故障
+          </div>
+
+          <h3>Redis 五大数据结构</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:5em"><col style="min-width:10em"><col></colgroup>
+            <tr><th>类型</th><th>适用场景</th><th>典型操作</th></tr>
+            <tr><td>String</td><td>缓存、计数器、分布式锁</td><td>SET/GET, INCR, SETNX</td></tr>
+            <tr><td>Hash</td><td>对象存储（用户信息）</td><td>HSET/HGET, HMGET</td></tr>
+            <tr><td>List</td><td>消息队列、最新列表</td><td>LPUSH/RPOP, LRANGE</td></tr>
+            <tr><td>Set</td><td>去重、交集/并集运算</td><td>SADD, SINTER, SUNION</td></tr>
+            <tr><td>ZSet</td><td>排行榜、带权重的队列</td><td>ZADD, ZRANGEBYSCORE</td></tr>
+          </table>
+          </div>
+          <div class="tips"><b>SETNX</b>（Set if Not eXists）是实现分布式锁的核心命令。搭配过期时间使用：SETNX + EXPIRE。</div>
+
+          <h3>Redis 淘汰策略（内存满时）</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:10em"><col></colgroup>
+            <tr><th>策略</th><th>说明</th></tr>
+            <tr><td>volatile-lru</td><td>从<b>已设过期时间</b>的key中淘汰最久未使用的</td></tr>
+            <tr><td>allkeys-lru</td><td>从<b>所有key</b>中淘汰最久未使用的（最常用）</td></tr>
+            <tr><td>volatile-ttl</td><td>从已设过期时间的key中淘汰<b>剩余时间最短</b>的</td></tr>
+            <tr><td>noeviction</td><td>不淘汰，内存满直接报错（默认）</td></tr>
+          </table>
+          </div>
+
+          <h3>缓存优化方案</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <tr><th>问题</th><th>优化措施</th><th>具体技术</th></tr>
+            <tr>
+              <td><b>雪崩</b></td>
+              <td>TTL随机偏移 + 高可用集群</td>
+              <td>过期时间 = 基础TTL + random(0,300s)；Redis Sentinel/Cluster主从切换；本地缓存Caffeine兜底</td>
+            </tr>
+            <tr>
+              <td><b>击穿</b></td>
+              <td>互斥锁 + 逻辑过期</td>
+              <td>SETNX获取锁→查DB→写缓存→释放锁；或value中存逻辑过期时间，过期后异步更新</td>
+            </tr>
+            <tr>
+              <td><b>穿透</b></td>
+              <td>布隆过滤器 + 缓存空值</td>
+              <td>BF用多个哈希函数判断key是否可能存在；查不到的key缓存null并设短TTL（60s）</td>
+            </tr>
+          </table>
+          </div>
+
+          <h3>Redis 通用优化</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <tr><th>优化方向</th><th>方案</th><th>说明</th></tr>
+            <tr><td>读写分离</td><td>主写从读</td><td>Master处理写，多个Slave处理读，减轻单节点压力</td></tr>
+            <tr><td>持久化选择</td><td>RDB/AOF按场景选</td><td>RDB快但可能丢数据；AOF安全但慢；混合持久化兼顾两者</td></tr>
+            <tr><td>大key拆分</td><td>分片/压缩</td><td>单个value超过10KB建议拆分，避免阻塞单线程；用<code>unlink</code>异步删除</td></tr>
+            <tr><td>连接池</td><td>复用连接</td><td>避免频繁TCP握手，设maxTotal/maxIdle/minIdle参数</td></tr>
+          </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S26: 法律法规 ============ -->
+      <div class="sec" id="s26">
         <div class="card">
           <h2><span class="icon">⚖️</span>法律法规与知识产权</h2>
 
