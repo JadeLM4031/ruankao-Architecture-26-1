@@ -82,8 +82,8 @@
         font-weight: 600;
       }
       .content {
-        padding: 12px 14px 60px;
-        margin-top: 8px;
+        padding: 6px 7px 30px;
+        margin-top: 4px;
       }
       .sec {
         display: none;
@@ -350,30 +350,30 @@
       </div>
 
       <div class="nav" id="nav">
-        <a href="#" class="active" data-s="s1">ATAM</a>
-        <a href="#" data-s="s2">架构风格</a>
+        <a href="#" class="active" data-s="s2">架构风格</a>
+        <a href="#" data-s="s1">ATAM</a>
         <a href="#" data-s="s3">质量属性</a>
-        <a href="#" data-s="s4">UML</a>
-        <a href="#" data-s="s5">TCP/IP</a>
-        <a href="#" data-s="s6">区块链</a>
-        <a href="#" data-s="s7">LRU/FIFO</a>
-        <a href="#" data-s="s8">PV操作</a>
-        <a href="#" data-s="s9">流水线</a>
-        <a href="#" data-s="s10">Cache/死锁</a>
-        <a href="#" data-s="s11">子网划分</a>
-        <a href="#" data-s="s12">挣值分析</a>
-        <a href="#" data-s="s13">关键路径</a>
-        <a href="#" data-s="s14">等级保护</a>
-        <a href="#" data-s="s15">云原生</a>
-        <a href="#" data-s="s16">加密/签名</a>
+        <a href="#" data-s="s23">4+1视图</a>
         <a href="#" data-s="s17">案例话术</a>
+        <a href="#" data-s="s24">开发模型</a>
         <a href="#" data-s="s18">内聚/耦合</a>
         <a href="#" data-s="s19">覆盖测试</a>
         <a href="#" data-s="s20">设计模式</a>
-        <a href="#" data-s="s21">排序算法</a>
-        <a href="#" data-s="s23">4+1视图</a>
-        <a href="#" data-s="s24">开发模型</a>
+        <a href="#" data-s="s4">UML</a>
+        <a href="#" data-s="s9">流水线</a>
+        <a href="#" data-s="s7">LRU/FIFO</a>
+        <a href="#" data-s="s10">Cache/死锁</a>
+        <a href="#" data-s="s8">PV操作</a>
+        <a href="#" data-s="s5">TCP/IP</a>
+        <a href="#" data-s="s11">子网划分</a>
         <a href="#" data-s="s25">Redis缓存</a>
+        <a href="#" data-s="s15">云原生</a>
+        <a href="#" data-s="s6">区块链</a>
+        <a href="#" data-s="s16">加密/签名</a>
+        <a href="#" data-s="s14">等级保护</a>
+        <a href="#" data-s="s12">挣值分析</a>
+        <a href="#" data-s="s13">关键路径</a>
+        <a href="#" data-s="s21">排序算法</a>
         <a href="#" data-s="s26">法律法规</a>
         <span class="nav-sep">|</span>
         <a href="#" data-s="s22" class="nav-essay">论文模板</a>
@@ -381,66 +381,8 @@
     </div>
 
     <div class="content" id="content">
-      <!-- ============ S1: ATAM ============ -->
-      <div class="sec active" id="s1">
-        <div class="card">
-          <h2><span class="icon">📐</span>ATAM 架构评估核心概念</h2>
-
-          <h3>四个关键概念（必背）</h3>
-          <table>
-            <tr>
-              <th>概念</th>
-              <th>标准定义</th>
-              <th>判断关键词</th>
-            </tr>
-            <tr>
-              <td><b>敏感点</b></td>
-              <td>一个架构决策影响<b>一个</b>质量属性</td>
-              <td>只涉及1个质量属性，影响显著</td>
-            </tr>
-            <tr>
-              <td><b>权衡点</b></td>
-              <td>一个架构决策影响<b>多个</b>质量属性（此升彼降）</td>
-              <td>涉及≥2个质量属性</td>
-            </tr>
-            <tr>
-              <td><b>风险</b></td>
-              <td>架构决策存在<b>潜在负面结果</b></td>
-              <td>"团队能力不足""经验欠缺""可能成为瓶颈"</td>
-            </tr>
-            <tr>
-              <td><b>非风险</b></td>
-              <td>经过分析，架构决策<b>没有问题</b></td>
-              <td>"有效满足需求""没有负面影响"</td>
-            </tr>
-          </table>
-
-          <div class="trap">
-            敏感点 vs 风险陷阱："主库写入可能成为瓶颈"看似风险，但它分析的是对性能这<b>一个</b>属性的影响 →
-            是<b>敏感点</b>。"团队能力不足"这种组织层面不确定因素才是<b>风险</b>。
-          </div>
-
-          <h3>ATAM评估九步法</h3>
-          <ol>
-            <li>介绍ATAM方法</li>
-            <li>介绍业务驱动因素</li>
-            <li>介绍架构方案</li>
-            <li>识别架构方法</li>
-            <li>生成质量属性效用树 <span class="tag">重点</span></li>
-            <li>分析架构方法</li>
-            <li>头脑风暴场景并排序</li>
-            <li>再次分析架构方法</li>
-            <li>报告结果</li>
-          </ol>
-
-          <h3>效用树四级结构</h3>
-          <div class="formula">根节点 → 质量属性 → 质量属性细化 → 场景</div>
-          <p>每个场景带<b>优先级</b>（高/中/低），高优先级场景用于驱动后续分析。</p>
-        </div>
-      </div>
-
       <!-- ============ S2: 架构风格 ============ -->
-      <div class="sec" id="s2">
+      <div class="sec active" id="s2">
         <div class="card">
           <h2><span class="icon">🏗️</span>五大架构风格速查</h2>
 
@@ -546,6 +488,64 @@
         </div>
       </div>
 
+      <!-- ============ S1: ATAM ============ -->
+      <div class="sec" id="s1">
+        <div class="card">
+          <h2><span class="icon">📐</span>ATAM 架构评估核心概念</h2>
+
+          <h3>四个关键概念（必背）</h3>
+          <table>
+            <tr>
+              <th>概念</th>
+              <th>标准定义</th>
+              <th>判断关键词</th>
+            </tr>
+            <tr>
+              <td><b>敏感点</b></td>
+              <td>一个架构决策影响<b>一个</b>质量属性</td>
+              <td>只涉及1个质量属性，影响显著</td>
+            </tr>
+            <tr>
+              <td><b>权衡点</b></td>
+              <td>一个架构决策影响<b>多个</b>质量属性（此升彼降）</td>
+              <td>涉及≥2个质量属性</td>
+            </tr>
+            <tr>
+              <td><b>风险</b></td>
+              <td>架构决策存在<b>潜在负面结果</b></td>
+              <td>"团队能力不足""经验欠缺""可能成为瓶颈"</td>
+            </tr>
+            <tr>
+              <td><b>非风险</b></td>
+              <td>经过分析，架构决策<b>没有问题</b></td>
+              <td>"有效满足需求""没有负面影响"</td>
+            </tr>
+          </table>
+
+          <div class="trap">
+            敏感点 vs 风险陷阱："主库写入可能成为瓶颈"看似风险，但它分析的是对性能这<b>一个</b>属性的影响 →
+            是<b>敏感点</b>。"团队能力不足"这种组织层面不确定因素才是<b>风险</b>。
+          </div>
+
+          <h3>ATAM评估九步法</h3>
+          <ol>
+            <li>介绍ATAM方法</li>
+            <li>介绍业务驱动因素</li>
+            <li>介绍架构方案</li>
+            <li>识别架构方法</li>
+            <li>生成质量属性效用树 <span class="tag">重点</span></li>
+            <li>分析架构方法</li>
+            <li>头脑风暴场景并排序</li>
+            <li>再次分析架构方法</li>
+            <li>报告结果</li>
+          </ol>
+
+          <h3>效用树四级结构</h3>
+          <div class="formula">根节点 → 质量属性 → 质量属性细化 → 场景</div>
+          <p>每个场景带<b>优先级</b>（高/中/低），高优先级场景用于驱动后续分析。</p>
+        </div>
+      </div>
+
       <!-- ============ S3: 质量属性 ============ -->
       <div class="sec" id="s3">
         <div class="card">
@@ -618,6 +618,445 @@
         </div>
       </div>
 
+      <!-- ============ S23: 4+1视图 ============ -->
+      <div class="sec" id="s23">
+        <div class="card">
+          <h2><span class="icon">🔭</span>Kruchten 4+1 视图模型</h2>
+
+          <h3>五个视图总览</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:7em"><col style="min-width:12em"><col style="min-width:10em"><col style="min-width:8em"></colgroup>
+            <tr><th>视图</th><th>关注点</th><th>对应UML图</th><th>使用者</th></tr>
+            <tr>
+              <td><b>逻辑视图</b></td>
+              <td>功能需求、领域模型、"做什么"</td>
+              <td>类图、对象图、状态图</td>
+              <td>最终用户</td>
+            </tr>
+            <tr>
+              <td><b>进程视图</b></td>
+              <td>并发、同步、运行时、"怎么运行"</td>
+              <td>活动图、序列图、通信图</td>
+              <td>系统集成者</td>
+            </tr>
+            <tr>
+              <td><b>开发视图</b></td>
+              <td>模块划分、代码结构、"怎么组织代码"</td>
+              <td>包图、组件图</td>
+              <td>程序员</td>
+            </tr>
+            <tr>
+              <td><b>物理视图</b></td>
+              <td>软件→硬件映射、"怎么部署"</td>
+              <td>部署图</td>
+              <td>系统工程师</td>
+            </tr>
+            <tr>
+              <td><b>场景视图(+1)</b></td>
+              <td>用例驱动，串联验证其他四个</td>
+              <td>用例图</td>
+              <td>所有利益相关者</td>
+            </tr>
+          </table>
+          </div>
+
+          <div class="mnemonic">速记：逻做什、进怎么跑、开怎么码、物怎么装、场串起来</div>
+
+          <h3>静态 vs 动态</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">静态结构</div>
+              逻辑视图、开发视图<br>描述系统的<b>结构组成</b>
+            </div>
+            <div class="b">
+              <div class="title">动态结构</div>
+              进程视图、物理视图<br>描述系统的<b>运行与部署</b>
+            </div>
+          </div>
+
+          <div class="trap">"物理视图"也叫"部署视图"，是同一概念的不同译法。"开发视图"也叫"实现视图"。</div>
+          <div class="trap">别混淆Hofmeister四视图（概念/模块/执行/代码），与Kruchten的4+1不同！</div>
+        </div>
+      </div>
+
+      <!-- ============ S17: 案例话术 ============ -->
+      <div class="sec" id="s17">
+        <div class="card">
+          <h2><span class="icon">📝</span>案例答题话术模板</h2>
+
+          <h3>架构风格对比答题模板</h3>
+          <div class="formula">
+            ① 选择XX风格（结论）<br />
+            ② 优势：XX方面具有XX特点（如：事件驱动在实时性方面具有响应快的特点）<br />
+            ③ 劣势：XX方面存在XX不足<br />
+            ④ 适用场景：适合XX类型系统
+          </div>
+
+          <h3>扩展性/可修改性问法答题模板</h3>
+          <div class="formula">
+            ① 定义标准接口（接口层抽象）<br />
+            ② 采用注册机制（插件注册发现）<br />
+            ③ 使用配置化/规则化方式（声明式扩展）<br />
+            ④ 具体技术：SPI机制、策略模式、观察者模式
+          </div>
+
+          <h3>案例三步法</h3>
+          <ol>
+            <li><b>结论</b>：直接回答问题</li>
+            <li><b>具体技术名词+原理</b>：用专业术语，不用通俗描述</li>
+            <li><b>逐条对应背景条件</b>：把题目中的条件逐条回应（值2-3分）</li>
+          </ol>
+
+          <div class="trap">常见失分原因：只写关键词不展开、不用专业术语、不对应题目背景条件。</div>
+
+          <h3>分页地址转换公式</h3>
+          <div class="formula">
+            页号 = 逻辑地址 / 页面大小（整除）<br />
+            页内偏移 = 逻辑地址 % 页面大小<br />
+            物理地址 = 页框号 × 页面大小 + 页内偏移
+          </div>
+          <p>页面4KB时十六进制快速法：页号=高位部分（去掉末3位hex），偏移=末3位hex</p>
+        </div>
+      </div>
+
+      <!-- ============ S24: 开发模型 ============ -->
+      <div class="sec" id="s24">
+        <div class="card">
+          <h2><span class="icon">🔄</span>系统开发方法对比</h2>
+          <h3>六大开发模型</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:4em"><col style="min-width:10em"><col style="min-width:8em"><col></colgroup>
+            <tr><th>模型</th><th>核心特点</th><th>适用场景</th><th>关键词</th></tr>
+            <tr><td><b>瀑布模型</b></td><td>线性顺序、文档驱动、阶段间有里程碑</td><td>需求明确、变更少</td><td>文档驱动、阶段固化</td></tr>
+            <tr><td><b>原型模型</b></td><td>快速构建初步版本确认需求</td><td>需求不明确</td><td>需求模糊、快速验证</td></tr>
+            <tr><td><b>螺旋模型</b></td><td>风险驱动、迭代、每圈含四阶段（目标/风险/开发/评审）</td><td>大型复杂、高风险</td><td>风险分析、迭代</td></tr>
+            <tr><td><b>增量模型</b></td><td>分批交付、每次交付一个可用增量</td><td>需要快速交付部分功能</td><td>分批交付、逐步完善</td></tr>
+            <tr><td><b>喷泉模型</b></td><td>面向对象、迭代无间隙（各阶段可交叉）</td><td>OO开发项目</td><td>无间隙、迭代、面向对象</td></tr>
+            <tr><td><b>敏捷方法</b></td><td>拥抱变化、人本主义、短迭代、持续反馈</td><td>需求变化频繁</td><td>Scrum、迭代、拥抱变化</td></tr>
+          </table>
+          </div>
+          <div class="tips">考试常考"给场景选模型"——看需求是否明确、项目规模、风险高低。</div>
+          <h3>RUP四阶段</h3>
+          <div class="formula"><b>初始</b>（确定范围）→ <b>细化</b>（架构设计）→ <b>构造</b>（编码测试）→ <b>移交</b>（部署交付）</div>
+          <div class="trap">RUP是<b>用例驱动、以架构为中心、迭代增量</b>的开发过程。不要和瀑布混淆。</div>
+          <h3>需求工程方法速查</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:8em"><col></colgroup>
+            <tr><th>方法</th><th>说明</th></tr>
+            <tr><td><b>访谈</b></td><td>面对面问用户（考试标准术语，不是"口头问答"）</td></tr>
+            <tr><td><b>原型法</b></td><td>快速做初步版本确认需求（不是"快速模型"）</td></tr>
+            <tr><td><b>问卷调查</b></td><td>发给大量用户填</td></tr>
+            <tr><td><b>头脑风暴</b></td><td>大家坐一起想</td></tr>
+            <tr><td><b>观察法</b></td><td>跟着用户上班看（常考）</td></tr>
+            <tr><td><b>文档分析</b></td><td>读现有系统文档</td></tr>
+          </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S18: 内聚/耦合 ============ -->
+      <div class="sec" id="s18">
+        <div class="card">
+          <h2><span class="icon">🧩</span>内聚与耦合</h2>
+
+          <h3>七种内聚（从低到高，功能内聚最优）</h3>
+          <table>
+            <tr><th>类型</th><th>含义</th><th>类比</th></tr>
+            <tr><td><b>偶然内聚</b></td><td>几个功能硬凑在一起，毫无关联</td><td>随机分到一组的人</td></tr>
+            <tr><td><b>逻辑内聚</b></td><td>逻辑上相关的功能放一起，由参数决定执行哪个</td><td>同一类工具放一个抽屉</td></tr>
+            <tr><td><b>时间内聚</b></td><td>同一时间段执行的功能放一起</td><td>晨起流程：刷牙洗脸穿衣</td></tr>
+            <tr><td><b>过程内聚</b></td><td>按特定顺序执行的处理步骤放一起</td><td>按步骤的菜谱</td></tr>
+            <tr><td><b>通信内聚</b></td><td>操作同一数据集的功能放一起</td><td>都操作"学生表"的增删改查</td></tr>
+            <tr><td><b>顺序内聚</b></td><td>一个功能的输出是另一个的输入</td><td>流水线：A的产出给B</td></tr>
+            <tr><td><b>功能内聚</b></td><td>所有元素共同完成一个单一功能</td><td>只做一件事且做好</td></tr>
+          </table>
+
+          <h3>七种耦合（从低到高，非直接耦合最优）</h3>
+          <table>
+            <tr><th>类型</th><th>含义</th><th>类比</th></tr>
+            <tr><td><b>非直接耦合</b></td><td>两模块无直接关系，通过主模块间接联系</td><td>互不认识，通过中间人联系</td></tr>
+            <tr><td><b>数据耦合</b></td><td>只通过<b>简单数据参数</b>传递信息</td><td>只传纸条不传原件</td></tr>
+            <tr><td><b>标记耦合</b></td><td>通过<b>数据结构（记录/对象）</b>传递信息</td><td>传整个档案袋</td></tr>
+            <tr><td><b>控制耦合</b></td><td>传递<b>控制信息</b>（开关/标志），一个模块控制另一个的执行</td><td>远程遥控器</td></tr>
+            <tr><td><b>外部耦合</b></td><td>共享<b>外部数据格式/通信协议/设备</b></td><td>共用同一台打印机</td></tr>
+            <tr><td><b>公共耦合</b></td><td>共享<b>全局数据结构/公共变量</b></td><td>共用一块白板</td></tr>
+            <tr><td><b>内容耦合</b></td><td>一个模块直接访问另一个模块的<b>内部数据/代码</b></td><td>直接翻别人的抽屉</td></tr>
+          </table>
+
+          <div class="trap">考试陷阱："传递整个数据结构"是<b>标记耦合</b>不是数据耦合。数据耦合只传简单参数（int、string）。传递控制标志（flag/开关）是<b>控制耦合</b>。</div>
+        </div>
+      </div>
+
+      <!-- ============ S19: 覆盖测试 ============ -->
+      <div class="sec" id="s19">
+        <div class="card">
+          <h2><span class="icon">🧪</span>白盒测试 · 逻辑覆盖</h2>
+
+          <h3>六种覆盖强度排序（从弱到强）</h3>
+          <div class="formula">语句覆盖 &lt; 判定覆盖 &lt; 条件覆盖 &lt; 判定/条件覆盖 &lt; 条件组合覆盖 &lt; 路径覆盖</div>
+
+          <h3>逐一详解</h3>
+          <table>
+            <tr><th>覆盖类型</th><th>要求</th><th>说明</th></tr>
+            <tr><td><b>语句覆盖</b></td><td>每条语句至少执行一次</td><td>最弱，只管"跑过"，连分支都可能没覆盖全</td></tr>
+            <tr><td><b>判定覆盖</b><br>（分支覆盖）</td><td>每个判定的真假分支至少执行一次</td><td>覆盖了分支，但不管条件内部的各个子条件</td></tr>
+            <tr><td><b>条件覆盖</b></td><td>每个条件的真假至少取一次</td><td>管到每个子条件，但组合情况不一定覆盖</td></tr>
+            <tr><td><b>判定/条件覆盖</b></td><td>同时满足判定覆盖和条件覆盖</td><td>既覆盖分支又覆盖每个条件，但条件组合不一定全</td></tr>
+            <tr><td><b>条件组合覆盖</b></td><td>所有条件的<b>真假组合</b>至少出现一次</td><td>最强（除路径覆盖外），用例数最多</td></tr>
+            <tr><td><b>路径覆盖</b></td><td>覆盖程序中所有可能的执行路径</td><td>理论上最强，但路径数可能爆炸（循环导致无限路径）</td></tr>
+          </table>
+
+          <h3>快速判断技巧</h3>
+          <ul>
+            <li>题目问"最弱的覆盖" → <b>语句覆盖</b></li>
+            <li>题目问"保证每个条件真假都取到" → <b>条件覆盖</b></li>
+            <li>题目问"所有条件组合都要覆盖" → <b>条件组合覆盖</b></li>
+            <li>题目问"覆盖所有可能执行路径" → <b>路径覆盖</b></li>
+            <li>条件组合覆盖的用例数 = 2^n（n=条件个数），如2个条件→4个用例</li>
+          </ul>
+
+          <div class="trap">条件覆盖 ≠ 判定覆盖。条件覆盖管每个子条件的真假，但可能出现：每个条件都取过真假，但判定结果只取了真没取假。所以二者独立，判定/条件覆盖是同时满足两者。</div>
+
+          <h3>白盒 vs 黑盒 vs 其他</h3>
+          <table>
+            <tr><th>类型</th><th>方法</th><th>关注点</th></tr>
+            <tr><td><b>白盒测试</b></td><td>逻辑覆盖、路径分析</td><td>内部代码结构</td></tr>
+            <tr><td><b>黑盒测试</b></td><td>等价类划分、边界值分析、因果图</td><td>功能是否正确，不看代码</td></tr>
+            <tr><td><b>回归测试</b></td><td>修改后重新测试</td><td>确认修改没引入新bug</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============ S20: 设计模式 ============ -->
+      <div class="sec" id="s20">
+        <div class="card">
+          <h2><span class="icon">🧩</span>设计模式速查（23种）</h2>
+
+          <h3>三大分类</h3>
+          <div class="mnemonic">创建型5 + 结构型7 + 行为型11 = 23种</div>
+          <table>
+            <tr><th>类型</th><th>核心目的</th><th>包含模式</th></tr>
+            <tr><td><b>创建型</b></td><td>对象怎么创建</td><td>工厂方法、抽象工厂、单例、建造者、原型</td></tr>
+            <tr><td><b>结构型</b></td><td>类和对象怎么组合</td><td>适配器、桥接、组合、装饰器、外观、享元、代理</td></tr>
+            <tr><td><b>行为型</b></td><td>对象之间怎么交互</td><td>责任链、命令、解释器、迭代器、中介者、备忘录、观察者、状态、策略、模板方法、访问者</td></tr>
+          </table>
+
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🏭</span>创建型模式（5种）</h2>
+
+          <table>
+            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
+            <tr>
+              <td><b>工厂方法</b></td>
+              <td>定义创建对象的接口，由子类决定实例化哪个类</td>
+              <td>不知道具体要创建哪个类的实例</td>
+            </tr>
+            <tr>
+              <td><b>抽象工厂</b></td>
+              <td>创建一系列相关对象的接口，无需指定具体类</td>
+              <td>需要创建产品族（如跨平台UI组件）</td>
+            </tr>
+            <tr>
+              <td><b>单例</b></td>
+              <td>确保一个类只有一个实例+全局访问点</td>
+              <td>配置管理、线程池、日志、数据库连接池</td>
+            </tr>
+            <tr>
+              <td><b>建造者</b></td>
+              <td>将复杂对象的构建与表示分离，分步骤构建</td>
+              <td>对象有很多可选参数（如SQL查询构建）</td>
+            </tr>
+            <tr>
+              <td><b>原型</b></td>
+              <td>通过复制已有实例来创建新实例（clone）</td>
+              <td>创建成本高，复制比new更高效</td>
+            </tr>
+          </table>
+
+          <div class="trap">单例的懒汉式=第一次使用时创建（延迟加载）；饿汉式=类加载时就创建。考试经常考反。</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🏗️</span>结构型模式（7种）</h2>
+
+          <table>
+            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
+            <tr>
+              <td><b>适配器</b></td>
+              <td>将一个类的接口转换为客户端期望的另一个接口</td>
+              <td>兼容旧接口、整合第三方库</td>
+            </tr>
+            <tr>
+              <td><b>桥接</b></td>
+              <td>将抽象部分与实现部分分离，使它们可以独立变化</td>
+              <td>避免多层继承爆炸（如形状×颜色）</td>
+            </tr>
+            <tr>
+              <td><b>组合</b></td>
+              <td>将对象组合成树形结构，统一处理单个对象和组合对象</td>
+              <td>文件系统、菜单树、组织架构</td>
+            </tr>
+            <tr>
+              <td><b>装饰器</b></td>
+              <td>动态地为对象添加额外职责，不修改原有类</td>
+              <td>Java IO流、为对象加功能但不想改原类</td>
+            </tr>
+            <tr>
+              <td><b>外观</b></td>
+              <td>为子系统提供一个统一的高层接口</td>
+              <td>简化复杂子系统的调用（如一键下单）</td>
+            </tr>
+            <tr>
+              <td><b>享元</b></td>
+              <td>共享细粒度对象，减少内存用量</td>
+              <td>大量相似对象（如字符编辑器中的字符对象）</td>
+            </tr>
+            <tr>
+              <td><b>代理</b></td>
+              <td>为其他对象提供代理以控制对它的访问</td>
+              <td>远程代理、虚拟代理、保护代理、缓存代理</td>
+            </tr>
+          </table>
+
+          <div class="vs">
+            <div class="a">
+              <div class="title">装饰器 vs 代理</div>
+              装饰器：<b>增强</b>功能，不改变接口<br />
+              代理：<b>控制</b>访问，可能改变行为
+            </div>
+            <div class="b">
+              <div class="title">适配器 vs 桥接</div>
+              适配器：<b>事后</b>补救，让不兼容的接口能一起工作<br />
+              桥接：<b>事前</b>设计，将抽象与实现分离
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🎯</span>行为型模式（11种 · 高频6种）</h2>
+
+          <table>
+            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
+            <tr>
+              <td><b>观察者</b> <span class="tag">高频</span></td>
+              <td>一对多依赖，对象状态变化时自动通知所有观察者</td>
+              <td>事件监听、消息推送、MVC中的Model-View</td>
+            </tr>
+            <tr>
+              <td><b>策略</b> <span class="tag">高频</span></td>
+              <td>封装算法族，使它们可以互相替换</td>
+              <td>排序算法切换、支付方式选择、折扣计算</td>
+            </tr>
+            <tr>
+              <td><b>模板方法</b> <span class="tag">高频</span></td>
+              <td>定义算法骨架，将某些步骤延迟到子类实现</td>
+              <td>框架设计（如JUnit的setUp/tearDown）</td>
+            </tr>
+            <tr>
+              <td><b>命令</b> <span class="tag">高频</span></td>
+              <td>将请求封装为对象，支持撤销、队列、日志</td>
+              <td>撤销/重做操作、任务队列、宏命令</td>
+            </tr>
+            <tr>
+              <td><b>状态</b> <span class="tag">高频</span></td>
+              <td>允许对象在内部状态改变时改变其行为</td>
+              <td>订单状态机、审批流程、游戏角色状态</td>
+            </tr>
+            <tr>
+              <td><b>责任链</b> <span class="tag">高频</span></td>
+              <td>将请求沿链传递，直到有对象处理它</td>
+              <td>审批流程（员工→经理→总监）、异常处理链</td>
+            </tr>
+            <tr>
+              <td>迭代器</td>
+              <td>提供顺序访问聚合对象元素的方法，不暴露内部</td>
+              <td>遍历集合对象</td>
+            </tr>
+            <tr>
+              <td>中介者</td>
+              <td>用中介对象封装多个对象之间的交互</td>
+              <td>聊天室、航空管制、GUI组件协调</td>
+            </tr>
+            <tr>
+              <td>备忘录</td>
+              <td>在不破坏封装的前提下捕获和恢复对象内部状态</td>
+              <td>撤销操作、存档/读档</td>
+            </tr>
+            <tr>
+              <td>解释器</td>
+              <td>为语言定义文法表示，并设计解释器解释语句</td>
+              <td>正则表达式、SQL解析、数学表达式求值</td>
+            </tr>
+            <tr>
+              <td>访问者</td>
+              <td>在不修改元素类的前提下定义新操作</td>
+              <td>编译器AST遍历、文档导出（PDF/HTML）</td>
+            </tr>
+          </table>
+
+          <div class="vs">
+            <div class="a">
+              <div class="title">策略 vs 状态</div>
+              策略：客户端<b>主动选择</b>算法<br />
+              状态：对象<b>自动切换</b>行为（状态变了行为就变）
+            </div>
+            <div class="b">
+              <div class="title">观察者 vs 中介者</div>
+              观察者：一对多<b>通知</b>（发布-订阅）<br />
+              中介者：多对多<b>协调</b>（中心化通信）
+            </div>
+          </div>
+
+          <div class="trap">命令模式 vs 策略模式：命令封装的是"请求/操作"（可撤销、可排队），策略封装的是"算法/行为"（可替换）。考试常混淆。</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">📐</span>SOLID原则（设计模式基础）</h2>
+
+          <table>
+            <tr><th>原则</th><th>全称</th><th>含义</th></tr>
+            <tr><td><b>S</b></td><td>单一职责原则</td><td>一个类只有一个引起它变化的原因</td></tr>
+            <tr><td><b>O</b></td><td>开闭原则</td><td>对扩展开放，对修改关闭</td></tr>
+            <tr><td><b>L</b></td><td>里氏替换原则</td><td>子类可以替换父类出现的地方</td></tr>
+            <tr><td><b>I</b></td><td>接口隔离原则</td><td>客户端不应依赖它不需要的接口</td></tr>
+            <tr><td><b>D</b></td><td>依赖倒置原则</td><td>高层不依赖低层，都依赖抽象</td></tr>
+          </table>
+
+          <div class="trap">依赖倒置 ≠ 依赖注入。依赖倒置是原则（都依赖抽象），依赖注入是实现方式（由外部注入依赖）。</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="icon">🎯</span>案例题高频考法</h2>
+
+          <h3>考法1：选择合适的设计模式</h3>
+          <div class="key">
+            题目关键词 → 模式：<br />
+            "动态添加职责" → <b>装饰器</b><br />
+            "接口不兼容/转换" → <b>适配器</b><br />
+            "封装请求/撤销" → <b>命令</b><br />
+            "一对多通知" → <b>观察者</b><br />
+            "算法可替换" → <b>策略</b><br />
+            "状态改变行为" → <b>状态</b><br />
+            "统一高层接口" → <b>外观</b><br />
+            "树形结构" → <b>组合</b><br />
+            "控制访问" → <b>代理</b>
+          </div>
+
+          <h3>考法2：对比两种模式的区别</h3>
+          <div class="key">
+            答题模板：<br />
+            ① 模式A的核心是XX，适用于XX场景<br />
+            ② 模式B的核心是XX，适用于XX场景<br />
+            ③ 本题场景是XX，应选XX模式
+          </div>
+        </div>
+      </div>
+
       <!-- ============ S4: UML ============ -->
       <div class="sec" id="s4">
         <div class="card">
@@ -677,6 +1116,230 @@
             <li><b>动作（Action）</b>：转换时执行的操作</li>
             <li><b>守卫条件（Guard）</b>：[条件表达式]，满足才触发转换</li>
           </ul>
+        </div>
+      </div>
+
+      <!-- ============ S9: 流水线 ============ -->
+      <div class="sec" id="s9">
+        <div class="card">
+          <h2><span class="icon">⚡</span>流水线计算</h2>
+
+          <h3>三个核心公式</h3>
+          <div class="formula">时钟周期：Δt = max(各段时间)</div>
+          <div class="formula">总时间：T = (级数k + 指令数n - 1) × Δt</div>
+          <div class="formula">吞吐率：TP = n / T &nbsp;|&nbsp; 加速比：S = 不用流水线时间 / T</div>
+
+          <h3>计算示例</h3>
+          <p>4级流水线，各段2ns/3ns/2ns/2ns，100条指令：</p>
+          <ul>
+            <li>Δt = max(2,3,2,2) = <b>3ns</b></li>
+            <li>T = (4+100-1)×3 = 103×3 = <b>309ns</b></li>
+            <li>TP = 100/309 ns⁻¹</li>
+            <li>不用流水线：每条9ns×100=900ns，S=900/309≈<b>2.91</b></li>
+          </ul>
+
+          <h3>气泡（Stall）</h3>
+          <div class="formula">实际时间 = 理想时间 + m×(n-1)×Δt（m=每条指令插入的气泡数）</div>
+        </div>
+      </div>
+
+      <!-- ============ S7: LRU/FIFO ============ -->
+      <div class="sec" id="s7">
+        <div class="card">
+          <h2><span class="icon">📄</span>LRU / FIFO / OPT 页面置换</h2>
+
+          <h3>LRU 手算方法</h3>
+          <div class="key">维护列表：左边=最近使用的，右边=最久没用的。命中→移到最左；缺页→淘汰最右，新页加最左。</div>
+
+          <h3>三种算法对比</h3>
+          <table>
+            <tr>
+              <th>算法</th>
+              <th>淘汰策略</th>
+              <th>Belady异常</th>
+            </tr>
+            <tr>
+              <td><b>OPT</b></td>
+              <td>淘汰将来最久不用的（向后看）</td>
+              <td>不会</td>
+            </tr>
+            <tr>
+              <td><b>LRU</b></td>
+              <td>淘汰过去最近最久未用的（向前看）</td>
+              <td>不会</td>
+            </tr>
+            <tr>
+              <td><b>FIFO</b></td>
+              <td>淘汰最早进入的</td>
+              <td><b>可能</b></td>
+            </tr>
+          </table>
+
+          <div class="trap">Belady异常 = 增加页框数反而缺页率上升。<b>只有FIFO可能出现</b>。LRU和OPT是栈式算法，不会。</div>
+
+          <h3>缺页率公式</h3>
+          <div class="formula">缺页率 = 缺页次数 / 总访问次数</div>
+
+          <h3>快速判断技巧</h3>
+          <ul>
+            <li>前N次访问（N=页框数）必为缺页（初始为空）</li>
+            <li>刚被淘汰的页面如果马上又被访问，一定缺页</li>
+            <li>序列中有连续重复的页号 → 命中机会多</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============ S10: Cache/死锁 ============ -->
+      <div class="sec" id="s10">
+        <div class="card">
+          <h2><span class="icon">💾</span>Cache 映射 + 死锁资源计算</h2>
+
+          <h3>Cache三种映射</h3>
+          <table>
+            <tr>
+              <th>方式</th>
+              <th>规则</th>
+              <th>优点</th>
+              <th>缺点</th>
+            </tr>
+            <tr>
+              <td>直接映射</td>
+              <td>块号%行数=固定行</td>
+              <td>速度快</td>
+              <td>冲突多</td>
+            </tr>
+            <tr>
+              <td>全相联</td>
+              <td>任意块放任意行</td>
+              <td>冲突最少</td>
+              <td>硬件复杂</td>
+            </tr>
+            <tr>
+              <td>N路组相联</td>
+              <td>先分组，组内N路任选</td>
+              <td>平衡</td>
+              <td>—</td>
+            </tr>
+          </table>
+
+          <h3>计算公式</h3>
+          <div class="formula">总行数 = Cache容量/块大小 &nbsp;|&nbsp; 组数 = 总行数/N</div>
+
+          <h3>RISC vs CISC</h3>
+          <table>
+            <tr>
+              <th>特征</th>
+              <th>RISC</th>
+              <th>CISC</th>
+            </tr>
+            <tr>
+              <td>指令数量</td>
+              <td>少</td>
+              <td>多</td>
+            </tr>
+            <tr>
+              <td>指令长度</td>
+              <td><b>固定</b></td>
+              <td><b>可变</b></td>
+            </tr>
+            <tr>
+              <td>寻址方式</td>
+              <td><b>简单（少）</b></td>
+              <td><b>丰富（多）</b></td>
+            </tr>
+            <tr>
+              <td>寄存器数量</td>
+              <td><b>多（>100）</b></td>
+              <td>少</td>
+            </tr>
+            <tr>
+              <td>控制器</td>
+              <td><b>硬布线</b></td>
+              <td><b>微程序</b></td>
+            </tr>
+            <tr>
+              <td>流水线</td>
+              <td><b>适合（大多1周期）</b></td>
+              <td>不适合</td>
+            </tr>
+            <tr>
+              <td>代表</td>
+              <td>ARM、MIPS</td>
+              <td>x86</td>
+            </tr>
+          </table>
+
+          <h3>死锁资源计算</h3>
+          <div class="formula">m ≥ n×(X-1) + 1</div>
+          <p>m=资源总数，n=进程数，X=每个进程最多需要的资源数</p>
+          <div class="tips">含义：最坏情况每个进程各拿(X-1)个（差1个就能完成），再留至少1个给某个进程先完成释放。</div>
+
+          <h3>寻址方式</h3>
+          <table>
+            <tr>
+              <th>方式</th>
+              <th>类比</th>
+            </tr>
+            <tr>
+              <td>立即寻址</td>
+              <td>直接给你钱</td>
+            </tr>
+            <tr>
+              <td>直接寻址</td>
+              <td>给你门牌号</td>
+            </tr>
+            <tr>
+              <td>寄存器寻址</td>
+              <td>钱在你口袋</td>
+            </tr>
+            <tr>
+              <td>寄存器间接寻址</td>
+              <td>口袋里有张纸条写着门牌号</td>
+            </tr>
+            <tr>
+              <td>基址寻址</td>
+              <td>门牌号+楼栋偏移</td>
+            </tr>
+            <tr>
+              <td>变址寻址</td>
+              <td>数组遍历（基址+下标）</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============ S8: PV操作 ============ -->
+      <div class="sec" id="s8">
+        <div class="card">
+          <h2><span class="icon">🔄</span>PV 操作</h2>
+
+          <h3>基本规则</h3>
+          <div class="formula">P(S)：S=S-1，若S&lt;0则阻塞等待 &nbsp;|&nbsp; V(S)：S=S+1，若有等待进程则唤醒</div>
+          <div class="mnemonic">P = 申请等待 &nbsp;|&nbsp; V = 释放通知</div>
+
+          <h3>生产者-消费者</h3>
+          <p>缓冲区容量N。empty=N, full=0, mutex=1：</p>
+          <div class="formula">
+            生产者：P(empty) → P(mutex) → 写 → V(mutex) → V(full)<br />
+            消费者：P(full) → P(mutex) → 读 → V(mutex) → V(empty)
+          </div>
+          <div class="key">P的顺序不能反（先P(empty)再P(mutex)，否则死锁）。V的顺序无所谓。N=1时可省略mutex。</div>
+
+          <h3>多读者-写者</h3>
+          <div class="formula">
+            读者：P(mutex); rc++; if(rc==1)P(rw); V(mutex); 读; P(mutex); rc--; if(rc==0)V(rw); V(mutex)<br />
+            写者：P(rw); 写; V(rw)
+          </div>
+
+          <h3>前趋同步</h3>
+          <div class="formula">P1先完成：V(S) &nbsp;|&nbsp; P2后开始：P(S) &nbsp;|&nbsp; 信号量S=0</div>
+
+          <h3>做题三问</h3>
+          <ol>
+            <li><b>谁等谁？</b> → 先完成的V，后开始的P</li>
+            <li><b>有没有互斥？</b> → 共享资源需要mutex</li>
+            <li><b>信号量初始值？</b> → 一般题目会给出</li>
+          </ol>
         </div>
       </div>
 
@@ -917,6 +1580,247 @@
         </div>
       </div>
 
+      <!-- ============ S11: 子网划分 ============ -->
+      <div class="sec" id="s11">
+        <div class="card">
+          <h2><span class="icon">🔢</span>IP 子网划分</h2>
+
+          <h3>核心公式</h3>
+          <div class="formula">子网数 = 2^n &nbsp;|&nbsp; 每子网主机数 = 2^m - 2</div>
+          <p>n=借的主机位数，m=剩余主机位数（减2=网络地址+广播地址）</p>
+
+          <h3>常用掩码对照表</h3>
+          <table>
+            <tr>
+              <th>CIDR</th>
+              <th>子网掩码</th>
+              <th>借位</th>
+              <th>子网数</th>
+              <th>每子网主机</th>
+            </tr>
+            <tr>
+              <td>/25</td>
+              <td>255.255.255.128</td>
+              <td>1</td>
+              <td>2</td>
+              <td>126</td>
+            </tr>
+            <tr>
+              <td>/26</td>
+              <td>255.255.255.192</td>
+              <td>2</td>
+              <td>4</td>
+              <td>62</td>
+            </tr>
+            <tr>
+              <td>/27</td>
+              <td>255.255.255.224</td>
+              <td>3</td>
+              <td>8</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>/28</td>
+              <td>255.255.255.240</td>
+              <td>4</td>
+              <td>16</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>/29</td>
+              <td>255.255.255.248</td>
+              <td>5</td>
+              <td>32</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>/30</td>
+              <td>255.255.255.252</td>
+              <td>6</td>
+              <td>64</td>
+              <td>2</td>
+            </tr>
+          </table>
+
+          <h3>求网络地址</h3>
+          <div class="formula">网络地址 = IP地址 AND 子网掩码</div>
+          <p>
+            例：IP 192.168.10.130/26<br />
+            130 = 10000010，/26掩码末字节=11000000(192)<br />
+            AND = 10000000 = 128 → 网络地址 = 192.168.10.128
+          </p>
+        </div>
+      </div>
+
+      <!-- ============ S25: Redis缓存 ============ -->
+      <div class="sec" id="s25">
+        <div class="card">
+          <h2><span class="icon">⚡</span>Redis 缓存三大问题</h2>
+
+          <h3>雪崩 / 击穿 / 穿透 速判</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:4em"><col style="min-width:14em"><col style="min-width:14em"></colgroup>
+            <tr><th>问题</th><th>是什么</th><th>解决方案</th></tr>
+            <tr>
+              <td><b>雪崩</b></td>
+              <td>大量缓存<b>同时过期</b>，或Redis宕机，瞬间所有请求打到数据库</td>
+              <td>① 过期时间加随机偏移（避免同时失效）<br/>② 热点数据永不过期<br/>③ Redis集群（高可用）<br/>④ 限流+降级</td>
+            </tr>
+            <tr>
+              <td><b>击穿</b></td>
+              <td>某个<b>热点key过期</b>的瞬间，大量并发请求同时打到数据库</td>
+              <td>① 互斥锁（只放一个请求去查DB）<br/>② 热点key永不过期<br/>③ 提前异步刷新</td>
+            </tr>
+            <tr>
+              <td><b>穿透</b></td>
+              <td>查询<b>根本不存在</b>的数据（缓存和DB都没有），每次请求都穿透到数据库</td>
+              <td>① 布隆过滤器（前置拦截）<br/>② 缓存空值（key→null，设短TTL）<br/>③ 参数校验（拦截非法请求）</td>
+            </tr>
+          </table>
+          </div>
+          <div class="trap">
+            <b>记忆口诀</b>：<br/>
+            雪崩 = <b>大面积同时过期</b>（像雪崩一样大面积坍塌）<br/>
+            击穿 = <b>一个热点key被突破</b>（像子弹击穿靶心）<br/>
+            穿透 = <b>查不存在的数据，缓存形同虚设</b>（直接穿透到DB）<br/><br/>
+            <b>三者共同危害</b>：数据库承受不住瞬间高并发→宕机→级联故障
+          </div>
+
+          <h3>Redis 五大数据结构</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:5em"><col style="min-width:10em"><col></colgroup>
+            <tr><th>类型</th><th>适用场景</th><th>典型操作</th></tr>
+            <tr><td>String</td><td>缓存、计数器、分布式锁</td><td>SET/GET, INCR, SETNX</td></tr>
+            <tr><td>Hash</td><td>对象存储（用户信息）</td><td>HSET/HGET, HMGET</td></tr>
+            <tr><td>List</td><td>消息队列、最新列表</td><td>LPUSH/RPOP, LRANGE</td></tr>
+            <tr><td>Set</td><td>去重、交集/并集运算</td><td>SADD, SINTER, SUNION</td></tr>
+            <tr><td>ZSet</td><td>排行榜、带权重的队列</td><td>ZADD, ZRANGEBYSCORE</td></tr>
+          </table>
+          </div>
+          <div class="tips"><b>SETNX</b>（Set if Not eXists）是实现分布式锁的核心命令。搭配过期时间使用：SETNX + EXPIRE。</div>
+
+          <h3>Redis 淘汰策略（内存满时）</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:10em"><col></colgroup>
+            <tr><th>策略</th><th>说明</th></tr>
+            <tr><td>volatile-lru</td><td>从<b>已设过期时间</b>的key中淘汰最久未使用的</td></tr>
+            <tr><td>allkeys-lru</td><td>从<b>所有key</b>中淘汰最久未使用的（最常用）</td></tr>
+            <tr><td>volatile-ttl</td><td>从已设过期时间的key中淘汰<b>剩余时间最短</b>的</td></tr>
+            <tr><td>noeviction</td><td>不淘汰，内存满直接报错（默认）</td></tr>
+          </table>
+          </div>
+
+          <h3>缓存优化方案</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <tr><th>问题</th><th>优化措施</th><th>具体技术</th></tr>
+            <tr>
+              <td><b>雪崩</b></td>
+              <td>TTL随机偏移 + 高可用集群</td>
+              <td>过期时间 = 基础TTL + random(0,300s)；Redis Sentinel/Cluster主从切换；本地缓存Caffeine兜底</td>
+            </tr>
+            <tr>
+              <td><b>击穿</b></td>
+              <td>互斥锁 + 逻辑过期</td>
+              <td>SETNX获取锁→查DB→写缓存→释放锁；或value中存逻辑过期时间，过期后异步更新</td>
+            </tr>
+            <tr>
+              <td><b>穿透</b></td>
+              <td>布隆过滤器 + 缓存空值</td>
+              <td>BF用多个哈希函数判断key是否可能存在；查不到的key缓存null并设短TTL（60s）</td>
+            </tr>
+          </table>
+          </div>
+
+          <h3>Redis 通用优化</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <tr><th>优化方向</th><th>方案</th><th>说明</th></tr>
+            <tr><td>读写分离</td><td>主写从读</td><td>Master处理写，多个Slave处理读，减轻单节点压力</td></tr>
+            <tr><td>持久化选择</td><td>RDB/AOF按场景选</td><td>RDB快但可能丢数据；AOF安全但慢；混合持久化兼顾两者</td></tr>
+            <tr><td>大key拆分</td><td>分片/压缩</td><td>单个value超过10KB建议拆分，避免阻塞单线程；用<code>unlink</code>异步删除</td></tr>
+            <tr><td>连接池</td><td>复用连接</td><td>避免频繁TCP握手，设maxTotal/maxIdle/minIdle参数</td></tr>
+          </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S15: 云原生 ============ -->
+      <div class="sec" id="s15">
+        <div class="card">
+          <h2><span class="icon">☁️</span>云原生六大技术</h2>
+
+          <table>
+            <tr>
+              <th>技术</th>
+              <th>说明</th>
+              <th>场景关键词</th>
+            </tr>
+            <tr>
+              <td><b>容器化</b></td>
+              <td>Docker等，应用打包隔离运行</td>
+              <td>环境不一致</td>
+            </tr>
+            <tr>
+              <td><b>微服务</b></td>
+              <td>单体拆分为独立部署的小服务</td>
+              <td>一个故障拖垮整体</td>
+            </tr>
+            <tr>
+              <td><b>DevOps</b></td>
+              <td>开发运维一体化，CI/CD</td>
+              <td>发布需停机</td>
+            </tr>
+            <tr>
+              <td><b>服务网格</b></td>
+              <td>Istio等，微服务间通信管理</td>
+              <td>服务间调用复杂</td>
+            </tr>
+            <tr>
+              <td><b>不可变基础设施</b></td>
+              <td>容器镜像不可变，替换而非修改</td>
+              <td>配置漂移</td>
+            </tr>
+            <tr>
+              <td><b>声明式API</b></td>
+              <td>描述期望状态而非操作步骤</td>
+              <td>K8s编排</td>
+            </tr>
+          </table>
+
+          <h3>其他高频技术概念</h3>
+          <table>
+            <tr>
+              <th>概念</th>
+              <th>要点</th>
+            </tr>
+            <tr>
+              <td><b>CAP定理</b></td>
+              <td>一致性C、可用性A、分区容忍P，三者只能满足两个。分布式系统必选P，所以是在CA之间选。</td>
+            </tr>
+            <tr>
+              <td><b>BASE</b></td>
+              <td>Basically Available（基本可用）、Soft State（软状态）、Eventually Consistent（最终一致性）</td>
+            </tr>
+            <tr>
+              <td><b>绞杀者模式</b></td>
+              <td>单体→微服务迁移：新建微服务→路由切换→逐步替换→下线旧模块</td>
+            </tr>
+            <tr>
+              <td><b>Lambda vs Kappa</b></td>
+              <td>Lambda=批处理+流处理双通道；Kappa=只用流处理（简化版）</td>
+            </tr>
+            <tr>
+              <td><b>零信任</b></td>
+              <td>从不信任，始终验证；四大特性：身份认证、设备验证、最小权限、微隔离</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
       <!-- ============ S6: 区块链 ============ -->
       <div class="sec" id="s6">
         <div class="card">
@@ -1041,299 +1945,98 @@
         </div>
       </div>
 
-      <!-- ============ S7: LRU/FIFO ============ -->
-      <div class="sec" id="s7">
+      <!-- ============ S16: 加密/签名 ============ -->
+      <div class="sec" id="s16">
         <div class="card">
-          <h2><span class="icon">📄</span>LRU / FIFO / OPT 页面置换</h2>
+          <h2><span class="icon">🔐</span>加密与数字签名</h2>
 
-          <h3>LRU 手算方法</h3>
-          <div class="key">维护列表：左边=最近使用的，右边=最久没用的。命中→移到最左；缺页→淘汰最右，新页加最左。</div>
-
-          <h3>三种算法对比</h3>
-          <table>
-            <tr>
-              <th>算法</th>
-              <th>淘汰策略</th>
-              <th>Belady异常</th>
-            </tr>
-            <tr>
-              <td><b>OPT</b></td>
-              <td>淘汰将来最久不用的（向后看）</td>
-              <td>不会</td>
-            </tr>
-            <tr>
-              <td><b>LRU</b></td>
-              <td>淘汰过去最近最久未用的（向前看）</td>
-              <td>不会</td>
-            </tr>
-            <tr>
-              <td><b>FIFO</b></td>
-              <td>淘汰最早进入的</td>
-              <td><b>可能</b></td>
-            </tr>
-          </table>
-
-          <div class="trap">Belady异常 = 增加页框数反而缺页率上升。<b>只有FIFO可能出现</b>。LRU和OPT是栈式算法，不会。</div>
-
-          <h3>缺页率公式</h3>
-          <div class="formula">缺页率 = 缺页次数 / 总访问次数</div>
-
-          <h3>快速判断技巧</h3>
-          <ul>
-            <li>前N次访问（N=页框数）必为缺页（初始为空）</li>
-            <li>刚被淘汰的页面如果马上又被访问，一定缺页</li>
-            <li>序列中有连续重复的页号 → 命中机会多</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- ============ S8: PV操作 ============ -->
-      <div class="sec" id="s8">
-        <div class="card">
-          <h2><span class="icon">🔄</span>PV 操作</h2>
-
-          <h3>基本规则</h3>
-          <div class="formula">P(S)：S=S-1，若S&lt;0则阻塞等待 &nbsp;|&nbsp; V(S)：S=S+1，若有等待进程则唤醒</div>
-          <div class="mnemonic">P = 申请等待 &nbsp;|&nbsp; V = 释放通知</div>
-
-          <h3>生产者-消费者</h3>
-          <p>缓冲区容量N。empty=N, full=0, mutex=1：</p>
-          <div class="formula">
-            生产者：P(empty) → P(mutex) → 写 → V(mutex) → V(full)<br />
-            消费者：P(full) → P(mutex) → 读 → V(mutex) → V(empty)
-          </div>
-          <div class="key">P的顺序不能反（先P(empty)再P(mutex)，否则死锁）。V的顺序无所谓。N=1时可省略mutex。</div>
-
-          <h3>多读者-写者</h3>
-          <div class="formula">
-            读者：P(mutex); rc++; if(rc==1)P(rw); V(mutex); 读; P(mutex); rc--; if(rc==0)V(rw); V(mutex)<br />
-            写者：P(rw); 写; V(rw)
+          <h3>对称 vs 非对称加密</h3>
+          <div class="vs">
+            <div class="a">
+              <div class="title">对称加密</div>
+              同一把密钥加解密<br />
+              ✅ 速度快<br />
+              ❌ 密钥分发困难<br />
+              代表：AES、DES、3DES
+            </div>
+            <div class="b">
+              <div class="title">非对称加密</div>
+              公钥加密、私钥解密<br />
+              ✅ 解决密钥分发<br />
+              ❌ 速度慢<br />
+              代表：RSA、ECC
+            </div>
           </div>
 
-          <h3>前趋同步</h3>
-          <div class="formula">P1先完成：V(S) &nbsp;|&nbsp; P2后开始：P(S) &nbsp;|&nbsp; 信号量S=0</div>
-
-          <h3>做题三问</h3>
+          <h3>数字签名完整流程</h3>
           <ol>
-            <li><b>谁等谁？</b> → 先完成的V，后开始的P</li>
-            <li><b>有没有互斥？</b> → 共享资源需要mutex</li>
-            <li><b>信号量初始值？</b> → 一般题目会给出</li>
+            <li>发送方对消息做<b>哈希</b>（摘要）</li>
+            <li>用发送方的<b>私钥</b>加密摘要 → 签名</li>
+            <li>用接收方的<b>公钥</b>加密消息 → 保密</li>
+            <li>接收方用自己的<b>私钥</b>解密消息</li>
+            <li>用发送方的<b>公钥</b>解密签名 → 验证</li>
+            <li>对消息做哈希，与解密的摘要对比</li>
           </ol>
+
+          <div class="key">先哈希再签名（不直接签名原文，签名摘要）。签名=私钥加密摘要，验证=公钥解密摘要。</div>
+
+          <h3>密码存储</h3>
+          <div class="trap">密码存储用<b>加盐哈希</b>（Salt+Hash），不是加密！加密可逆，哈希不可逆。</div>
         </div>
       </div>
 
-      <!-- ============ S9: 流水线 ============ -->
-      <div class="sec" id="s9">
+      <!-- ============ S14: 等级保护 ============ -->
+      <div class="sec" id="s14">
         <div class="card">
-          <h2><span class="icon">⚡</span>流水线计算</h2>
+          <h2><span class="icon">🛡️</span>等级保护 2.0</h2>
 
-          <h3>三个核心公式</h3>
-          <div class="formula">时钟周期：Δt = max(各段时间)</div>
-          <div class="formula">总时间：T = (级数k + 指令数n - 1) × Δt</div>
-          <div class="formula">吞吐率：TP = n / T &nbsp;|&nbsp; 加速比：S = 不用流水线时间 / T</div>
-
-          <h3>计算示例</h3>
-          <p>4级流水线，各段2ns/3ns/2ns/2ns，100条指令：</p>
-          <ul>
-            <li>Δt = max(2,3,2,2) = <b>3ns</b></li>
-            <li>T = (4+100-1)×3 = 103×3 = <b>309ns</b></li>
-            <li>TP = 100/309 ns⁻¹</li>
-            <li>不用流水线：每条9ns×100=900ns，S=900/309≈<b>2.91</b></li>
-          </ul>
-
-          <h3>气泡（Stall）</h3>
-          <div class="formula">实际时间 = 理想时间 + m×(n-1)×Δt（m=每条指令插入的气泡数）</div>
-        </div>
-      </div>
-
-      <!-- ============ S10: Cache/死锁 ============ -->
-      <div class="sec" id="s10">
-        <div class="card">
-          <h2><span class="icon">💾</span>Cache 映射 + 死锁资源计算</h2>
-
-          <h3>Cache三种映射</h3>
+          <h3>五个级别</h3>
           <table>
             <tr>
-              <th>方式</th>
-              <th>规则</th>
-              <th>优点</th>
-              <th>缺点</th>
+              <th>级别</th>
+              <th>名称</th>
+              <th>备案</th>
+              <th>测评</th>
+              <th>适用</th>
             </tr>
             <tr>
-              <td>直接映射</td>
-              <td>块号%行数=固定行</td>
-              <td>速度快</td>
-              <td>冲突多</td>
+              <td>一级</td>
+              <td>自主保护级</td>
+              <td>不需</td>
+              <td>不需</td>
+              <td>小型系统</td>
             </tr>
             <tr>
-              <td>全相联</td>
-              <td>任意块放任意行</td>
-              <td>冲突最少</td>
-              <td>硬件复杂</td>
+              <td>二级</td>
+              <td>指导保护级</td>
+              <td><b>需备案</b></td>
+              <td>不需强制测评</td>
+              <td>一般系统</td>
             </tr>
             <tr>
-              <td>N路组相联</td>
-              <td>先分组，组内N路任选</td>
-              <td>平衡</td>
-              <td>—</td>
+              <td>三级</td>
+              <td>监督保护级</td>
+              <td>需备案</td>
+              <td><b>每年至少1次</b></td>
+              <td>重要系统（银行、电商）</td>
+            </tr>
+            <tr>
+              <td>四级</td>
+              <td>强制保护级</td>
+              <td>需备案</td>
+              <td><b>每半年至少1次</b></td>
+              <td>极重要（国防）</td>
+            </tr>
+            <tr>
+              <td>五级</td>
+              <td>专控保护级</td>
+              <td>需备案</td>
+              <td>更频繁</td>
+              <td>国家安全</td>
             </tr>
           </table>
 
-          <h3>计算公式</h3>
-          <div class="formula">总行数 = Cache容量/块大小 &nbsp;|&nbsp; 组数 = 总行数/N</div>
-
-          <h3>RISC vs CISC</h3>
-          <table>
-            <tr>
-              <th>特征</th>
-              <th>RISC</th>
-              <th>CISC</th>
-            </tr>
-            <tr>
-              <td>指令数量</td>
-              <td>少</td>
-              <td>多</td>
-            </tr>
-            <tr>
-              <td>指令长度</td>
-              <td><b>固定</b></td>
-              <td><b>可变</b></td>
-            </tr>
-            <tr>
-              <td>寻址方式</td>
-              <td><b>简单（少）</b></td>
-              <td><b>丰富（多）</b></td>
-            </tr>
-            <tr>
-              <td>寄存器数量</td>
-              <td><b>多（>100）</b></td>
-              <td>少</td>
-            </tr>
-            <tr>
-              <td>控制器</td>
-              <td><b>硬布线</b></td>
-              <td><b>微程序</b></td>
-            </tr>
-            <tr>
-              <td>流水线</td>
-              <td><b>适合（大多1周期）</b></td>
-              <td>不适合</td>
-            </tr>
-            <tr>
-              <td>代表</td>
-              <td>ARM、MIPS</td>
-              <td>x86</td>
-            </tr>
-          </table>
-
-          <h3>死锁资源计算</h3>
-          <div class="formula">m ≥ n×(X-1) + 1</div>
-          <p>m=资源总数，n=进程数，X=每个进程最多需要的资源数</p>
-          <div class="tips">含义：最坏情况每个进程各拿(X-1)个（差1个就能完成），再留至少1个给某个进程先完成释放。</div>
-
-          <h3>寻址方式</h3>
-          <table>
-            <tr>
-              <th>方式</th>
-              <th>类比</th>
-            </tr>
-            <tr>
-              <td>立即寻址</td>
-              <td>直接给你钱</td>
-            </tr>
-            <tr>
-              <td>直接寻址</td>
-              <td>给你门牌号</td>
-            </tr>
-            <tr>
-              <td>寄存器寻址</td>
-              <td>钱在你口袋</td>
-            </tr>
-            <tr>
-              <td>寄存器间接寻址</td>
-              <td>口袋里有张纸条写着门牌号</td>
-            </tr>
-            <tr>
-              <td>基址寻址</td>
-              <td>门牌号+楼栋偏移</td>
-            </tr>
-            <tr>
-              <td>变址寻址</td>
-              <td>数组遍历（基址+下标）</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <!-- ============ S11: 子网划分 ============ -->
-      <div class="sec" id="s11">
-        <div class="card">
-          <h2><span class="icon">🔢</span>IP 子网划分</h2>
-
-          <h3>核心公式</h3>
-          <div class="formula">子网数 = 2^n &nbsp;|&nbsp; 每子网主机数 = 2^m - 2</div>
-          <p>n=借的主机位数，m=剩余主机位数（减2=网络地址+广播地址）</p>
-
-          <h3>常用掩码对照表</h3>
-          <table>
-            <tr>
-              <th>CIDR</th>
-              <th>子网掩码</th>
-              <th>借位</th>
-              <th>子网数</th>
-              <th>每子网主机</th>
-            </tr>
-            <tr>
-              <td>/25</td>
-              <td>255.255.255.128</td>
-              <td>1</td>
-              <td>2</td>
-              <td>126</td>
-            </tr>
-            <tr>
-              <td>/26</td>
-              <td>255.255.255.192</td>
-              <td>2</td>
-              <td>4</td>
-              <td>62</td>
-            </tr>
-            <tr>
-              <td>/27</td>
-              <td>255.255.255.224</td>
-              <td>3</td>
-              <td>8</td>
-              <td>30</td>
-            </tr>
-            <tr>
-              <td>/28</td>
-              <td>255.255.255.240</td>
-              <td>4</td>
-              <td>16</td>
-              <td>14</td>
-            </tr>
-            <tr>
-              <td>/29</td>
-              <td>255.255.255.248</td>
-              <td>5</td>
-              <td>32</td>
-              <td>6</td>
-            </tr>
-            <tr>
-              <td>/30</td>
-              <td>255.255.255.252</td>
-              <td>6</td>
-              <td>64</td>
-              <td>2</td>
-            </tr>
-          </table>
-
-          <h3>求网络地址</h3>
-          <div class="formula">网络地址 = IP地址 AND 子网掩码</div>
-          <p>
-            例：IP 192.168.10.130/26<br />
-            130 = 10000010，/26掩码末字节=11000000(192)<br />
-            AND = 10000000 = 128 → 网络地址 = 192.168.10.128
-          </p>
+          <div class="trap">"第二级以上需要强制测评" → 错！<b>第三级以上</b>才需要。"等级保护共分三级" → 错！<b>五级</b>。</div>
         </div>
       </div>
 
@@ -1409,513 +2112,6 @@
             <li>关键活动delay一天 = 项目晚一天</li>
             <li>非关键活动的总时差 = 可以拖延而不影响总工期的天数</li>
           </ul>
-        </div>
-      </div>
-
-      <!-- ============ S14: 等级保护 ============ -->
-      <div class="sec" id="s14">
-        <div class="card">
-          <h2><span class="icon">🛡️</span>等级保护 2.0</h2>
-
-          <h3>五个级别</h3>
-          <table>
-            <tr>
-              <th>级别</th>
-              <th>名称</th>
-              <th>备案</th>
-              <th>测评</th>
-              <th>适用</th>
-            </tr>
-            <tr>
-              <td>一级</td>
-              <td>自主保护级</td>
-              <td>不需</td>
-              <td>不需</td>
-              <td>小型系统</td>
-            </tr>
-            <tr>
-              <td>二级</td>
-              <td>指导保护级</td>
-              <td><b>需备案</b></td>
-              <td>不需强制测评</td>
-              <td>一般系统</td>
-            </tr>
-            <tr>
-              <td>三级</td>
-              <td>监督保护级</td>
-              <td>需备案</td>
-              <td><b>每年至少1次</b></td>
-              <td>重要系统（银行、电商）</td>
-            </tr>
-            <tr>
-              <td>四级</td>
-              <td>强制保护级</td>
-              <td>需备案</td>
-              <td><b>每半年至少1次</b></td>
-              <td>极重要（国防）</td>
-            </tr>
-            <tr>
-              <td>五级</td>
-              <td>专控保护级</td>
-              <td>需备案</td>
-              <td>更频繁</td>
-              <td>国家安全</td>
-            </tr>
-          </table>
-
-          <div class="trap">"第二级以上需要强制测评" → 错！<b>第三级以上</b>才需要。"等级保护共分三级" → 错！<b>五级</b>。</div>
-        </div>
-      </div>
-
-      <!-- ============ S15: 云原生 ============ -->
-      <div class="sec" id="s15">
-        <div class="card">
-          <h2><span class="icon">☁️</span>云原生六大技术</h2>
-
-          <table>
-            <tr>
-              <th>技术</th>
-              <th>说明</th>
-              <th>场景关键词</th>
-            </tr>
-            <tr>
-              <td><b>容器化</b></td>
-              <td>Docker等，应用打包隔离运行</td>
-              <td>环境不一致</td>
-            </tr>
-            <tr>
-              <td><b>微服务</b></td>
-              <td>单体拆分为独立部署的小服务</td>
-              <td>一个故障拖垮整体</td>
-            </tr>
-            <tr>
-              <td><b>DevOps</b></td>
-              <td>开发运维一体化，CI/CD</td>
-              <td>发布需停机</td>
-            </tr>
-            <tr>
-              <td><b>服务网格</b></td>
-              <td>Istio等，微服务间通信管理</td>
-              <td>服务间调用复杂</td>
-            </tr>
-            <tr>
-              <td><b>不可变基础设施</b></td>
-              <td>容器镜像不可变，替换而非修改</td>
-              <td>配置漂移</td>
-            </tr>
-            <tr>
-              <td><b>声明式API</b></td>
-              <td>描述期望状态而非操作步骤</td>
-              <td>K8s编排</td>
-            </tr>
-          </table>
-
-          <h3>其他高频技术概念</h3>
-          <table>
-            <tr>
-              <th>概念</th>
-              <th>要点</th>
-            </tr>
-            <tr>
-              <td><b>CAP定理</b></td>
-              <td>一致性C、可用性A、分区容忍P，三者只能满足两个。分布式系统必选P，所以是在CA之间选。</td>
-            </tr>
-            <tr>
-              <td><b>BASE</b></td>
-              <td>Basically Available（基本可用）、Soft State（软状态）、Eventually Consistent（最终一致性）</td>
-            </tr>
-            <tr>
-              <td><b>绞杀者模式</b></td>
-              <td>单体→微服务迁移：新建微服务→路由切换→逐步替换→下线旧模块</td>
-            </tr>
-            <tr>
-              <td><b>Lambda vs Kappa</b></td>
-              <td>Lambda=批处理+流处理双通道；Kappa=只用流处理（简化版）</td>
-            </tr>
-            <tr>
-              <td><b>零信任</b></td>
-              <td>从不信任，始终验证；四大特性：身份认证、设备验证、最小权限、微隔离</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <!-- ============ S16: 加密/签名 ============ -->
-      <div class="sec" id="s16">
-        <div class="card">
-          <h2><span class="icon">🔐</span>加密与数字签名</h2>
-
-          <h3>对称 vs 非对称加密</h3>
-          <div class="vs">
-            <div class="a">
-              <div class="title">对称加密</div>
-              同一把密钥加解密<br />
-              ✅ 速度快<br />
-              ❌ 密钥分发困难<br />
-              代表：AES、DES、3DES
-            </div>
-            <div class="b">
-              <div class="title">非对称加密</div>
-              公钥加密、私钥解密<br />
-              ✅ 解决密钥分发<br />
-              ❌ 速度慢<br />
-              代表：RSA、ECC
-            </div>
-          </div>
-
-          <h3>数字签名完整流程</h3>
-          <ol>
-            <li>发送方对消息做<b>哈希</b>（摘要）</li>
-            <li>用发送方的<b>私钥</b>加密摘要 → 签名</li>
-            <li>用接收方的<b>公钥</b>加密消息 → 保密</li>
-            <li>接收方用自己的<b>私钥</b>解密消息</li>
-            <li>用发送方的<b>公钥</b>解密签名 → 验证</li>
-            <li>对消息做哈希，与解密的摘要对比</li>
-          </ol>
-
-          <div class="key">先哈希再签名（不直接签名原文，签名摘要）。签名=私钥加密摘要，验证=公钥解密摘要。</div>
-
-          <h3>密码存储</h3>
-          <div class="trap">密码存储用<b>加盐哈希</b>（Salt+Hash），不是加密！加密可逆，哈希不可逆。</div>
-        </div>
-      </div>
-
-      <!-- ============ S17: 案例话术 ============ -->
-      <div class="sec" id="s17">
-        <div class="card">
-          <h2><span class="icon">📝</span>案例答题话术模板</h2>
-
-          <h3>架构风格对比答题模板</h3>
-          <div class="formula">
-            ① 选择XX风格（结论）<br />
-            ② 优势：XX方面具有XX特点（如：事件驱动在实时性方面具有响应快的特点）<br />
-            ③ 劣势：XX方面存在XX不足<br />
-            ④ 适用场景：适合XX类型系统
-          </div>
-
-          <h3>扩展性/可修改性问法答题模板</h3>
-          <div class="formula">
-            ① 定义标准接口（接口层抽象）<br />
-            ② 采用注册机制（插件注册发现）<br />
-            ③ 使用配置化/规则化方式（声明式扩展）<br />
-            ④ 具体技术：SPI机制、策略模式、观察者模式
-          </div>
-
-          <h3>案例三步法</h3>
-          <ol>
-            <li><b>结论</b>：直接回答问题</li>
-            <li><b>具体技术名词+原理</b>：用专业术语，不用通俗描述</li>
-            <li><b>逐条对应背景条件</b>：把题目中的条件逐条回应（值2-3分）</li>
-          </ol>
-
-          <div class="trap">常见失分原因：只写关键词不展开、不用专业术语、不对应题目背景条件。</div>
-
-          <h3>分页地址转换公式</h3>
-          <div class="formula">
-            页号 = 逻辑地址 / 页面大小（整除）<br />
-            页内偏移 = 逻辑地址 % 页面大小<br />
-            物理地址 = 页框号 × 页面大小 + 页内偏移
-          </div>
-          <p>页面4KB时十六进制快速法：页号=高位部分（去掉末3位hex），偏移=末3位hex</p>
-        </div>
-      </div>
-
-      <!-- ============ S18: 内聚/耦合 ============ -->
-      <div class="sec" id="s18">
-        <div class="card">
-          <h2><span class="icon">🧩</span>内聚与耦合</h2>
-
-          <h3>七种内聚（从低到高，功能内聚最优）</h3>
-          <table>
-            <tr><th>类型</th><th>含义</th><th>类比</th></tr>
-            <tr><td><b>偶然内聚</b></td><td>几个功能硬凑在一起，毫无关联</td><td>随机分到一组的人</td></tr>
-            <tr><td><b>逻辑内聚</b></td><td>逻辑上相关的功能放一起，由参数决定执行哪个</td><td>同一类工具放一个抽屉</td></tr>
-            <tr><td><b>时间内聚</b></td><td>同一时间段执行的功能放一起</td><td>晨起流程：刷牙洗脸穿衣</td></tr>
-            <tr><td><b>过程内聚</b></td><td>按特定顺序执行的处理步骤放一起</td><td>按步骤的菜谱</td></tr>
-            <tr><td><b>通信内聚</b></td><td>操作同一数据集的功能放一起</td><td>都操作"学生表"的增删改查</td></tr>
-            <tr><td><b>顺序内聚</b></td><td>一个功能的输出是另一个的输入</td><td>流水线：A的产出给B</td></tr>
-            <tr><td><b>功能内聚</b></td><td>所有元素共同完成一个单一功能</td><td>只做一件事且做好</td></tr>
-          </table>
-
-          <h3>七种耦合（从低到高，非直接耦合最优）</h3>
-          <table>
-            <tr><th>类型</th><th>含义</th><th>类比</th></tr>
-            <tr><td><b>非直接耦合</b></td><td>两模块无直接关系，通过主模块间接联系</td><td>互不认识，通过中间人联系</td></tr>
-            <tr><td><b>数据耦合</b></td><td>只通过<b>简单数据参数</b>传递信息</td><td>只传纸条不传原件</td></tr>
-            <tr><td><b>标记耦合</b></td><td>通过<b>数据结构（记录/对象）</b>传递信息</td><td>传整个档案袋</td></tr>
-            <tr><td><b>控制耦合</b></td><td>传递<b>控制信息</b>（开关/标志），一个模块控制另一个的执行</td><td>远程遥控器</td></tr>
-            <tr><td><b>外部耦合</b></td><td>共享<b>外部数据格式/通信协议/设备</b></td><td>共用同一台打印机</td></tr>
-            <tr><td><b>公共耦合</b></td><td>共享<b>全局数据结构/公共变量</b></td><td>共用一块白板</td></tr>
-            <tr><td><b>内容耦合</b></td><td>一个模块直接访问另一个模块的<b>内部数据/代码</b></td><td>直接翻别人的抽屉</td></tr>
-          </table>
-
-          <div class="trap">考试陷阱："传递整个数据结构"是<b>标记耦合</b>不是数据耦合。数据耦合只传简单参数（int、string）。传递控制标志（flag/开关）是<b>控制耦合</b>。</div>
-        </div>
-      </div>
-
-      <!-- ============ S19: 覆盖测试 ============ -->
-      <div class="sec" id="s19">
-        <div class="card">
-          <h2><span class="icon">🧪</span>白盒测试 · 逻辑覆盖</h2>
-
-          <h3>六种覆盖强度排序（从弱到强）</h3>
-          <div class="formula">语句覆盖 &lt; 判定覆盖 &lt; 条件覆盖 &lt; 判定/条件覆盖 &lt; 条件组合覆盖 &lt; 路径覆盖</div>
-
-          <h3>逐一详解</h3>
-          <table>
-            <tr><th>覆盖类型</th><th>要求</th><th>说明</th></tr>
-            <tr><td><b>语句覆盖</b></td><td>每条语句至少执行一次</td><td>最弱，只管"跑过"，连分支都可能没覆盖全</td></tr>
-            <tr><td><b>判定覆盖</b><br>（分支覆盖）</td><td>每个判定的真假分支至少执行一次</td><td>覆盖了分支，但不管条件内部的各个子条件</td></tr>
-            <tr><td><b>条件覆盖</b></td><td>每个条件的真假至少取一次</td><td>管到每个子条件，但组合情况不一定覆盖</td></tr>
-            <tr><td><b>判定/条件覆盖</b></td><td>同时满足判定覆盖和条件覆盖</td><td>既覆盖分支又覆盖每个条件，但条件组合不一定全</td></tr>
-            <tr><td><b>条件组合覆盖</b></td><td>所有条件的<b>真假组合</b>至少出现一次</td><td>最强（除路径覆盖外），用例数最多</td></tr>
-            <tr><td><b>路径覆盖</b></td><td>覆盖程序中所有可能的执行路径</td><td>理论上最强，但路径数可能爆炸（循环导致无限路径）</td></tr>
-          </table>
-
-          <h3>快速判断技巧</h3>
-          <ul>
-            <li>题目问"最弱的覆盖" → <b>语句覆盖</b></li>
-            <li>题目问"保证每个条件真假都取到" → <b>条件覆盖</b></li>
-            <li>题目问"所有条件组合都要覆盖" → <b>条件组合覆盖</b></li>
-            <li>题目问"覆盖所有可能执行路径" → <b>路径覆盖</b></li>
-            <li>条件组合覆盖的用例数 = 2^n（n=条件个数），如2个条件→4个用例</li>
-          </ul>
-
-          <div class="trap">条件覆盖 ≠ 判定覆盖。条件覆盖管每个子条件的真假，但可能出现：每个条件都取过真假，但判定结果只取了真没取假。所以二者独立，判定/条件覆盖是同时满足两者。</div>
-
-          <h3>白盒 vs 黑盒 vs 其他</h3>
-          <table>
-            <tr><th>类型</th><th>方法</th><th>关注点</th></tr>
-            <tr><td><b>白盒测试</b></td><td>逻辑覆盖、路径分析</td><td>内部代码结构</td></tr>
-            <tr><td><b>黑盒测试</b></td><td>等价类划分、边界值分析、因果图</td><td>功能是否正确，不看代码</td></tr>
-            <tr><td><b>回归测试</b></td><td>修改后重新测试</td><td>确认修改没引入新bug</td></tr>
-          </table>
-        </div>
-      </div>
-      <!-- ============ S20: 设计模式 ============ -->
-      <div class="sec" id="s20">
-        <div class="card">
-          <h2><span class="icon">🧩</span>设计模式速查（23种）</h2>
-
-          <h3>三大分类</h3>
-          <div class="mnemonic">创建型5 + 结构型7 + 行为型11 = 23种</div>
-          <table>
-            <tr><th>类型</th><th>核心目的</th><th>包含模式</th></tr>
-            <tr><td><b>创建型</b></td><td>对象怎么创建</td><td>工厂方法、抽象工厂、单例、建造者、原型</td></tr>
-            <tr><td><b>结构型</b></td><td>类和对象怎么组合</td><td>适配器、桥接、组合、装饰器、外观、享元、代理</td></tr>
-            <tr><td><b>行为型</b></td><td>对象之间怎么交互</td><td>责任链、命令、解释器、迭代器、中介者、备忘录、观察者、状态、策略、模板方法、访问者</td></tr>
-          </table>
-
-        </div>
-
-        <div class="card">
-          <h2><span class="icon">🏭</span>创建型模式（5种）</h2>
-
-          <table>
-            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
-            <tr>
-              <td><b>工厂方法</b></td>
-              <td>定义创建对象的接口，由子类决定实例化哪个类</td>
-              <td>不知道具体要创建哪个类的实例</td>
-            </tr>
-            <tr>
-              <td><b>抽象工厂</b></td>
-              <td>创建一系列相关对象的接口，无需指定具体类</td>
-              <td>需要创建产品族（如跨平台UI组件）</td>
-            </tr>
-            <tr>
-              <td><b>单例</b></td>
-              <td>确保一个类只有一个实例+全局访问点</td>
-              <td>配置管理、线程池、日志、数据库连接池</td>
-            </tr>
-            <tr>
-              <td><b>建造者</b></td>
-              <td>将复杂对象的构建与表示分离，分步骤构建</td>
-              <td>对象有很多可选参数（如SQL查询构建）</td>
-            </tr>
-            <tr>
-              <td><b>原型</b></td>
-              <td>通过复制已有实例来创建新实例（clone）</td>
-              <td>创建成本高，复制比new更高效</td>
-            </tr>
-          </table>
-
-          <div class="trap">单例的懒汉式=第一次使用时创建（延迟加载）；饿汉式=类加载时就创建。考试经常考反。</div>
-        </div>
-
-        <div class="card">
-          <h2><span class="icon">🏗️</span>结构型模式（7种）</h2>
-
-          <table>
-            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
-            <tr>
-              <td><b>适配器</b></td>
-              <td>将一个类的接口转换为客户端期望的另一个接口</td>
-              <td>兼容旧接口、整合第三方库</td>
-            </tr>
-            <tr>
-              <td><b>桥接</b></td>
-              <td>将抽象部分与实现部分分离，使它们可以独立变化</td>
-              <td>避免多层继承爆炸（如形状×颜色）</td>
-            </tr>
-            <tr>
-              <td><b>组合</b></td>
-              <td>将对象组合成树形结构，统一处理单个对象和组合对象</td>
-              <td>文件系统、菜单树、组织架构</td>
-            </tr>
-            <tr>
-              <td><b>装饰器</b></td>
-              <td>动态地为对象添加额外职责，不修改原有类</td>
-              <td>Java IO流、为对象加功能但不想改原类</td>
-            </tr>
-            <tr>
-              <td><b>外观</b></td>
-              <td>为子系统提供一个统一的高层接口</td>
-              <td>简化复杂子系统的调用（如一键下单）</td>
-            </tr>
-            <tr>
-              <td><b>享元</b></td>
-              <td>共享细粒度对象，减少内存用量</td>
-              <td>大量相似对象（如字符编辑器中的字符对象）</td>
-            </tr>
-            <tr>
-              <td><b>代理</b></td>
-              <td>为其他对象提供代理以控制对它的访问</td>
-              <td>远程代理、虚拟代理、保护代理、缓存代理</td>
-            </tr>
-          </table>
-
-          <div class="vs">
-            <div class="a">
-              <div class="title">装饰器 vs 代理</div>
-              装饰器：<b>增强</b>功能，不改变接口<br />
-              代理：<b>控制</b>访问，可能改变行为
-            </div>
-            <div class="b">
-              <div class="title">适配器 vs 桥接</div>
-              适配器：<b>事后</b>补救，让不兼容的接口能一起工作<br />
-              桥接：<b>事前</b>设计，将抽象与实现分离
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2><span class="icon">🎯</span>行为型模式（11种 · 高频6种）</h2>
-
-          <table>
-            <tr><th>模式</th><th>核心要点</th><th>适用场景</th></tr>
-            <tr>
-              <td><b>观察者</b> <span class="tag">高频</span></td>
-              <td>一对多依赖，对象状态变化时自动通知所有观察者</td>
-              <td>事件监听、消息推送、MVC中的Model-View</td>
-            </tr>
-            <tr>
-              <td><b>策略</b> <span class="tag">高频</span></td>
-              <td>封装算法族，使它们可以互相替换</td>
-              <td>排序算法切换、支付方式选择、折扣计算</td>
-            </tr>
-            <tr>
-              <td><b>模板方法</b> <span class="tag">高频</span></td>
-              <td>定义算法骨架，将某些步骤延迟到子类实现</td>
-              <td>框架设计（如JUnit的setUp/tearDown）</td>
-            </tr>
-            <tr>
-              <td><b>命令</b> <span class="tag">高频</span></td>
-              <td>将请求封装为对象，支持撤销、队列、日志</td>
-              <td>撤销/重做操作、任务队列、宏命令</td>
-            </tr>
-            <tr>
-              <td><b>状态</b> <span class="tag">高频</span></td>
-              <td>允许对象在内部状态改变时改变其行为</td>
-              <td>订单状态机、审批流程、游戏角色状态</td>
-            </tr>
-            <tr>
-              <td><b>责任链</b> <span class="tag">高频</span></td>
-              <td>将请求沿链传递，直到有对象处理它</td>
-              <td>审批流程（员工→经理→总监）、异常处理链</td>
-            </tr>
-            <tr>
-              <td>迭代器</td>
-              <td>提供顺序访问聚合对象元素的方法，不暴露内部</td>
-              <td>遍历集合对象</td>
-            </tr>
-            <tr>
-              <td>中介者</td>
-              <td>用中介对象封装多个对象之间的交互</td>
-              <td>聊天室、航空管制、GUI组件协调</td>
-            </tr>
-            <tr>
-              <td>备忘录</td>
-              <td>在不破坏封装的前提下捕获和恢复对象内部状态</td>
-              <td>撤销操作、存档/读档</td>
-            </tr>
-            <tr>
-              <td>解释器</td>
-              <td>为语言定义文法表示，并设计解释器解释语句</td>
-              <td>正则表达式、SQL解析、数学表达式求值</td>
-            </tr>
-            <tr>
-              <td>访问者</td>
-              <td>在不修改元素类的前提下定义新操作</td>
-              <td>编译器AST遍历、文档导出（PDF/HTML）</td>
-            </tr>
-          </table>
-
-          <div class="vs">
-            <div class="a">
-              <div class="title">策略 vs 状态</div>
-              策略：客户端<b>主动选择</b>算法<br />
-              状态：对象<b>自动切换</b>行为（状态变了行为就变）
-            </div>
-            <div class="b">
-              <div class="title">观察者 vs 中介者</div>
-              观察者：一对多<b>通知</b>（发布-订阅）<br />
-              中介者：多对多<b>协调</b>（中心化通信）
-            </div>
-          </div>
-
-          <div class="trap">命令模式 vs 策略模式：命令封装的是"请求/操作"（可撤销、可排队），策略封装的是"算法/行为"（可替换）。考试常混淆。</div>
-        </div>
-
-        <div class="card">
-          <h2><span class="icon">📐</span>SOLID原则（设计模式基础）</h2>
-
-          <table>
-            <tr><th>原则</th><th>全称</th><th>含义</th></tr>
-            <tr><td><b>S</b></td><td>单一职责原则</td><td>一个类只有一个引起它变化的原因</td></tr>
-            <tr><td><b>O</b></td><td>开闭原则</td><td>对扩展开放，对修改关闭</td></tr>
-            <tr><td><b>L</b></td><td>里氏替换原则</td><td>子类可以替换父类出现的地方</td></tr>
-            <tr><td><b>I</b></td><td>接口隔离原则</td><td>客户端不应依赖它不需要的接口</td></tr>
-            <tr><td><b>D</b></td><td>依赖倒置原则</td><td>高层不依赖低层，都依赖抽象</td></tr>
-          </table>
-
-          <div class="trap">依赖倒置 ≠ 依赖注入。依赖倒置是原则（都依赖抽象），依赖注入是实现方式（由外部注入依赖）。</div>
-        </div>
-
-        <div class="card">
-          <h2><span class="icon">🎯</span>案例题高频考法</h2>
-
-          <h3>考法1：选择合适的设计模式</h3>
-          <div class="key">
-            题目关键词 → 模式：<br />
-            "动态添加职责" → <b>装饰器</b><br />
-            "接口不兼容/转换" → <b>适配器</b><br />
-            "封装请求/撤销" → <b>命令</b><br />
-            "一对多通知" → <b>观察者</b><br />
-            "算法可替换" → <b>策略</b><br />
-            "状态改变行为" → <b>状态</b><br />
-            "统一高层接口" → <b>外观</b><br />
-            "树形结构" → <b>组合</b><br />
-            "控制访问" → <b>代理</b>
-          </div>
-
-          <h3>考法2：对比两种模式的区别</h3>
-          <div class="key">
-            答题模板：<br />
-            ① 模式A的核心是XX，适用于XX场景<br />
-            ② 模式B的核心是XX，适用于XX场景<br />
-            ③ 本题场景是XX，应选XX模式
-          </div>
         </div>
       </div>
 
@@ -2009,6 +2205,110 @@
           </div>
 
           <div class="trap">考试陷阱："平均性能最好的排序"→快排。"最坏情况下仍为O(n log n)"→归并/堆排。"稳定的O(n log n)排序"→只有归并。</div>
+        </div>
+      </div>
+
+      <!-- ============ S26: 法律法规 ============ -->
+      <div class="sec" id="s26">
+        <div class="card">
+          <h2><span class="icon">⚖️</span>法律法规与知识产权</h2>
+
+          <h3>六大知识产权类型</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <tr><th>类型</th><th>取得方式</th><th>保护期限</th><th>续展</th></tr>
+            <tr>
+              <td><b>著作权</b></td>
+              <td>自动取得</td>
+              <td>作者终生+50年；单位发表后50年</td>
+              <td>不可</td>
+            </tr>
+            <tr>
+              <td><b>发明专利</b></td>
+              <td>申请+实质审查</td>
+              <td><b>20年</b>（自申请日）</td>
+              <td>不可</td>
+            </tr>
+            <tr>
+              <td><b>实用新型/外观设计</b></td>
+              <td>申请+形式审查</td>
+              <td><b>10年</b>（自申请日）</td>
+              <td>不可</td>
+            </tr>
+            <tr>
+              <td><b>商标权</b></td>
+              <td>需注册</td>
+              <td>10年（自核准注册日）</td>
+              <td><b>可以</b>，每次10年，次数不限</td>
+            </tr>
+            <tr>
+              <td><b>商业秘密</b></td>
+              <td>自动保护（需保密措施）</td>
+              <td>无固定期限</td>
+              <td>--</td>
+            </tr>
+          </table>
+          </div>
+          <div class="mnemonic">发明20实用10，商标10年可续展，著作权自动保50，商业秘密无期限</div>
+
+          <h3>软件著作权归属（高频！）</h3>
+          <table>
+            <tr><th>场景</th><th>无约定时归属</th></tr>
+            <tr><td>职务开发（本职工作）</td><td>归<b>单位</b></td></tr>
+            <tr><td>非职务开发（个人）</td><td>归<b>开发者个人</b></td></tr>
+            <tr><td>委托开发</td><td>归<b>受托人</b>（实际开发者）</td></tr>
+            <tr><td>合作开发</td><td><b>共同享有</b></td></tr>
+          </table>
+          <div class="trap">委托开发无约定时归<b>受托人（开发者）</b>，不是出资的委托方！出资≠有著作权。</div>
+          <div class="trap">"必须登记才能获得著作权"→错！著作权自软件开发<b>完成之日</b>起自动产生。</div>
+
+          <h3>软件著作权的权利</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:60px;white-space:nowrap"><col><col></colgroup>
+            <tr><th>类别</th><th>权利</th><th>保护期</th></tr>
+            <tr><td rowspan="4"><b>人身权</b></td><td>发表权</td><td>50年</td></tr>
+            <tr><td>署名权（开发者身份权）</td><td><b>永久</b></td></tr>
+            <tr><td>修改权</td><td><b>永久</b></td></tr>
+            <tr><td>保护作品完整权</td><td><b>永久</b></td></tr>
+            <tr><td><b>财产权</b></td><td>使用权、复制权、发行权、出租权、翻译权、转让权等</td><td>50年</td></tr>
+          </table>
+          </div>
+          <div class="trap">发表权是人身权但有50年期限；署名权、修改权才是<b>真正永久</b>的。</div>
+
+          <h3>专利申请原则</h3>
+          <div class="formula">先申请原则（不是先发明！）| 单一性原则 | 书面原则</div>
+          <div class="trap">中国专利采用<b>"先申请原则"</b>。两人同日申请→协商确定。商标采用"先注册原则"。</div>
+
+          <h3>合理使用（不构成侵权）</h3>
+          <div class="key">
+            以下可不经许可、不付报酬（但需指明作者）：<br />
+            ① 个人学习、研究或欣赏<br />
+            ② 课堂教学或科学研究（少量复制）<br />
+            ③ 国家机关执行公务<br />
+            ④ 新闻报道中不可避免地引用<br />
+            ⑤ 为介绍/评论某一作品而适当引用<br />
+            ⑥ 免费表演（未收费也未付报酬）<br />
+            ⑦ 翻译成少数民族语言文字在国内出版
+          </div>
+
+          <h3>侵权判断速判</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col><col style="min-width:60px;white-space:nowrap"><col></colgroup>
+            <tr><th>情形</th><th>结果</th><th>理由</th></tr>
+            <tr><td>个人学习复制一份</td><td>不侵权</td><td>合理使用</td></tr>
+            <tr><td>课堂教学少量复制</td><td>不侵权</td><td>合理使用</td></tr>
+            <tr><td>企业内部用盗版软件</td><td><b style="color:#e53935">侵权</b></td><td>非个人学习</td></tr>
+            <tr><td>独立创作相同作品</td><td>不侵权</td><td>独立创作≠抄袭</td></tr>
+            <tr><td>个人学习但放到网上传播</td><td><b style="color:#e53935">侵权</b></td><td>超出合理使用</td></tr>
+            <tr><td>保护期满后使用</td><td>不侵权</td><td>进入公共领域（仍需署名）</td></tr>
+          </table>
+          </div>
+
+          <h3>商业秘密四要件</h3>
+          <div class="formula">秘密性 + 价值性 + 实用性 + 保密性</div>
+          <div class="tips">商业秘密泄密即丧失保护。一旦公开，不再构成商业秘密。</div>
         </div>
       </div>
 
@@ -2223,305 +2523,6 @@
           </ol>
         </div>
       </div>
-      <!-- ============ S23: 4+1视图 ============ -->
-      <div class="sec" id="s23">
-        <div class="card">
-          <h2><span class="icon">🔭</span>Kruchten 4+1 视图模型</h2>
-
-          <h3>五个视图总览</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <colgroup><col style="min-width:7em"><col style="min-width:12em"><col style="min-width:10em"><col style="min-width:8em"></colgroup>
-            <tr><th>视图</th><th>关注点</th><th>对应UML图</th><th>使用者</th></tr>
-            <tr>
-              <td><b>逻辑视图</b></td>
-              <td>功能需求、领域模型、"做什么"</td>
-              <td>类图、对象图、状态图</td>
-              <td>最终用户</td>
-            </tr>
-            <tr>
-              <td><b>进程视图</b></td>
-              <td>并发、同步、运行时、"怎么运行"</td>
-              <td>活动图、序列图、通信图</td>
-              <td>系统集成者</td>
-            </tr>
-            <tr>
-              <td><b>开发视图</b></td>
-              <td>模块划分、代码结构、"怎么组织代码"</td>
-              <td>包图、组件图</td>
-              <td>程序员</td>
-            </tr>
-            <tr>
-              <td><b>物理视图</b></td>
-              <td>软件→硬件映射、"怎么部署"</td>
-              <td>部署图</td>
-              <td>系统工程师</td>
-            </tr>
-            <tr>
-              <td><b>场景视图(+1)</b></td>
-              <td>用例驱动，串联验证其他四个</td>
-              <td>用例图</td>
-              <td>所有利益相关者</td>
-            </tr>
-          </table>
-          </div>
-
-          <div class="mnemonic">速记：逻做什、进怎么跑、开怎么码、物怎么装、场串起来</div>
-
-          <h3>静态 vs 动态</h3>
-          <div class="vs">
-            <div class="a">
-              <div class="title">静态结构</div>
-              逻辑视图、开发视图<br>描述系统的<b>结构组成</b>
-            </div>
-            <div class="b">
-              <div class="title">动态结构</div>
-              进程视图、物理视图<br>描述系统的<b>运行与部署</b>
-            </div>
-          </div>
-
-          <div class="trap">"物理视图"也叫"部署视图"，是同一概念的不同译法。"开发视图"也叫"实现视图"。</div>
-          <div class="trap">别混淆Hofmeister四视图（概念/模块/执行/代码），与Kruchten的4+1不同！</div>
-        </div>
-      </div>
-
-      <!-- ============ S24: 开发模型 ============ -->
-      <div class="sec" id="s24">
-        <div class="card">
-          <h2><span class="icon">🔄</span>系统开发方法对比</h2>
-          <h3>六大开发模型</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <colgroup><col style="min-width:4em"><col style="min-width:10em"><col style="min-width:8em"><col></colgroup>
-            <tr><th>模型</th><th>核心特点</th><th>适用场景</th><th>关键词</th></tr>
-            <tr><td><b>瀑布模型</b></td><td>线性顺序、文档驱动、阶段间有里程碑</td><td>需求明确、变更少</td><td>文档驱动、阶段固化</td></tr>
-            <tr><td><b>原型模型</b></td><td>快速构建初步版本确认需求</td><td>需求不明确</td><td>需求模糊、快速验证</td></tr>
-            <tr><td><b>螺旋模型</b></td><td>风险驱动、迭代、每圈含四阶段（目标/风险/开发/评审）</td><td>大型复杂、高风险</td><td>风险分析、迭代</td></tr>
-            <tr><td><b>增量模型</b></td><td>分批交付、每次交付一个可用增量</td><td>需要快速交付部分功能</td><td>分批交付、逐步完善</td></tr>
-            <tr><td><b>喷泉模型</b></td><td>面向对象、迭代无间隙（各阶段可交叉）</td><td>OO开发项目</td><td>无间隙、迭代、面向对象</td></tr>
-            <tr><td><b>敏捷方法</b></td><td>拥抱变化、人本主义、短迭代、持续反馈</td><td>需求变化频繁</td><td>Scrum、迭代、拥抱变化</td></tr>
-          </table>
-          </div>
-          <div class="tips">考试常考"给场景选模型"——看需求是否明确、项目规模、风险高低。</div>
-          <h3>RUP四阶段</h3>
-          <div class="formula"><b>初始</b>（确定范围）→ <b>细化</b>（架构设计）→ <b>构造</b>（编码测试）→ <b>移交</b>（部署交付）</div>
-          <div class="trap">RUP是<b>用例驱动、以架构为中心、迭代增量</b>的开发过程。不要和瀑布混淆。</div>
-          <h3>需求工程方法速查</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <colgroup><col style="min-width:8em"><col></colgroup>
-            <tr><th>方法</th><th>说明</th></tr>
-            <tr><td><b>访谈</b></td><td>面对面问用户（考试标准术语，不是"口头问答"）</td></tr>
-            <tr><td><b>原型法</b></td><td>快速做初步版本确认需求（不是"快速模型"）</td></tr>
-            <tr><td><b>问卷调查</b></td><td>发给大量用户填</td></tr>
-            <tr><td><b>头脑风暴</b></td><td>大家坐一起想</td></tr>
-            <tr><td><b>观察法</b></td><td>跟着用户上班看（常考）</td></tr>
-            <tr><td><b>文档分析</b></td><td>读现有系统文档</td></tr>
-          </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ S25: Redis缓存 ============ -->
-      <div class="sec" id="s25">
-        <div class="card">
-          <h2><span class="icon">⚡</span>Redis 缓存三大问题</h2>
-
-          <h3>雪崩 / 击穿 / 穿透 速判</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <colgroup><col style="min-width:4em"><col style="min-width:14em"><col style="min-width:14em"></colgroup>
-            <tr><th>问题</th><th>是什么</th><th>解决方案</th></tr>
-            <tr>
-              <td><b>雪崩</b></td>
-              <td>大量缓存<b>同时过期</b>，或Redis宕机，瞬间所有请求打到数据库</td>
-              <td>① 过期时间加随机偏移（避免同时失效）<br/>② 热点数据永不过期<br/>③ Redis集群（高可用）<br/>④ 限流+降级</td>
-            </tr>
-            <tr>
-              <td><b>击穿</b></td>
-              <td>某个<b>热点key过期</b>的瞬间，大量并发请求同时打到数据库</td>
-              <td>① 互斥锁（只放一个请求去查DB）<br/>② 热点key永不过期<br/>③ 提前异步刷新</td>
-            </tr>
-            <tr>
-              <td><b>穿透</b></td>
-              <td>查询<b>根本不存在</b>的数据（缓存和DB都没有），每次请求都穿透到数据库</td>
-              <td>① 布隆过滤器（前置拦截）<br/>② 缓存空值（key→null，设短TTL）<br/>③ 参数校验（拦截非法请求）</td>
-            </tr>
-          </table>
-          </div>
-          <div class="trap">
-            <b>记忆口诀</b>：<br/>
-            雪崩 = <b>大面积同时过期</b>（像雪崩一样大面积坍塌）<br/>
-            击穿 = <b>一个热点key被突破</b>（像子弹击穿靶心）<br/>
-            穿透 = <b>查不存在的数据，缓存形同虚设</b>（直接穿透到DB）<br/><br/>
-            <b>三者共同危害</b>：数据库承受不住瞬间高并发→宕机→级联故障
-          </div>
-
-          <h3>Redis 五大数据结构</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <colgroup><col style="min-width:5em"><col style="min-width:10em"><col></colgroup>
-            <tr><th>类型</th><th>适用场景</th><th>典型操作</th></tr>
-            <tr><td>String</td><td>缓存、计数器、分布式锁</td><td>SET/GET, INCR, SETNX</td></tr>
-            <tr><td>Hash</td><td>对象存储（用户信息）</td><td>HSET/HGET, HMGET</td></tr>
-            <tr><td>List</td><td>消息队列、最新列表</td><td>LPUSH/RPOP, LRANGE</td></tr>
-            <tr><td>Set</td><td>去重、交集/并集运算</td><td>SADD, SINTER, SUNION</td></tr>
-            <tr><td>ZSet</td><td>排行榜、带权重的队列</td><td>ZADD, ZRANGEBYSCORE</td></tr>
-          </table>
-          </div>
-          <div class="tips"><b>SETNX</b>（Set if Not eXists）是实现分布式锁的核心命令。搭配过期时间使用：SETNX + EXPIRE。</div>
-
-          <h3>Redis 淘汰策略（内存满时）</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <colgroup><col style="min-width:10em"><col></colgroup>
-            <tr><th>策略</th><th>说明</th></tr>
-            <tr><td>volatile-lru</td><td>从<b>已设过期时间</b>的key中淘汰最久未使用的</td></tr>
-            <tr><td>allkeys-lru</td><td>从<b>所有key</b>中淘汰最久未使用的（最常用）</td></tr>
-            <tr><td>volatile-ttl</td><td>从已设过期时间的key中淘汰<b>剩余时间最短</b>的</td></tr>
-            <tr><td>noeviction</td><td>不淘汰，内存满直接报错（默认）</td></tr>
-          </table>
-          </div>
-
-          <h3>缓存优化方案</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <tr><th>问题</th><th>优化措施</th><th>具体技术</th></tr>
-            <tr>
-              <td><b>雪崩</b></td>
-              <td>TTL随机偏移 + 高可用集群</td>
-              <td>过期时间 = 基础TTL + random(0,300s)；Redis Sentinel/Cluster主从切换；本地缓存Caffeine兜底</td>
-            </tr>
-            <tr>
-              <td><b>击穿</b></td>
-              <td>互斥锁 + 逻辑过期</td>
-              <td>SETNX获取锁→查DB→写缓存→释放锁；或value中存逻辑过期时间，过期后异步更新</td>
-            </tr>
-            <tr>
-              <td><b>穿透</b></td>
-              <td>布隆过滤器 + 缓存空值</td>
-              <td>BF用多个哈希函数判断key是否可能存在；查不到的key缓存null并设短TTL（60s）</td>
-            </tr>
-          </table>
-          </div>
-
-          <h3>Redis 通用优化</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <tr><th>优化方向</th><th>方案</th><th>说明</th></tr>
-            <tr><td>读写分离</td><td>主写从读</td><td>Master处理写，多个Slave处理读，减轻单节点压力</td></tr>
-            <tr><td>持久化选择</td><td>RDB/AOF按场景选</td><td>RDB快但可能丢数据；AOF安全但慢；混合持久化兼顾两者</td></tr>
-            <tr><td>大key拆分</td><td>分片/压缩</td><td>单个value超过10KB建议拆分，避免阻塞单线程；用<code>unlink</code>异步删除</td></tr>
-            <tr><td>连接池</td><td>复用连接</td><td>避免频繁TCP握手，设maxTotal/maxIdle/minIdle参数</td></tr>
-          </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ S26: 法律法规 ============ -->
-      <div class="sec" id="s26">
-        <div class="card">
-          <h2><span class="icon">⚖️</span>法律法规与知识产权</h2>
-
-          <h3>六大知识产权类型</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <tr><th>类型</th><th>取得方式</th><th>保护期限</th><th>续展</th></tr>
-            <tr>
-              <td><b>著作权</b></td>
-              <td>自动取得</td>
-              <td>作者终生+50年；单位发表后50年</td>
-              <td>不可</td>
-            </tr>
-            <tr>
-              <td><b>发明专利</b></td>
-              <td>申请+实质审查</td>
-              <td><b>20年</b>（自申请日）</td>
-              <td>不可</td>
-            </tr>
-            <tr>
-              <td><b>实用新型/外观设计</b></td>
-              <td>申请+形式审查</td>
-              <td><b>10年</b>（自申请日）</td>
-              <td>不可</td>
-            </tr>
-            <tr>
-              <td><b>商标权</b></td>
-              <td>需注册</td>
-              <td>10年（自核准注册日）</td>
-              <td><b>可以</b>，每次10年，次数不限</td>
-            </tr>
-            <tr>
-              <td><b>商业秘密</b></td>
-              <td>自动保护（需保密措施）</td>
-              <td>无固定期限</td>
-              <td>--</td>
-            </tr>
-          </table>
-          </div>
-          <div class="mnemonic">发明20实用10，商标10年可续展，著作权自动保50，商业秘密无期限</div>
-
-          <h3>软件著作权归属（高频！）</h3>
-          <table>
-            <tr><th>场景</th><th>无约定时归属</th></tr>
-            <tr><td>职务开发（本职工作）</td><td>归<b>单位</b></td></tr>
-            <tr><td>非职务开发（个人）</td><td>归<b>开发者个人</b></td></tr>
-            <tr><td>委托开发</td><td>归<b>受托人</b>（实际开发者）</td></tr>
-            <tr><td>合作开发</td><td><b>共同享有</b></td></tr>
-          </table>
-          <div class="trap">委托开发无约定时归<b>受托人（开发者）</b>，不是出资的委托方！出资≠有著作权。</div>
-          <div class="trap">"必须登记才能获得著作权"→错！著作权自软件开发<b>完成之日</b>起自动产生。</div>
-
-          <h3>软件著作权的权利</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <colgroup><col style="min-width:60px;white-space:nowrap"><col><col></colgroup>
-            <tr><th>类别</th><th>权利</th><th>保护期</th></tr>
-            <tr><td rowspan="4"><b>人身权</b></td><td>发表权</td><td>50年</td></tr>
-            <tr><td>署名权（开发者身份权）</td><td><b>永久</b></td></tr>
-            <tr><td>修改权</td><td><b>永久</b></td></tr>
-            <tr><td>保护作品完整权</td><td><b>永久</b></td></tr>
-            <tr><td><b>财产权</b></td><td>使用权、复制权、发行权、出租权、翻译权、转让权等</td><td>50年</td></tr>
-          </table>
-          </div>
-          <div class="trap">发表权是人身权但有50年期限；署名权、修改权才是<b>真正永久</b>的。</div>
-
-          <h3>专利申请原则</h3>
-          <div class="formula">先申请原则（不是先发明！）| 单一性原则 | 书面原则</div>
-          <div class="trap">中国专利采用<b>"先申请原则"</b>。两人同日申请→协商确定。商标采用"先注册原则"。</div>
-
-          <h3>合理使用（不构成侵权）</h3>
-          <div class="key">
-            以下可不经许可、不付报酬（但需指明作者）：<br />
-            ① 个人学习、研究或欣赏<br />
-            ② 课堂教学或科学研究（少量复制）<br />
-            ③ 国家机关执行公务<br />
-            ④ 新闻报道中不可避免地引用<br />
-            ⑤ 为介绍/评论某一作品而适当引用<br />
-            ⑥ 免费表演（未收费也未付报酬）<br />
-            ⑦ 翻译成少数民族语言文字在国内出版
-          </div>
-
-          <h3>侵权判断速判</h3>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table>
-            <colgroup><col><col style="min-width:60px;white-space:nowrap"><col></colgroup>
-            <tr><th>情形</th><th>结果</th><th>理由</th></tr>
-            <tr><td>个人学习复制一份</td><td>不侵权</td><td>合理使用</td></tr>
-            <tr><td>课堂教学少量复制</td><td>不侵权</td><td>合理使用</td></tr>
-            <tr><td>企业内部用盗版软件</td><td><b style="color:#e53935">侵权</b></td><td>非个人学习</td></tr>
-            <tr><td>独立创作相同作品</td><td>不侵权</td><td>独立创作≠抄袭</td></tr>
-            <tr><td>个人学习但放到网上传播</td><td><b style="color:#e53935">侵权</b></td><td>超出合理使用</td></tr>
-            <tr><td>保护期满后使用</td><td>不侵权</td><td>进入公共领域（仍需署名）</td></tr>
-          </table>
-          </div>
-
-          <h3>商业秘密四要件</h3>
-          <div class="formula">秘密性 + 价值性 + 实用性 + 保密性</div>
-          <div class="tips">商业秘密泄密即丧失保护。一旦公开，不再构成商业秘密。</div>
-        </div>
-      </div>
-
     </div>
     <!-- /content -->
 
