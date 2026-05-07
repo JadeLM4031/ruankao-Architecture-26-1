@@ -2341,6 +2341,8 @@
             <tr><td>分布式</td><td>分布式架构</td><td>节点协作与数据一致性</td><td>任务调度中心、多副本冗余、心跳故障检测</td></tr>
             <tr><td>大数据</td><td>大数据处理架构</td><td>海量巡检数据的存储与计算</td><td>分布式文件存储、并行计算、分层数据处理</td></tr>
             <tr><td>可靠性</td><td>高可用架构</td><td>系统可靠性保障</td><td>冗余部署、故障自动转移、熔断降级</td></tr>
+            <tr><td>云原生</td><td>云原生架构</td><td>容器化与弹性伸缩</td><td>Docker容器化、K8s编排管理、滚动发布、服务网格</td></tr>
+            <tr><td>安全性</td><td>安全架构</td><td>数据安全与访问控制</td><td>分层加密、RBAC权限、JWT认证、审计日志</td></tr>
           </table>
         </div>
 
@@ -2365,18 +2367,18 @@
           <div class="tips">建议首选背<b>模块B</b>（覆盖6个方向），再背<b>模块C</b>作为备用（覆盖4个方向）。两个模块覆盖全部11个方向。</div>
 
           <div class="essay-h3">模块B：微服务/SOA（最通用 ⭐）</div>
-          <div class="essay-fixed">面向服务架构（SOA）是一种将业务功能划分为独立服务单元的架构方法，通过标准接口和协议实现服务间的松耦合协作。SOA的核心原则包括：<b>服务自治</b>（每个服务独立部署和演进）、<b>接口标准化</b>（统一的通信协议和数据格式）、<b>松耦合</b>（服务间依赖最小化）、<b>服务可重用</b>（通用服务可被多个业务流程调用）。微服务架构是SOA的进一步演进，强调更细粒度的服务拆分、独立的数据存储和去中心化的治理。其关键技术包括服务注册与发现、API网关、负载均衡、熔断降级、分布式配置中心等。相较于传统单体架构，微服务在可扩展性、可维护性和技术栈灵活性方面具有显著优势，但也引入了服务间通信、数据一致性和运维复杂度等新的挑战。</div>
+          <div class="essay-fixed">在本项目中，由于巡检业务涉及航线规划、数据采集、点云解析、缺陷识别、结果派发等多个环节，各环节的迭代频率和技术栈需求差异较大。例如AI缺陷识别模块需要频繁更新模型，而航线规划模块相对稳定。如果采用传统单体架构，任何模块的修改都需要重新部署整个系统，风险高、效率低。因此我决定采用面向服务架构（SOA），将系统按业务功能拆分为独立服务。SOA的核心原则包括：<b>服务自治</b>（在我的项目中，每个服务独立部署和升级，AI模块3个月迭代4个版本而不影响其他服务）、<b>接口标准化</b>（统一采用RESTful API，所有接口遵循/api/v1/资源名的命名规范）、<b>松耦合</b>（服务间通过消息队列异步通信，一方宕机不影响另一方）、<b>服务可重用</b>（点云解析服务可同时被巡检任务和数据分析模块调用）。微服务架构是SOA的进一步演进，强调更细粒度的服务拆分、独立的数据存储和去中心化的治理，但也引入了服务间通信、数据一致性和运维复杂度等新的挑战。</div>
           <div class="essay-combo"><b>适用方向</b>：微服务、SOA、云原生、系统安全性、自动化测试、大部分通用题目（6个方向）</div>
 
           <div class="essay-h3">模块C：大数据处理</div>
-          <div class="essay-fixed">大数据处理是指对海量、多源、异构数据进行采集、存储、计算和分析的技术体系。其核心特征可用"5V"概括：<b>Volume</b>（数据量大）、<b>Velocity</b>（处理速度快）、<b>Variety</b>（数据类型多样）、<b>Value</b>（价值密度低）、<b>Veracity</b>（数据真实性）。关键技术包括：分布式存储（如HDFS、对象存储）实现数据的分块冗余存储；分布式计算（如MapReduce、Spark）实现多节点并行处理；流式计算实现实时数据处理。在架构设计中，需要根据数据特征和业务需求选择合适的存储和计算方案，在性能、成本和一致性之间做出权衡。湖仓一体（Lakehouse）是近年的重要发展方向，融合了数据湖的灵活存储和数据仓库的事务一致性，通过统一存储层实现ACID事务支持和Schema管理。</div>
+          <div class="essay-fixed">在本项目中，无人机单次巡检可生成数十GB的点云与影像数据，日均数据量超过200GB，且包含点云、图像、结构化报告等多种数据类型。这些数据具备典型的大数据特征：<b>Volume</b>（日均200GB，总量已达PB级）、<b>Velocity</b>（巡检数据要求30分钟内完成解析）、<b>Variety</b>（点云、图像、日志等异构数据）、<b>Value</b>（海量数据中真正有价值的缺陷信息占比极低）、<b>Veracity</b>（传感器噪声和天气干扰影响数据质量）。面对这种数据规模，传统单机处理方式完全无法胜任。需要引入分布式存储实现大文件的分块冗余存储，采用并行计算框架将点云按空间区域分块后多节点同时处理，并通过流式计算实现实时缺陷告警。在架构设计中，需要在处理性能、存储成本和数据一致性之间做出权衡。</div>
           <div class="essay-combo"><b>适用方向</b>：大数据处理、湖仓一体、AI/智能化、数据库设计（4个方向）</div>
 
           <div class="essay-h3">模块A：分布式系统（备用）</div>
-          <div class="essay-fixed">分布式系统是由多台通过网络互联、协同完成任务的计算机节点组成的系统，对外呈现统一的逻辑整体。其核心特征包括：<b>节点自治性</b>（各节点独立运行）、<b>操作透明性</b>（用户无需感知数据分布）、<b>资源共享</b>（跨节点的资源访问）。分布式系统面临三大挑战：一是<b>性能挑战</b>，网络通信延迟和数据分布导致响应时间增加，需通过缓存、并行计算和负载均衡优化；二是<b>可用性挑战</b>，节点故障可能导致服务中断，需通过冗余部署和故障检测保障；三是<b>一致性挑战</b>，CAP定理指出一致性、可用性和分区容忍性三者不可兼得，需根据业务场景在强一致性和最终一致性之间权衡。</div>
+          <div class="essay-fixed">在本项目中，系统需要同时管理多台无人机执行巡检任务，涉及点云解析、航线规划、缺陷识别等多个服务节点的协同工作，属于典型的分布式系统架构。其核心特征包括：<b>节点自治性</b>（各服务独立运行和部署）、<b>操作透明性</b>（用户无需感知数据分布在哪个节点）、<b>资源共享</b>（跨节点的存储和计算能力统一调度）。在架构设计过程中，我重点面临三大挑战：<b>性能方面</b>，单节点解析10GB点云需2小时，远超30分钟的业务要求，海量数据的分布式处理成为首要难题；<b>可用性方面</b>，巡检任务一旦开始不允许中断，任何节点故障都不能影响整体任务执行；<b>一致性方面</b>，点云解析完成后必须可靠地通知派发服务，消息丢失会导致巡检结果遗漏。根据CAP定理，一致性、可用性和分区容忍性三者不可兼得，需要根据业务场景做出权衡。</div>
 
           <div class="essay-h3">模块E：系统可靠性（备用）</div>
-          <div class="essay-fixed">系统可靠性是指系统在规定条件下和规定时间内完成功能的能力。核心指标包括：<b>MTTF</b>（平均无故障时间）、<b>MTTR</b>（平均修复时间）、<b>可用性</b>=MTBF/(MTBF+MTTR)。提升可靠性的主要策略包括：<b>冗余设计</b>（多副本部署消除单点故障）、<b>故障检测</b>（心跳机制、健康检查）、<b>故障恢复</b>（自动转移、熔断降级、限流）、<b>容错设计</b>（重试机制、补偿事务、幂等性保障）。可靠性需要在成本和可用性之间权衡——更高的可靠性意味着更多的冗余资源和更复杂的运维。</div>
+          <div class="essay-fixed">在本项目中，系统可靠性直接关系到电力巡检的安全。如果巡检任务执行到一半系统崩溃，无人机可能悬停在高压线附近无法返航，存在严重的安全隐患。因此我对系统可靠性提出了明确指标：整体可用性不低于99.7%，核心服务故障恢复时间不超过30秒。可靠性设计的核心指标包括：<b>MTTF</b>（平均无故障时间，我要求核心服务MTTF不低于720小时）、<b>MTTR</b>（平均修复时间）、<b>可用性</b>=MTBF/(MTBF+MTTR)。在架构层面，我需要重点考虑：<b>冗余设计</b>（关键服务至少2个实例，消除单点故障）、<b>故障检测</b>（心跳机制每5秒一次，及时发现异常）、<b>故障恢复</b>（自动转移、熔断降级，防止级联故障）、<b>容错设计</b>（消息重试、补偿事务、幂等性保障，确保数据不丢失）。可靠性需要在成本和可用性之间权衡——更高的可靠性意味着更多的冗余资源和更复杂的运维。</div>
         </div>
 
         <!-- 第三部分：方案 -->
@@ -2394,8 +2396,8 @@
           <div class="essay-h3">方案C：大数据处理架构</div>
           <div class="essay-fixed">在本项目中，我设计了分层数据处理架构。原始数据层存储无人机采集的点云和影像，采用分布式文件系统实现高吞吐读写。处理层采用并行计算框架，将点云按空间区域分块分配至多节点同时处理。结果层将解析后的结构化数据存储至关系型数据库，支持业务查询和报表分析。通过消息队列连接各层，实现数据异步流转和最终一致性。</div>
 
-          <div class="essay-h3">方案D：容器化部署</div>
-          <div class="essay-fixed">在本项目中，我将各服务以Docker容器形式打包，通过Kubernetes编排管理。通过HPA机制根据CPU使用率自动调整实例数。服务更新采用滚动发布策略，新版本逐步替换旧版本，避免整体停机。容器化实现了环境一致性，消除了"在我机器上能跑"的问题。</div>
+          <div class="essay-h3">方案D：容器化部署（云原生方向用）</div>
+          <div class="essay-fixed">在本项目中，我将各服务以Docker容器形式打包，通过Kubernetes编排管理。每个服务拥有独立的数据库实例，通过Service实现服务间通信，避免了传统共享数据库带来的耦合问题。通过HPA机制根据CPU使用率自动调整实例数。服务更新采用滚动发布策略，新版本逐步替换旧版本，避免整体停机。容器化实现了环境一致性，消除了"在我机器上能跑"的问题。数据库同样容器化部署，利用持久卷（PV/PVC）保障数据持久化存储，主从复制实现读写分离。</div>
         </div>
 
         <!-- 第三部分：故事 -->
@@ -2488,7 +2490,9 @@
         <!-- 质量属性速查 -->
         <div class="card">
           <h2><span class="icon">⭐</span>质量属性 → 技术策略速查</h2>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
           <table>
+            <colgroup><col style="min-width:90px;white-space:nowrap"><col><col></colgroup>
             <tr><th>质量属性</th><th>题目关键词</th><th>技术策略</th></tr>
             <tr><td><b>性能</b></td><td>响应时间、吞吐量、并发</td><td>缓存、并行计算、GPU加速、异步消息队列、负载均衡</td></tr>
             <tr><td><b>可用性</b></td><td>不中断、故障恢复、高可靠</td><td>多副本部署、心跳检测、故障自动转移、熔断降级</td></tr>
@@ -2497,6 +2501,7 @@
             <tr><td><b>安全性</b></td><td>数据安全、访问控制</td><td>TLS/AES加密、RBAC、Token认证、审计日志</td></tr>
             <tr><td><b>可维护性</b></td><td>运维便利、日志监控</td><td>容器化、统一日志、链路追踪</td></tr>
           </table>
+          </div>
         </div>
 
         <!-- 考场策略 -->
@@ -2521,6 +2526,93 @@
             <li><b>第四优先</b>：第四部分总结（200字）→ 固定句式</li>
             <li><b>选背</b>：模块C理论（250字）→ 覆盖大数据/AI/数据库</li>
           </ol>
+        </div>
+
+        <!-- 常用技术速查 -->
+        <div class="card">
+          <h2><span class="icon">🧰</span>考什么题 → 写什么技术</h2>
+          <div class="tips">按题目方向分类，每个方向只需要记住表里的几个技术名，考场直接填进模板。</div>
+
+          <h3>⭐ 微服务 / SOA（最高频）</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:90px;white-space:nowrap"><col style="min-width:100px;white-space:nowrap"><col style="min-width:240px"></colgroup>
+            <tr><th>用途</th><th>技术</th><th>论文里怎么写</th></tr>
+            <tr><td>服务拆分</td><td><b>RESTful API</b></td><td>服务间通过RESTful接口通信，每个服务独立数据库，高内聚低耦合</td></tr>
+            <tr><td>服务注册</td><td><b>Nacos</b></td><td>服务启动时注册到Nacos，调用方动态获取实例列表，新增节点自动发现</td></tr>
+            <tr><td>API网关</td><td><b>Spring Cloud Gateway</b></td><td>统一入口，路由转发+身份认证+限流，外部请求先到网关再分发</td></tr>
+            <tr><td>异步通信</td><td><b>RabbitMQ</b></td><td>非实时任务通过消息队列异步处理，开启持久化和ACK防止消息丢失</td></tr>
+            <tr><td>熔断降级</td><td><b>Sentinel</b></td><td>服务异常时自动熔断返回降级结果，防止级联故障拖垮整个系统</td></tr>
+            <tr><td>缓存</td><td><b>Redis</b></td><td>热点数据缓存到Redis减少数据库压力，TTL+随机偏移防止雪崩</td></tr>
+            <tr><td>容器部署</td><td><b>Docker + K8s</b></td><td>服务打包Docker镜像，K8s编排管理，滚动发布零停机更新</td></tr>
+          </table>
+          </div>
+
+          <h3>⭐ 分布式系统</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:90px;white-space:nowrap"><col style="min-width:100px;white-space:nowrap"><col style="min-width:240px"></colgroup>
+            <tr><th>用途</th><th>技术</th><th>论文里怎么写</th></tr>
+            <tr><td>负载均衡</td><td><b>Nginx</b></td><td>Nginx反向代理，加权轮询分发请求至多个节点，避免单点过载</td></tr>
+            <tr><td>分布式锁</td><td><b>Redis SETNX</b></td><td>用SETNX+过期时间实现分布式锁，防止多节点重复处理同一任务</td></tr>
+            <tr><td>任务调度</td><td><b>XXL-Job</b></td><td>分布式任务调度中心，最小负载优先分配，节点故障自动迁移任务</td></tr>
+            <tr><td>心跳检测</td><td><b>自定义/框架</b></td><td>每5秒心跳，失联超30秒自动剔除故障节点并迁移任务</td></tr>
+            <tr><td>数据一致性</td><td><b>消息持久化+补偿</b></td><td>消息队列开启持久化+消费确认，补偿任务定时扫描未同步数据</td></tr>
+            <tr><td>冗余部署</td><td><b>多副本</b></td><td>关键服务至少2个实例，消除单点故障，整体可用性达99.7%</td></tr>
+          </table>
+          </div>
+
+          <h3>大数据处理 / 湖仓一体</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:90px;white-space:nowrap"><col style="min-width:100px;white-space:nowrap"><col style="min-width:240px"></colgroup>
+            <tr><th>用途</th><th>技术</th><th>论文里怎么写</th></tr>
+            <tr><td>并行计算</td><td><b>Spark</b></td><td>数据按区域分块提交Spark集群并行处理，内存计算减少磁盘IO</td></tr>
+            <tr><td>消息总线</td><td><b>Kafka</b></td><td>各层数据通过Kafka异步流转，解耦生产者和消费者，支持回溯消费</td></tr>
+            <tr><td>流式处理</td><td><b>Flink</b></td><td>实时消费Kafka数据计算告警，支持窗口聚合和状态管理，秒级延迟</td></tr>
+            <tr><td>文件存储</td><td><b>HDFS / MinIO</b></td><td>大文件分块存储，3副本保证可靠性，支持高吞吐读写</td></tr>
+            <tr><td>数据仓库</td><td><b>Hive / ClickHouse</b></td><td>历史数据入仓做离线分析，ClickHouse支撑海量数据秒级查询</td></tr>
+          </table>
+          </div>
+
+          <h3>云原生</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:90px;white-space:nowrap"><col style="min-width:100px;white-space:nowrap"><col style="min-width:240px"></colgroup>
+            <tr><th>用途</th><th>技术</th><th>论文里怎么写</th></tr>
+            <tr><td>容器化</td><td><b>Docker</b></td><td>每个服务打包Docker镜像，统一环境消除"在我机器上能跑"问题</td></tr>
+            <tr><td>编排管理</td><td><b>Kubernetes</b></td><td>K8s管理容器生命周期，HPA根据CPU自动扩缩容，滚动发布零停机</td></tr>
+            <tr><td>服务网格</td><td><b>Istio</b></td><td>通过Sidecar代理实现服务间流量管理、熔断限流，业务代码零侵入</td></tr>
+            <tr><td>CI/CD</td><td><b>Jenkins</b></td><td>代码提交自动触发构建→测试→部署流水线，减少人工操作失误</td></tr>
+            <tr><td>配置中心</td><td><b>Nacos</b></td><td>配置集中管理，修改后实时推送，无需重启服务</td></tr>
+          </table>
+          </div>
+
+          <h3>系统可靠性</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:90px;white-space:nowrap"><col style="min-width:100px;white-space:nowrap"><col style="min-width:240px"></colgroup>
+            <tr><th>用途</th><th>技术</th><th>论文里怎么写</th></tr>
+            <tr><td>监控告警</td><td><b>Prometheus + Grafana</b></td><td>采集CPU、内存、QPS指标，Grafana看板展示，超阈值自动告警</td></tr>
+            <tr><td>日志采集</td><td><b>ELK</b></td><td>ES+Logstash+Kibana统一收集日志，可视化查询，异常实时告警</td></tr>
+            <tr><td>链路追踪</td><td><b>SkyWalking</b></td><td>追踪请求在多服务间的调用链，快速定位性能瓶颈和故障点</td></tr>
+            <tr><td>熔断降级</td><td><b>Sentinel</b></td><td>服务异常时自动熔断返回降级结果，防止级联故障</td></tr>
+            <tr><td>冗余部署</td><td><b>多副本+故障转移</b></td><td>关键服务至少2个实例，主节点故障自动切换到备节点</td></tr>
+          </table>
+          </div>
+
+          <h3>系统安全性</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:90px;white-space:nowrap"><col style="min-width:100px;white-space:nowrap"><col style="min-width:240px"></colgroup>
+            <tr><th>用途</th><th>技术</th><th>论文里怎么写</th></tr>
+            <tr><td>身份认证</td><td><b>JWT</b></td><td>登录后颁发Token，后续请求携带Token验证，无状态认证适合分布式</td></tr>
+            <tr><td>传输加密</td><td><b>TLS</b></td><td>所有服务间通信走TLS加密，防止中间人窃听和篡改</td></tr>
+            <tr><td>存储加密</td><td><b>AES-256</b></td><td>敏感数据（杆塔坐标、巡检结果）AES-256加密后存入数据库</td></tr>
+            <tr><td>访问控制</td><td><b>RBAC</b></td><td>基于角色的权限控制，巡检员只能执行任务，管理员可配置参数</td></tr>
+            <tr><td>审计日志</td><td><b>自定义+ELK</b></td><td>所有操作记录审计日志，支持事后追溯和合规审查</td></tr>
+          </table>
+          </div>
         </div>
       </div>
     </div>
