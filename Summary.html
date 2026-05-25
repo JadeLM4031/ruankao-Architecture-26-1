@@ -1746,6 +1746,56 @@
           </table>
           </div>
         </div>
+
+        <div class="card">
+          <h2><span class="icon">🔥</span>秒杀场景 + 并发控制（锁）</h2>
+
+          <h3>秒杀场景架构要点</h3>
+          <p>秒杀的核心挑战：<b>短时间内海量请求抢购有限库存</b>，容易导致超卖、系统崩溃。解决方案分层：</p>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <tr><th>层级</th><th>策略</th><th>说明</th></tr>
+            <tr><td><b>前端</b></td><td>限流+防重复</td><td>按钮置灰、验证码、同一用户短时间内只能提交一次</td></tr>
+            <tr><td><b>网关</b></td><td>请求过滤</td><td>Nginx限流（limit_req）、IP黑名单、只放行少量请求到后端</td></tr>
+            <tr><td><b>服务层</b></td><td>库存预扣</td><td>Redis原子操作预减库存（DECR），库存为0直接拦截，不再查数据库</td></tr>
+            <tr><td><b>数据库</b></td><td>乐观锁/悲观锁</td><td>最终落库时用锁机制防止超卖</td></tr>
+            <tr><td><b>异步</b></td><td>消息队列削峰</td><td>订单请求写入MQ异步处理，避免数据库直接承压</td></tr>
+          </table>
+          </div>
+          <div class="key">秒杀核心思路：<b>拦截在前，落库在后</b>。层层过滤，最终只有少量请求真正操作数据库。</div>
+
+          <h3>乐观锁 vs 悲观锁</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <colgroup><col style="min-width:5em;white-space:nowrap"><col style="min-width:14em"><col style="min-width:14em"></colgroup>
+            <tr><th></th><th><b>乐观锁</b></th><th><b>悲观锁</b></th></tr>
+            <tr><td><b>思想</b></td><td>假设不会冲突，<b>更新时才检查</b></td><td>假设一定冲突，<b>先加锁再操作</b></td></tr>
+            <tr><td><b>实现</b></td><td>版本号（version字段）或CAS（Compare And Swap）</td><td>数据库行锁：SELECT ... FOR UPDATE</td></tr>
+            <tr><td><b>流程</b></td><td>读数据→记版本号→修改时比较版本→版本一致则更新并+1，不一致则重试</td><td>事务中先锁定行→其他事务等待→操作完释放锁</td></tr>
+            <tr><td><b>适用</b></td><td><b>读多写少</b>，冲突概率低（如秒杀）</td><td><b>写多竞争激烈</b>，冲突概率高（如库存扣减）</td></tr>
+            <tr><td><b>优点</b></td><td>不锁行，并发性能好</td><td>安全，不会丢失更新</td></tr>
+            <tr><td><b>缺点</b></td><td>冲突时需重试，高并发下大量失败</td><td>加锁阻塞，并发性能差，可能死锁</td></tr>
+          </table>
+          </div>
+
+          <h3>乐观锁防超卖 SQL 示例</h3>
+          <div class="essay-fixed">
+            UPDATE goods SET stock = stock - 1, version = version + 1<br>
+            WHERE id = 1 AND stock > 0 AND version = #{当前版本号}
+          </div>
+          <div class="tips">version不匹配则影响行数为0，说明被其他线程抢先了，需要重试。stock > 0 防止库存为负。</div>
+
+          <h3>其他常见锁</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <table>
+            <tr><th>锁类型</th><th>说明</th><th>场景</th></tr>
+            <tr><td><b>分布式锁</b></td><td>Redis SETNX实现，多节点互斥</td><td>多台服务器防止重复操作</td></tr>
+            <tr><td><b>自旋锁</b></td><td>获取不到锁时循环重试（忙等待）</td><td>锁持有时间极短的场景</td></tr>
+            <tr><td><b>读写锁</b></td><td>读共享、写互斥</td><td>读多写少（如配置信息）</td></tr>
+            <tr><td><b>公平锁/非公平锁</b></td><td>公平锁按等待顺序获取，非公平锁允许插队</td><td>公平锁适合严格要求顺序的场景</td></tr>
+          </table>
+          </div>
+        </div>
       </div>
 
       <!-- ============ S15: 云原生 ============ -->
