@@ -30,7 +30,6 @@
         color: var(--text);
         line-height: 1.8;
         font-size: 15px;
-        max-width: 100vw;
         overflow-x: hidden;
       }
       .header {
@@ -97,6 +96,8 @@
         padding: 16px;
         margin-bottom: 12px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .card h2 {
         font-size: 16px;
@@ -180,6 +181,18 @@
         border-collapse: collapse;
         margin: 8px 0;
         font-size: 13px;
+      }
+      .tbl-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      th, td {
+        white-space: nowrap;
+      }
+      th.cell-wrap, td.cell-wrap {
+        white-space: normal;
+        max-width: 25em;
+        overflow-wrap: break-word;
       }
       th {
         background: var(--blue);
@@ -374,6 +387,8 @@
         <a href="#" data-s="s13">关键路径</a>
         <a href="#" data-s="s21">排序算法</a>
         <a href="#" data-s="s26">法律法规</a>
+        <a href="#" data-s="s28">AI/大模型</a>
+        <a href="#" data-s="s29">冲刺急救卡</a>
         <span class="nav-sep">|</span>
         <a href="#" data-s="s22" class="nav-essay">论文模板</a>
         <a href="#" data-s="s27" class="nav-essay">出题记录</a>
@@ -2367,6 +2382,8 @@
         <div class="card">
           <h2><span class="icon">📄</span>论文万能模板 v4 · 无人机智能管控平台</h2>
 
+          <div class="trap"><b>⚠️ 2026上实考37分，"万能模板+只背模块B"打法已证伪！</b>死因：①题目第二问枚举清单=评分标准，模板只覆盖一半，每个缺项丢6-7分 ②机考环境模板痕迹减分。项目背景/摘要/第一部分仍然可复用，但<b>第二三问必须"题目绑定式"写作——主线跟着题目关键词走，第二问枚举的每一项都成段展开</b>。2026上高并发题第二问六方面（缓存/异步/限流降级/数据库优化/服务拆分/水平扩容）就是明牌评分清单。</div>
+
           <h3>项目信息速查</h3>
           <table>
             <tr><th style="white-space:nowrap">项目</th><td>某地市电力公司输电无人机智能管控平台</td></tr>
@@ -2493,7 +2510,7 @@
           <h2><span class="icon">🗺️</span>题目 → 组装速查表</h2>
 
           <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table style="white-space:nowrap">
+          <table>
             <tr><th>论文方向</th><th>第二问</th><th>第三问</th><th>状态</th></tr>
             <tr><td><b>微服务架构</b></td><td>模块B</td><td>方案A+D + 故事3+1</td><td style="color:#27ae60">✅ 必背</td></tr>
             <tr><td><b>SOA</b></td><td>模块B</td><td>方案A+D + 故事3+1</td><td style="color:#27ae60">✅ 必背</td></tr>
@@ -2677,10 +2694,11 @@
       <!-- ============ S27: 论文出题记录 ============ -->
       <div class="sec" id="s27">
         <div class="card">
-          <h2><span class="icon">📈</span>2020-2025 论文出题记录</h2>
+          <h2><span class="icon">📈</span>2020-2026 论文出题记录</h2>
           <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table style="font-size:13px;white-space:nowrap">
+          <table style="font-size:13px">
             <tr><th>年份</th><th>试题一</th><th>试题二</th><th>试题三</th><th>试题四</th></tr>
+            <tr style="background:#fff7ed"><td><b>2026上</b></td><td>🤖向量数据库应用</td><td>高并发系统 ⬅️<b>选答37分</b>（二问枚举六方面=评分清单）</td><td>🤖六边形架构（三问图数据/GraphRAG）</td><td>🤖多模态大模型测试框架（二问枚举四层次）</td></tr>
             <tr><td><b>2025下</b></td><td>性能测试</td><td>秒杀场景技术方案</td><td>Serverless架构</td><td>云原生数据库</td></tr>
             <tr><td><b>2025上</b></td><td>AI辅助TDD</td><td>负载均衡架构</td><td>事件驱动架构</td><td>多模型数据源</td></tr>
             <tr><td><b>2024下</b></td><td>SOA</td><td>软件维护</td><td>多源异构数据集成</td><td>分布式事务</td></tr>
@@ -2695,37 +2713,175 @@
 
         <div class="card">
           <h2><span class="icon">🎯</span>出题规律与2026预测</h2>
-          <div class="essay-h3">高频方向（出现3次以上）</div>
+          <div class="essay-h3">高频方向（出现3次以上，含2026上）</div>
           <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table style="white-space:nowrap">
-            <tr><th>方向</th><th>出现次数</th><th>最近一次</th><th>空白年数</th></tr>
-            <tr><td><b>测试类</b></td><td>5次</td><td>2025下（性能测试）</td><td>0年（刚考）</td></tr>
-            <tr><td><b>数据类</b></td><td>5次</td><td>2025上（多模型数据源）</td><td>0年（刚考）</td></tr>
-            <tr><td><b>架构风格类</b></td><td>6次</td><td>2025下（Serverless）</td><td>0年（刚考）</td></tr>
-            <tr><td><b>分布式/高并发</b></td><td>3次</td><td>2025下（秒杀场景）</td><td>0年（刚考）</td></tr>
+          <table>
+            <tr><th>方向</th><th>出现次数</th><th>最近一次</th><th>备注</th></tr>
+            <tr><td><b>架构风格类</b></td><td>7次</td><td>2026上（六边形架构）</td><td>年年出，问法越来越具体</td></tr>
+            <tr><td><b>测试类</b></td><td>6次</td><td>2026上（多模态大模型测试）</td><td>"考过就不考"已失效</td></tr>
+            <tr><td><b>数据类</b></td><td>6次</td><td>2026上（向量数据库）</td><td>几乎每年必出</td></tr>
+            <tr><td><b>分布式/高并发</b></td><td>4次</td><td>2026上（高并发）</td><td>秒杀→高并发连出</td></tr>
+            <tr style="color:#e74c3c"><td><b>🤖AI相关（跨方向渗透）</b></td><td>3/4</td><td>2026上</td><td>轨迹：<b>2024年0/8 → 2025上1/4 → 2026上3/4</b></td></tr>
           </table>
           </div>
 
-          <div class="essay-h3">2026 预测</div>
+          <div class="essay-h3">2026下 预测（2026上出分后修正）</div>
           <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-          <table style="white-space:nowrap">
+          <table>
             <tr><th>概率</th><th>方向</th><th>理由</th></tr>
-            <tr style="color:#e74c3c"><td><b>高</b></td><td><b>微服务架构</b></td><td>2021后没直接出，5年空白，经典必考</td></tr>
-            <tr style="color:#e74c3c"><td><b>高</b></td><td><b>系统安全架构</b></td><td>2021后没出，5年空白</td></tr>
-            <tr style="color:#e67e22"><td><b>中</b></td><td>大数据/数据处理</td><td>几乎每年必出一个，换角度仍可能</td></tr>
-            <tr style="color:#e67e22"><td><b>中</b></td><td>分布式系统</td><td>2024-2025连考，再出概率降低但不排除</td></tr>
-            <tr><td>低</td><td>测试类</td><td>2024-2025连出3次，短期饱和</td></tr>
-            <tr><td>低</td><td>可靠性</td><td>2023出过，间隔不够长</td></tr>
-            <tr><td>低</td><td>软件维护</td><td>2024+2022都出过</td></tr>
+            <tr style="color:#e74c3c"><td><b>高</b></td><td><b>🤖AI应用（RAG/Agent/大模型落地/图数据）</b></td><td>AI轨迹2026上3/4，案例选择已AI化。考架构师视角（选型/管线/部署/端边云协同），不考算法数学</td></tr>
+            <tr style="color:#e74c3c"><td><b>高</b></td><td><b>数据方向</b></td><td>年年必出。向量数据库刚考→图数据库/湖仓一体/多模态数据可能换皮</td></tr>
+            <tr style="color:#e67e22"><td><b>中</b></td><td>经典架构回归（微服务/SOA/事件驱动）</td><td>微服务2021后5年空白；但注意2026上押微服务已落空一次</td></tr>
+            <tr style="color:#e67e22"><td><b>中</b></td><td>高并发/分布式</td><td>秒杀→高并发连出是持续热点，六方面素材无论如何必备</td></tr>
+            <tr><td>低</td><td>可靠性 / 软件维护</td><td>间隔不足</td></tr>
+            <tr><td>极低</td><td>向量库/六边形/多模态原题复现</td><td>刚考过，短期不重复，但<b>同族技术换皮</b>要防</td></tr>
           </table>
           </div>
+
+          <div class="trap"><b>2026上押题复盘：微服务、安全架构双双押中不中。</b>教训：押具体题目不如<b>按枚举维度备素材</b>（六方面/RAG管线/分层清单）+ 练题目绑定式写作——4题里3题模板接不住，但"枚举项逐段成文"的写法任何题都接得住。</div>
 
           <div class="essay-h3">结论</div>
           <div class="essay-combo">
-            <b>核心背诵集（模块B+F）覆盖高概率方向</b>：微服务→模块B、安全架构→模块B、自动化测试→模块F<br>
-            4选1中至少有1个是你准备过的，<b>稳过45分</b>。
+            <b>⚠️ 2026上已验证："背1个理论模块+现场填充"打法=37分翻车</b>。2026上4题里3题（向量数据库/六边形架构/多模态大模型）模板完全接不住；唯一经典题（高并发）选对了仍37，证明问题在答法不在选题。<br>
+            <b>2026下策略：AI主线为第一主线（2026上论文3/4题AI相关，案例场景已AI化）+ 高并发六方面保底 + 核心练"题目绑定式写作"（逐段对照题目三问，第二问枚举项逐一成段）</b>。
           </div>
         </div>
+      </div>
+
+      <!-- ============ S28: AI与大模型 ============ -->
+      <div class="sec" id="s28">
+          <h2><span class="icon">🤖</span>AI / 大模型速查（2026必考）</h2>
+
+          <h3>机器学习三分类（看标签和奖励）</h3>
+          <table>
+            <tr><th>类型</th><th>特征</th><th>代表算法</th><th>场景信号词</th></tr>
+            <tr><td><b>监督学习</b></td><td>有标签</td><td>决策树、SVM、朴素贝叶斯、KNN、线性/逻辑回归</td><td>分类、预测、标注数据</td></tr>
+            <tr><td><b>无监督学习</b></td><td>无标签</td><td><b>K-means聚类</b>、PCA降维</td><td>分群、无预定义类别</td></tr>
+            <tr><td><b>强化学习</b></td><td>环境奖励</td><td>Q-learning、RLHF</td><td>试错、策略、自我对弈</td></tr>
+          </table>
+          <div class="trap">一字之差陷阱：<b>K-means=无监督聚类</b>，<b>KNN=监督分类</b>。看到"K"开头先问：有标签吗？</div>
+
+          <h3>过拟合 vs 欠拟合（先判断再开药）</h3>
+          <table>
+            <tr><th>症状</th><th>诊断</th><th>药方</th></tr>
+            <tr><td>训练好 + 测试差</td><td><b>过拟合</b></td><td>加数据/数据增强、正则化L1L2、Dropout、早停、交叉验证</td></tr>
+            <tr><td>训练差 + 测试差</td><td><b>欠拟合</b></td><td>加大模型、加特征、训练更久</td></tr>
+          </table>
+          <div class="trap">验证集损失先降后升=过拟合信号→早停。<b>验证集神圣不可并入训练集</b>（失去裁判资格）。加大模型治不了过拟合。</div>
+
+          <h3>Transformer：为什么取代RNN</h3>
+          <div class="key"><b>自注意力（Self-Attention）</b>：任意两位置直接计算关联 → ①捕捉长距离依赖不丢失 ②整句并行计算，训练快数量级。GPT的T=Transformer。RNN逐词串行传话，梯度消失。</div>
+
+          <h3>大模型知识注入三路线 + 选型决策树</h3>
+          <table>
+            <tr><th>路线</th><th>做什么</th><th>成本</th><th>适用</th></tr>
+            <tr><td>预训练</td><td>从零学通用知识</td><td>天文数字</td><td>大厂</td></tr>
+            <tr><td>微调（SFT/LoRA）</td><td>学行为风格，知识写入参数</td><td>中/低</td><td>格式、语气、领域行为</td></tr>
+            <tr><td><b>RAG</b></td><td>外挂知识库，检索后生成</td><td>低</td><td>知识频繁更新、私有知识、要溯源</td></tr>
+          </table>
+          <div class="formula">选型口诀：<b>知识变→RAG；行为变→微调；都要→RAG+微调组合</b></div>
+
+          <h3>RAG双管线（案例画图题模板）</h3>
+          <div class="key">
+            <b>离线建库</b>：文档解析 → 切分（Chunking）→ Embedding向量化 → 存入向量数据库<br>
+            <b>在线问答</b>：用户提问 → 问题向量化 → 向量检索（召回Top-K）→ 重排序（Rerank精筛）→ 提示词拼接 → 大模型生成
+          </div>
+          <div class="trap">先粗后精=检索系统通用架构思想。切分块大小影响召回质量。</div>
+
+          <h3>向量数据库三件套</h3>
+          <table>
+            <tr><th>组件</th><th>关键词</th></tr>
+            <tr><td>Embedding模型</td><td>文本→高维向量，语义相近则距离近</td></tr>
+            <tr><td>ANN近似索引</td><td><b>HNSW</b>、IVF、乘积量化PQ——牺牲少量精度换数量级速度</td></tr>
+            <tr><td>相似度度量</td><td>余弦（看方向）、内积、欧氏距离</td></tr>
+          </table>
+          <div class="trap">张冠李戴锚点：<b>B+树=关系数据库</b>的索引，向量库用ANN。产品：Milvus、FAISS、Pinecone、pgvector。</div>
+
+          <h3>Agent智能体（四模块+ReAct）</h3>
+          <div class="key"><b>规划 + 记忆 + 工具 + 行动</b>四模块。核心循环<b>ReAct</b>：思考→行动（调工具）→观察结果→再思考，迭代到完成。与Chatbot区别：给目标自己拆任务闭环交付。Function Calling=工具调用协议。</div>
+
+          <h3>提示工程 + 安全</h3>
+          <table>
+            <tr><th>技术</th><th>要点</th></tr>
+            <tr><td>Zero-shot / Few-shot</td><td>不给例 / 给几个"输入→输出"示例学格式</td></tr>
+            <tr><td><b>CoT思维链</b></td><td>示例含<b>推理过程</b>，教模型"怎么想"——数学逻辑题</td></tr>
+            <tr><td>提示注入</td><td><b>安全攻击</b>（非技术）：恶意指令藏数据里劫持模型。防御：输入过滤、指令数据分离、输出审核、最小权限</td></tr>
+          </table>
+
+          <h3>幻觉治理组合拳</h3>
+          <div class="formula">RAG接地（答案基于检索事实）+ 引用溯源 + 降温度参数 + 关键场景人工审核 + 后置事实核查。<b>"增大参数"不是治理手段</b></div>
+
+          <h3>端云协同对照（论文+案例通用）</h3>
+          <table>
+            <tr><th></th><th>端侧AI</th><th>云侧AI</th></tr>
+            <tr><td>强项</td><td><b>低时延、隐私（不出设备）、可离线</b></td><td><b>算力强、大模型、集中更新</b></td></tr>
+            <tr><td>弱项</td><td>算力受限、模型小</td><td>网络时延、数据上云</td></tr>
+            <tr><td>典型</td><td>唤醒词、人脸解锁、缺陷初筛</td><td>深度推理、生成、训练</td></tr>
+          </table>
+          <div class="key">口诀：<b>端侧赢在快和私，云侧赢在强</b>。标准分工：<b>云训练、边/端推理</b>（无人机：端侧初筛→边缘聚合→云端深度分析+训练）</div>
+
+          <h3>数据漂移与MLOps</h3>
+          <div class="key">上线后效果下降+输入分布变化=<b>数据漂移</b>。应对闭环：分布监控→告警→新数据重训→灰度评估→全量上线→版本回滚。</div>
+
+          <h3>物联网四层（案例答法）</h3>
+          <table>
+            <tr><th>层次</th><th>技术名词</th></tr>
+            <tr><td><b>感知层</b></td><td>RFID、传感器、摄像头、GPS/北斗</td></tr>
+            <tr><td><b>网络层</b></td><td>NB-IoT（广覆盖低功耗）、5G、LoRa、ZigBee</td></tr>
+            <tr><td><b>平台层</b></td><td>设备接入网关、设备管理、数据汇聚清洗、规则引擎、消息队列</td></tr>
+            <tr><td><b>应用层</b></td><td>行业应用、API开放平台</td></tr>
+          </table>
+          <div class="key">答法：逐层"用什么技术解决什么问题"→最后绑业务（无人机巡检：感知采集→5G回传→平台汇聚分析→应用告警闭环）</div>
+      </div>
+
+      <!-- ============ S29: 冲刺急救卡 ============ -->
+      <div class="sec" id="s29">
+          <h2><span class="icon">🚨</span>冲刺急救卡（冲刺暴露的全部易错点）</h2>
+
+          <h3>① 磁盘三件套（看到"平均"必÷2）</h3>
+          <div class="formula">平均存取时间 = ①寻道 + ②旋转延迟(60000/rpm ÷ 2) + ③传输 —— 三件套一个不能少</div>
+          <table>
+            <tr><th>转速</th><th>一圈</th><th>半圈(平均)</th></tr>
+            <tr><td>7200rpm</td><td>8.33ms</td><td><b>4.17ms</b></td></tr>
+            <tr><td>10000rpm</td><td>6ms</td><td><b>3ms</b></td></tr>
+            <tr><td>15000rpm</td><td>4ms</td><td><b>2ms</b></td></tr>
+          </table>
+
+          <h3>② SSTF / SCAN 经典序列速查（磁头53，队列98,183,37,122,14,124,65,67）</h3>
+          <table>
+            <tr><th>算法</th><th>顺序</th><th>总寻道</th></tr>
+            <tr><td><b>SSTF</b></td><td>65→67→<b>37</b>→14→98→122→124→183</td><td><b>236</b></td></tr>
+            <tr><td><b>SCAN</b>(向大)</td><td>65→67→98→122→124→<b>183折返</b>→37→14</td><td><b>299</b> = (183-53)+(183-14)</td></tr>
+            <tr><td>FCFS</td><td>按队列原序</td><td>640</td></tr>
+          </table>
+          <div class="trap">SSTF关键分叉：67处选<b>37</b>不选98（距离30&lt;31）。SCAN速算=|折返点-起点|+|折返点-另一端末点|。折返点=该方向<b>最远请求</b>（题说扫到边缘才用边缘）。SSTF缺点=可能饥饿；SCAN=电梯算法无饥饿。</div>
+
+          <h3>③ 页面置换三条命</h3>
+          <div class="key">1. <b>帧未满不淘汰</b>（装入≠淘汰）2. <b>命中必须刷新</b>"最近使用" 3. <b>OPT看将来最远（永不再用=最优淘汰），LRU看过去最远</b>。Belady只有FIFO。</div>
+
+          <h3>④ 流水线两公式</h3>
+          <div class="formula">不等长段：ΣΔt + (n-1)×max(Δt)　|　等长段：(k+n-1)×t<br>周期=max(Δt)；最大吞吐率=1/周期；加速比=n×ΣΔt ÷ 总时间</div>
+          <div class="trap">流水线三连问：总时间→吞吐率→加速比，公式套就行。周期是max不是平均。</div>
+
+          <h3>⑤ 子网块边界三步法 + CIDR两规则</h3>
+          <div class="key">①块=256-掩码末字节（.192→64 .224→32 .240→16 .248→8）②<b>在草稿上写出边界序列</b> 0|64|128|192 ③IP落在哪个区间→网络地址=左端、广播=右端-1</div>
+          <div class="formula">CIDR聚合：<b>条数变前缀（2ⁿ个网络→缩短n位），起点不动窝</b>（32个C网→/24-5=/19，起点原样保留）</div>
+
+          <h3>⑥ 死锁资源公式（必代回验证）</h3>
+          <div class="formula">保证不死锁的最少资源 = n×(m-1)+1　（n进程、每个最多m台）<br>反向问"最多几个进程"：n ≤ (总数-1)/(m-1)，向下取整，代回验证</div>
+
+          <h3>⑦ PV三锚点</h3>
+          <div class="key">1. 初值=<b>资源现有量</b>（empty=容量、full=0、mutex=1，与进程数无关）2. <b>正值数资源、负值数等待</b>（S=-2即2个等待）3. P顺序：先同步后互斥（先P(empty)再P(mutex)，反了死锁）</div>
+
+          <h3>⑧ 等保三锚点</h3>
+          <div class="key">五级=自·指·监·强·专（三级监督保护）| 定级两要素=<b>受侵害客体+侵害程度</b> | 三级及以上<b>每年至少一测</b>（"每半年"是1.0时代四级老规定）</div>
+
+          <h3>⑨ 否定式选择题三步（真题每年3-5道）</h3>
+          <div class="key">①圈出"不正确/错误/不能" ②逐项标✓/✗（只判真假，不想"哪个可疑"）③选✗项——把否定式转成肯定式</div>
+          <div class="trap">错误项高发形态=<b>张冠李戴</b>：拿技术X的标志组件描述技术Y（B+树→关系库不是向量库；ESB→SOA不是微服务；算力竞赛→PoW不是PBFT）。</div>
+
+          <h3>⑩ 端云/冒进/扩容对照速记</h3>
+          <div class="key">端侧=快和私（低时延/隐私/离线），云侧=强（算力/大模型）。过拟合加数据降复杂度，欠拟合加模型。水平扩展=加机器，垂直扩展=换大机器。</div>
       </div>
 
     </div>
@@ -2744,6 +2900,33 @@
       }
       adjustPadding()
       window.addEventListener("resize", adjustPadding)
+
+      // 所有表格自动包一层横向滚动容器：表格自己滚，页面永不横向滚动
+      document.querySelectorAll("table").forEach((t) => {
+        if (t.parentElement && t.parentElement.classList.contains("tbl-scroll")) return
+        const w = document.createElement("div")
+        w.className = "tbl-scroll"
+        t.parentNode.insertBefore(w, t)
+        w.appendChild(t)
+      })
+
+      // 单元格折行规则：按视觉宽度计数（汉字/全角=1字，数字字母等半角=0.5字）
+      // 超过20字折行（上限20em），不超过永不折行 —— 内联样式，优先级最高
+      const cellWidth = (s) => {
+        let w = 0
+        for (const ch of s) w += ch.charCodeAt(0) <= 0xff ? 0.5 : 1
+        return w
+      }
+      document.querySelectorAll("table td, table th").forEach((c) => {
+        const force = c.hasAttribute("data-nowrap") || (c.closest("table") && c.closest("table").hasAttribute("data-nowrap"))
+        if (!force && cellWidth((c.textContent || "").trim()) > 20) {
+          c.style.whiteSpace = "normal"
+          c.style.maxWidth = "20em"
+          c.style.overflowWrap = "break-word"
+        } else {
+          c.style.whiteSpace = "nowrap"
+        }
+      })
 
       // 导航切换
       const nav = document.getElementById("nav")

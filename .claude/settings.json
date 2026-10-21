@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(python -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(node -e *)",
+      "Bash(awk 'NR>=2720 && NR<=2745' \"c:/Users/JadeLM/Desktop/study/Summary.html\")",
+      "WebFetch(domain:www.educity.cn)",
+      "WebFetch(domain:blog.csdn.net)",
+      "Bash(grep -n \"\\\\.card\\\\s*{\\\\|\\\\.card table\\\\|table\\\\s*{\\\\|td,\\\\|th,\\\\|td\\\\s*{\\\\|th\\\\s*{\" \"c:/Users/JadeLM/Desktop/study/Summary.html\")"
+    ]
+  }
+}

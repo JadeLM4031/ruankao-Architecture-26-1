@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>系统架构设计师 - 模块12：综合拾遗</title>
+<title>系统架构设计师 - 冲刺第6关：案例手感+高并发+物联网</title>
 <style>
 :root { --bg:#f5f6fa; --card:#ffffff; --border:#e0e3eb; --text:#1e2235; --muted:#6b7194; --accent:#4361ee; --accent2:#3a56d4; --accent-light:#eef1ff; --correct:#16a34a; --correct-bg:#dcfce7; --wrong:#dc2626; --wrong-bg:#fee2e2; }
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -22,7 +22,6 @@ h1 { text-align:center; font-size:1.6rem; margin-bottom:6px; }
 .q-tag { display:inline-block; font-size:0.72rem; padding:2px 10px; border-radius:20px; font-weight:600; }
 .tag-choice { background:#dbeafe; color:#2563eb; }
 .tag-case { background:#ede9fe; color:#7c3aed; }
-.tag-calc { background:#fef3c7; color:#92400e; }
 .q-score { display:inline-block; font-size:0.72rem; padding:2px 10px; border-radius:20px; font-weight:600; background:#f0fdf4; color:#166534; }
 .q-number { font-weight:700; color:var(--accent); font-size:0.9rem; margin-bottom:6px; }
 .q-text { font-size:0.95rem; margin-bottom:16px; white-space:pre-wrap; }
@@ -60,14 +59,17 @@ h1 { text-align:center; font-size:1.6rem; margin-bottom:6px; }
 </head>
 <body>
 <div class="container">
-  <h1>模块12：综合拾遗（数学/知识产权/项目管理）</h1>
-  <p class="subtitle">选择题 x 6（每题1分）+ 案例分析 x 1（8分）| 共14分 | 全部作答后生成报告</p>
+  <h1>冲刺第6关：案例手感 + 高并发 + 物联网</h1>
+  <p class="subtitle">2026上必答题真题原题 + 锁/MQ/秒杀 + 物联网分层 | 选择×4 + 案例×3（共26分） | 选择≥80% + 案例我判达标 | 自动保存</p>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="summary-bar">
     <div class="summary-item"><div class="num" id="totalCount">7</div><div class="label">总题数</div></div>
     <div class="summary-item"><div class="num" id="doneCount">0</div><div class="label">已作答</div></div>
-    <div class="summary-item"><div class="num" id="correctCount" style="color:var(--correct)">0</div><div class="label">选择题正确</div></div>
-    <div class="summary-item"><div class="num" id="totalScore" style="color:var(--accent)">0</div><div class="label">满分14分</div></div>
+    <div class="summary-item"><div class="num" id="correctCount" style="color:var(--correct)">0/4</div><div class="label">选择正确</div></div>
+    <div class="summary-item"><div class="num" id="totalScore" style="color:var(--accent)">0/26</div><div class="label">案例待教练评分</div></div>
+  </div>
+  <div style="text-align:center; margin-bottom:16px;">
+    <button class="btn" style="background:#fee2e2;color:#dc2626;" onclick="resetQuiz()">清空记录，重新开始</button>
   </div>
   <div id="questionsContainer"></div>
   <div style="text-align:center; margin:30px 0;">
@@ -84,129 +86,123 @@ h1 { text-align:center; font-size:1.6rem; margin-bottom:6px; }
 const questions = [
   {
     id: 1,
-    type: "choice",
-    tag: "选择题",
-    tagClass: "tag-choice",
-    score: 1,
-    text: "某程序员在公司的办公电脑上，利用业余时间独立开发了一款软件。该软件的著作权应归谁所有？",
-    options: [
-      "A. 归程序员个人所有，因为是业余时间开发的",
-      "B. 归公司所有，因为使用了公司的设备",
-      "C. 需要根据是否使用了公司的资源和技术资料来判断",
-      "D. 归公司和程序员共同所有"
-    ],
-    answer: 2,
-    analysis: "正确答案：C\n\n职务作品判断标准：\n- 如果是\"为完成单位工作任务\"所开发 → 著作权归单位\n- 如果是在本职工作中明确指派的任务 → 著作权归单位\n\n本题关键信息：\"业余时间\"\"独立开发\"→ 看起来不是职务作品\n但\"使用公司办公电脑\"→ 可能涉及使用了公司资源\n\n判断原则：\n1. 是否为单位指派的任务？\n2. 是否主要利用了单位的物质技术条件（设备、资金、未公开信息）？\n3. 是否与本职工作相关？\n\n如果确实完全独立、与工作无关、未利用公司专有技术 → 归个人\n如果利用了公司资源或与本职工作相关 → 归公司\n\nA过于绝对（只看时间不看资源），B也过于绝对。C最准确：需综合判断。"
+    type: "case",
+    tag: "案例·2026上真题",
+    tagClass: "tag-case",
+    score: 8,
+    text: "【2026上半年真题·必答题原文】\n某园区计划构建智能化的入侵检测与告警系统，覆盖办公区、仓储区及核心机房，7×24小时不间断运行。\n系统有如下8条需求描述，请指出每条主要对应的质量属性（性能 / 可用性 / 安全性 / 可修改性，可以重复）：\n\na. 局部组件失效时，核心告警功能必须保持可用\nb. 业务峰值期间高吞吐量持续处理大规模实时事件流，极低延迟完成研判告警\nc. 接入新类型传感器协议时，对既有业务模块的代码侵入降至最低\nd. 发生未授权越权访问时，1秒内触发告警并留存轨迹至审计日志\ne. 主分析节点宕机时自动容灾切换至备用节点\nf. 安全管理员可对异常访问链路溯源，审计记录完整且防篡改\ng. 新增检测规则以插件化方式融入，不修改现有处理链路\nh. 高危入侵事件在规定时间约束内精准识别并确保告警推送成功\n\n【作答格式】每行写：字母=属性名，共8行。",
+    sampleAnswer: "【参考答案】\na = 可用性（失效后核心功能仍可用=故障不影响核心业务）\nb = 性能（高吞吐+低延迟=吞吐量与响应时间）\nc = 可修改性（新协议接入低侵入=易于修改扩展）\nd = 安全性（越权访问+告警+审计=机密性/可审计性）\ne = 可用性（宕机自动容灾切换=故障恢复）\nf = 安全性（溯源+防篡改=可审计性/完整性）\ng = 可修改性（规则插件化=易于修改）\nh = 性能（规定时间约束内识别+推送成功=实时性/响应时间）\n\n【判分逻辑】8条×1分。识别关键词：\n- 性能：吞吐、延迟、时间约束、响应\n- 可用性：失效仍可用、容灾、故障切换、7×24\n- 安全性：越权、审计、溯源、防篡改、加密\n- 可修改性：低侵入、插件化、易扩展、不修改现有\n\n注意：d和h都带时间数字，但d的时间用于安全告警（安全为主），h是识别时限（性能）。拿不准时看「目的」不看「数字」。",
+    scoringGuide: "每条1分共8分。a/e=可用性，b/h=性能，c/g=可修改性，d/f=安全性。答「可扩展性」视为可修改性同类，可给分但考试建议用标准词。"
   },
   {
     id: 2,
     type: "choice",
-    tag: "选择题",
+    tag: "案例·架构风格",
     tagClass: "tag-choice",
     score: 1,
-    text: "某项目计划预算100万元，计划工期10个月。第5个月末，计划完成工作预算（PV）为50万元，实际完成工作预算（EV）为45万元，实际花费（AC）为52万元。则该项目的成本绩效指数（CPI）和进度绩效指数（SPI）分别为：",
+    text: "接上题：入侵检测系统的数据处理流程为「数据采集→协议解析→格式标准化→特征提取→规则匹配→告警输出」的连续加工流水线，各环节对数据依次变换。\n最适合采用的架构风格及理由是：",
     options: [
-      "A. CPI=0.87, SPI=0.90",
-      "B. CPI=1.16, SPI=1.11",
-      "C. CPI=0.87, SPI=1.11",
-      "D. CPI=1.16, SPI=0.90"
+      "A. 管道-过滤器风格：前一构件的输出是后一构件的输入，数据流式连续变换，支持并行处理，与数据处理流水线天然契合",
+      "B. 分层风格：每层只与相邻层交互，安全可控",
+      "C. 事件驱动风格：事件的发布者与订阅者解耦，适合告警场景",
+      "D. 主程序-子程序风格：调用关系清晰，便于维护"
     ],
     answer: 0,
-    analysis: "正确答案：A\n\n挣值分析公式：\nCPI = EV / AC = 45 / 52 ≈ 0.87\nSPI = EV / PV = 45 / 50 = 0.90\n\n解读：\nCPI = 0.87 < 1 → 成本超支（每花1元只创造了0.87元的价值）\nSPI = 0.90 < 1 → 进度落后（只完成了计划的90%）\n\n记忆方法：\n- 分子永远是EV（挣值）\n- CPI的分母是AC（实际花了多少）→ 花得比挣得多 = 超支\n- SPI的分母是PV（计划做多少）→ 挣得比计划少 = 落后\n- 都是>1好的方向（CPI>1省钱，SPI>1超前）\n\nCV = EV - AC = 45 - 52 = -7万（超支7万）\nSV = EV - PV = 45 - 50 = -5万（落后5万的进度）"
+    analysis: "正确答案：A\n\n风格选型的判别轴（案例必答题第二问标准玩法）：\n- 管道-过滤器：数据**流式连续变换**（一环出、一环进），数据本身不回头 → 信号处理、编译器、实时数据流 ✓\n- 分层：**逐级调用、关注点分离**（表示→业务→数据）→ 企业信息系统\n- 事件驱动：**生产者消费者解耦、异步响应** → GUI、告警推送、物联网消息\n- C/S、仓库（数据中心）、解释器、黑板（无确定性算法的协作求解）\n\n本题题干给的就是「采集→解析→标准化→特征→匹配→输出」六环流水线——文字上就是管道过滤器的形状。\nC有迷惑性：告警确实像事件，但问的是**数据处理流程**的风格，告警只是最后一段的输出。\n\n【2026上真题就这么考】必答题=质量属性识别+风格选择+构件设计三连。"
   },
   {
     id: 3,
-    type: "choice",
-    tag: "选择题",
-    tagClass: "tag-choice",
-    score: 1,
-    text: "关于软件著作权，以下叙述正确的是：",
-    options: [
-      "A. 软件著作权自软件发布之日起产生",
-      "B. 软件著作权需要向版权局登记后才能获得",
-      "C. 软件著作权自软件开发完成之日起自动产生",
-      "D. 软件著作权的保护期限为作者终生"
-    ],
-    answer: 2,
-    analysis: "正确答案：C\n\n软件著作权核心规则：\n- 自开发完成之日起自动产生，无需登记，无需发布（C正确）\n- 登记不是获得著作权的前提，只是证据效力更强\n- 保护期限：自然人=终生+死后50年，法人=发表后50年\n\nA错误：不是从\"发布\"之日起，而是从\"开发完成\"之日起。软件可以不发布就享有著作权。\nB错误：不需要登记。登记是自愿的，不是强制的。\nD错误：不是\"作者终生\"，而是\"终生+死后50年\"（自然人）或\"发表后50年\"（法人/单位）。"
+    type: "case",
+    tag: "案例·技术选型",
+    tagClass: "tag-case",
+    score: 6,
+    text: "某智能巡检系统要求：边缘侧对巡检图像做缺陷初筛，响应<50ms，断网时质检必须继续；云端负责缺陷深度分析与模型迭代；原始图像属商业机密不允许出厂区。\n问题：\n1. 边缘侧AI部署方案及理由（2分）\n2. 云端AI部署方案及理由（2分）\n3. 原始图像不出厂区的条件下，云端模型如何获得训练数据？（2分）\n\n【作答要求】每小问2-3句，必须带具体技术名词。",
+    sampleAnswer: "【参考答案】\n\n1. 边缘侧：部署**轻量化检测模型**（经**量化压缩**的YOLO类小模型）做本地实时推理。理由：边缘本地闭环不依赖网络→满足<50ms时延且断网可用；量化后模型小、算力需求低，适配边缘设备。\n\n2. 云端：部署**大参数模型/多模态大模型**负责深度分析，并承担**模型训练与迭代**（云训练、边推理）。理由：云端算力强、数据集中，适合复杂缺陷的精确识别与模型版本迭代，通过**OTA更新**推送新模型到边缘。\n\n3. 数据方案：原始图像在厂区内完成**脱敏/特征提取**（如只导出缺陷特征向量、标注样本经脱敏处理）后回传云端训练；或采用**联邦学习**——数据不出本地，只上传模型梯度/参数更新，云端聚合训练。\n\n【评分要点】\n小问1：轻量模型+量化+本地闭环（时延/断网）各关键词2-3个\n小问2：大模型+云训练边推理+OTA\n小问3：脱敏回传 或 联邦学习（说出任一即满分，两个都说更好）",
+    scoringGuide: "每小问2分：选型名词1分+理由对应题干约束1分。写笼统的'用AI技术'不得分，必须有量化/轻量模型/联邦学习级别名词。"
   },
   {
     id: 4,
     type: "choice",
-    tag: "计算题",
-    tagClass: "tag-calc",
+    tag: "高并发·锁",
+    tagClass: "tag-choice",
     score: 1,
-    text: "某公司需要选择技术方案，有以下两个备选方案：\n方案A：成功概率70%，收益200万元；失败概率30%，损失50万元。\n方案B：成功概率50%，收益400万元；失败概率50%，损失80万元。\n用决策树方法，应选择哪个方案？其期望收益为：",
+    text: "某电商秒杀场景：库存扣减操作并发极高（瞬时数万请求），但单个商品的冲突集中在秒杀开始的极短窗口。\n关于库存扣减的并发控制方案，最合理的是：",
     options: [
-      "A. 方案A，期望收益125万元",
-      "B. 方案B，期望收益160万元",
-      "C. 方案A，期望收益140万元",
-      "D. 方案B，期望收益320万元"
+      "A. 使用悲观锁（SELECT ... FOR UPDATE），锁住库存行直到事务提交，简单可靠",
+      "B. 使用乐观锁（version版本号/CAS），提交时检测冲突，冲突则返回失败；或先用Redis+Lua脚本原子预扣",
+      "C. 不加任何控制，超卖后人工回滚订单",
+      "D. 对整个库存表加表级锁，杜绝一切并发问题"
     ],
     answer: 1,
-    analysis: "正确答案：B\n\n决策树期望值 = 概率 × 收益 之和\n\n方案A期望值 = 0.7 × 200 + 0.3 × (-50) = 140 - 15 = 125万元\n方案B期望值 = 0.5 × 400 + 0.5 × (-80) = 200 - 40 = 160万元\n\n160 > 125 → 选方案B，期望收益160万元。\n\n决策树方法：选期望值最大的方案。\n注意：期望值法不考虑风险偏好。方案B虽然期望值更高，但失败概率也更高（50%），风险更大。如果考虑风险厌恶，可能选A更稳妥。但纯决策树方法只看期望值。"
+    analysis: "正确答案：B\n\n秒杀场景锁选型（高频考法）：\n- 高并发读多写少 → **乐观锁**：version字段，`UPDATE stock SET num=num-1, version=version+1 WHERE id=? AND version=?`，影响行数=0即冲突，返回“已售罄”——不阻塞、吞吐高\n- 更优：**Redis预扣库存**——Lua脚本原子执行「判断num≥0再DECR」，内存级速度，扣完设售罄标记，挡掉后续请求，DB只做最终落库\n- 悲观锁（A/D）：数万请求排队等锁→大量阻塞连接堆积→**超时雪崩**，秒杀大忌；只在低并发强一致（如转账）用\n\n【答题模板】秒杀防超卖三层：①Redis+Lua原子预扣（挡量）②DB乐观锁version兜底（防重）③售罄标记快速失败（护系统）。\n\n这套词同时是论文高并发方向“限流降级+数据库优化”两个方面的现成素材。"
   },
   {
     id: 5,
     type: "choice",
-    tag: "选择题",
+    tag: "高并发·MQ削峰",
     tagClass: "tag-choice",
     score: 1,
-    text: "以下标准代号中，表示推荐性国家标准的是：",
+    text: "关于消息队列（MQ）在秒杀/高并发系统中的作用，下列说法**不正确**的是：",
     options: [
-      "A. GB",
-      "B. GB/T",
-      "C. GB/Z",
-      "D. GJB"
+      "A. 削峰填谷：瞬时洪峰先写入MQ缓冲，消费端按数据库可承受的速率平稳消费",
+      "B. 异步处理：下单主流程发送消息后即可返回，库存扣减、通知等由消费者异步完成",
+      "C. 应用解耦：订单、库存、通知服务各自订阅消息，生产者无需知道消费者是谁",
+      "D. 引入MQ后，消息不丢失、不重复、必达有序是天然保证的，无需额外设计"
     ],
-    answer: 1,
-    analysis: "正确答案：B\n\n标准代号含义：\n- GB = 国家标准（强制性）\n- GB/T = 国家标准（推荐性），T=推荐\n- GB/Z = 国家标准化指导性技术文件，Z=指导\n- GJB = 国家军用标准\n\n其他常见代号：\n- ISO = 国际标准化组织\n- IEEE = 美国电气电子工程师学会\n- YD = 通信行业标准\n- SJ = 电子行业标准\n- DB = 地方标准\n- Q = 企业标准\n\n记忆：GB是强制（\"必GB\"），GB/T是推荐（\"T=推Tui荐\"）"
+    answer: 3,
+    analysis: "正确答案：D（不正确项）\n\nMQ三大作用（必背）：削峰（蓄水池）、异步（主流程快走）、解耦（生产消费者互不认识）——A/B/C全对。\n\nD恰恰说反：**消息可靠性要自己设计**——\n- 不丢：生产端confirm机制+MQ持久化+消费端手动ack\n- 不重复：消费端**幂等设计**（同一消息重复消费结果不变，如订单号唯一约束/状态机判断）\n- 顺序：分区内有序，跨分区需按key路由\n\n【真题考法】「MQ可能带来什么问题」→消息丢失、重复消费（幂等解决）、系统复杂度上升、一致性从强变最终一致。\n\n【答题素材】这套词=论文高并发“异步处理”方面的成段素材。"
   },
   {
     id: 6,
-    type: "choice",
-    tag: "选择题",
-    tagClass: "tag-choice",
-    score: 1,
-    text: "甲公司委托乙公司开发一款管理软件，双方未签订书面合同，也未对著作权归属做出明确约定。该软件的著作权应归：",
-    options: [
-      "A. 甲公司所有，因为甲公司出资委托",
-      "B. 乙公司所有，因为乙公司是实际开发者",
-      "C. 甲乙公司共同所有",
-      "D. 归国家所有"
-    ],
-    answer: 1,
-    analysis: "正确答案：B\n\n委托开发著作权归属规则：\n- 有合同约定 → 按合同约定\n- 没有合同或合同未约定 → 归开发者（受托方）\n\n本题：\"未签订书面合同\"\"未对著作权归属做出明确约定\" → 归开发者乙公司。\n\nA错误：出资不等于拥有著作权。委托方只获得软件的使用权，不是著作权。\nC错误：共同所有需要有明确约定，法律没有规定默认共同所有。\nD错误：软件著作权不会归国家。\n\n真题常考三种情况：\n1. 职务作品 → 单位\n2. 委托开发有约定 → 按约定\n3. 委托开发无约定 → 开发者"
+    type: "case",
+    tag: "案例·秒杀系统",
+    tagClass: "tag-case",
+    score: 6,
+    text: "某平台计划开展“1元抢购”秒杀活动，预估瞬时请求量为平时的50倍，商品仅100件。\n问题：从请求进入系统到下单成功，请按**请求流向**写出4个层次的关键设计要点。\n\n【作答要求】按「前端→网关→缓存/库存→异步下单」顺序，每层1-2句，带具体技术名词。",
+    sampleAnswer: "【参考答案】\n\n① 前端层：页面静态化+**CDN**分发；按钮点击后置灰防重复提交；增加**验证码/答题**环节提前消耗部分洪峰。\n\n② 网关层：**限流**（令牌桶算法限制QPS）；UID级别**去重**（同一用户重复请求直接拒绝）；黑名单拦截（风控）。\n\n③ 缓存/库存层：**Redis预扣库存**，用**Lua脚本原子**执行「校验库存≥0→DECR」，防超卖；扣完后设置**本地缓存售罄标记**，后续请求快速失败不再穿透。\n\n④ 异步下单层：预扣成功后写**消息队列（Kafka/RabbitMQ）削峰**，前端返回“排队中”；消费端按数据库承受速率落库，DB用**乐观锁version**兜底；同时非核心服务（推荐、评论）**降级**，保下单主链路。\n\n【评分要点】每层1.5分：层名+技术名词（CDN/验证码、令牌桶/去重、Redis+Lua/售罄标记、MQ削峰/乐观锁/降级）。四层结构完整+名词具体=满分。",
+    scoringGuide: "4层×1.5分。缺层扣层分；有层无具体名词减半。答出“分布式锁”也算库存层手段。"
   },
   {
     id: 7,
-    type: "case",
-    tag: "案例分析",
-    tagClass: "tag-case",
-    score: 8,
-    text: "某软件开发项目，总预算200万元，计划工期12个月。项目进行到第6个月末时，各项数据如下：\n\n- 计划完成工作的预算成本（PV）= 100万元\n- 实际完成工作的预算成本（EV）= 80万元\n- 实际花费（AC）= 90万元\n\n问题：\n1. 计算项目的成本偏差（CV）、进度偏差（SV）、成本绩效指数（CPI）和进度绩效指数（SPI）。（4分）\n2. 根据计算结果，判断项目当前的成本和进度状况（超支/节约、超前/落后）。（2分）\n3. 如果项目继续按当前CPI执行，预测项目完工时的总成本（EAC）。（2分）",
-    sampleAnswer: "【参考答案】\n\n问题1（4分）\nCV = EV - AC = 80 - 90 = -10万元\nSV = EV - PV = 80 - 100 = -20万元\nCPI = EV / AC = 80 / 90 ≈ 0.89\nSPI = EV / PV = 80 / 100 = 0.80\n\n问题2（2分）\nCV = -10 < 0 → 成本超支（花了90万只完成了80万的价值）\nSV = -20 < 0 → 进度落后（只完成了计划的80%）\nCPI = 0.89 < 1 → 每花1元只创造0.89元价值\nSPI = 0.80 < 1 → 进度只达到计划的80%\n\n综合判断：项目既超支又落后。\n\n问题3（2分）\nEAC（完工估算）= BAC / CPI\nBAC（完工预算）= 200万元（总预算）\nEAC = 200 / 0.89 ≈ 224.7万元\n\n含义：如果继续按当前效率执行，项目最终将花费约224.7万元，超出预算24.7万元。",
-    scoringGuide: "问题1：每个指标1分（CV、SV、CPI、SPI），共4分。\n问题2：正确判断成本超支（1分）+ 正确判断进度落后（1分），共2分。\n问题3：正确使用EAC公式（1分）+ 计算结果正确（1分），共2分。"
+    type: "choice",
+    tag: "物联网·分层",
+    tagClass: "tag-choice",
+    score: 1,
+    text: "某智慧农业物联网系统的以下设计要素归属的层次，**错误**的是：",
+    options: [
+      "A. 土壤温湿度传感器、病虫害识别摄像头 → 感知层",
+      "B. NB-IoT广覆盖低功耗传输、LoRa自建园区网络 → 网络层",
+      "C. 设备管理平台（注册/OTA升级）、规则引擎、时序数据库存储 → 应用层",
+      "D. 面向农户的灌溉预警小程序、API开放平台 → 应用层"
+    ],
+    answer: 2,
+    analysis: "正确答案：C（归属错误项）\n\n设备管理（注册/OTA）、规则引擎、数据汇聚与时序数据库属于**平台层**——平台层是物联网的“中场发动机”（设备接入+设备管理+数据汇聚+业务使能四大组件），不是应用层。应用层是最终面向行业的App/大屏/API开放。\n\n【分层口诀】感知采集→网络传输→平台管理→应用服务。\n\n【选型锚点】\n- NB-IoT：广覆盖/低功耗/小数据/低成本（抄表、农业）——运营商网络\n- LoRa：自建私有网络（园区、农场自己部署网关）\n- 5G：大带宽低时延（视频回传、车联网）\n- ZigBee：短距离Mesh（智能家居）\n\n案例物联网题=四层填空+每层技术名词+绑业务场景，2026上你现场编的就是这题的变体。"
   }
 ];
 
 let userAnswers={}, totalQuestions=questions.length, choiceCorrect=0;
 
-function renderQuestions(){const c=document.getElementById('questionsContainer');let h='';questions.forEach(q=>{const tc=q.tagClass||(q.type==='choice'?'tag-choice':'tag-case');h+=`<div class="q-card" id="qcard-${q.id}"><div class="q-header"><span class="q-tag ${tc}">${q.tag}</span><span class="q-score">${q.score}分</span></div><div class="q-number">第 ${q.id} 题</div><div class="q-text">${q.text}</div>`;if(q.type==='choice'){h+=`<div class="options" id="opts-${q.id}">`;q.options.forEach((o,i)=>{h+=`<button class="opt-btn" id="opt-${q.id}-${i}" onclick="selectOption(${q.id},${i})">${o}</button>`;});h+=`</div><div class="btn-row"><button class="btn btn-primary" id="submit-${q.id}" onclick="submitChoice(${q.id})" disabled>提交答案</button></div>`;}else{h+=`<textarea class="case-input" id="input-${q.id}" placeholder="在此输入你的答案..."></textarea><div class="btn-row"><button class="btn btn-primary" id="submit-${q.id}" onclick="submitCase(${q.id})">提交答案</button></div>`;}h+=`<div class="analysis" id="analysis-${q.id}"></div></div>`;});c.innerHTML=h;}
+function renderQuestions(){const c=document.getElementById('questionsContainer');let h='';questions.forEach(q=>{const tc=q.tagClass||(q.type==='choice'?'tag-choice':'tag-case');h+=`<div class="q-card" id="qcard-${q.id}"><div class="q-header"><span class="q-tag ${tc}">${q.tag}</span><span class="q-score">${q.score}分</span></div><div class="q-number">第 ${q.id} 题</div><div class="q-text">${q.text}</div>`;if(q.type==='choice'){h+=`<div class="options" id="opts-${q.id}">`;q.options.forEach((o,i)=>{h+=`<button class="opt-btn" id="opt-${q.id}-${i}" onclick="selectOption(${q.id},${i})">${o}</button>`;});h+=`</div><div class="btn-row"><button class="btn btn-primary" id="submit-${q.id}" onclick="submitChoice(${q.id})" disabled>提交答案</button></div>`;}else{h+=`<textarea class="case-input" id="input-${q.id}" placeholder="在此输入你的答案（按题目要求的格式作答）..."></textarea><div class="btn-row"><button class="btn btn-primary" id="submit-${q.id}" onclick="submitCase(${q.id})">提交答案</button></div>`;}h+=`<div class="analysis" id="analysis-${q.id}"></div></div>`;});c.innerHTML=h;}
 
-function selectOption(qid,oi){if(userAnswers[qid]!==undefined)return;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(o=>o.classList.remove('selected'));document.getElementById(`opt-${qid}-${oi}`).classList.add('selected');document.getElementById(`submit-${qid}`).disabled=false;userAnswers[qid]={type:'choice',selected:oi,submitted:false};}
+function selectOption(qid,oi){if(userAnswers[qid]&&userAnswers[qid].submitted)return;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(o=>o.classList.remove('selected'));document.getElementById(`opt-${qid}-${oi}`).classList.add('selected');document.getElementById(`submit-${qid}`).disabled=false;userAnswers[qid]={type:'choice',selected:oi,submitted:false};saveState();}
 
-function submitChoice(qid){if(!userAnswers[qid]||userAnswers[qid].submitted)return;userAnswers[qid].submitted=true;const q=questions.find(x=>x.id===qid),sel=userAnswers[qid].selected,cor=q.answer,ok=sel===cor;if(ok)choiceCorrect++;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(o=>o.classList.add('disabled'));document.getElementById(`opt-${qid}-${cor}`).classList.add('correct-answer');if(!ok)document.getElementById(`opt-${qid}-${sel}`).classList.add('wrong-answer');const card=document.getElementById(`qcard-${qid}`);card.classList.add('answered',ok?'correct-card':'wrong-card');card.querySelector('.q-number').innerHTML+=ok?`<span class="score-badge score-correct">+ ${q.score}分</span>`:`<span class="score-badge score-wrong">+ 0分</span>`;const ae=document.getElementById(`analysis-${qid}`);ae.innerHTML=`<h4>解析</h4><p>${q.analysis.replace(/\n/g,'<br>')}</p>`;ae.classList.add('show');document.getElementById(`submit-${qid}`).disabled=true;document.getElementById(`submit-${qid}`).textContent='已提交';updateProgress();}
+function submitChoice(qid){if(!userAnswers[qid]||userAnswers[qid].submitted)return;userAnswers[qid].submitted=true;const q=questions.find(x=>x.id===qid),sel=userAnswers[qid].selected,cor=q.answer,ok=sel===cor;if(ok)choiceCorrect++;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(o=>o.classList.add('disabled'));document.getElementById(`opt-${qid}-${cor}`).classList.add('correct-answer');if(!ok)document.getElementById(`opt-${qid}-${sel}`).classList.add('wrong-answer');const card=document.getElementById(`qcard-${qid}`);card.classList.add('answered',ok?'correct-card':'wrong-card');card.querySelector('.q-number').innerHTML+=ok?`<span class="score-badge score-correct">+ ${q.score}分</span>`:`<span class="score-badge score-wrong">+ 0分</span>`;const ae=document.getElementById(`analysis-${qid}`);ae.innerHTML=`<h4>解析</h4><p>${q.analysis.replace(/\n/g,'<br>')}</p>`;ae.classList.add('show');document.getElementById(`submit-${qid}`).disabled=true;document.getElementById(`submit-${qid}`).textContent='已提交';updateProgress();saveState();}
 
-function submitCase(qid){const inp=document.getElementById(`input-${qid}`),ans=inp.value.trim();if(!ans){alert('请先输入你的答案');return;}if(userAnswers[qid]&&userAnswers[qid].submitted)return;userAnswers[qid]={type:'case',answer:ans,submitted:true};inp.disabled=true;document.getElementById(`submit-${qid}`).disabled=true;document.getElementById(`submit-${qid}`).textContent='已提交';const card=document.getElementById(`qcard-${qid}`);card.classList.add('answered','case-card');card.querySelector('.q-number').innerHTML+='<span class="score-badge" style="background:#ede9fe;color:#7c3aed">待教练评分</span>';const q=questions.find(x=>x.id===qid),ae=document.getElementById(`analysis-${qid}`);ae.innerHTML=`<h4>参考答案</h4><p>${q.sampleAnswer.replace(/\n/g,'<br>')}</p>${q.scoringGuide?`<h4 style="margin-top:12px">评分标准</h4><p>${q.scoringGuide.replace(/\n/g,'<br>')}</p>`:''}`;ae.classList.add('show');updateProgress();}
+function submitCase(qid){const inp=document.getElementById(`input-${qid}`),ans=inp.value.trim();if(!ans){alert('请先输入你的答案');return;}if(userAnswers[qid]&&userAnswers[qid].submitted)return;userAnswers[qid]={type:'case',answer:ans,submitted:true};inp.disabled=true;document.getElementById(`submit-${qid}`).disabled=true;document.getElementById(`submit-${qid}`).textContent='已提交';const card=document.getElementById(`qcard-${qid}`);card.classList.add('answered','case-card');card.querySelector('.q-number').innerHTML+='<span class="score-badge" style="background:#ede9fe;color:#7c3aed">待教练评分</span>';const q=questions.find(x=>x.id===qid),ae=document.getElementById(`analysis-${qid}`);ae.innerHTML=`<h4>参考答案</h4><p>${q.sampleAnswer.replace(/\n/g,'<br>')}</p>${q.scoringGuide?`<h4 style="margin-top:12px">评分标准</h4><p>${q.scoringGuide.replace(/\n/g,'<br>')}</p>`:''}`;ae.classList.add('show');updateProgress();saveState();}
 
-function updateProgress(){const a=Object.values(userAnswers).filter(x=>x.submitted).length;document.getElementById('doneCount').textContent=a;document.getElementById('correctCount').textContent=choiceCorrect;document.getElementById('progressFill').style.width=(a/totalQuestions*100)+'%';if(a===totalQuestions)document.getElementById('generateBtn').disabled=false;}
+function updateProgress(){const a=Object.values(userAnswers).filter(x=>x.submitted).length;document.getElementById('doneCount').textContent=a;document.getElementById('correctCount').textContent=choiceCorrect+'/4';const cs=questions.filter(q=>q.type==='choice'&&userAnswers[q.id]&&userAnswers[q.id].submitted&&userAnswers[q.id].selected===q.answer).reduce((s,q)=>s+q.score,0);document.getElementById('totalScore').textContent=cs+'/26';document.getElementById('progressFill').style.width=(a/totalQuestions*100)+'%';if(a===totalQuestions)document.getElementById('generateBtn').disabled=false;}
 
-function generateReport(){let r=`=== 系统架构设计师 模块12 答题报告 ===\n日期：${new Date().toLocaleDateString('zh-CN')}\n选择题正确：${choiceCorrect}/6\n选择题得分：${choiceCorrect}/6分\n\n`;questions.forEach(q=>{const ua=userAnswers[q.id];r+=`--- 第${q.id}题（${q.tag}，${q.score}分）---\n`;if(q.type==='choice'){r+=`我的答案：${String.fromCharCode(65+ua.selected)}\n正确答案：${String.fromCharCode(65+q.answer)}\n结果：${ua.selected===q.answer?'✓ 正确（+'+q.score+'分）':'✗ 错误（+0分）'}\n`;}else{r+=`我的答案（${q.score}分，待教练评分）：\n${ua.answer}\n`;}r+='\n';});r+='=== 报告结束 ===';document.getElementById('reportText').value=r;document.getElementById('reportSection').classList.add('show');document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});}
+function generateReport(){let r=`=== 冲刺第6关：案例手感+高并发+物联网 答题报告 ===\n日期：${new Date().toLocaleDateString('zh-CN')}\n选择题正确：${choiceCorrect}/4\n案例题3道（20分）：待教练评分\n\n`;questions.forEach(q=>{const ua=userAnswers[q.id];r+=`--- 第${q.id}题（${q.tag}，${q.score}分）---\n`;if(q.type==='choice'){r+=`我的答案：${String.fromCharCode(65+ua.selected)}\n正确答案：${String.fromCharCode(65+q.answer)}\n结果：${ua.selected===q.answer?'✓ 正确（+'+q.score+'分）':'✗ 错误（+0分）'}\n`;}else{r+=`我的答案（${q.score}分，待教练评分）：\n${ua.answer}\n`;}r+='\n';});r+='=== 报告结束 ===';document.getElementById('reportText').value=r;document.getElementById('reportSection').classList.add('show');document.getElementById('reportSection').scrollIntoView({behavior:'smooth'});saveState();}
 
 function copyReport(){const ta=document.getElementById('reportText');ta.select();navigator.clipboard.writeText(ta.value).then(()=>{const b=event.target;b.textContent='✓ 已复制';setTimeout(()=>{b.textContent='一键复制';},2000);}).catch(()=>{document.execCommand('copy');alert('已复制');});}
 
+const QUIZ_KEY='archQuiz_sprint6';
+function saveState(){try{const state={answers:{},report:document.getElementById('reportText').value};Object.keys(userAnswers).forEach(k=>{const ua=userAnswers[k];state.answers[k]=ua.type==='case'?{type:'case',answer:ua.answer,submitted:ua.submitted}:{type:'choice',selected:ua.selected,submitted:ua.submitted};});localStorage.setItem(QUIZ_KEY,JSON.stringify(state));}catch(e){}}
+function resetQuiz(){if(confirm('确定清空所有作答记录并重新开始？')){try{localStorage.removeItem(QUIZ_KEY);}catch(e){}location.reload();}}
+function loadState(){try{const d=JSON.parse(localStorage.getItem(QUIZ_KEY)||'null');if(!d||!d.answers)return;Object.keys(d.answers).forEach(k=>{const ua=d.answers[k];const q=questions.find(x=>x.id==k);if(!q)return;if(ua.type==='case'){if(ua.answer!==undefined){document.getElementById(`input-${k}`).value=ua.answer;userAnswers[k]={type:'case',answer:ua.answer,submitted:false};if(ua.submitted){const inp=document.getElementById(`input-${k}`);inp.disabled=true;const card=document.getElementById(`qcard-${k}`);card.classList.add('answered','case-card');card.querySelector('.q-number').innerHTML+='<span class="score-badge" style="background:#ede9fe;color:#7c3aed">待教练评分</span>';const ae=document.getElementById(`analysis-${k}`);ae.innerHTML=`<h4>参考答案</h4><p>${q.sampleAnswer.replace(/\n/g,'<br>')}</p>${q.scoringGuide?`<h4 style="margin-top:12px">评分标准</h4><p>${q.scoringGuide.replace(/\n/g,'<br>')}</p>`:''}`;ae.classList.add('show');document.getElementById(`submit-${k}`).disabled=true;document.getElementById(`submit-${k}`).textContent='已提交';userAnswers[k].submitted=true;}}}else{if(ua.selected===undefined)return;document.getElementById(`opt-${k}-${ua.selected}`).classList.add('selected');document.getElementById(`submit-${k}`).disabled=false;userAnswers[k]={type:'choice',selected:ua.selected,submitted:false};if(ua.submitted){const cor=q.answer,ok=ua.selected===cor;if(ok)choiceCorrect++;document.querySelectorAll(`[id^="opt-${k}-"]`).forEach(o=>o.classList.add('disabled'));document.getElementById(`opt-${k}-${cor}`).classList.add('correct-answer');if(!ok)document.getElementById(`opt-${k}-${ua.selected}`).classList.add('wrong-answer');const card=document.getElementById(`qcard-${k}`);card.classList.add('answered',ok?'correct-card':'wrong-card');card.querySelector('.q-number').innerHTML+=ok?`<span class="score-badge score-correct">+ ${q.score}分</span>`:`<span class="score-badge score-wrong">+ 0分</span>`;const ae=document.getElementById(`analysis-${k}`);ae.innerHTML=`<h4>解析</h4><p>${q.analysis.replace(/\n/g,'<br>')}</p>`;ae.classList.add('show');document.getElementById(`submit-${k}`).disabled=true;document.getElementById(`submit-${k}`).textContent='已提交';userAnswers[k].submitted=true;}}});if(d.report){document.getElementById('reportText').value=d.report;document.getElementById('reportSection').classList.add('show');}updateProgress();}catch(e){}}
+
 renderQuestions();
+loadState();
 </script>
 </body>
 </html>
