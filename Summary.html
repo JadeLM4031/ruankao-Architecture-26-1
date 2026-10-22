@@ -389,6 +389,7 @@
         <a href="#" data-s="s26">法律法规</a>
         <a href="#" data-s="s28">AI/大模型</a>
         <a href="#" data-s="s29">冲刺急救卡</a>
+        <a href="#" data-s="s30">考前几页纸</a>
         <span class="nav-sep">|</span>
         <a href="#" data-s="s22" class="nav-essay">论文模板</a>
         <a href="#" data-s="s27" class="nav-essay">出题记录</a>
@@ -420,6 +421,71 @@
           </div>
 
           <h3>2. 调用/返回风格</h3>
+
+          <h4 style="color:var(--blue)">★ Web应用经典分层（MVC落地，案例高频）</h4>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <svg viewBox="0 0 780 585" style="min-width:720px;width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#475569"/></marker>
+            </defs>
+            <style>text{font-family:-apple-system,"Microsoft YaHei","PingFang SC",sans-serif}</style>
+
+            <!-- 浏览器 -->
+            <rect x="215" y="8" width="330" height="46" rx="9" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+            <text x="380" y="27" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1e293b">🖥 浏览器 / 前端（HTML · Vue）</text>
+            <text x="380" y="45" text-anchor="middle" font-size="10.5" fill="#64748b">展示界面 · 发起请求</text>
+            <rect x="575" y="18" width="92" height="26" rx="13" fill="#ede9fe"/>
+            <text x="621" y="35" text-anchor="middle" font-size="11.5" font-weight="700" fill="#7c3aed">MVC·View</text>
+
+            <line x1="380" y1="54" x2="380" y2="82" stroke="#475569" stroke-width="1.6" marker-end="url(#arr)"/>
+            <text x="392" y="72" font-size="11" fill="#475569">HTTP请求 / JSON响应</text>
+
+            <!-- 表现层 -->
+            <rect x="85" y="120" width="475" height="60" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="100" y="143" font-size="13" font-weight="700" fill="#1e3a8a">表现层 · Controller（SpringMVC · Servlet层）</text>
+            <text x="100" y="163" font-size="10.5" fill="#1e40af">接收请求分发 · 参数校验封装 · 调用Service · 返回JSON/视图</text>
+            <text x="100" y="176" font-size="10.5" fill="#1e40af">【只接活交活，不写业务逻辑】</text>
+            <rect x="575" y="137" width="92" height="26" rx="13" fill="#dbeafe"/>
+            <text x="621" y="154" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">MVC·Ctrl</text>
+
+            <line x1="322" y1="180" x2="322" y2="206" stroke="#475569" stroke-width="1.6" marker-end="url(#arr)"/>
+            <text x="334" y="197" font-size="11" fill="#475569">调用Service接口</text>
+
+            <!-- 业务层 -->
+            <rect x="112" y="242" width="430" height="58" rx="8" fill="#dcfce7" stroke="#4ade80" stroke-width="1.5"/>
+            <text x="127" y="264" font-size="13" font-weight="700" fill="#14532d">业务逻辑层 · Service</text>
+            <text x="127" y="284" font-size="10.5" fill="#166534">业务规则 · 事务管理 · 流程编排（组合多个DAO完成用例）</text>
+            <rect x="575" y="258" width="92" height="26" rx="13" fill="#dcfce7"/>
+            <text x="621" y="275" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">Model ①</text>
+
+            <line x1="327" y1="300" x2="327" y2="326" stroke="#475569" stroke-width="1.6" marker-end="url(#arr)"/>
+            <text x="339" y="317" font-size="11" fill="#475569">调用DAO/Mapper接口</text>
+
+            <!-- 持久层 -->
+            <rect x="112" y="330" width="430" height="58" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="127" y="352" font-size="13" font-weight="700" fill="#78350f">数据访问层 · DAO（MyBatis / JDBC）</text>
+            <text x="127" y="372" font-size="10.5" fill="#92400e">封装CRUD · 屏蔽数据库差异｜只管存取，不问业务</text>
+            <rect x="575" y="346" width="92" height="26" rx="13" fill="#fef3c7"/>
+            <text x="621" y="363" text-anchor="middle" font-size="11" font-weight="700" fill="#b45309">Model ②</text>
+
+            <!-- Entity 纵向标签 -->
+            <rect x="10" y="120" width="34" height="288" rx="17" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.4"/>
+            <text x="27" y="264" text-anchor="middle" font-size="11.5" font-weight="700" fill="#b45309" transform="rotate(-90 27 264)">Entity 实体类 · 贯穿各层的数据载体</text>
+
+            <!-- 出容器到DB -->
+            <line x1="327" y1="422" x2="327" y2="452" stroke="#475569" stroke-width="1.6" marker-end="url(#arr)"/>
+            <text x="339" y="442" font-size="11" fill="#475569">SQL（MyBatis / JDBC）</text>
+
+            <rect x="207" y="456" width="240" height="44" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+            <text x="327" y="483" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1e293b">🗄 数据库 DB（MySQL）</text>
+
+            <text x="327" y="530" text-anchor="middle" font-size="11.5" fill="#64748b">依赖原则：只能上层调下层（面向接口）· 不许跨层（Controller ↛ DAO）· 不许反向</text>
+            <text x="327" y="550" text-anchor="middle" font-size="11.5" fill="#64748b">案例流程：浏览器 → Controller → Service → DAO → DB → 逐层返回</text>
+          </svg>
+          </div>
+          <div class="trap"><b>MVC vs 三层（高频辨析）</b>：MVC是架构模式（M=Service+DAO+Entity，V=视图，C=控制器）；三层是分层思想（表现-业务-持久）。结合：View+Controller落在表现层，Model分布在业务层+持久层。<b>依赖原则：只能上层调下层、面向接口，不许跨层（Controller不能直接调DAO）、不许反向</b>。案例请求流程：浏览器→Controller→Service→DAO→DB→逐层返回。</div>
+          <div class="key"><b>考点：分层职责（案例考"某功能放哪层"，不考框架注解）</b>——业务规则与<b>事务管理属于业务逻辑层</b>（组合业务如转账=扣款+记账，要么全成功要么全回滚）；表现层只管交互不写业务（职责分离+复用）。</div>
+
           <table>
             <tr>
               <th>子风格</th>
@@ -732,6 +798,132 @@
             物理地址 = 页框号 × 页面大小 + 页内偏移
           </div>
           <p>页面4KB时十六进制快速法：页号=高位部分（去掉末3位hex），偏移=末3位hex</p>
+        </div>
+
+        <!-- 案例高频架构图 -->
+        <div class="card">
+          <h2><span class="icon">🗺️</span>案例高频架构图（嵌入式/数仓/爬虫/网络拓扑/MV*辨析）</h2>
+
+          <h3>① 嵌入式系统分层（案例年年有一道选答）</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <svg viewBox="0 0 760 235" style="min-width:700px;width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">
+            <style>text{font-family:-apple-system,"Microsoft YaHei",sans-serif}</style>
+            <rect x="120" y="8"  width="520" height="34" rx="7" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.4"/>
+            <text x="380" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a8a">应用层 —— 业务应用软件（巡检控制、数据采集界面）</text>
+            <rect x="120" y="50" width="520" height="34" rx="7" fill="#cffafe" stroke="#22d3ee" stroke-width="1.4"/>
+            <text x="380" y="72" text-anchor="middle" font-size="13" font-weight="700" fill="#155e75">中间件层 —— 文件系统 / GUI / 网络协议栈 / 消息中间件</text>
+            <rect x="120" y="92" width="520" height="34" rx="7" fill="#dcfce7" stroke="#4ade80" stroke-width="1.4"/>
+            <text x="380" y="114" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">操作系统层 —— RTOS实时操作系统（任务调度 / 内存管理 / IPC）</text>
+            <rect x="120" y="134" width="520" height="34" rx="7" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.4"/>
+            <text x="380" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">硬件抽象层 HAL / BSP（板级支持包）—— 屏蔽硬件差异，向上提供统一接口</text>
+            <rect x="120" y="176" width="520" height="34" rx="7" fill="#e2e8f0" stroke="#64748b" stroke-width="1.6"/>
+            <text x="380" y="198" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">硬件层 —— 处理器 / 存储器 / 传感器 / 执行器 / 通信接口</text>
+            <rect x="12" y="8" width="34" height="202" rx="17" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
+            <text x="29" y="109" text-anchor="middle" font-size="11" font-weight="700" fill="#475569" transform="rotate(-90 29 109)">上层调用下层 · 依赖向下</text>
+          </svg>
+          </div>
+          <div class="trap"><b>优先级反转（嵌入式必考）</b>：低优先级任务占着资源，高优先级任务被迫等待，中优先级任务反而先运行。解决：①<b>优先级继承</b>（低任务临时继承高任务优先级，尽快释放资源）②<b>优先级天花板</b>（访问资源时直接升到资源天花板优先级）。<br><b>实时系统分类</b>：硬实时（时限绝对不可超：飞控、ABS防抱死）vs 软实时（偶尔超时可容忍：视频播放）。</div>
+
+          <h3>② 数据仓库分层（数据方向年年考）</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <svg viewBox="0 0 760 130" style="min-width:720px;width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="arr2" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#475569"/></marker></defs>
+            <style>text{font-family:-apple-system,"Microsoft YaHei",sans-serif}</style>
+            <rect x="8"   y="35" width="105" height="52" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.4"/>
+            <text x="60"  y="57" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e293b">源系统</text>
+            <text x="60"  y="75" text-anchor="middle" font-size="10" fill="#64748b">业务库/日志</text>
+            <line x1="115" y1="61" x2="138" y2="61" stroke="#475569" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <text x="126" y="52" text-anchor="middle" font-size="9.5" fill="#64748b">ETL抽取</text>
+            <rect x="140" y="35" width="105" height="52" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.4"/>
+            <text x="192" y="57" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e3a8a">ODS 贴源层</text>
+            <text x="192" y="75" text-anchor="middle" font-size="10" fill="#1e40af">原样落地·临时</text>
+            <line x1="247" y1="61" x2="270" y2="61" stroke="#475569" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <rect x="272" y="35" width="105" height="52" rx="8" fill="#dcfce7" stroke="#4ade80" stroke-width="1.4"/>
+            <text x="324" y="57" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14532d">DWD 明细层</text>
+            <text x="324" y="75" text-anchor="middle" font-size="10" fill="#166534">清洗·标准化</text>
+            <line x1="379" y1="61" x2="402" y2="61" stroke="#475569" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <rect x="404" y="35" width="105" height="52" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.4"/>
+            <text x="456" y="57" text-anchor="middle" font-size="12.5" font-weight="700" fill="#78350f">DWS 汇总层</text>
+            <text x="456" y="75" text-anchor="middle" font-size="10" fill="#92400e">按主题聚合</text>
+            <line x1="511" y1="61" x2="534" y2="61" stroke="#475569" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <rect x="536" y="35" width="105" height="52" rx="8" fill="#fce7f3" stroke="#f472b6" stroke-width="1.4"/>
+            <text x="588" y="57" text-anchor="middle" font-size="12.5" font-weight="700" fill="#831843">ADS 应用层</text>
+            <text x="588" y="75" text-anchor="middle" font-size="10" fill="#9d174d">报表·指标</text>
+            <line x1="643" y1="61" x2="666" y2="61" stroke="#475569" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <rect x="668" y="35" width="84" height="52" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="1.4"/>
+            <text x="710" y="57" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">BI/大屏</text>
+            <text x="710" y="75" text-anchor="middle" font-size="10" fill="#64748b">数据应用</text>
+          </svg>
+          </div>
+          <div class="key">口诀：<b>贴源ODS → 明细DWD → 汇总DWS → 应用ADS</b>，越往右越干净、越聚合。ODS原样保留（对账用），DWD清洗标准化，DWS按主题宽表聚合，ADS直接喂报表。</div>
+
+          <h3>③ Scrapy爬虫架构（2025案例真题原题）</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <svg viewBox="0 0 760 270" style="min-width:700px;width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="arr3" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#475569"/></marker></defs>
+            <style>text{font-family:-apple-system,"Microsoft YaHei",sans-serif}</style>
+            <rect x="290" y="10" width="180" height="56" rx="9" fill="#dcfce7" stroke="#4ade80" stroke-width="1.6"/>
+            <text x="380" y="33" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">Spider 爬虫</text>
+            <text x="380" y="52" text-anchor="middle" font-size="10.5" fill="#166534">解析Response·产出Item和新Request</text>
+            <rect x="60" y="107" width="160" height="56" rx="9" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.6"/>
+            <text x="140" y="130" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">Scheduler 调度器</text>
+            <text x="140" y="149" text-anchor="middle" font-size="10.5" fill="#92400e">请求队列·去重</text>
+            <rect x="290" y="107" width="180" height="56" rx="9" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.8"/>
+            <text x="380" y="130" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1e3a8a">Engine 引擎（总调度）</text>
+            <text x="380" y="149" text-anchor="middle" font-size="10.5" fill="#1e40af">全局数据流控制</text>
+            <rect x="530" y="107" width="170" height="56" rx="9" fill="#cffafe" stroke="#22d3ee" stroke-width="1.6"/>
+            <text x="615" y="130" text-anchor="middle" font-size="13" font-weight="700" fill="#155e75">Downloader 下载器</text>
+            <text x="615" y="149" text-anchor="middle" font-size="10.5" fill="#0e7490">发HTTP请求·取页面</text>
+            <rect x="290" y="204" width="180" height="52" rx="9" fill="#fce7f3" stroke="#f472b6" stroke-width="1.6"/>
+            <text x="380" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#831843">Item Pipeline</text>
+            <text x="380" y="243" text-anchor="middle" font-size="10.5" fill="#9d174d">清洗·校验·入库</text>
+            <line x1="360" y1="66"  x2="360" y2="105" stroke="#475569" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="348" y="88" text-anchor="end" font-size="10" fill="#475569">Response↓</text>
+            <line x1="400" y1="105" x2="400" y2="66"  stroke="#475569" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="412" y="88" text-anchor="start" font-size="10" fill="#475569">Item+新Request↑</text>
+            <line x1="222" y1="125" x2="288" y2="125" stroke="#475569" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="255" y="117" text-anchor="middle" font-size="10" fill="#475569">出队</text>
+            <line x1="288" y1="145" x2="222" y2="145" stroke="#475569" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="255" y="162" text-anchor="middle" font-size="10" fill="#475569">入队</text>
+            <line x1="472" y1="125" x2="528" y2="125" stroke="#475569" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="500" y="117" text-anchor="middle" font-size="10" fill="#475569">请求→</text>
+            <line x1="528" y1="145" x2="472" y2="145" stroke="#475569" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="500" y="162" text-anchor="middle" font-size="10" fill="#475569">←响应</text>
+            <line x1="380" y1="165" x2="380" y2="202" stroke="#475569" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="394" y="187" font-size="10" fill="#475569">Item↓</text>
+          </svg>
+          </div>
+          <div class="key">2025真题考法：给Scrapy架构图挖空填组件名。记：<b>Engine是心脏（谁都不直连，全经它中转）</b>；Spider解析出Item和新Request，新Request回调度器形成循环。知识图谱管线=爬虫采集→实体关系抽取→图数据库存储→问答检索。</div>
+
+          <h3>④ 三层网络拓扑（园区网标准架构）</h3>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <svg viewBox="0 0 760 150" style="min-width:640px;width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">
+            <style>text{font-family:-apple-system,"Microsoft YaHei",sans-serif}</style>
+            <rect x="230" y="8"  width="300" height="38" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="1.8"/>
+            <text x="380" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">核心层 —— 高速骨干转发（冗余双机）</text>
+            <text x="380" y="41" text-anchor="middle" font-size="10" fill="#64748b">不做什么策略，只求快和稳</text>
+            <rect x="230" y="56" width="300" height="38" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="380" y="74" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">汇聚层 —— 汇聚流量 · VLAN间路由 · 访问策略</text>
+            <text x="380" y="89" text-anchor="middle" font-size="10" fill="#92400e">承上启下的"派出所"</text>
+            <rect x="230" y="104" width="300" height="38" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="380" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a8a">接入层 —— 直连终端（交换机 / AP / 摄像头）</text>
+            <text x="380" y="137" text-anchor="middle" font-size="10" fill="#1e40af">端口安全、终端准入</text>
+            <line x1="360" y1="46" x2="360" y2="54" stroke="#475569" stroke-width="1.6"/>
+            <line x1="400" y1="94" x2="400" y2="102" stroke="#475569" stroke-width="1.6"/>
+            <text x="545" y="30" font-size="10.5" fill="#64748b">选择考法：扩容提速改哪层？→核心层</text>
+            <text x="545" y="75" font-size="10.5" fill="#64748b">新部门隔离/VLAN策略？→汇聚层</text>
+            <text x="545" y="120" font-size="10.5" fill="#64748b">终端接入与准入？→接入层</text>
+          </svg>
+          </div>
+
+          <h3>⑤ MVC / MVP / MVVM 辨析（选择高频）</h3>
+          <table>
+            <tr><th>模式</th><th>结构</th><th>一句话区别</th><th>标志词</th></tr>
+            <tr><td><b>MVC</b></td><td>Model-View-Controller</td><td>Controller处理输入并更新Model，View从Model取数据展示（可观察）</td><td>经典Web（SpringMVC）</td></tr>
+            <tr><td><b>MVP</b></td><td>Model-View-Presenter</td><td>View与Model<b>完全解耦</b>，一切经Presenter中转，View完全被动</td><td>Presenter全权代理</td></tr>
+            <tr><td><b>MVVM</b></td><td>Model-View-ViewModel</td><td>ViewModel与View通过<b>数据绑定双向同步</b>，改数据界面自动变</td><td>双向数据绑定（Vue/WPF）</td></tr>
+          </table>
+          <div class="trap">秒杀锚点：看到"<b>双向数据绑定</b>"→MVVM；看到"<b>View被动、Presenter全管</b>"→MVP；看到"Controller接收请求分发"→MVC。</div>
         </div>
       </div>
 
@@ -2446,21 +2638,49 @@
 
         <!-- 我的易错点 -->
         <div class="card">
-          <h2><span class="icon">⚠️</span>我的易错点（考前必看 · 2026-10-21闭卷三连测诊断）</h2>
+          <h2><span class="icon">⚠️</span>论文易错点（考前必看 · 2026-10-21/22诊断）</h2>
           <ul>
             <li>🔴 <b>切片对象=文档，不是提问</b>（同一晚错两次！"离线切文档，在线变提问"——用户提问只做向量化去检索）</li>
-            <li>🔴 <b>向量库原理三句缺一不可</b>：映射成高维向量语义近→余弦相似度Top-K→HNSW换速度（闭卷只答出了查询流程，丢核心映射原理）</li>
+            <li>🔴 <b>向量库原理三句缺一不可</b>：映射成高维向量语义近→余弦相似度Top-K→HNSW换速度（闭卷曾只答出查询流程）</li>
             <li>🟡 摘要必含词：检索增强生成（RAG）<b>+向量数据库</b>+管线名+端云+<b>三个效果数字</b>（漏过：向量数据库、分钟级）</li>
             <li>🟡 实践部分 = 方案落地 + 问题故事，两块都要写（曾只记"遇到的问题"）</li>
             <li>🟡 第二问的枚举环节必须逐项<b>编号成段</b>（1）（2）（3），不能连成一片</li>
             <li>🟡 RAG别打成RGA；摘要≤300字；效果数字用"约"</li>
+            <li>🟡 <b>六方面最弱项：数据库优化</b>（抽测漏了读写分离/分库分表，补测过）——考前默口诀（缓存异步限流降，库优拆分再扩容）+②④内容重过</li>
+            <li>🟡 <b>两个盲词：令牌桶（限流算法名）、HPA（自动扩缩容）</b>——论文限流/扩容段必须带上</li>
+            <li>🟡 限流降级三件套=限流（令牌桶+去重）+熔断（Sentinel）+降级（非核心服务），曾把缓存三问题串项进来</li>
+            <li>🟡 本地缓存术语锚要写"本地缓存（Caffeine）"，不要写"缓存内存"</li>
           </ul>
+          <div class="essay-combo">选择题/计算类易错点已迁至<b>「冲刺急救卡」第⑪节</b>（导航最后一项），考前一起过。</div>
         </div>
 
         <!-- 4选1选题决策法 -->
         <div class="card">
           <h2><span class="icon">🎯</span>4选1选题决策法（2026上37分的反向教训）</h2>
           <div class="essay-combo">拿到4道题<b>别选最眼熟的，做覆盖度盘点</b>：①扫每题第二问的枚举清单（六方面/四层次/全流程…）②数自己能成段覆盖几项 ③选覆盖度最高的（≥60%才选）。2026上高并发只覆盖3/6仍选了它=37分；当时若有覆盖5/6的题没识别出来，就是决策法的洞。</div>
+        </div>
+
+        <!-- 高并发六方面 -->
+        <div class="card">
+          <h2><span class="icon">⚡</span>高并发六方面（2026上真题第二问原文 · 第二主线必背）</h2>
+          <div class="essay-combo">这六个词就是2026上"论高并发"真题第二问的原文枚举=评分清单。每方面记<b>2个技术手段+1个无人机落地</b>即可。<br><b>顺序口诀：缓存异步限流降，库优拆分再扩容</b>（缓存设计/异步处理/限流降级/数据库优化/服务拆分/水平扩容）</div>
+          <p><b>（1）缓存设计。</b>采用多级缓存体系：本地缓存（Caffeine）存放热点配置与元数据，Redis分布式缓存存放巡检任务、设备状态等热点数据，影像缩略图与静态资源经CDN加速。一致性采用"先更新数据库、再删除缓存"并辅以过期时间兜底；针对雪崩对TTL做随机偏移，针对穿透缓存空结果。落地：杆塔台账、航线规划结果是典型读多写少数据，缓存命中率约九成。</p>
+          <p><b>（2）异步处理。</b>将非实时链路改为消息驱动：巡检数据解析、缺陷识别结果推送、报表生成通过Kafka异步处理，削峰填谷——请求写入消息后即返回，消费端按数据库承受能力平稳消费；消费端做幂等设计防止重复处理。落地：一次巡检回传的数据包分片入队，解析服务并行消费。</p>
+          <p><b>（3）限流降级。</b>网关层采用令牌桶算法限流，对单用户重复请求去重；核心链路（任务调度、缺陷告警）设置超时与熔断保护（Sentinel），下游故障时快速失败；高峰期自动降级非核心服务（统计报表、推荐），保障主链路可用性。</p>
+          <p><b>（4）数据库优化。</b>读写分离分担读压力，巡检影像元数据按地市与时间维度分库分表；点云、影像等大字段存对象存储，库内只保留索引地址；持续开展慢SQL治理与索引优化，高并发写入采用批量插入；并发更新用乐观锁version字段防止重复调度。</p>
+          <p><b>（5）服务拆分。</b>按业务能力将平台拆分为任务调度、航线规划、数据解析、缺陷识别、告警工单等微服务，各自独立部署、独立数据库；通过API网关统一入口，服务注册发现（Nacos）支持动态上下线。拆分带来独立伸缩与故障隔离，代价是分布式事务，采用基于消息的最终一致性方案。</p>
+          <p><b>（6）水平扩容。</b>服务容器化部署（Docker+K8s），通过HPA根据CPU与消息积压指标自动扩缩容：白天巡检高峰自动扩容解析与识别服务，夜间自动缩容节省资源；数据层通过分片与多副本配合扩容。扩容后系统吞吐能力随节点数近线性提升。</p>
+        </div>
+
+        <!-- AI族换皮速查 -->
+        <div class="card">
+          <h2><span class="icon">🔀</span>AI族换皮速查（题目换技术，素材换词不换骨）</h2>
+          <div class="essay-combo">RAG素材是底座，遇到AI族其他题按此换词——骨架（项目/管线/问题故事）全部不变。</div>
+          <p><b>→考图数据库/知识图谱：</b>向量库理论段换词——"Embedding向量化"→"实体抽取与关系抽取"、"余弦相似度检索"→"图遍历查询"、"HNSW索引"→"三元组存储"、"Milvus"→"Neo4j"；特点改为"擅长关联分析与多跳查询"；缺点改为"不擅长大规模全图统计"。落地场景：缺陷知识图谱（缺陷-部件-成因关联分析）。</p>
+          <p><b>→考GraphRAG（一句话）：</b>在向量检索基础上引入知识图谱——先从文档抽取实体关系建图，检索时图遍历与向量检索结合，擅长多跳推理与全局性问题。</p>
+          <p><b>→考Agent智能体：</b>四模块——规划（任务分解）、记忆（短期上下文+长期向量记忆）、工具（Function Calling）、行动（ReAct循环：思考→行动→观察→再思考）。落地：巡检工单自动处置Agent（识别缺陷→查台账→生成工单→通知班组）。</p>
+          <p><b>→考大模型应用系统：</b>"检测—检索—定级—复核"管线直接迁移，关键词换成大模型选型、RAG管线、人机协同、端云部署。</p>
+          <p><b>→考AI+测试（多模态测试框架，2026上真题）：</b>四层——页面识别层（元素语义解析）、规划测试路径层（ReAct生成操作步骤）、执行交互层（反馈修正循环）、分析层（语义比对智能断言）；问题写幻觉与上下文限制。</p>
         </div>
 
         <!-- 摘要 -->
@@ -2951,6 +3171,29 @@
 
           <h3>⑩ 端云/冒进/扩容对照速记</h3>
           <div class="key">端侧=快和私（低时延/隐私/离线），云侧=强（算力/大模型）。过拟合加数据降复杂度，欠拟合加模型。水平扩展=加机器，垂直扩展=换大机器。</div>
+
+          <h3>⑪ 滚动抽测新增易错（2026-10-22六轮抽测暴露）</h3>
+          <div class="key">
+            1. <b>流水线冒险三分类（二次遗忘）</b>：等结果→数据冒险→旁路转发｜猜跳转→控制冒险→分支预测｜抢硬件→结构冒险→<b>指令/数据Cache分离</b>。口诀：等数据猜控制抢结构<br>
+            2. <b>一字之差对子（全忘过）</b>：K-means=无监督聚类（无标签分组）vs KNN=监督分类（近邻投票）；Few-shot教格式 vs CoT教思考<br>
+            3. <b>MQ三作用=削峰+异步+解耦</b>（漏过解耦）；可靠性：不丢=confirm+持久化+手动ack，不重=消费端<b>幂等</b>——口诀"丢了靠确认持久化，重了靠幂等"<br>
+            4. <b>规则引擎→平台层</b>（二次错；应用层只有App/大屏/API开放）<br>
+            5. <b>区块链匹配</b>：已知参与方/强最终性→联盟链+PBFT；开放匿名→公链+PoW/PoS<br>
+            6. <b>挣值要算数值</b>：CV=EV−AC、SV=EV−PV（不只判断方向）<br>
+            7. <b>死锁题"竞争资源"=默认并发</b>：m×(需求−1)+1≤总数（串行不死锁仅在题目明说时成立）<br>
+            8. <b>磁盘三件套=寻道+半圈+传输（三次遗忘，最高危）</b>——考前默写第一行
+          </div>
+      </div>
+
+      <!-- ============ S30: 考前几页纸 ============ -->
+      <div class="sec" id="s30">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+          <b style="font-size:15px">希赛·考前几页纸</b>
+          <button id="btnXq" onclick="switchPdf('xq')" style="padding:7px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:var(--blue);color:#fff">2026下半年（默认）</button>
+          <button id="btnSs" onclick="switchPdf('ss')" style="padding:7px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#e2e8f0;color:#334155">2026上半年</button>
+        </div>
+        <iframe id="pdfFrame" src="2026下半年架构考前几页纸.pdf" style="width:100%;height:calc(100vh - 260px);min-height:420px;border:1px solid var(--border);border-radius:8px;background:#fff"></iframe>
+        <div id="pdfHint" style="font-size:12px;color:var(--muted);margin-top:8px">提示：用浏览器自带PDF查看器渲染，可翻页/缩放。手机端或嵌入被拦截时，<a href="2026下半年架构考前几页纸.pdf" target="_blank" style="color:var(--blue)">点此新开下半年</a> ｜ <a href="2026上半年架构考前几页纸.pdf" target="_blank" style="color:var(--blue)">点此新开上半年</a></div>
       </div>
 
     </div>
@@ -3011,6 +3254,8 @@
           secs.forEach((s) => s.classList.remove("active"))
           document.getElementById(id).classList.add("active")
           window.scrollTo({ top: 0, behavior: "smooth" })
+          if (id === "s30") { document.body.style.overflowY = "hidden"; setTimeout(fitPdf, 50) }
+          else document.body.style.overflowY = ""
         })
       })
 
@@ -3020,6 +3265,28 @@
           e.target.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
         }
       })
+
+      // 考前几页纸：切换与自适应高度
+      function switchPdf(w) {
+        document.getElementById("pdfFrame").src =
+          w === "xq" ? "2026下半年架构考前几页纸.pdf" : "2026上半年架构考前几页纸.pdf"
+        const bx = document.getElementById("btnXq"), bs = document.getElementById("btnSs")
+        const onXq = w === "xq"
+        bx.style.background = onXq ? "var(--blue)" : "#e2e8f0"
+        bx.style.color = onXq ? "#fff" : "#334155"
+        bs.style.background = onXq ? "#e2e8f0" : "var(--blue)"
+        bs.style.color = onXq ? "#334155" : "#fff"
+      }
+      function fitPdf() {
+        const f = document.getElementById("pdfFrame"), s = document.getElementById("s30"), hint = document.getElementById("pdfHint")
+        if (!f || !s) return
+        const secTop = s.getBoundingClientRect().top
+        const btnRow = 52 // 按钮行+间距实测值
+        const hintH = hint ? hint.offsetHeight + hint.offsetTop - (f.offsetTop + f.offsetHeight) : 40
+        const h = window.innerHeight - secTop - btnRow - hintH - 34 // 34=内容区底边距+余量
+        f.style.height = Math.max(h, 400) + "px"
+      }
+      window.addEventListener("resize", fitPdf)
 
       // 回到顶部按钮
       const btn = document.getElementById("backTop")

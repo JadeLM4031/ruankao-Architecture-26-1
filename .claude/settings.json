@@ -8,7 +8,20 @@
       "Bash(awk 'NR>=2720 && NR<=2745' \"c:/Users/JadeLM/Desktop/study/Summary.html\")",
       "WebFetch(domain:www.educity.cn)",
       "WebFetch(domain:blog.csdn.net)",
-      "Bash(grep -n \"\\\\.card\\\\s*{\\\\|\\\\.card table\\\\|table\\\\s*{\\\\|td,\\\\|th,\\\\|td\\\\s*{\\\\|th\\\\s*{\" \"c:/Users/JadeLM/Desktop/study/Summary.html\")"
+      "Bash(grep -n \"\\\\.card\\\\s*{\\\\|\\\\.card table\\\\|table\\\\s*{\\\\|td,\\\\|th,\\\\|td\\\\s*{\\\\|th\\\\s*{\" \"c:/Users/JadeLM/Desktop/study/Summary.html\")",
+      "Bash(where pdftotext *)",
+      "Bash(where pdftoppm *)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(pdftotext -enc UTF-8 \"2026上半年架构考前几页纸.pdf\" .上半年提取.txt)",
+      "Bash(pdftotext -enc UTF-8 \"2026下半年架构考前几页纸.pdf\" .下半年提取.txt)",
+      "Read(//d/environment/Git/mingw64/bin/**)",
+      "Bash(mkdir -p \"c:/Users/JadeLM/Desktop/study/.pdf_pages\")",
+      "Bash(pdftoppm -png -r 130 \"2026下半年架构考前几页纸.pdf\" .pdf_pages/pg)",
+      "Bash(where gs *)",
+      "Read(//d/environment/Git/usr/bin/**)",
+      "Bash(npm -v)",
+      "Bash(node .pdf_pages/extract.js \"2026下半年架构考前几页纸.pdf\" .pdf_pages/xq)",
+      "Bash(node .pdf_pages/extract2.js \"2026下半年架构考前几页纸.pdf\" .pdf_pages/xq)"
     ]
   }
 }
